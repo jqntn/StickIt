@@ -27,9 +27,17 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Direction"",
+                    ""type"": ""Value"",
+                    ""id"": ""b16cc044-ba91-485f-a9b1-3a9a667baf49"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""MousePosition"",
                     ""type"": ""Value"",
-                    ""id"": ""31ad1e37-f4f5-4479-9e8c-fc8a429f2821"",
+                    ""id"": ""d6731089-5380-4b24-a009-c1343ba1c4d1"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
@@ -42,8 +50,30 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""93e22bf6-7b1a-4099-9889-61237ed77478"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e669e173-b6da-40ec-ab8c-39008d1f44c4"",
+                    ""path"": ""<Gamepad>/leftStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Direction"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -53,7 +83,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
+                    ""groups"": ""Keyboard"",
                     ""action"": ""MousePosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
@@ -61,11 +91,35 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
             ]
         }
     ],
-    ""controlSchemes"": []
+    ""controlSchemes"": [
+        {
+            ""name"": ""Gamepad"",
+            ""bindingGroup"": ""Gamepad"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Gamepad>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Keyboard"",
+            ""bindingGroup"": ""Keyboard"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": true,
+                    ""isOR"": false
+                }
+            ]
+        }
+    ]
 }");
         // NormalInputs
         m_NormalInputs = asset.FindActionMap("NormalInputs", throwIfNotFound: true);
         m_NormalInputs_Jump = m_NormalInputs.FindAction("Jump", throwIfNotFound: true);
+        m_NormalInputs_Direction = m_NormalInputs.FindAction("Direction", throwIfNotFound: true);
         m_NormalInputs_MousePosition = m_NormalInputs.FindAction("MousePosition", throwIfNotFound: true);
     }
 
@@ -117,12 +171,14 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
     private readonly InputActionMap m_NormalInputs;
     private INormalInputsActions m_NormalInputsActionsCallbackInterface;
     private readonly InputAction m_NormalInputs_Jump;
+    private readonly InputAction m_NormalInputs_Direction;
     private readonly InputAction m_NormalInputs_MousePosition;
     public struct NormalInputsActions
     {
         private @PlayerInputs m_Wrapper;
         public NormalInputsActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Jump => m_Wrapper.m_NormalInputs_Jump;
+        public InputAction @Direction => m_Wrapper.m_NormalInputs_Direction;
         public InputAction @MousePosition => m_Wrapper.m_NormalInputs_MousePosition;
         public InputActionMap Get() { return m_Wrapper.m_NormalInputs; }
         public void Enable() { Get().Enable(); }
@@ -136,6 +192,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Jump.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnJump;
                 @Jump.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnJump;
                 @Jump.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnJump;
+                @Direction.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnDirection;
+                @Direction.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnDirection;
+                @Direction.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnDirection;
                 @MousePosition.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnMousePosition;
                 @MousePosition.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnMousePosition;
                 @MousePosition.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnMousePosition;
@@ -146,6 +205,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @Direction.started += instance.OnDirection;
+                @Direction.performed += instance.OnDirection;
+                @Direction.canceled += instance.OnDirection;
                 @MousePosition.started += instance.OnMousePosition;
                 @MousePosition.performed += instance.OnMousePosition;
                 @MousePosition.canceled += instance.OnMousePosition;
@@ -153,9 +215,28 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         }
     }
     public NormalInputsActions @NormalInputs => new NormalInputsActions(this);
+    private int m_GamepadSchemeIndex = -1;
+    public InputControlScheme GamepadScheme
+    {
+        get
+        {
+            if (m_GamepadSchemeIndex == -1) m_GamepadSchemeIndex = asset.FindControlSchemeIndex("Gamepad");
+            return asset.controlSchemes[m_GamepadSchemeIndex];
+        }
+    }
+    private int m_KeyboardSchemeIndex = -1;
+    public InputControlScheme KeyboardScheme
+    {
+        get
+        {
+            if (m_KeyboardSchemeIndex == -1) m_KeyboardSchemeIndex = asset.FindControlSchemeIndex("Keyboard");
+            return asset.controlSchemes[m_KeyboardSchemeIndex];
+        }
+    }
     public interface INormalInputsActions
     {
         void OnJump(InputAction.CallbackContext context);
+        void OnDirection(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
     }
 }
