@@ -1,1 +1,1 @@
-"C:\Program Files\Unity\Editor\Unity" -quit -batchmode -projectPath. -executeMethod ScriptBatch.StandaloneWindows64
+"C:\Program Files\Unity\Editor\Unity" -quit -batchmode -projectPath. -executeMethod ScriptBatch.Build
