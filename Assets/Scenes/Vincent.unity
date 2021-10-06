@@ -313,8 +313,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 148635716}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -15.66, y: 3.32, z: 0}
-  m_LocalScale: {x: 1, y: 20, z: 1}
+  m_LocalPosition: {x: -17.0417, y: 3.32, z: 0}
+  m_LocalScale: {x: 3.7635, y: 20, z: 1}
   m_Children: []
   m_Father: {fileID: 958254459}
   m_RootOrder: 2
@@ -1053,8 +1053,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1211566565}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.61, y: 3.32, z: 0}
-  m_LocalScale: {x: 1, y: 20, z: 1}
+  m_LocalPosition: {x: 17.1203, y: 3.32, z: 0}
+  m_LocalScale: {x: 4.0206733, y: 20, z: 1}
   m_Children: []
   m_Father: {fileID: 958254459}
   m_RootOrder: 3
@@ -1315,7 +1315,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 120
-  m_CollisionDetection: 1
+  m_CollisionDetection: 3
 --- !u!4 &1852242755
 Transform:
   m_ObjectHideFlags: 0
@@ -1324,7 +1324,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1852242750}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.11, y: 7.37, z: 0}
+  m_LocalPosition: {x: 0.27, y: 6.76, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 164793288}
@@ -1345,17 +1345,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isControllerGamepad: 1
   dotPreview: {fileID: 1563193181262515494, guid: d0c611942a4ded548aac09b0447276da, type: 3}
-  spaceBetweenDots: 0.01
-  numberOfDots: 50
-  maxSpeed: 30
-  minForceJumpMultiplicator: 0.2
-  speedIncreaseForceJump: 2
-  animCurveJump:
+  spaceBetweenDots: 0.02
+  numberOfDots: 10
+  maxSpeed: 25
+  animCurveJumpSpeed:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0.5
+      time: 0.013920136
+      value: 0.9989135
+      inSlope: 0.04999781
+      outSlope: 0.04999781
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.43563953
+    - serializedVersion: 3
+      time: 0.4664261
+      value: 0.0037507191
+      inSlope: -0.033686467
+      outSlope: -0.033686467
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.36507094
+    - serializedVersion: 3
+      time: 1.0056558
+      value: -0.000032804906
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  minForceJumpMultiplicator: 0.2
+  speedIncreaseForceJump: 2
+  animCurveJumpGravity:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0029037036
+      value: 0.50228065
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1363,28 +1396,19 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0
     - serializedVersion: 3
-      time: 0.5201013
-      value: 0.6254972
-      inSlope: 0.7892024
-      outSlope: 0.7892024
+      time: 0.72176284
+      value: 0.68315035
+      inSlope: 0.668116
+      outSlope: 0.668116
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.2737082
-      outWeight: 0.18841235
-    - serializedVersion: 3
-      time: 0.6677518
-      value: 0.78289956
-      inSlope: 1.3213831
-      outSlope: 1.3213831
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.1304459
+      inWeight: 0.16162002
       outWeight: 0.33333334
     - serializedVersion: 3
       time: 1
       value: 1
-      inSlope: 0
-      outSlope: 0
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
