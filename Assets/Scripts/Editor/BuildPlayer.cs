@@ -7,8 +7,9 @@ class ScriptBatch
     {
         string path = "Build_" + DateTime.Now.ToString("dd.MM.yy_HH.mm") + "/";
         Directory.CreateDirectory(path);
-        string[] dirs = Directory.GetDirectories(".", "Build_*", SearchOption.TopDirectoryOnly);
-        if (dirs != null) Directory.Delete(dirs[0], true);
+        string[] dirs = Directory.GetDirectories(".", "Build*", SearchOption.TopDirectoryOnly);
+        if (dirs != null)
+            foreach (var i in dirs) Directory.Delete(i, true);
         else Directory.CreateDirectory(path);
         BuildPipeline.BuildPlayer(
             Directory.GetFiles("Assets/Scenes", "*.unity"), path + "Plat.exe",
