@@ -33,7 +33,12 @@ public class Player : MonoBehaviour
     private Transform[] dots;
 
     [Header("Movement")]     //-----------------------
+    bool isAnimCurveSpeed;
+    Vector3 addedVector;
     public float maxSpeed;
+    [SerializeField] AnimationCurve animCurveJumpSpeed;
+    float t_speed;
+    float y_speed = 1;
     Vector2 direction;
     bool isChargingJump = false;
     [SerializeField]
@@ -42,9 +47,9 @@ public class Player : MonoBehaviour
     [SerializeField]
     float speedIncreaseForceJump;
     bool hasJumped = false;   
-    [SerializeField] AnimationCurve animCurveJump;
-    float t;
-    float y = 1;
+    [SerializeField] AnimationCurve animCurveJumpGravity;
+    float t_jump;
+    float y_jump = 1;
     public float gravityStrength;
     private Rigidbody rb;
     private Vector3 lastVelocity = Vector3.zero;
@@ -84,16 +89,12 @@ public class Player : MonoBehaviour
 
         if (hasJumped)
         {
-            if (t < animCurveJump.keys[animCurveJump.length - 1].time)
-            {
-              
-                t += Time.deltaTime;
-                y = t;
-                y = animCurveJump.Evaluate(y);
-            } else {
-                hasJumped = false;
- 
-            }
+            AnimCurveJumpGravity();
+
+        }
+        if (isAnimCurveSpeed)
+        {
+            AnimCurveJumpSpeed();
         }
 
     }
@@ -106,8 +107,18 @@ public class Player : MonoBehaviour
         }
         else isGrounded = false;
 
-        if(state != STATE.STICK)
-        rb.velocity += new Vector3(0, -gravityStrength) * y * Time.fixedDeltaTime;
+        if (state != STATE.STICK)
+        {
+           // realVelocity += new Vector2(0, -gravityStrength) * y_jump * Time.fixedDeltaTime;
+            
+            rb.velocity += new Vector3(0, -gravityStrength) * y_jump * Time.fixedDeltaTime;
+
+            rb.velocity -= addedVector;
+            addedVector = rb.velocity * y_speed;
+            rb.velocity += addedVector;
+
+            print(addedVector.magnitude);
+        }
 
         Attraction();
 
@@ -119,7 +130,9 @@ public class Player : MonoBehaviour
     {
         if(connectedPoints.Count > 0)
         GUILayout.Label(" attraction strength = " + connectedPoints[0].attractionStrength);
-        
+
+        GUILayout.Label(" y_speed  = " + y_speed);
+
     }
 
     #region JUMP
@@ -146,9 +159,13 @@ public class Player : MonoBehaviour
         forceJumpMultiplicator = minForceJumpMultiplicator;
         isChargingJump = false;
         EnableDots(false);
+        isAnimCurveSpeed = true;
         hasJumped = true;
-        t = 0;
-        y = 0;
+        t_jump = 0;
+        y_jump = 0;
+        t_speed = 0;
+        y_speed = 0;
+        addedVector = Vector3.zero;
 
     }
 
@@ -174,6 +191,10 @@ public class Player : MonoBehaviour
         connectedPoints.Add(contact);
 
         state = STATE.STICK;
+        isAnimCurveSpeed = false;
+        addedVector = Vector2.zero;
+        y_speed = 0;
+        t_speed = 0;
     }
 
     private void OnCollisionStay(Collision collision)
@@ -230,7 +251,7 @@ public class Player : MonoBehaviour
                         if(hit.transform == connectedPoints[i].transform)
                         {
                             connectedPoints[i].attractionStrength += gravityStrength * Time.fixedDeltaTime * 3;
-                            connectedPoints[i].attractionStrength = Mathf.Clamp(connectedPoints[i].attractionStrength, 0, 30 * attractionMultiplier);
+                            connectedPoints[i].attractionStrength = Mathf.Clamp(connectedPoints[i].attractionStrength, 0, 15 * attractionMultiplier);
                         }
                     }
                 }
@@ -268,7 +289,6 @@ public class Player : MonoBehaviour
                 direction = (mousePos - transform.position).normalized;
             }
             Vector2 potentialVelocity = direction * forceJump;
-            print(direction.magnitude);
 
 
             for (int i = 0; i < dots.Length; i++)
@@ -281,16 +301,43 @@ public class Player : MonoBehaviour
 
     Vector2 GetDotPosition(float t, Vector2 potentialVelocity)
     {
-        /* Vector2 PointPosition(float t){
-         * Vector 2 position = (Vector2)shotPoint.position + (direction.normalized * launchForce * t) + 0.5f * gravity * (t*t);
-        return position;
-         * }
-        */
-        Vector2 gravity = new Vector2(0, -animCurveJump.Evaluate(t) * gravityStrength);
+        Vector2 gravity = new Vector2(0, -animCurveJumpGravity.Evaluate(t) * gravityStrength);
 
         Vector2 pos = (Vector2)transform.position +(potentialVelocity * t) + 0.5f * gravity * (t*t);
         return pos;
 
+    }
+
+    void AnimCurveJumpGravity()
+    {
+        if (t_jump < animCurveJumpGravity.keys[animCurveJumpGravity.length - 1].time)
+        {
+
+            t_jump += Time.deltaTime;
+            y_jump = t_jump;
+            y_jump = animCurveJumpGravity.Evaluate(y_jump);
+        }
+        else
+        {
+            hasJumped = false;
+
+        }
+    }
+
+    void AnimCurveJumpSpeed()
+    {
+        if (t_speed < animCurveJumpSpeed.keys[animCurveJumpSpeed.length - 1].time)
+        {
+
+            t_speed += Time.deltaTime;
+            y_speed = t_speed;
+            y_speed = animCurveJumpSpeed.Evaluate(y_speed);
+        }
+        else
+        {
+
+            isAnimCurveSpeed = false;
+        }
     }
 
 
