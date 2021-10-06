@@ -33,9 +33,11 @@ public class Player : MonoBehaviour
     private Transform[] dots;
 
     [Header("Movement")]     //-----------------------
+    [Tooltip("Force maximale du jump, et clamp de la vélocité maximale")]
+    public float maxSpeed;
     bool isAnimCurveSpeed;
     Vector3 addedVector;
-    public float maxSpeed;
+    [Tooltip("% de la velocité ajoutée au saut en fonction du temps, cette valeur doit finir à 1")]
     [SerializeField] AnimationCurve animCurveJumpSpeed;
     float t_speed;
     float y_speed = 1;
@@ -56,8 +58,10 @@ public class Player : MonoBehaviour
 
     private List<ContactPoint> connectedPoints = new List<ContactPoint>();
     public float attractionMultiplier;
-    [Range(0,1)]public float desattractionMultiplier;
+    [Range(0,1)]public float repulsionMultiplier;
     [SerializeField] bool isSlippery;
+
+    public float speedSlowDownCharge;
 
 
 
@@ -107,17 +111,26 @@ public class Player : MonoBehaviour
         }
         else isGrounded = false;
 
-        if (state != STATE.STICK)
+        if (isChargingJump && !isGrounded)
         {
-           // realVelocity += new Vector2(0, -gravityStrength) * y_jump * Time.fixedDeltaTime;
-            
-            rb.velocity += new Vector3(0, -gravityStrength) * y_jump * Time.fixedDeltaTime;
+            if (rb.velocity.magnitude > 0.01f)
+                rb.velocity -= rb.velocity * speedSlowDownCharge * Time.fixedDeltaTime;
+            else rb.velocity = Vector3.zero;
 
-            rb.velocity -= addedVector;
-            addedVector = rb.velocity * y_speed;
-            rb.velocity += addedVector;
+        }
+        else
+        {
 
-            print(addedVector.magnitude);
+            if (state != STATE.STICK)
+            {
+                // realVelocity += new Vector2(0, -gravityStrength) * y_jump * Time.fixedDeltaTime;
+
+                rb.velocity += new Vector3(0, -gravityStrength) * y_jump * Time.fixedDeltaTime;
+
+                //rb.velocity -= addedVector;
+                //addedVector = rb.velocity * y_speed;
+                //rb.velocity += addedVector;
+            }
         }
 
         Attraction();
@@ -237,12 +250,14 @@ public class Player : MonoBehaviour
             if (isSlippery)
             {
                 Vector3 attraction = -direction * connectedPoints[i].attractionStrength;
+                float repulsion = connectedPoints[i].attractionStrength * repulsionMultiplier;
                 rb.velocity += attraction * Time.fixedDeltaTime;
                 if (!isGrounded)
                 {
-                    
-                    rb.velocity += new Vector3(0, -gravityStrength) * Time.fixedDeltaTime * desattractionMultiplier;
-                    connectedPoints[i].attractionStrength -= gravityStrength * Time.fixedDeltaTime * desattractionMultiplier;
+                    print(connectedPoints[i].transform.gameObject.name);
+                    print(repulsion);
+                    rb.velocity += new Vector3(0, -gravityStrength) * Time.fixedDeltaTime * 0.1f;
+                    connectedPoints[i].attractionStrength -= gravityStrength * Time.fixedDeltaTime * repulsion;
                 } else
                 {
                     RaycastHit hit;
