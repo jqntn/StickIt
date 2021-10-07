@@ -5,18 +5,37 @@ using UnityEngine;
 public class InteractionPlatforms : MonoBehaviour
 {
     [SerializeField]
-    Vector2 _direction;
+    public Vector2 _directionPlatform;
+    Vector3 _directionPlayer;
+    [HideInInspector]
+    public GameObject player;
+
     [SerializeField]
     bool _moveable;
     [SerializeField]
     bool _stickable;
-    // Start is called before the first frame update
+
     void Start()
     {
-        _direction =Vector3.up;
+        _directionPlatform.Normalize();
+    }
+
+    public virtual void PlatformAction(GameObject p)
+    {
+        Debug.Log("No specific platform action");
+    }
+
+
+    private void OnCollisionStay(Collision c)
+    {
+        if (c.gameObject.TryGetComponent(out Player p))
+        {
+            c.gameObject.GetComponent<Player>().state = Player.STATE.AIR;
+            PlatformAction(c.gameObject);
+        }
     }
     private void OnDrawGizmos()
     {
-        Debug.DrawRay(transform.position, _direction, Color.red);
+        Debug.DrawRay(transform.position, _directionPlatform, Color.red);
     }
 }
