@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
     public float spaceBetweenDots;
     public int numberOfDots;
     private Transform[] dots;
+    private bool isDotsEnabled = false;
 
     [Header("Movement")]     //-----------------------
     [Tooltip("Force maximale du jump, et clamp de la vélocité maximale")]
@@ -62,7 +63,8 @@ public class Player : MonoBehaviour
     [SerializeField] bool isSlippery;
 
     public float speedSlowDownCharge;
-
+    public int maxNumberOfJumps;
+    private int currentNumberOfJumps;
 
 
     // Start is called before the first frame update
@@ -77,10 +79,12 @@ public class Player : MonoBehaviour
             dots[i] = newDot;
         }
         //forceJumpMultiplicator = minForceJumpMultiplicator;
-        playerInputs.NormalInputs.Jump.started += _ => StartJumpCharge();
+        playerInputs.NormalInputs.Jump.started += _ => isChargingJump = true;
         playerInputs.NormalInputs.Jump.canceled += _ => Jump();
         playerInputs.NormalInputs.Direction.performed += cntxt => direction = cntxt.ReadValue<Vector2>();
         playerInputs.NormalInputs.Direction.canceled += cntxt => direction = Vector2.zero;
+
+        currentNumberOfJumps = maxNumberOfJumps;
 
        
     }
@@ -88,8 +92,15 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        IncreaseForceJump();
+        
         PreviewDirection();
+
+        if(isChargingJump &&  connectedPoints.Count > 0)
+        {
+            if(!isDotsEnabled)
+            EnableDots(true);
+            IncreaseForceJump();
+        }
 
         if (hasJumped)
         {
@@ -111,27 +122,18 @@ public class Player : MonoBehaviour
         }
         else isGrounded = false;
 
-        if (isChargingJump && !isGrounded)
+
+        if (state != STATE.STICK)
         {
-            if (rb.velocity.magnitude > 0.01f)
-                rb.velocity -= rb.velocity * speedSlowDownCharge * Time.fixedDeltaTime;
-            else rb.velocity = Vector3.zero;
+            // realVelocity += new Vector2(0, -gravityStrength) * y_jump * Time.fixedDeltaTime;
 
+            rb.velocity += new Vector3(0, -gravityStrength) * y_jump * Time.fixedDeltaTime;
+
+            //rb.velocity -= addedVector;
+            //addedVector = rb.velocity * y_speed;
+            //rb.velocity += addedVector;
         }
-        else
-        {
-
-            if (state != STATE.STICK)
-            {
-                // realVelocity += new Vector2(0, -gravityStrength) * y_jump * Time.fixedDeltaTime;
-
-                rb.velocity += new Vector3(0, -gravityStrength) * y_jump * Time.fixedDeltaTime;
-
-                //rb.velocity -= addedVector;
-                //addedVector = rb.velocity * y_speed;
-                //rb.velocity += addedVector;
-            }
-        }
+        
 
         Attraction();
 
@@ -149,52 +151,54 @@ public class Player : MonoBehaviour
     }
 
     #region JUMP
-    void StartJumpCharge()
-    {
-        isChargingJump = true;
-        EnableDots(true);
-    }
 
     void Jump()
     {
-        // Debug.Break();
-        connectedPoints.Clear();
-        float forceJump = maxSpeed * forceJumpMultiplicator;
-        if (!isControllerGamepad)
+        print(currentNumberOfJumps);
+        if (currentNumberOfJumps > 0)
         {
-            Vector3 mousePos = playerInputs.NormalInputs.MousePosition.ReadValue<Vector2>();
-            mousePos.z = transform.position.z - Camera.main.transform.position.z;
-            mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-            direction = (mousePos - transform.position).normalized;
+            // Debug.Break();
+            float forceJump = maxSpeed * forceJumpMultiplicator;
+            if (!isControllerGamepad)
+            {
+                Vector3 mousePos = playerInputs.NormalInputs.MousePosition.ReadValue<Vector2>();
+                mousePos.z = transform.position.z - Camera.main.transform.position.z;
+                mousePos = Camera.main.ScreenToWorldPoint(mousePos);
+                direction = (mousePos - transform.position).normalized;
+            }
+            rb.velocity = direction * forceJump;
+
+            forceJumpMultiplicator = minForceJumpMultiplicator;
+            isChargingJump = false;
+            EnableDots(false);
+            isAnimCurveSpeed = true;
+            hasJumped = true;
+            t_jump = 0;
+            y_jump = 0;
+            t_speed = 0;
+            y_speed = 0;
+            addedVector = Vector3.zero;
         }
-        rb.velocity = direction * forceJump;
-
-        forceJumpMultiplicator = minForceJumpMultiplicator;
-        isChargingJump = false;
-        EnableDots(false);
-        isAnimCurveSpeed = true;
-        hasJumped = true;
-        t_jump = 0;
-        y_jump = 0;
-        t_speed = 0;
-        y_speed = 0;
-        addedVector = Vector3.zero;
-
     }
 
     void IncreaseForceJump()
     {
-        if (isChargingJump)
-        {
-            forceJumpMultiplicator += Time.deltaTime * speedIncreaseForceJump;
-            forceJumpMultiplicator = Mathf.Clamp(forceJumpMultiplicator, minForceJumpMultiplicator, 1);
-        }
+        forceJumpMultiplicator += Time.deltaTime * speedIncreaseForceJump;
+        forceJumpMultiplicator = Mathf.Clamp(forceJumpMultiplicator, minForceJumpMultiplicator, 1);
+        
     }
     #endregion
 
 
     private void OnCollisionEnter(Collision collision)
     {
+        currentNumberOfJumps = maxNumberOfJumps;
+
+        if (isChargingJump)
+        {
+            EnableDots(true);
+        }
+
         Vector3 contactNormal = collision.contacts[0].normal;
         float dot = Vector2.Dot(contactNormal, lastVelocity);
         Vector3 localContactPos = collision.transform.position - collision.contacts[0].point;
@@ -208,6 +212,7 @@ public class Player : MonoBehaviour
         addedVector = Vector2.zero;
         y_speed = 0;
         t_speed = 0;
+        hasJumped = false;
     }
 
     private void OnCollisionStay(Collision collision)
@@ -223,6 +228,7 @@ public class Player : MonoBehaviour
 
     private void OnCollisionExit(Collision collision)
     {
+       
        for(int i =0; i < connectedPoints.Count; i++) 
        { 
             if(connectedPoints[i].transform == collision.transform)
@@ -233,6 +239,12 @@ public class Player : MonoBehaviour
        if(connectedPoints.Count == 0)
        {
            state = STATE.AIR;
+            if (!hasJumped)
+            {
+                currentNumberOfJumps--;
+                isChargingJump = false;
+                EnableDots(false);
+            }
        }
     }
 
@@ -289,6 +301,7 @@ public class Player : MonoBehaviour
         {
             dots[i].gameObject.SetActive(isTrue);
         }
+        isDotsEnabled = isTrue;
     }
 
     private void PreviewDirection()

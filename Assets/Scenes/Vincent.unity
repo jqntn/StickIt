@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -432,7 +432,7 @@ Transform:
   m_LocalScale: {x: 5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 958254459}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: -2.159, y: 1.129, z: -47.344}
 --- !u!54 &230276092
 Rigidbody:
@@ -1470,6 +1470,7 @@ MonoBehaviour:
   repulsionMultiplier: 0.01
   isSlippery: 1
   speedSlowDownCharge: 5
+  maxNumberOfJumps: 1
 --- !u!1 &2072929555
 GameObject:
   m_ObjectHideFlags: 0
