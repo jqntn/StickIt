@@ -1,9 +1,9 @@
 using System;
 using System.IO;
 using UnityEditor;
-class ScriptBatch
+class BuildPlayer
 {
-    static void BuildPlayer(BuildOptions bo = BuildOptions.None)
+    static void StandaloneWindows64(BuildOptions bo = BuildOptions.None)
     {
         string path = "Build_" + DateTime.Now.ToString("dd.MM.yy_HH.mm") + "/";
         Directory.CreateDirectory(path);
@@ -19,9 +19,9 @@ class ScriptBatch
         File.Delete(path + "UnityCrashHandler64.exe");
     }
     [MenuItem("BuildPlayer/Build")]
-    static void Build() { BuildPlayer(); }
+    static void Build() { StandaloneWindows64(); }
     [MenuItem("BuildPlayer/BuildRun")]
-    static void BuildRun() { BuildPlayer(BuildOptions.AutoRunPlayer); }
+    static void BuildRun() { StandaloneWindows64(BuildOptions.AutoRunPlayer); }
     [MenuItem("BuildPlayer/BuildShow")]
-    static void BuildShow() { BuildPlayer(BuildOptions.ShowBuiltPlayer); }
+    static void BuildShow() { StandaloneWindows64(BuildOptions.ShowBuiltPlayer); }
 }
