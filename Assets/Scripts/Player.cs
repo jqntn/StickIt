@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
     #endregion
 
     public enum STATE { STICK, AIR }
-    STATE state = STATE.AIR;
+    public STATE state = STATE.AIR;
 
     bool isGrounded = false;
 
@@ -134,8 +134,8 @@ public class Player : MonoBehaviour
             //rb.velocity += addedVector;
         }
         
-
-        Attraction();
+        if(state == STATE.STICK)
+            Attraction();
 
         lastVelocity = rb.velocity;
 
@@ -267,7 +267,7 @@ public class Player : MonoBehaviour
                 if (!isGrounded)
                 {
                     print(connectedPoints[i].transform.gameObject.name);
-                    print(repulsion);
+                    //print(repulsion);
                     rb.velocity += new Vector3(0, -gravityStrength) * Time.fixedDeltaTime * 0.1f;
                     connectedPoints[i].attractionStrength -= gravityStrength * Time.fixedDeltaTime * repulsion;
                 } else
