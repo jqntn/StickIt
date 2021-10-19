@@ -155,7 +155,7 @@ public class Player : MonoBehaviour
     void Jump()
     {
         print(currentNumberOfJumps);
-        if (currentNumberOfJumps > 0)
+        if (currentNumberOfJumps > 0 && state == STATE.STICK)
         {
             // Debug.Break();
             float forceJump = maxSpeed * forceJumpMultiplicator;
