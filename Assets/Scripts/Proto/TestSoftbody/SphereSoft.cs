@@ -25,13 +25,13 @@ public class SphereSoft : MonoBehaviour
 
     private void Awake()
     {
-        Softbody.Init(Shape, ColliderSize, RigidbodyMass, Spring, Damper, RigidbodyConstraints.FreezeRotation, PrefabLine, ViewLines);
+        Softbody.Init(Shape, ColliderSize, RigidbodyMass, Spring, Damper, RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ, PrefabLine, ViewLines);
     }
     private void Start()
     {
         
 
-        Softbody.AddCollider(ref root, Softbody.ColliderShape.Sphere, 0.005f, 0.5f);
+       // Softbody.AddCollider(ref root, Softbody.ColliderShape.Sphere, 0.005f, 0.5f);
         Softbody.AddCollider(ref x);
         Softbody.AddCollider(ref x2);
         Softbody.AddCollider(ref y);
