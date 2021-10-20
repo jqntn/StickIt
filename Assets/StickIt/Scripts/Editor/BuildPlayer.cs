@@ -16,7 +16,7 @@ class BuildPlayer
         if (zips != null)
             foreach (var i in zips) File.Delete(i);
         BuildPipeline.BuildPlayer(
-            Directory.GetFiles("Assets/Scenes", "*.unity"), path + "Plat.exe",
+            Directory.GetFiles("Assets/StickIt/Scenes", "*.unity"), path + "Plat.exe",
             BuildTarget.StandaloneWindows64,
             BuildOptions.CompressWithLz4HC | bo
         );
