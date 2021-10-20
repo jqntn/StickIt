@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.IO.Compression;
 using UnityEditor;
 class BuildPlayer
 {
@@ -17,6 +18,7 @@ class BuildPlayer
             BuildOptions.CompressWithLz4HC | bo
         );
         File.Delete(path + "UnityCrashHandler64.exe");
+        ZipFile.CreateFromDirectory(path, path.Remove(path.Length - 1) + ".zip");
     }
     [MenuItem("BuildPlayer/Build")]
     static void Build() { StandaloneWindows64(); }
