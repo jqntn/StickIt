@@ -28,9 +28,9 @@ public class InteractionPlatforms : MonoBehaviour
 
     private void OnCollisionStay(Collision c)
     {
-        if (c.gameObject.TryGetComponent(out Player p))
+        if (c.gameObject.TryGetComponent(out PlayerMouvement p))
         {
-            c.gameObject.GetComponent<Player>().state = Player.STATE.AIR;
+            c.gameObject.GetComponent<PlayerMouvement>().state = PlayerMouvement.STATE.AIR;
             PlatformAction(c.gameObject);
         }
     }
