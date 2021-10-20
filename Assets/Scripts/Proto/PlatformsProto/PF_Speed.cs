@@ -24,6 +24,7 @@ public class PF_Speed : InteractionPlatforms
         Vector3 vel = c.gameObject.GetComponent<Rigidbody>().velocity;
         Vector3 proj = Vector3.Project(vel, transform.right);
         newDirection = proj.normalized;
+        Debug.Log(c.gameObject.name);
     }
 
 }
