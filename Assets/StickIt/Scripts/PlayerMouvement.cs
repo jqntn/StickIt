@@ -90,10 +90,16 @@ public class PlayerMouvement : MonoBehaviour
         
         PreviewDirection();
 
+        print(isChargingJump);
         if(isChargingJump &&  connectedPoints.Count > 0)
         {
-            if(!isDotsEnabled)
-            EnableDots(true);
+           
+            if (!isDotsEnabled)
+            {
+                EnableDots(true);
+              
+            }
+
             IncreaseForceJump();
         }
 
@@ -300,7 +306,6 @@ public class PlayerMouvement : MonoBehaviour
             if (!hasJumped)
             {
                 currentNumberOfJumps--;
-                isChargingJump = false;
                 EnableDots(false);
             }
         }
