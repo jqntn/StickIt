@@ -266,7 +266,7 @@ public class Player : MonoBehaviour
                 rb.velocity += attraction * Time.fixedDeltaTime;
                 if (!isGrounded)
                 {
-                    print(connectedPoints[i].transform.gameObject.name);
+                    //print(connectedPoints[i].transform.gameObject.name);
                     //print(repulsion);
                     rb.velocity += new Vector3(0, -gravityStrength) * Time.fixedDeltaTime * 0.1f;
                     connectedPoints[i].attractionStrength -= gravityStrength * Time.fixedDeltaTime * repulsion;

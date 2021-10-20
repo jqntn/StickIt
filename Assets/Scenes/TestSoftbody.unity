@@ -1344,9 +1344,9 @@ GameObject:
   - component: {fileID: 842403380}
   - component: {fileID: 842403385}
   - component: {fileID: 842403384}
-  - component: {fileID: 842403383}
   - component: {fileID: 842403382}
   - component: {fileID: 842403381}
+  - component: {fileID: 842403383}
   m_Layer: 0
   m_Name: PlatformSpeed (2)
   m_TagString: Untagged
@@ -1362,7 +1362,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 842403379}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.14, y: -5.4, z: 0}
+  m_LocalPosition: {x: 4.14, y: -5.27, z: 0}
   m_LocalScale: {x: 5, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 958254459}
@@ -2277,7 +2277,7 @@ Transform:
   m_GameObject: {fileID: 2095252281}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -13.29, y: 0.7, z: 0}
-  m_LocalScale: {x: 5, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 1, z: 44.03}
   m_Children: []
   m_Father: {fileID: 958254459}
   m_RootOrder: 4
@@ -2323,7 +2323,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3707412117905080972, guid: 3fc74a974efe3294198e9e27a9b60a45, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.30070582
       objectReference: {fileID: 0}
     - target: {fileID: 3707412117905080972, guid: 3fc74a974efe3294198e9e27a9b60a45, type: 3}
       propertyPath: m_LocalRotation.x
@@ -2331,7 +2331,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3707412117905080972, guid: 3fc74a974efe3294198e9e27a9b60a45, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 0.953717
       objectReference: {fileID: 0}
     - target: {fileID: 3707412117905080972, guid: 3fc74a974efe3294198e9e27a9b60a45, type: 3}
       propertyPath: m_LocalRotation.z
@@ -2343,11 +2343,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3707412117905080972, guid: 3fc74a974efe3294198e9e27a9b60a45, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 145
       objectReference: {fileID: 0}
     - target: {fileID: 3707412117905080972, guid: 3fc74a974efe3294198e9e27a9b60a45, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3817335943640868201, guid: 3fc74a974efe3294198e9e27a9b60a45, type: 3}
+      propertyPath: Damper
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3817335943640868201, guid: 3fc74a974efe3294198e9e27a9b60a45, type: 3}
+      propertyPath: Spring
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 4051145099965782070, guid: 3fc74a974efe3294198e9e27a9b60a45, type: 3}
       propertyPath: m_Name
