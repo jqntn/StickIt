@@ -9,9 +9,12 @@ class BuildPlayer
         string path = "Build_" + DateTime.Now.ToString("dd.MM.yy_HH.mm") + "/";
         Directory.CreateDirectory(path);
         string[] dirs = Directory.GetDirectories(".", "Build*", SearchOption.TopDirectoryOnly);
+        string[] zips = Directory.GetFiles(".", "Build*", SearchOption.TopDirectoryOnly);
         if (dirs != null)
             foreach (var i in dirs) Directory.Delete(i, true);
         else Directory.CreateDirectory(path);
+        if (zips != null)
+            foreach (var i in zips) File.Delete(i);
         BuildPipeline.BuildPlayer(
             Directory.GetFiles("Assets/Scenes", "*.unity"), path + "Plat.exe",
             BuildTarget.StandaloneWindows64,

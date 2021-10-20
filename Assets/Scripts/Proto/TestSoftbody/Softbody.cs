@@ -1,7 +1,5 @@
 using UnityEditor;
-using UnityEditor.PackageManager;
 using UnityEngine;
-
 public static class Softbody
 {
     #region --- helpers ---
@@ -11,7 +9,6 @@ public static class Softbody
         Sphere,
     }
     #endregion
-
     public static ColliderShape Shape;
     public static float ColliderSize;
     public static float RigidbodyMass;
@@ -20,7 +17,6 @@ public static class Softbody
     public static RigidbodyConstraints Constraints;
     public static LineRenderer PrefabLine;
     public static bool ViewLines;
-
     public static void Init(ColliderShape shape, float collidersize, float rigidbodymass, float spring, float damper, RigidbodyConstraints constraints)
     {
         Shape = shape;
@@ -49,17 +45,14 @@ public static class Softbody
     public static SpringJoint AddSpring(ref GameObject go1, ref GameObject go2)
     {
         SpringJoint sp = AddSpring(ref go1, ref go2, Spring, Damper);
-
         if (ViewLines == true)
             AddLine(ref go1, ref go2);
-
         return sp;
     }
     public static LineRenderer AddLine(ref GameObject go1, ref GameObject go2)
     {
         return AddLine(ref go1, ref go2, ref PrefabLine);
     }
-
     public static Rigidbody AddCollider(ref GameObject go, ColliderShape shape, float size, float mass)
     {
         switch (shape)
@@ -73,7 +66,6 @@ public static class Softbody
                 sc.radius = size;
                 break;
         }
-
         Rigidbody rb = go.AddComponent<Rigidbody>();
         rb.mass = mass;
         rb.drag = 0f;
