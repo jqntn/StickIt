@@ -5,20 +5,20 @@ using MoreMountains.Feedbacks;
 using UnityEngine.Events;
 public class CameraShakeScript : MonoBehaviour
 {
-    private MMFeedback cameraShake;
+    private MMFeedbacks cameraShake;
 
     public UnityEvent OnCameraShake;
     public static CameraShakeScript Instance;
     private void Awake()
     {
-        cameraShake = GetComponent<MMFeedback>();
+        cameraShake = GetComponent<MMFeedbacks>();
 
         // Listeners | TestShakeCall.cs
         GameEvents.CameraShakeEvent.AddListener(ShakeCamera);
     }
     public void ShakeCamera()
     {
-        cameraShake?.Play(new Vector3(0,0,0));
+        cameraShake?.PlayFeedbacks();
         PlayOnCameraShake();
     }
 
