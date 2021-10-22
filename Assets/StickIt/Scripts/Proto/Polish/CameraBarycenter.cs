@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,9 +11,11 @@ public class CameraBarycenter : MonoBehaviour
     public float minZoom = -100.0f;
     public float maxZoom = -70.0f;
     public float zoomLimiter = 50.0f;
+    public float zoomTime = 0.2f;
+    public AnimationCurve zoomCurve;
     [Header("----------- CAMERA BOUNDS ------------")]
     public bool hasCameraBounds = true;
-    public Collider2D boundsIntern;
+    public Collider2D cameraBounds;
     private MultiplayerManager multiplayerManager;
     [Header("----------- DEBUG --------------------")]
     [SerializeField] private Vector3 velocity = new Vector3(0.0f, 0.0f, 0.0f);
@@ -24,8 +25,12 @@ public class CameraBarycenter : MonoBehaviour
     private void Awake()
     {
         velocity = new Vector3(0.0f, 0.0f, 0.0f);
-        bounds_X = boundsIntern.bounds.extents.x / 2;
-        bounds_Y = boundsIntern.bounds.extents.y / 2;
+        if(hasCameraBounds)
+        {
+            bounds_X = cameraBounds.bounds.extents.x / 2;
+            bounds_Y = cameraBounds.bounds.extents.y / 2;
+        }
+
     }
     private void Start()
     {
@@ -59,8 +64,8 @@ public class CameraBarycenter : MonoBehaviour
     {
         float newZoom = Mathf.Lerp(maxZoom, minZoom, GetGreatestDistance() / zoomLimiter);
         transform.position = new Vector3(
-            transform.position.x, 
-            transform.position.y, 
+            transform.position.x,
+            transform.position.y,
             Mathf.Lerp(transform.position.z, newZoom, Time.deltaTime));
     }
 
