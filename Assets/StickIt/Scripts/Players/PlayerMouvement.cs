@@ -3,26 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using MoreMountains.Feedbacks;
-using UnityEngine.Events;
 
 public class PlayerMouvement : MonoBehaviour
 {
-    #region PLAYER_INPUTS
-    [SerializeField] private bool isControllerGamepad;
-    private PlayerInputs playerInputs;
-
-    private void Awake()
-    {
-        playerInputs = new PlayerInputs();
-    }
-    private void OnEnable()
-    { playerInputs.Enable(); }
-
-    private void OnDisable()
-    { playerInputs.Disable();}
-
-    #endregion
+    public Player myPlayer;
 
     public enum STATE { STICK, AIR }
     public STATE state = STATE.AIR;
@@ -52,24 +36,22 @@ public class PlayerMouvement : MonoBehaviour
     float forceJumpMultiplicator;
     [SerializeField]
     float speedIncreaseForceJump;
-    bool hasJumped = false;   
+    bool hasJumped = false;
     [SerializeField] AnimationCurve animCurveJumpGravity;
     float t_jump;
     float y_jump = 1;
     public float gravityStrength;
     private Rigidbody rb;
-    private Vector3 lastVelocity = Vector3.zero;
+    public Vector3 velocityLastFrame = Vector3.zero;
 
-    private List<ContactPoint> connectedPoints = new List<ContactPoint>();
+    private List<ContactPointSurface> connectedPoints = new List<ContactPointSurface>();
     public float attractionMultiplier;
-    [Range(0,1)]public float repulsionMultiplier;
+    [Range(0, 1)] public float repulsionMultiplier;
     [SerializeField] bool isSlippery;
 
-    public float speedSlowDownCharge;
     public int maxNumberOfJumps;
     private int currentNumberOfJumps;
 
-    
 
     // Start is called before the first frame update
     void Start()
@@ -85,22 +67,22 @@ public class PlayerMouvement : MonoBehaviour
 
         currentNumberOfJumps = maxNumberOfJumps;
 
-       
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
         PreviewDirection();
 
-        if(isChargingJump &&  connectedPoints.Count > 0)
+        if (isChargingJump && connectedPoints.Count > 0)
         {
-           
+
             if (!isDotsEnabled)
             {
                 EnableDots(true);
-              
+
             }
 
             IncreaseForceJump();
@@ -136,21 +118,29 @@ public class PlayerMouvement : MonoBehaviour
             //addedVector = rb.velocity * y_speed;
             //rb.velocity += addedVector;
         }
-        
-        if(state == STATE.STICK)
+
+        if (state == STATE.STICK)
             Attraction();
 
-        lastVelocity = rb.velocity;
+        velocityLastFrame = rb.velocity;
 
     }
 
     private void OnGUI()
     {
-        if(connectedPoints.Count > 0)
-        GUILayout.Label(" attraction strength = " + connectedPoints[0].attractionStrength);
+        GUILayout.BeginVertical();
+        GUIStyle style = new GUIStyle();
+        style.fontSize = 24;
+        style.normal.textColor = Color.white;
 
-        GUILayout.Label(" y_speed  = " + y_speed);
+        if (myPlayer.id == 0)
+        {
+            GUILayout.Label(" Velocity  = " + rb.velocity, style);
+            GUILayout.Label("Magnitude = " + rb.velocity.magnitude, style);
+        }
+        GUILayout.EndVertical();
 
+        
     }
 
     // ----- INPUTS -----
@@ -158,14 +148,14 @@ public class PlayerMouvement : MonoBehaviour
 
     public void InputDirection(InputAction.CallbackContext context)
     {
-        if(context.performed) direction = context.ReadValue<Vector2>();
+        if (context.performed) direction = context.ReadValue<Vector2>();
         else if (context.canceled) direction = Vector2.zero;
     }
 
     public void InputJump(InputAction.CallbackContext context)
     {
         if (context.started) isChargingJump = true;
-        else if(context.canceled) Jump();
+        else if (context.canceled) Jump();
     }
 
     #endregion
@@ -178,13 +168,7 @@ public class PlayerMouvement : MonoBehaviour
         {
             // Debug.Break();
             float forceJump = maxSpeed * forceJumpMultiplicator;
-            if (!isControllerGamepad)
-            {
-                Vector3 mousePos = playerInputs.NormalInputs.MousePosition.ReadValue<Vector2>();
-                mousePos.z = transform.position.z - Camera.main.transform.position.z;
-                mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-                direction = (mousePos - transform.position).normalized;
-            }
+
             rb.velocity = direction * forceJump;
 
             forceJumpMultiplicator = minForceJumpMultiplicator;
@@ -199,13 +183,13 @@ public class PlayerMouvement : MonoBehaviour
             addedVector = Vector3.zero;
         }
 
-       
+
     }
     void IncreaseForceJump()
     {
         forceJumpMultiplicator += Time.deltaTime * speedIncreaseForceJump;
         forceJumpMultiplicator = Mathf.Clamp(forceJumpMultiplicator, minForceJumpMultiplicator, 1);
-        
+
     }
 
     private void Attraction()
@@ -242,10 +226,7 @@ public class PlayerMouvement : MonoBehaviour
                 }
 
             }
-            else
-            {
-                rb.velocity += -direction * 50 * Time.fixedDeltaTime;
-            }
+
 
             if (connectedPoints[i].attractionStrength < 0)
             {
@@ -260,42 +241,53 @@ public class PlayerMouvement : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
-
-        if (collision.gameObject.tag == "Player")
+        switch (collision.transform.tag)
         {
-            GameEvents.CameraShakeEvent.Invoke();
+            case "Player":
+                Player playerCollided = collision.transform.GetComponent<Player>();
+                if (myPlayer.id < playerCollided.id)
+                {
+                    if(collision.contactCount > 0)
+                    CollisionBetweenPlayers(playerCollided.myMouvementScript, collision.contacts[0]);
+                }
+                    break;
+
+            default:
+                if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
+                #region Collision Untagged
+                currentNumberOfJumps = maxNumberOfJumps;
+
+                if (isChargingJump)
+                {
+                    EnableDots(true);
+                }
+
+                Vector3 contactNormal = collision.contacts[0].normal;
+                float dot = Vector2.Dot(contactNormal, velocityLastFrame);
+                Vector3 localContactPos = collision.transform.position - collision.contacts[0].point;
+                ContactPointSurface contact = new ContactPointSurface(collision.transform, localContactPos, -dot * attractionMultiplier);
+                contact.localPosition.z = transform.position.z;
+
+                connectedPoints.Add(contact);
+
+                state = STATE.STICK;
+                isAnimCurveSpeed = false;
+                addedVector = Vector2.zero;
+                y_speed = 0;
+                t_speed = 0;
+                hasJumped = false;
+                #endregion
+                break;
         }
 
-        if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
-        #region Collision Untagged
-        currentNumberOfJumps = maxNumberOfJumps;
 
-        if (isChargingJump)
-        {
-            EnableDots(true);
-        }
 
-        Vector3 contactNormal = collision.contacts[0].normal;
-        float dot = Vector2.Dot(contactNormal, lastVelocity);
-        Vector3 localContactPos = collision.transform.position - collision.contacts[0].point;
-        ContactPoint contact = new ContactPoint(collision.transform, localContactPos, -dot * attractionMultiplier);
-        contact.localPosition.z = transform.position.z;
-
-        connectedPoints.Add(contact);
-
-        state = STATE.STICK;
-        isAnimCurveSpeed = false;
-        addedVector = Vector2.zero;
-        y_speed = 0;
-        t_speed = 0;
-        hasJumped = false;
-        #endregion
 
     }
     private void OnCollisionStay(Collision collision)
     {
         if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
-        foreach (ContactPoint point in connectedPoints.Where(point => collision.transform == point.transform))
+        foreach (ContactPointSurface point in connectedPoints.Where(point => collision.transform == point.transform))
         {
             point.localPosition = collision.transform.position - collision.contacts[0].point;
         }
@@ -320,7 +312,44 @@ public class PlayerMouvement : MonoBehaviour
             }
         }
     }
+
+
+    public void CollisionBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact)
+    {
+
+        //float newVelMagnitudeP1 = playerCollided.velocityLastFrame.magnitude;
+        //float newVelMagnitudeP2 = velocityLastFrame.magnitude;
+
+        //Vector3 newDirP1 = Vector3.Reflect(velocityLastFrame.normalized, contact.normal);
+        //Vector3 newDirP2 = Vector3.Reflect(playerCollided.velocityLastFrame.normalized, contact.normal);
+
+        //rb.velocity = newDirP1 * newVelMagnitudeP1;
+        //playerCollided.rb.velocity = newDirP2 * newVelMagnitudeP2;
+
+        rb.velocity = playerCollided.velocityLastFrame;
+        playerCollided.rb.velocity = velocityLastFrame;
+
+        #region debug
+        print(playerCollided.velocityLastFrame);
+        //Last velocities
+        Debug.DrawRay(transform.position,  -velocityLastFrame, Color.blue, 3f);
+        Debug.DrawRay(playerCollided.transform.position, -playerCollided.velocityLastFrame, Color.gray, 3f);
+
+        //New velocities
+        //Debug.DrawRay(playerCollided.transform.position, newDirP2 * velocityLastFrame.magnitude, Color.yellow, 3f);
+        //Debug.DrawRay(transform.position, newDirP1 * playerCollided.velocityLastFrame.magnitude, Color.green, 3f);
+
+        // Normal
+        Debug.DrawRay(contact.point,contact.point + contact.normal * 100f, Color.red, 3f);
+       // Debug.Break();
+        #endregion
+
+    }
+
+
+
     #endregion
+
 
     // ----- PREVIEW DOTS -----
     #region PreviewDots
@@ -337,13 +366,6 @@ public class PlayerMouvement : MonoBehaviour
         if (isChargingJump)
         {
             float forceJump = maxSpeed * forceJumpMultiplicator;
-            if (!isControllerGamepad)
-            {
-                Vector3 mousePos = playerInputs.NormalInputs.Direction.ReadValue<Vector2>();
-                mousePos.z = transform.position.z - Camera.main.transform.position.z;
-                mousePos = Camera.main.ScreenToWorldPoint(mousePos);
-                direction = (mousePos - transform.position).normalized;
-            }
             Vector2 potentialVelocity = direction * forceJump;
 
 
@@ -402,19 +424,19 @@ public class PlayerMouvement : MonoBehaviour
 }
 
 
-public class ContactPoint
+public class ContactPointSurface
 {
     public Transform transform;
     public Vector3 localPosition;
     public float attractionStrength;
 
-    public ContactPoint(Transform transform, Vector3 position, float attractionStrength) 
+    public ContactPointSurface(Transform transform, Vector3 position, float attractionStrength)
     {
         this.transform = transform;
         this.localPosition = position;
         this.attractionStrength = attractionStrength;
     }
 
-    public ContactPoint() { }
+    public ContactPointSurface() { }
 
 }
