@@ -194,8 +194,15 @@ MonoBehaviour:
   minZoom: -140
   maxZoom: -80
   zoomLimiter: 10
-  hasCameraBounds: 1
-  boundsIntern: {fileID: 0}
+  zoomTime: 0.2
+  zoomCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  hasCameraBounds: 0
+  cameraBounds: {fileID: 0}
   velocity: {x: 0, y: 0, z: 0}
   centerPoint: {x: 0, y: 0, z: 0}
   bounds_X: 0
