@@ -13,7 +13,9 @@ public class MultiplayerManager : MonoBehaviour
     [SerializeField] private Transform _prefabPlayer;
     [SerializeField] private Transform _playersStartingPos;
     [Header("------------DEBUG------------")]
-    public List<GameObject> players = new List<GameObject>();
+    public List<Player> players = new List<Player>();
+    public List<Player> alivePlayers = new List<Player>();
+    public List<Player> deadPlayers = new List<Player>();
     
 
     private void Awake()
@@ -38,7 +40,8 @@ public class MultiplayerManager : MonoBehaviour
             Player scriptPlayer = newPlayer.transform.GetComponent<Player>();
             scriptPlayer.id = i;
 
-            players.Add(scriptPlayer.gameObject);
+            players.Add(scriptPlayer);
+            alivePlayers.Add(scriptPlayer);
         }
     }
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using MoreMountains.Feedbacks;
+using UnityEngine.Events;
 
 public class PlayerMouvement : MonoBehaviour
 {
@@ -67,6 +69,7 @@ public class PlayerMouvement : MonoBehaviour
     public int maxNumberOfJumps;
     private int currentNumberOfJumps;
 
+    
 
     // Start is called before the first frame update
     void Start()
@@ -256,9 +259,11 @@ public class PlayerMouvement : MonoBehaviour
     #region Collisions
     private void OnCollisionEnter(Collision collision)
     {
+
+
         if (collision.gameObject.tag == "Player")
         {
-
+            GameEvents.CameraShakeEvent.Invoke();
         }
 
         if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
