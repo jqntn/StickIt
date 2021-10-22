@@ -15,7 +15,6 @@ public class CameraBarycenter : MonoBehaviour
     [Header("----------- CAMERA BOUNDS ------------")]
     public bool hasCameraBounds = true;
     public Collider2D boundsIntern;
-    public Collider2D boundsExtern;
     private MultiplayerManager multiplayerManager;
     [Header("----------- DEBUG --------------------")]
     [SerializeField] private Vector3 velocity = new Vector3(0.0f, 0.0f, 0.0f);
