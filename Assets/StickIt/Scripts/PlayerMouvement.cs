@@ -3,43 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
 public class PlayerMouvement : MonoBehaviour
 {
     #region PLAYER_INPUTS
     [SerializeField] private bool isControllerGamepad;
     private PlayerInputs playerInputs;
-
     private void Awake()
     {
         playerInputs = new PlayerInputs();
     }
-    private void OnEnable()
-    { playerInputs.Enable(); }
-
-    private void OnDisable()
-    { playerInputs.Disable();}
-
+    private void OnEnable() { playerInputs.Enable(); }
+    private void OnDisable() { playerInputs.Disable(); }
     #endregion
-
     public enum STATE { STICK, AIR }
     public STATE state = STATE.AIR;
-
     bool isGrounded = false;
-
     [Header("Dots Preview")] //-----------------------
     [SerializeField] Transform dotPreview;
     public float spaceBetweenDots;
     public int numberOfDots;
     private Transform[] dots;
     private bool isDotsEnabled = false;
-
-    [Header("Movement")]     //-----------------------
-    [Tooltip("Force maximale du jump, et clamp de la vélocité maximale")]
+    [Header("Movement")] //-----------------------
+    [Tooltip("Force maximale du jump, et clamp de la vï¿½locitï¿½ maximale")]
     public float maxSpeed;
     bool isAnimCurveSpeed;
     Vector3 addedVector;
-    [Tooltip("% de la velocité ajoutée au saut en fonction du temps, cette valeur doit finir à 1")]
+    [Tooltip("% de la velocitï¿½ ajoutï¿½e au saut en fonction du temps, cette valeur doit finir ï¿½ 1")]
     [SerializeField] AnimationCurve animCurveJumpSpeed;
     float t_speed;
     float y_speed = 1;
@@ -50,24 +40,20 @@ public class PlayerMouvement : MonoBehaviour
     float forceJumpMultiplicator;
     [SerializeField]
     float speedIncreaseForceJump;
-    bool hasJumped = false;   
+    bool hasJumped = false;
     [SerializeField] AnimationCurve animCurveJumpGravity;
     float t_jump;
     float y_jump = 1;
     public float gravityStrength;
     private Rigidbody rb;
     private Vector3 lastVelocity = Vector3.zero;
-
     private List<ContactPoint> connectedPoints = new List<ContactPoint>();
     public float attractionMultiplier;
-    [Range(0,1)]public float repulsionMultiplier;
+    [Range(0, 1)] public float repulsionMultiplier;
     [SerializeField] bool isSlippery;
-
     public float speedSlowDownCharge;
     public int maxNumberOfJumps;
     private int currentNumberOfJumps;
-
-
     // Start is called before the first frame update
     void Start()
     {
@@ -79,41 +65,29 @@ public class PlayerMouvement : MonoBehaviour
             newDot.gameObject.SetActive(false);
             dots[i] = newDot;
         }
-
         currentNumberOfJumps = maxNumberOfJumps;
-
-       
     }
-
     // Update is called once per frame
     void Update()
     {
-        
         PreviewDirection();
-
-        if(isChargingJump &&  connectedPoints.Count > 0)
+        if (isChargingJump && connectedPoints.Count > 0)
         {
-           
             if (!isDotsEnabled)
             {
                 EnableDots(true);
-              
             }
-
             IncreaseForceJump();
         }
-
         if (hasJumped)
         {
             AnimCurveJumpGravity();
-
         }
         if (isAnimCurveSpeed)
         {
             AnimCurveJumpSpeed();
         }
     }
-
     private void FixedUpdate()
     {
         if (Physics.Raycast(transform.GetChild(0).position, new Vector3(0, -1, 0), 0.1f))
@@ -121,52 +95,37 @@ public class PlayerMouvement : MonoBehaviour
             isGrounded = true;
         }
         else isGrounded = false;
-
-
         if (state != STATE.STICK)
         {
             // realVelocity += new Vector2(0, -gravityStrength) * y_jump * Time.fixedDeltaTime;
-
             rb.velocity += new Vector3(0, -gravityStrength) * y_jump * Time.fixedDeltaTime;
-
             //rb.velocity -= addedVector;
             //addedVector = rb.velocity * y_speed;
             //rb.velocity += addedVector;
         }
-        
-        if(state == STATE.STICK)
+        if (state == STATE.STICK)
             Attraction();
-
         lastVelocity = rb.velocity;
-
     }
-
     private void OnGUI()
     {
-        if(connectedPoints.Count > 0)
-        GUILayout.Label(" attraction strength = " + connectedPoints[0].attractionStrength);
-
+        if (connectedPoints.Count > 0)
+            GUILayout.Label(" attraction strength = " + connectedPoints[0].attractionStrength);
         GUILayout.Label(" y_speed  = " + y_speed);
-
     }
-
     // ----- INPUTS -----
     #region Inputs
-
     public void InputDirection(InputAction.CallbackContext context)
     {
-        if(context.performed) direction = context.ReadValue<Vector2>();
+        if (context.performed) direction = context.ReadValue<Vector2>();
         else if (context.canceled) direction = Vector2.zero;
     }
-
     public void InputJump(InputAction.CallbackContext context)
     {
         if (context.started) isChargingJump = true;
-        else if(context.canceled) Jump();
+        else if (context.canceled) Jump();
     }
-
     #endregion
-
     // ----- JUMP -----
     #region JUMP
     void Jump()
@@ -183,7 +142,6 @@ public class PlayerMouvement : MonoBehaviour
                 direction = (mousePos - transform.position).normalized;
             }
             rb.velocity = direction * forceJump;
-
             forceJumpMultiplicator = minForceJumpMultiplicator;
             isChargingJump = false;
             EnableDots(false);
@@ -195,26 +153,18 @@ public class PlayerMouvement : MonoBehaviour
             y_speed = 0;
             addedVector = Vector3.zero;
         }
-
-       
     }
     void IncreaseForceJump()
     {
         forceJumpMultiplicator += Time.deltaTime * speedIncreaseForceJump;
         forceJumpMultiplicator = Mathf.Clamp(forceJumpMultiplicator, minForceJumpMultiplicator, 1);
-        
     }
-
     private void Attraction()
     {
-
-
         for (int i = connectedPoints.Count - 1; i >= 0; i--)
         {
             Vector3 localPlayerPosition = connectedPoints[i].transform.position - transform.position;
             Vector3 direction = (connectedPoints[i].localPosition - localPlayerPosition).normalized;
-
-
             if (isSlippery)
             {
                 Vector3 attraction = -direction * connectedPoints[i].attractionStrength;
@@ -237,13 +187,11 @@ public class PlayerMouvement : MonoBehaviour
                         }
                     }
                 }
-
             }
             else
             {
                 rb.velocity += -direction * 50 * Time.fixedDeltaTime;
             }
-
             if (connectedPoints[i].attractionStrength < 0)
             {
                 connectedPoints.RemoveAt(i);
@@ -251,33 +199,25 @@ public class PlayerMouvement : MonoBehaviour
         }
     }
     #endregion
-
     // ----- COLLISIONS -----
     #region Collisions
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Player")
-        {
-
-        }
-
+        { }
         if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
         #region Collision Untagged
         currentNumberOfJumps = maxNumberOfJumps;
-
         if (isChargingJump)
         {
             EnableDots(true);
         }
-
         Vector3 contactNormal = collision.contacts[0].normal;
         float dot = Vector2.Dot(contactNormal, lastVelocity);
         Vector3 localContactPos = collision.transform.position - collision.contacts[0].point;
         ContactPoint contact = new ContactPoint(collision.transform, localContactPos, -dot * attractionMultiplier);
         contact.localPosition.z = transform.position.z;
-
         connectedPoints.Add(contact);
-
         state = STATE.STICK;
         isAnimCurveSpeed = false;
         addedVector = Vector2.zero;
@@ -285,7 +225,6 @@ public class PlayerMouvement : MonoBehaviour
         t_speed = 0;
         hasJumped = false;
         #endregion
-
     }
     private void OnCollisionStay(Collision collision)
     {
@@ -316,7 +255,6 @@ public class PlayerMouvement : MonoBehaviour
         }
     }
     #endregion
-
     // ----- PREVIEW DOTS -----
     #region PreviewDots
     private void EnableDots(bool isTrue)
@@ -340,32 +278,25 @@ public class PlayerMouvement : MonoBehaviour
                 direction = (mousePos - transform.position).normalized;
             }
             Vector2 potentialVelocity = direction * forceJump;
-
-
             for (int i = 0; i < dots.Length; i++)
             {
                 dots[i].transform.position = GetDotPosition(i * spaceBetweenDots, potentialVelocity);
             }
-
         }
     }
     Vector2 GetDotPosition(float t, Vector2 potentialVelocity)
     {
         Vector2 gravity = new Vector2(0, -animCurveJumpGravity.Evaluate(t) * gravityStrength);
-
-        Vector2 pos = (Vector2)transform.position + (potentialVelocity * t) + 0.5f * gravity * (t * t);
+        Vector2 pos = (Vector2) transform.position + (potentialVelocity * t) + 0.5f * gravity * (t * t);
         return pos;
-
     }
     #endregion
-
     // ----- ANIMATIONS CURVE -----
     #region Animations curve
     void AnimCurveJumpGravity()
     {
         if (t_jump < animCurveJumpGravity.keys[animCurveJumpGravity.length - 1].time)
         {
-
             t_jump += Time.deltaTime;
             y_jump = t_jump;
             y_jump = animCurveJumpGravity.Evaluate(y_jump);
@@ -373,43 +304,33 @@ public class PlayerMouvement : MonoBehaviour
         else
         {
             hasJumped = false;
-
         }
     }
     void AnimCurveJumpSpeed()
     {
         if (t_speed < animCurveJumpSpeed.keys[animCurveJumpSpeed.length - 1].time)
         {
-
             t_speed += Time.deltaTime;
             y_speed = t_speed;
             y_speed = animCurveJumpSpeed.Evaluate(y_speed);
         }
         else
         {
-
             isAnimCurveSpeed = false;
         }
     }
     #endregion
-
-
 }
-
-
 public class ContactPoint
 {
     public Transform transform;
     public Vector3 localPosition;
     public float attractionStrength;
-
-    public ContactPoint(Transform transform, Vector3 position, float attractionStrength) 
+    public ContactPoint(Transform transform, Vector3 position, float attractionStrength)
     {
         this.transform = transform;
         this.localPosition = position;
         this.attractionStrength = attractionStrength;
     }
-
     public ContactPoint() { }
-
 }

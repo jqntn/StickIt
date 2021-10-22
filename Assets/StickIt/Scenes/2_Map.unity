@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 0299d7135e23b824baa283052ea13cca, type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 188998678}
   m_Layer: 0
-  m_Name: --------MAP--------
+  m_Name: MapRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -323,8 +323,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _directionPlatform: {x: 0, y: 0}
   player: {fileID: 0}
-  _moveable: 0
-  _stickable: 0
   impulse: 50
 --- !u!54 &402055187
 Rigidbody:
@@ -425,11 +423,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 761489390457479454, guid: 06b8251ce0dd99b44bd6230cc6e792bc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 761489390457479454, guid: 06b8251ce0dd99b44bd6230cc6e792bc, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 761489390457479454, guid: 06b8251ce0dd99b44bd6230cc6e792bc, type: 3}
       propertyPath: m_LocalRotation.w
@@ -622,8 +620,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _directionPlatform: {x: 0, y: 0}
   player: {fileID: 0}
-  _moveable: 0
-  _stickable: 0
   impulse: 50
 --- !u!54 &568233703
 Rigidbody:
@@ -752,9 +748,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _directionPlatform: {x: 0, y: 0}
   player: {fileID: 0}
-  _moveable: 0
-  _stickable: 0
-  instant: 0
   impulse: 40
 --- !u!54 &579889107
 Rigidbody:
@@ -1112,7 +1105,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1089428404
 GameObject:
@@ -1163,9 +1156,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _directionPlatform: {x: 0, y: 0}
   player: {fileID: 0}
-  _moveable: 0
-  _stickable: 0
-  instant: 0
   impulse: 40
 --- !u!54 &1089428407
 Rigidbody:
@@ -1357,7 +1347,7 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1181180905}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1531983635
+--- !u!1 &1312016778
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1365,44 +1355,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1531983636}
-  m_Layer: 0
-  m_Name: Platforms
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1531983636
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1531983635}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 402055185}
-  - {fileID: 579889105}
-  - {fileID: 1089428405}
-  - {fileID: 1845142941}
-  - {fileID: 568233701}
-  - {fileID: 1874624446}
-  m_Father: {fileID: 188998678}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1708592422
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1708592424}
-  - component: {fileID: 1708592423}
+  - component: {fileID: 1312016780}
+  - component: {fileID: 1312016779}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -1410,13 +1364,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!108 &1708592423
+--- !u!108 &1312016779
 Light:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1708592422}
+  m_GameObject: {fileID: 1312016778}
   m_Enabled: 1
   serializedVersion: 10
   m_Type: 1
@@ -1472,20 +1426,56 @@ Light:
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
   m_ShadowAngle: 0
---- !u!4 &1708592424
+--- !u!4 &1312016780
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1708592422}
+  m_GameObject: {fileID: 1312016778}
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!1 &1531983635
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1531983636}
+  m_Layer: 0
+  m_Name: Platforms
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1531983636
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531983635}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 402055185}
+  - {fileID: 579889105}
+  - {fileID: 1089428405}
+  - {fileID: 1845142941}
+  - {fileID: 568233701}
+  - {fileID: 1874624446}
+  m_Father: {fileID: 188998678}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1758655677
 GameObject:
   m_ObjectHideFlags: 0
@@ -1647,9 +1637,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _directionPlatform: {x: 0, y: 0}
   player: {fileID: 0}
-  _moveable: 0
-  _stickable: 0
-  instant: 0
   impulse: 40
 --- !u!54 &1845142943
 Rigidbody:
@@ -1778,8 +1765,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _directionPlatform: {x: 0, y: 0}
   player: {fileID: 0}
-  _moveable: 0
-  _stickable: 0
   impulse: 50
 --- !u!54 &1874624448
 Rigidbody:

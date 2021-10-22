@@ -1,40 +1,33 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-class MapManager : MonoBehaviour
+class MapManager : Unique<MapManager>
 {
-    [SerializeField]
-    int _curMapID;
-    [SerializeField]
-    int _prevMapID;
-    [SerializeField]
-    int[] _nextMapIDs;
-    public int loadedMapsBufferSize;
-    public List<string> mapNames;
-    void Start()
+    [Range(0, 1)]
+    public float smoothTime;
+    Vector3 _velocity0,
+    _velocity1;
+    void OnGUI()
     {
-        GenNextMapsIDs();
-        StartCoroutine(LoadScene("2_Map"));
+        if (GUI.Button(new Rect(0, 0, 100, 50), "NextMap")) StartCoroutine(NextMap("2_Map"));
     }
-    void GenNextMapsIDs()
+    IEnumerator NextMap(string nextMapName)
     {
-        int[] nextMapIDs = new int[loadedMapsBufferSize];
-        int lastValue = -1;
-        for (int i = 0; i < nextMapIDs.Length; i++)
+        GameObject curMapRoot = GameObject.Find("MapRoot");
+        GameObject nextMapRoot = null;
+        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(nextMapName, LoadSceneMode.Additive);
+        while (!asyncOperation.isDone)
         {
-            nextMapIDs[i] = Random.Range(0, mapNames.Count);
-            while (nextMapIDs[i] == lastValue) nextMapIDs[i] = Random.Range(0, mapNames.Count - 1);
-            lastValue = nextMapIDs[i];
+            // Do SlowMo on current map here
+            yield return null;
         }
-        _nextMapIDs = nextMapIDs;
-    }
-    IEnumerator LoadScene(string mapName)
-    {
-        yield return null;
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(mapName);
-        asyncOperation.allowSceneActivation = false;
-        if (asyncOperation.isDone) asyncOperation.allowSceneActivation = true;
-        yield return null;
+        foreach (var i in SceneManager.GetSceneByName(nextMapName).GetRootGameObjects())
+            if (i.name == "MapRoot") { nextMapRoot = i; nextMapRoot.transform.position = new Vector3(50, 0); break; }
+        // Do transition to new map from here
+        // curMapRoot.transform.position = Vector3.SmoothDamp(curMapRoot.transform.position, new Vector3(-50, 0), ref _velocity0, smoothTime);
+        // nextMapRoot.transform.position = Vector3.SmoothDamp(curMapRoot.transform.position, Vector3.zero, ref _velocity1, smoothTime);
+        curMapRoot.transform.position = new Vector3(-50, 0);
+        nextMapRoot.transform.position = Vector3.zero;
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
     }
 }
