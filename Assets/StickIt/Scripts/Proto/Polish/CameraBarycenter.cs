@@ -75,8 +75,8 @@ public class CameraBarycenter : MonoBehaviour
 
         //Debug
         float val = 0;
-        List<GameObject> players = multiplayerManager.players;
-        foreach(GameObject player in players)
+        List<Player> players = multiplayerManager.players;
+        foreach(Player player in players)
         {
             Debug.DrawLine(player.transform.position, center, Color.red + new Color(-val, val, 0));
             val += 0.25f;
@@ -87,7 +87,7 @@ public class CameraBarycenter : MonoBehaviour
 
     private float GetGreatestDistance()
     {
-        List<GameObject> players = multiplayerManager.players;
+        List<Player> players = multiplayerManager.players;
         var bounds = new Bounds(players[0].transform.position, Vector3.zero);
         for (int i = 0; i < players.Count; i++)
         {
