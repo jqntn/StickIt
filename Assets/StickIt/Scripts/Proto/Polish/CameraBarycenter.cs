@@ -4,20 +4,28 @@ using UnityEngine;
 
 public class CameraBarycenter : MonoBehaviour
 {
-    [Header("---------- CAMERA MOVEMENT -----------")]
+    [Header("----------- CAMERA MOVEMENT -----------")]
+    public bool hasMovement = true;
     public float smoothTime = 0.5f;
-    [Header("----------- CAMERA ZOOM    -------------")]
+    [Header("----------- CAMERA ZOOM    -----------")]
     public bool hasZoom = true;
     public float minZoom = -100.0f;
     public float maxZoom = -70.0f;
     public float zoomLimiter = 50.0f;
+    [Header("----------- CAMERA BOUNDS ------------")]
+    public bool hasCameraBounds = true;
+    public Collider2D boundsIntern;
     private MultiplayerManager multiplayerManager;
-    private Camera cam;
-    private Vector3 velocity;
-
+    [Header("----------- DEBUG --------------------")]
+    [SerializeField] private Vector3 velocity = new Vector3(0.0f, 0.0f, 0.0f);
+    [SerializeField] private Vector3 centerPoint = new Vector3(0.0f, 0.0f, 0.0f);
+    [SerializeField] float bounds_X = 0.0f;
+    [SerializeField] float bounds_Y = 0.0f;
     private void Awake()
     {
-        cam = Camera.main;
+        velocity = new Vector3(0.0f, 0.0f, 0.0f);
+        bounds_X = boundsIntern.bounds.extents.x / 2;
+        bounds_Y = boundsIntern.bounds.extents.y / 2;
     }
     private void Start()
     {
@@ -26,20 +34,24 @@ public class CameraBarycenter : MonoBehaviour
 
     private void LateUpdate()
     {
-        if(multiplayerManager.players.Count <= 0) { return; }
+        if (multiplayerManager.players.Count <= 0) { return; }
 
-        FollowPlayers();
+        if (hasMovement) { FollowPlayers(); }
         if (hasZoom) { Zoom(); }
     }
 
     private void FollowPlayers()
     {
-        Vector3 centerPoint = GetCentroid();
+        centerPoint = GetCentroid();
+        if (hasCameraBounds)
+        {
+            centerPoint.x = Mathf.Clamp(centerPoint.x, -bounds_X, bounds_X);
+            centerPoint.y = Mathf.Clamp(centerPoint.y, -bounds_Y, bounds_Y);
+        }
         Vector3 newPos = new Vector3(
             centerPoint.x,
             centerPoint.y,
             transform.position.z);
-
         transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
     }
 

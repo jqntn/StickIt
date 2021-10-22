@@ -20,14 +20,14 @@ public class MusicalChairManager : MonoBehaviour
     [SerializeField] Color colorChairActive;
     [SerializeField] Color colorChairInactive;
     [Header("Players")]
-    public List<GameObject> playersInGame;
-    public List<GameObject> chosenOnes;
+    public List<Player> playersInGame;
+    public List<Player> chosenOnes;
     // Start is called before the first frame update
     void Start()
     {
         for (int i = 0; i < GameManager.gameManager.players.Length; i++)
         {
-            playersInGame.Add(GameManager.gameManager.players[i]);
+            playersInGame.Add(GameManager.gameManager.players[i].GetComponent<Player>());
         }
         chairs = FindObjectsOfType<Chair>();
         inTransition = true;
@@ -75,11 +75,17 @@ public class MusicalChairManager : MonoBehaviour
     {
         int rand = Random.Range(0, chairs.Length);
         int chairsChanged = 0;
-        while (chairsChanged < maxChairsActive && !chairs[rand].isActive)
+        while (chairsChanged < maxChairsActive)
         {
-            chairs[rand].ActivateChair(colorChairActive);
-            chairsChanged++;
-            rand = Random.Range(0, chairs.Length);
+            if (chairs[rand].isActive)
+            {
+                rand = Random.Range(0, chairs.Length);
+            }
+            else
+            {
+                chairs[rand].ActivateChair(colorChairActive);
+                chairsChanged++;
+            }
         }
     }
     private void ResetChairPool()
@@ -88,15 +94,21 @@ public class MusicalChairManager : MonoBehaviour
         {
             c.DeactivateChair(colorChairInactive);
         }
-        foreach(GameObject g in playersInGame)
+        for(int i = playersInGame.Count-1; i >= 0; i--)
         {
-            if(!chosenOnes.Find(x => g))
+            if (chosenOnes.Find(x => playersInGame[i].id != x.id))
             {
                 //MAKE THE LOSERS EXPLODE
                 //g.GetComponent<Player>().Die();
-                playersInGame.Remove(g);
+                Debug.Log(playersInGame[i].name + " DIES");
+                playersInGame.Remove(playersInGame[i]);
             }
         }
         maxChairsActive = playersInGame.Count - 1;
+        chosenOnes.Clear();
+        if(playersInGame.Count <= 1)
+        {
+            GameManager.gameManager.ChangeMod();
+        }
     }
 }
