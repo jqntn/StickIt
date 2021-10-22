@@ -7,11 +7,12 @@ public class Chair : MonoBehaviour
     MusicalChairManager musicalChairManager;
     public bool isActive;
     public bool isTaken;
-    public List<GameObject> playersInChair;
-    public GameObject chosenOne;
+    public List<Player> playersInChair;
+    public Player chosenOne;
     // Start is called before the first frame update
     void Start()
     {
+        musicalChairManager = FindObjectOfType<MusicalChairManager>();
     }
 
     // Update is called once per frame
@@ -43,9 +44,13 @@ public class Chair : MonoBehaviour
     public void DeactivateChair(Color c)
     {
         //FAIRE TREMBLER LA CHAISE A L'INVERSE
-        isActive = false;
-        gameObject.GetComponent<MeshRenderer>().material.color = c;
-        musicalChairManager.chosenOnes.Add(chosenOne);
+        if (isActive)
+        {
+            gameObject.GetComponent<MeshRenderer>().material.color = c;
+            if (isTaken)
+                musicalChairManager.chosenOnes.Add(chosenOne);
+            isActive = false;
+        }
     }
     private void OnTriggerEnter(Collider c)
     {
@@ -55,18 +60,16 @@ public class Chair : MonoBehaviour
         {
             if (c.gameObject.transform.parent.parent.CompareTag("Player"))
             {
-                playersInChair.Add(c.gameObject);
+                playersInChair.Add(c.gameObject.GetComponentInParent<Player>());
             }
         }
     }
     private void OnTriggerExit(Collider c)
     {
-        if (isActive)
-        {
             if (c.gameObject.transform.parent.parent.CompareTag("Player"))
             {
-               playersInChair.Remove(playersInChair.Find(x => c.gameObject));
+               playersInChair.Remove(playersInChair.Find(x => c.gameObject.GetComponentInParent<Player>()));
             }
-        }
+        
     }
 }

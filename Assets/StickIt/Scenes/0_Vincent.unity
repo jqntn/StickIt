@@ -343,7 +343,7 @@ GameObject:
   - component: {fileID: 219448690}
   m_Layer: 0
   m_Name: PlatformSpeed (1)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -376,9 +376,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _directionPlatform: {x: 0, y: 0}
   player: {fileID: 0}
-  _moveable: 0
-  _stickable: 0
-  instant: 0
   impulse: 40
 --- !u!54 &219448691
 Rigidbody:
@@ -585,8 +582,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _directionPlatform: {x: 0, y: 0}
   player: {fileID: 0}
-  _moveable: 0
-  _stickable: 0
   impulse: 50
 --- !u!1 &356446395
 GameObject:
@@ -729,7 +724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d173294bcfafa7e469ee34d358e07bc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nbrOfPlayer: 2
+  nbrOfPlayer: 1
   _prefabPlayer: {fileID: 8854867468096441738, guid: bd2e8aa23cf5c3341ac34eba02c200b7, type: 3}
   _playersStartingPos: {fileID: 838287262}
   players: []
@@ -1330,7 +1325,7 @@ GameObject:
   - component: {fileID: 842403381}
   m_Layer: 0
   m_Name: PlatformSpeed (2)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1363,9 +1358,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _directionPlatform: {x: 0, y: 0}
   player: {fileID: 0}
-  _moveable: 0
-  _stickable: 0
-  instant: 0
   impulse: 40
 --- !u!54 &842403382
 Rigidbody:
@@ -1461,7 +1453,7 @@ GameObject:
   - component: {fileID: 897889414}
   m_Layer: 0
   m_Name: Platform (1)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1473,13 +1465,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 897889412}
-  m_LocalRotation: {x: -0, y: -0, z: 0.60979944, w: 0.7925558}
-  m_LocalPosition: {x: 15.33, y: -4.27, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0.60876137, w: 0.7933534}
+  m_LocalPosition: {x: 15.36, y: -4.26, z: 0}
   m_LocalScale: {x: 2.65885, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 175797928}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 75.15}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 75}
 --- !u!114 &897889414
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1494,8 +1486,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _directionPlatform: {x: 0, y: 0}
   player: {fileID: 0}
-  _moveable: 0
-  _stickable: 0
   impulse: 50
 --- !u!54 &897889415
 Rigidbody:
@@ -1630,7 +1620,7 @@ GameObject:
   - component: {fileID: 1001004920}
   m_Layer: 0
   m_Name: Platform (2)
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1663,8 +1653,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _directionPlatform: {x: 0, y: 0}
   player: {fileID: 0}
-  _moveable: 0
-  _stickable: 0
   impulse: 50
 --- !u!54 &1001004921
 Rigidbody:
@@ -1932,7 +1920,7 @@ GameObject:
   - component: {fileID: 1540556282}
   m_Layer: 0
   m_Name: PlatformSpeed
-  m_TagString: Untagged
+  m_TagString: Platform
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1945,7 +1933,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1540556280}
   m_LocalRotation: {x: -0, y: -0, z: -0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: 10.76, y: 2.67, z: 0}
+  m_LocalPosition: {x: 10.59, y: 2.5, z: 0}
   m_LocalScale: {x: 21.926502, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 175797928}
@@ -1965,9 +1953,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _directionPlatform: {x: 0, y: 0}
   player: {fileID: 0}
-  _moveable: 0
-  _stickable: 0
-  instant: 0
   impulse: 40
 --- !u!54 &1540556283
 Rigidbody:

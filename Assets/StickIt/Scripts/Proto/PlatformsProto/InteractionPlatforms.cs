@@ -6,36 +6,20 @@ public class InteractionPlatforms : MonoBehaviour
 {
     [SerializeField]
     public Vector2 _directionPlatform;
-    Vector3 _directionPlayer;
     [HideInInspector]
     public GameObject player;
 
-    [SerializeField]
-    bool _moveable;
-    [SerializeField]
-    bool _stickable;
 
-    void Start()
-    {
-        _directionPlatform.Normalize();
-    }
-
-    public virtual void PlatformAction(GameObject p)
+    public virtual void PlatformAction(Collision c)
     {
         Debug.Log("No specific platform action");
     }
 
-
-    private void OnCollisionStay(Collision c)
+    private void OnCollisionEnter(Collision c)
     {
         if (c.gameObject.TryGetComponent(out PlayerMouvement p))
         {
-            c.gameObject.GetComponent<PlayerMouvement>().state = PlayerMouvement.STATE.AIR;
-            PlatformAction(c.gameObject);
+            PlatformAction(c);
         }
-    }
-    private void OnDrawGizmos()
-    {
-        Debug.DrawRay(transform.position, _directionPlatform, Color.red);
     }
 }
