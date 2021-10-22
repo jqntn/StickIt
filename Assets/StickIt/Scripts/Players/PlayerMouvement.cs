@@ -137,6 +137,8 @@ public class PlayerMouvement : MonoBehaviour
         {
             GUILayout.Label(" Velocity  = " + rb.velocity, style);
             GUILayout.Label("Magnitude = " + rb.velocity.magnitude, style);
+            if(connectedPoints.Count>0)
+            GUILayout.Label("Attraction = " + connectedPoints[0].attractionStrength, style);
         }
         GUILayout.EndVertical();
 
@@ -155,7 +157,7 @@ public class PlayerMouvement : MonoBehaviour
     public void InputJump(InputAction.CallbackContext context)
     {
         if (context.started) isChargingJump = true;
-        else if (context.canceled) Jump();
+        else if (context.canceled && direction != Vector2.zero) Jump();
     }
 
     #endregion
@@ -181,6 +183,11 @@ public class PlayerMouvement : MonoBehaviour
             t_speed = 0;
             y_speed = 0;
             addedVector = Vector3.zero;
+
+            foreach(ContactPointSurface contact in connectedPoints)
+            {
+                contact.attractionStrength = 100f;
+            }
         }
 
 
@@ -192,48 +199,7 @@ public class PlayerMouvement : MonoBehaviour
 
     }
 
-    private void Attraction()
-    {
 
-
-        for (int i = connectedPoints.Count - 1; i >= 0; i--)
-        {
-            Vector3 localPlayerPosition = connectedPoints[i].transform.position - transform.position;
-            Vector3 direction = (connectedPoints[i].localPosition - localPlayerPosition).normalized;
-
-
-            if (isSlippery)
-            {
-                Vector3 attraction = -direction * connectedPoints[i].attractionStrength;
-                float repulsion = connectedPoints[i].attractionStrength * repulsionMultiplier;
-                rb.velocity += attraction * Time.fixedDeltaTime;
-                if (!isGrounded)
-                {
-                    rb.velocity += new Vector3(0, -gravityStrength) * Time.fixedDeltaTime * 0.1f;
-                    connectedPoints[i].attractionStrength -= gravityStrength * Time.fixedDeltaTime * repulsion;
-                }
-                else
-                {
-                    RaycastHit hit;
-                    if (Physics.Raycast(transform.GetChild(0).position, new Vector3(0, -1, 0), out hit, 0.1f))
-                    {
-                        if (hit.transform == connectedPoints[i].transform)
-                        {
-                            connectedPoints[i].attractionStrength += gravityStrength * Time.fixedDeltaTime * 3;
-                            connectedPoints[i].attractionStrength = Mathf.Clamp(connectedPoints[i].attractionStrength, 0, 15 * attractionMultiplier);
-                        }
-                    }
-                }
-
-            }
-
-
-            if (connectedPoints[i].attractionStrength < 0)
-            {
-                connectedPoints.RemoveAt(i);
-            }
-        }
-    }
     #endregion
 
     // ----- COLLISIONS -----
@@ -294,6 +260,7 @@ public class PlayerMouvement : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
+        print("exit");
         if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
         for (int i = 0; i < connectedPoints.Count; i++)
         {
@@ -350,6 +317,48 @@ public class PlayerMouvement : MonoBehaviour
 
     #endregion
 
+    private void Attraction()
+    {
+
+
+        for (int i = connectedPoints.Count - 1; i >= 0; i--)
+        {
+            Vector3 localPlayerPosition = connectedPoints[i].transform.position - transform.position;
+            Vector3 direction = (connectedPoints[i].localPosition - localPlayerPosition).normalized;
+
+
+            if (isSlippery)
+            {
+                Vector3 attraction = -direction * connectedPoints[i].attractionStrength;
+                float repulsion = connectedPoints[i].attractionStrength * repulsionMultiplier;
+                rb.velocity += attraction * Time.fixedDeltaTime;
+                if (!isGrounded)
+                {
+                    rb.velocity += new Vector3(0, -gravityStrength) * Time.fixedDeltaTime * 0.1f;
+                    connectedPoints[i].attractionStrength -= gravityStrength * Time.fixedDeltaTime * repulsion;
+                }
+                else
+                {
+                    RaycastHit hit;
+                    if (Physics.Raycast(transform.GetChild(0).position, new Vector3(0, -1, 0), out hit, 0.1f))
+                    {
+                        if (hit.transform == connectedPoints[i].transform)
+                        {
+                            connectedPoints[i].attractionStrength += gravityStrength * Time.fixedDeltaTime * 3;
+                            connectedPoints[i].attractionStrength = Mathf.Clamp(connectedPoints[i].attractionStrength, 0, 2* attractionMultiplier);
+                        }
+                    }
+                }
+
+            }
+
+
+            if (connectedPoints[i].attractionStrength < 0)
+            {
+                connectedPoints.RemoveAt(i);
+            }
+        }
+    }
 
     // ----- PREVIEW DOTS -----
     #region PreviewDots
