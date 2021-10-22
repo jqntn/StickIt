@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -23,11 +24,11 @@ public class GameManager : MonoBehaviour
         {
             gameManager = this;
         }
+        players = GameObject.FindGameObjectsWithTag("Player");
     }
     // Start is called before the first frame update
     void Start()
     {
-        players = GameObject.FindGameObjectsWithTag("Player");
     }
 
     public void ChangeMod()
@@ -48,5 +49,11 @@ public class GameManager : MonoBehaviour
     public void GivePointPlayer()
     {
 
+    }
+
+    private void OnGUI()
+    {
+        if (GUI.Button(new Rect(10, 10, 50, 50), "Reload Scene"))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
