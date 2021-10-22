@@ -39,9 +39,12 @@ public class MultiplayerManager : MonoBehaviour
             newPlayer.transform.position = _playersStartingPos.GetChild(i).position;
             Player scriptPlayer = newPlayer.transform.GetComponent<Player>();
             scriptPlayer.id = i;
+            newPlayer.gameObject.name = "Player" + i.ToString();
 
             players.Add(scriptPlayer);
             alivePlayers.Add(scriptPlayer);
+
+
         }
     }
 
