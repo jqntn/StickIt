@@ -1005,12 +1005,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d173294bcfafa7e469ee34d358e07bc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nbrOfPlayer: 2
+  nbrOfPlayer: 4
   _prefabPlayer: {fileID: 8854867468096441738, guid: bd2e8aa23cf5c3341ac34eba02c200b7, type: 3}
   _playersStartingPos: {fileID: 838287262}
   players: []
   alivePlayers: []
   deadPlayers: []
+  materials:
+  - {fileID: 2100000, guid: bbab336ec81de7f4284a26e22ae426df, type: 2}
+  - {fileID: 2100000, guid: 4a0d86f138e169c4885a0711c62c440a, type: 2}
+  - {fileID: 2100000, guid: b6dfdb6b5582dfa47bc62e8f0876bcef, type: 2}
+  - {fileID: 2100000, guid: cfc9bb33a760d504783203410585c1b0, type: 2}
 --- !u!4 &396755828
 Transform:
   m_ObjectHideFlags: 0
