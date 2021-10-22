@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -92,8 +93,13 @@ public class PlayerMouvement : MonoBehaviour
 
         if(isChargingJump &&  connectedPoints.Count > 0)
         {
-            if(!isDotsEnabled)
-            EnableDots(true);
+           
+            if (!isDotsEnabled)
+            {
+                EnableDots(true);
+              
+            }
+
             IncreaseForceJump();
         }
 
@@ -106,7 +112,6 @@ public class PlayerMouvement : MonoBehaviour
         {
             AnimCurveJumpSpeed();
         }
-
     }
 
     private void FixedUpdate()
@@ -166,7 +171,6 @@ public class PlayerMouvement : MonoBehaviour
     #region JUMP
     void Jump()
     {
-        print(currentNumberOfJumps);
         if (currentNumberOfJumps > 0 && state == STATE.STICK)
         {
             // Debug.Break();
@@ -191,6 +195,8 @@ public class PlayerMouvement : MonoBehaviour
             y_speed = 0;
             addedVector = Vector3.zero;
         }
+
+       
     }
     void IncreaseForceJump()
     {
@@ -216,8 +222,6 @@ public class PlayerMouvement : MonoBehaviour
                 rb.velocity += attraction * Time.fixedDeltaTime;
                 if (!isGrounded)
                 {
-                    print(connectedPoints[i].transform.gameObject.name);
-                    //print(repulsion);
                     rb.velocity += new Vector3(0, -gravityStrength) * Time.fixedDeltaTime * 0.1f;
                     connectedPoints[i].attractionStrength -= gravityStrength * Time.fixedDeltaTime * repulsion;
                 }
@@ -252,6 +256,13 @@ public class PlayerMouvement : MonoBehaviour
     #region Collisions
     private void OnCollisionEnter(Collision collision)
     {
+        if (collision.gameObject.tag == "Player")
+        {
+
+        }
+
+        if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
+        #region Collision Untagged
         currentNumberOfJumps = maxNumberOfJumps;
 
         if (isChargingJump)
@@ -273,20 +284,20 @@ public class PlayerMouvement : MonoBehaviour
         y_speed = 0;
         t_speed = 0;
         hasJumped = false;
+        #endregion
+
     }
     private void OnCollisionStay(Collision collision)
     {
-        for (int i = 0; i < connectedPoints.Count; i++)
+        if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
+        foreach (ContactPoint point in connectedPoints.Where(point => collision.transform == point.transform))
         {
-            if (collision.transform == connectedPoints[i].transform)
-            {
-                connectedPoints[i].localPosition = collision.transform.position - collision.contacts[0].point;
-            }
+            point.localPosition = collision.transform.position - collision.contacts[0].point;
         }
     }
     private void OnCollisionExit(Collision collision)
     {
-
+        if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
         for (int i = 0; i < connectedPoints.Count; i++)
         {
             if (connectedPoints[i].transform == collision.transform)
@@ -300,7 +311,6 @@ public class PlayerMouvement : MonoBehaviour
             if (!hasJumped)
             {
                 currentNumberOfJumps--;
-                isChargingJump = false;
                 EnableDots(false);
             }
         }

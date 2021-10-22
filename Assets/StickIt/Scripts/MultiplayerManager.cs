@@ -25,22 +25,21 @@ public class MultiplayerManager : MonoBehaviour
     private void Start()
     {
        Initialization();
+       print(Gamepad.all.Count);
     }
 
     private void Initialization()
     {
-        print(Gamepad.all.Count);
         for (int i = 0; i < nbrOfPlayer; i++)
         {
             PlayerInput newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1, Gamepad.all[i]);
+            print(Gamepad.all[i].name);
             newPlayer.transform.position = _playersStartingPos.GetChild(i).position;
             Player scriptPlayer = newPlayer.transform.GetComponent<Player>();
-            print(scriptPlayer.gameObject.name);
             scriptPlayer.id = i;
 
             players.Add(scriptPlayer.gameObject);
         }
-
     }
 
 
