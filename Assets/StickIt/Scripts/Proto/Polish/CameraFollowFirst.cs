@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraFollowFirst : MonoBehaviour
 {
-    public List<GameObject> playerList = new List<GameObject>();
+    public List<Player> playerList = new List<Player>();
     MultiplayerManager multiplayerManager;
     [Header("---------- DEBUG ------------")]
     public RaceDirection direction = RaceDirection.RIGHT;
@@ -17,11 +17,11 @@ public class CameraFollowFirst : MonoBehaviour
     public void GetFirst(GameObject _first)
     {
         first = _first;
-        foreach(GameObject player in playerList)
+        foreach(Player player in playerList)
         {
-            if(_first != player)
+            if(_first != player.gameObject)
             {
-                second = player;
+                second = player.gameObject;
             }
         }
     }
