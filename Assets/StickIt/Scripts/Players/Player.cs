@@ -23,12 +23,13 @@ public class Player : MonoBehaviour
         myMouvementScript.enabled = false;       
         _multiplayerManager.alivePlayers.Remove(this);
         _multiplayerManager.deadPlayers.Add(this);
+
     }
 
     public void Respawn()
     {
         _multiplayerManager.alivePlayers.Add(this);
-        _multiplayerManager.deadPlayers.Add(this);
+        _multiplayerManager.deadPlayers.Remove(this);
         myMouvementScript.enabled = true;
     }
 }
