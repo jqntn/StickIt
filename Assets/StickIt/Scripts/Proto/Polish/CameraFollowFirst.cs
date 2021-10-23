@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,7 +6,7 @@ using UnityEngine;
 public class CameraFollowFirst : MonoBehaviour
 {
     public List<Player> playerList = new List<Player>();
-    MultiplayerManager multiplayerManager;
+    private MultiplayerManager multiplayerManager;
     [Header("---------- DEBUG ------------")]
     public RaceDirection direction = RaceDirection.RIGHT;
     [SerializeField] private Vector2 positionToGoTo;
@@ -13,6 +14,7 @@ public class CameraFollowFirst : MonoBehaviour
     public float smoothTime = 0.2f;
     public GameObject first;
     public GameObject second;
+    public int currentCheckpoint = 0;
 
     public void GetFirst(GameObject _first)
     {
@@ -25,6 +27,18 @@ public class CameraFollowFirst : MonoBehaviour
             }
         }
     }
+
+    private void SwitchFirst()
+    {
+        if(second.GetComponent<RacePlayer>().raceCheckpoint == currentCheckpoint)
+        {
+            GameObject temp = first;
+            first = second;
+            second = temp;
+        }
+
+        positionToGoTo = first.transform.position;
+    }
     private void Start()
     {
         multiplayerManager = MultiplayerManager.instance;
@@ -32,50 +46,53 @@ public class CameraFollowFirst : MonoBehaviour
     }
     public void Update()
     {
+        float first_Y = Mathf.Round(first.transform.position.y);
+        float first_X = Mathf.Round(first.transform.position.x);
+        float second_Y = Mathf.Round(second.transform.position.y);
+        float second_X = Mathf.Round(second.transform.position.x);
         switch (direction)
         {
             case RaceDirection.UP:
-                if (first.transform.position.y >= second.transform.position.y)
+                if (first_Y >= second_Y && first.GetComponent<RacePlayer>().raceCheckpoint == currentCheckpoint)
                 {
                     positionToGoTo = first.transform.position;
                 }
                 else
                 {
-                    positionToGoTo = second.transform.position;
+                    SwitchFirst();
                 }
                 break;
             case RaceDirection.DOWN: 
-                if (first.transform.position.y <= second.transform.position.y)
+                if (first_Y <= second_Y && first.GetComponent<RacePlayer>().raceCheckpoint == currentCheckpoint)
                 {
                     positionToGoTo = first.transform.position;
                 }
                 else
                 {
-                    positionToGoTo = second.transform.position;
+                    SwitchFirst();
                 }
                 break;
             case RaceDirection.LEFT: 
-                if (first.transform.position.x <= second.transform.position.x)
+                if (first_X <= second_X && first.GetComponent<RacePlayer>().raceCheckpoint == currentCheckpoint)
                 {
                     positionToGoTo = first.transform.position;
                 }
                 else
                 {
-                    positionToGoTo = second.transform.position;
+                    SwitchFirst();
                 }
                 break;
             case RaceDirection.RIGHT: 
-                if (first.transform.position.x >= second.transform.position.x)
+                if (first_X >= second_X && first.GetComponent<RacePlayer>().raceCheckpoint == currentCheckpoint)
                 {
                     positionToGoTo = first.transform.position;
                 }
                 else
                 {
-                    positionToGoTo = second.transform.position;
+                    SwitchFirst();
                 }
                 break;
         }
-
     }
     void LateUpdate()
     {

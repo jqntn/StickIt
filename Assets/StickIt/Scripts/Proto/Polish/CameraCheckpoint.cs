@@ -5,20 +5,23 @@ using UnityEngine;
 public class CameraCheckpoint : MonoBehaviour
 {
     public RaceDirection direction;
-    private bool isEnclenched = false;
+    public int number = 0;
+    private bool hasEnclenched = false;
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("Collision Checkpoint");
-        Player otherPlayer = other.GetComponentInParent<Player>();
+        RacePlayer otherPlayer = other.GetComponentInParent<RacePlayer>();
         if(otherPlayer != null)
         {
             Debug.Log("Player detected");
             CameraFollowFirst camera = Camera.main.GetComponent<CameraFollowFirst>();
             camera.direction = direction;
 
-            if (!isEnclenched)
+            if (!hasEnclenched)
             {
-                camera.GetFirst(other.GetComponentInParent<Player>().gameObject);
+                camera.GetFirst(otherPlayer.gameObject);
+                hasEnclenched = true;
+                camera.currentCheckpoint = number;
             }
         }
     }
