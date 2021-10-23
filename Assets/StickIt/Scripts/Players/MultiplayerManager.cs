@@ -16,8 +16,8 @@ public class MultiplayerManager : MonoBehaviour
     public List<Player> players = new List<Player>();
     public List<Player> alivePlayers = new List<Player>();
     public List<Player> deadPlayers = new List<Player>();
-    
 
+    public List<Material> materials = new List<Material>();
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -34,8 +34,11 @@ public class MultiplayerManager : MonoBehaviour
     {
         for (int i = 0; i < nbrOfPlayer; i++)
         {
-            PlayerInput newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1, Gamepad.all[i]);
-            print(Gamepad.all[i].name);
+            PlayerInput newPlayer = null;
+            if (i < Gamepad.all.Count)
+            newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1, Gamepad.all[i]);
+            else newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1);
+
             newPlayer.transform.position = _playersStartingPos.GetChild(i).position;
             Player scriptPlayer = newPlayer.transform.GetComponent<Player>();
             scriptPlayer.id = i;
@@ -44,6 +47,10 @@ public class MultiplayerManager : MonoBehaviour
             players.Add(scriptPlayer);
             alivePlayers.Add(scriptPlayer);
 
+            scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = materials[i];
+            print(materials[i]);
+            if (scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>())
+                print("yes");
 
         }
     }
