@@ -34,6 +34,8 @@ public class Player : MonoBehaviour
         deathAnim.PlayFeedbacks();
         yield return new WaitForSeconds(deathAnim.TotalDuration);
         GetComponentInChildren<MeshRenderer>().enabled = false;
+        GetComponentInChildren<Collider>().enabled = false;
+        GetComponent<Rigidbody>().isKinematic = true;
         GameObject temp = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.rotation);
         temp.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
         yield return null;
@@ -45,6 +47,10 @@ public class Player : MonoBehaviour
         _multiplayerManager.alivePlayers.Add(this);
         _multiplayerManager.deadPlayers.Remove(this);
         myMouvementScript.enabled = true;
+        GetComponentInChildren<MeshRenderer>().enabled = true;
+        GetComponentInChildren<Collider>().enabled = true;
+        GetComponent<Rigidbody>().isKinematic = false;
+
     }
 
     public void QuitGame()
