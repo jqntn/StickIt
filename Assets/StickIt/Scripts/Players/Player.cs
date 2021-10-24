@@ -46,4 +46,10 @@ public class Player : MonoBehaviour
         _multiplayerManager.deadPlayers.Remove(this);
         myMouvementScript.enabled = true;
     }
+
+    public void QuitGame()
+    {
+        Debug.Log("Quit Application");
+        Application.Quit();
+    }
 }

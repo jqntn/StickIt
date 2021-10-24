@@ -75,8 +75,10 @@ public class ToolMMFeedbacksManager : MonoBehaviour
         for (int i = 0; i < feedbacksList.Count; i++)
         {
             text = text.Insert(index,
-                "\n\tpublic void " + feedbacksList[i].name + "Call()\n\t{\n" +
-                "\t\tfeedbacksList[" + i + "].PlayFeedbacks();" +
+                "\n\tpublic void " + feedbacksList[i].name + "Call()\n\t{" +
+                "\n\t\tif (!feedbacksList[" + i + "].IsPlaying){" +
+                "\n\t\t\tfeedbacksList[" + i + "].PlayFeedbacks();" +
+                "\n\t\t}" +
                 "\n\t}"
              );
             File.WriteAllText(path, text);
