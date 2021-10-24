@@ -25,16 +25,20 @@ public class Player : MonoBehaviour
         myMouvementScript.enabled = false;
         _multiplayerManager.alivePlayers.Remove(this);
         _multiplayerManager.deadPlayers.Add(this);
-        deathAnim.PlayFeedbacks();
+
+        // Play Death Animation
         StartCoroutine(OnDeath());
     }
     IEnumerator OnDeath()
     {
+        deathAnim.PlayFeedbacks();
         yield return new WaitForSeconds(deathAnim.TotalDuration);
         GetComponentInChildren<MeshRenderer>().enabled = false;
         GameObject temp = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.rotation);
         temp.GetComponent<ParticleSystemRenderer>().material = _multiplayerManager.materials[id];
         yield return null;
+        GameEvents.CameraShake_CEvent?.Invoke();
+        
     }
     public void Respawn()
     {

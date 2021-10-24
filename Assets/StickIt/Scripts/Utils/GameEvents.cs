@@ -6,8 +6,7 @@ using UnityEngine.Events;
 public static class GameEvents
 {
     // | Events
-	public static UnityEvent MMFeelOrganicEvent = new UnityEvent();
-	public static UnityEvent MMFeelChocEvent = new UnityEvent();
+	public static UnityEvent CameraShake_CEvent = new UnityEvent();
 	// | End Events
 
 }
