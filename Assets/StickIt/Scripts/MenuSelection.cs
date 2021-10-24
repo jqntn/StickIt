@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class MenuSelection : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class MenuSelection : MonoBehaviour
     [SerializeField] private Transform _prefabPlayer;
     [SerializeField] private Transform _playersStartingPos;
     public List<Material> materials = new List<Material>();
+
+    public string sceneToLoad;
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +27,12 @@ public class MenuSelection : MonoBehaviour
             if (Gamepad.all[i].buttonSouth.isPressed)
             {
                 AddPlayer(Gamepad.all[i], i);
+            } else if (MultiplayerManager.instance.players.Count >= 2)
+            {
+                if (Gamepad.all[i].startButton.isPressed)
+                {
+                    LaunchGame();
+                }
             }
         }
     }
@@ -56,13 +65,15 @@ public class MenuSelection : MonoBehaviour
         scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = materials[i];
     }
 
-    private void LaunchGame()
+    public void LaunchGame()
     {
 
         foreach(Player player in MultiplayerManager.instance.players)
         {
             MultiplayerManager.instance.SaveDatas(player.myDatas);
         }
+
+        SceneManager.LoadScene(sceneToLoad);
 
     }
 }

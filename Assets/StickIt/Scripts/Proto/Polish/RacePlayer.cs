@@ -5,7 +5,7 @@ public class RacePlayer : MonoBehaviour
     [Header("------------ DEBUG -----------")]
     public int raceCheckpoint = 0;
 
-    public void ResetCheckpoint()
+    /*public void ResetCheckpoint()
     {
         raceCheckpoint = 0;
     }
@@ -17,5 +17,5 @@ public class RacePlayer : MonoBehaviour
         {
             raceCheckpoint = checkpoint.number;
         }
-    }
+    }*/
 }

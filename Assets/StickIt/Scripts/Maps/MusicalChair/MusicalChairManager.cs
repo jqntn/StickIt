@@ -6,6 +6,8 @@ public class MusicalChairManager : MonoBehaviour
 {
     [Header("Countdown")]
     [SerializeField] float durationValue;
+    GameManager _gameManager;
+    MultiplayerManager _multiplayerManager;
     float duration;
     [SerializeField] float transitionValue;
     [SerializeField] Color colorTextTransition;
@@ -19,20 +21,19 @@ public class MusicalChairManager : MonoBehaviour
     int maxChairsActive;
     [SerializeField] Color colorChairActive;
     [SerializeField] Color colorChairInactive;
+    public Color colorChairTaken;
     [Header("Players")]
-    public List<Player> playersInGame;
+    //public List<Player> playersInGame;
     public List<Player> chosenOnes;
     // Start is called before the first frame update
     void Start()
     {
-        for (int i = 0; i < GameManager.gameManager.players.Length; i++)
-        {
-            playersInGame.Add(GameManager.gameManager.players[i].GetComponent<Player>());
-        }
+        _gameManager = GameManager.instance;
+        _multiplayerManager = MultiplayerManager.instance;
         chairs = FindObjectsOfType<Chair>();
         inTransition = true;
         transition = transitionValue;
-        maxChairsActive = playersInGame.Count - 1;
+        maxChairsActive = _multiplayerManager.alivePlayers.Count - 1;
     }
 
     // Update is called once per frame
@@ -94,21 +95,26 @@ public class MusicalChairManager : MonoBehaviour
         {
             c.DeactivateChair(colorChairInactive);
         }
-        for(int i = playersInGame.Count-1; i >= 0; i--)
+        /*for(int i = chosenOnes.Count-1; i >= 0; i--)
         {
             if (chosenOnes.Find(x => playersInGame[i].myDatas.id != x.myDatas.id))
             {
                 //MAKE THE LOSERS EXPLODE
-                //g.GetComponent<Player>().Die();
-                Debug.Log(playersInGame[i].name + " DIES");
-                playersInGame.Remove(playersInGame[i]);
+                Debug.Log(_multiplayerManager.players[i].name + " DIES");
+                _multiplayerManager.alivePlayers[i].GetComponent<Player>().Death();
+            }
+        }*/
+        for(int i = _multiplayerManager.alivePlayers.Count-1; i >= 0; i--)
+        {
+
+            if (!chosenOnes.Find(x => _multiplayerManager.alivePlayers[i] == x))
+            {
+                //MAKE THE LOSERS EXPLODE
+                Debug.Log(_multiplayerManager.players[i].name + " DIES");
+                _multiplayerManager.alivePlayers[i].GetComponent<Player>().Death();
             }
         }
-        maxChairsActive = playersInGame.Count - 1;
+        maxChairsActive = _multiplayerManager.alivePlayers.Count - 1;
         chosenOnes.Clear();
-        if(playersInGame.Count <= 1)
-        {
-            GameManager.gameManager.ChangeMod();
-        }
     }
 }

@@ -35,7 +35,7 @@ public class MultiplayerManager : MonoBehaviour
 
     int nbrDevicesLastFrame = 0;
     private void Awake()
-    {
+    {
         Initialization();
         if (instance == null) instance = this;
         else Destroy(gameObject);

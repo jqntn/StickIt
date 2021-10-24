@@ -52,6 +52,9 @@ public class PlayerMouvement : MonoBehaviour
     public int maxNumberOfJumps;
     private int currentNumberOfJumps;
 
+    [Header("CollisionVariables")]
+    public GameObject collisionEffect;
+
 
     // Start is called before the first frame update
     void Start()
@@ -282,7 +285,8 @@ public class PlayerMouvement : MonoBehaviour
 
     public void CollisionBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact)
     {
-
+        int id = GetComponent<Player>().id;
+        int ido = playerCollided.GetComponent<Player>().id;
         //float newVelMagnitudeP1 = playerCollided.velocityLastFrame.magnitude;
         //float newVelMagnitudeP2 = velocityLastFrame.magnitude;
 
@@ -292,10 +296,15 @@ public class PlayerMouvement : MonoBehaviour
         //rb.velocity = newDirP1 * newVelMagnitudeP1;
         //playerCollided.rb.velocity = newDirP2 * newVelMagnitudeP2;
 
+        Vector3 v = Quaternion.Euler(0, 0, 90) * contact.normal;
+        Debug.DrawRay(contact.point, v, Color.green);
+        GameObject g = Instantiate(collisionEffect, contact.point, Quaternion.Euler(0,0, Vector3.Angle(contact.normal, v)));
+        g.GetComponent<ParticleSystemRenderer>().material.color = new Color((MultiplayerManager.instance.materials[id].color.r + MultiplayerManager.instance.materials[ido].color.r) /2, (MultiplayerManager.instance.materials[id].color.g + MultiplayerManager.instance.materials[ido].color.g)/2, (MultiplayerManager.instance.materials[id].color.b + MultiplayerManager.instance.materials[ido].color.b)/2);
+        //Debug.Break();
         rb.velocity = playerCollided.velocityLastFrame;
         playerCollided.rb.velocity = velocityLastFrame;
 
-        #region debug
+       /* #region debug
         print(playerCollided.velocityLastFrame);
         //Last velocities
         Debug.DrawRay(transform.position,  -velocityLastFrame, Color.blue, 3f);
@@ -308,7 +317,7 @@ public class PlayerMouvement : MonoBehaviour
         // Normal
         Debug.DrawRay(contact.point,contact.point + contact.normal * 100f, Color.red, 3f);
        // Debug.Break();
-        #endregion
+        #endregion*/
 
     }
 
