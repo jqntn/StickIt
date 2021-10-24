@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
 
     public void ChangeMod()
     {
-        InitMod(currentMod);
+        StartCoroutine(EndLevel());
     }
 
     private void InitMod(TypeMods type)
@@ -50,6 +50,17 @@ public class GameManager : MonoBehaviour
 
     public void GivePointPlayer()
     {
+
+    }
+
+    IEnumerator EndLevel()
+    {
+        yield return new WaitForSeconds(1.5f);
+        Time.timeScale = 0.2f;
+        yield return new WaitForSeconds(1);
+        Time.timeScale = 1f;
+        //InitMod(currentMod);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
     }
 
