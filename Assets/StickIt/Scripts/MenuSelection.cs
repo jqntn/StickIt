@@ -11,8 +11,6 @@ public class MenuSelection : MonoBehaviour
     [SerializeField] private Transform _playersStartingPos;
     public List<Material> materials = new List<Material>();
 
-    public string sceneToLoad;
-
     [SerializeField] Animator animLaunchGame;
 
     // Start is called before the first frame update
@@ -80,7 +78,7 @@ public class MenuSelection : MonoBehaviour
             MultiplayerManager.instance.SaveDatas(player.myDatas);
         }
 
-        SceneManager.LoadScene(sceneToLoad);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1) ;
 
     }
 }

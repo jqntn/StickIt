@@ -50,32 +50,32 @@ public class MultiplayerManager : MonoBehaviour
        print(Gamepad.all.Count);
     }
 
-    private void Initialization()
-    {
-        nbrDevicesLastFrame = InputSystem.devices.Count;
-        for (int i = 0; i < nbrOfPlayer; i++)
-        {
-            PlayerInput newPlayer = null;
-            if (i < Gamepad.all.Count)
-            newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1, Gamepad.all[i]);
-            else newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1);
+    //private void Initialization()
+    //{
+    //    nbrDevicesLastFrame = InputSystem.devices.Count;
+    //    for (int i = 0; i < nbrOfPlayer; i++)
+    //    {
+    //        PlayerInput newPlayer = null;
+    //        if (i < Gamepad.all.Count)
+    //        newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1, Gamepad.all[i]);
+    //        else newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1);
 
-            newPlayer.transform.position = playersStartingPos.GetChild(i).position;
-            Player scriptPlayer = newPlayer.transform.GetComponent<Player>();
-            //scriptPlayer.id = i;
-            newPlayer.gameObject.name = "Player" + i.ToString();
+    //        newPlayer.transform.position = playersStartingPos.GetChild(i).position;
+    //        Player scriptPlayer = newPlayer.transform.GetComponent<Player>();
+    //        //scriptPlayer.id = i;
+    //        newPlayer.gameObject.name = "Player" + i.ToString();
 
-            players.Add(scriptPlayer);
-            alivePlayers.Add(scriptPlayer);
+    //        players.Add(scriptPlayer);
+    //        alivePlayers.Add(scriptPlayer);
 
-            scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = scriptPlayer.myDatas.material;
+    //        scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = scriptPlayer.myDatas.material;
 
-            //newPlayer.deviceLostEvent.AddListener((newPlayer) => LostDevice(newPlayer));
-            //newPlayer.deviceRegainedEvent.AddListener((newPlayer) => RegainDevice(newPlayer));
+    //        //newPlayer.deviceLostEvent.AddListener((newPlayer) => LostDevice(newPlayer));
+    //        //newPlayer.deviceRegainedEvent.AddListener((newPlayer) => RegainDevice(newPlayer));
 
             
-        }
-    }
+    //    }
+    //}
 
     public void SaveDatas(PlayerData playerData)
     {
