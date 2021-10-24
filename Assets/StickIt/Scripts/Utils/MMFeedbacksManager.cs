@@ -7,19 +7,18 @@ public class MMFeedbacksManager : MonoBehaviour
     private void Awake()
     {
         // | Listeners
-		GameEvents.MMFeelOrganicEvent.AddListener(MMFeelOrganicCall);
-		GameEvents.MMFeelChocEvent.AddListener(MMFeelChocCall);
+		GameEvents.CameraShake_CEvent.AddListener(CameraShake_CCall);
 		// | End Listeners
     }
 
     // | Calls
-	public void MMFeelOrganicCall()
+	public void CameraShake_CCall()
 	{
-		feedbacksList[1].PlayFeedbacks();
-	}
-	public void MMFeelChocCall()
-	{
-		feedbacksList[0].PlayFeedbacks();
+        if (!feedbacksList[0].IsPlaying)
+        {
+            feedbacksList[0].PlayFeedbacks();
+        }
+
 	}
 	// | End Calls
 }

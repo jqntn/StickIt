@@ -8,13 +8,15 @@ public class CameraBarycenter : MonoBehaviour
     public float smoothTime = 0.5f;
     [Header("----------- CAMERA ZOOM    -----------")]
     public bool hasZoom = true;
-    public float minZoom = -100.0f;
-    public float maxZoom = -70.0f;
+    [Header("Zoom on Z Axis, take negative value ")]
+    public float minZoom = -150.0f;
+    public float maxZoom = -100.0f;
+    [Header("high value = stronger zoom depending on distance between player")]
     public float zoomLimiter = 50.0f;
-    public float zoomTime = 0.2f;
-    public AnimationCurve zoomCurve;
+    //public float zoomTime = 0.2f;
+    //public AnimationCurve zoomCurve;
     [Header("----------- CAMERA BOUNDS ------------")]
-    public bool hasCameraBounds = true;
+    public bool hasCameraBounds = false;
     public Collider2D cameraBounds;
     private MultiplayerManager multiplayerManager;
     [Header("----------- DEBUG --------------------")]
