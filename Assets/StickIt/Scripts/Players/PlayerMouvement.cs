@@ -21,11 +21,11 @@ public class PlayerMouvement : MonoBehaviour
     private bool isDotsEnabled = false;
 
     [Header("Movement")]     //-----------------------
-    [Tooltip("Force maximale du jump, et clamp de la vélocité maximale")]
+    [Tooltip("Force maximale du jump, et clamp de la vï¿½locitï¿½ maximale")]
     public float maxSpeed;
     bool isAnimCurveSpeed;
     Vector3 addedVector;
-    [Tooltip("% de la velocité ajoutée au saut en fonction du temps, cette valeur doit finir à 1")]
+    [Tooltip("% de la velocitï¿½ ajoutï¿½e au saut en fonction du temps, cette valeur doit finir ï¿½ 1")]
     [SerializeField] AnimationCurve animCurveJumpSpeed;
     float t_speed;
     float y_speed = 1;
@@ -214,7 +214,7 @@ public class PlayerMouvement : MonoBehaviour
         {
             case "Player":
                 Player playerCollided = collision.transform.GetComponent<Player>();
-                if (myPlayer.id < playerCollided.id)
+                if (myPlayer.myDatas.id < playerCollided.myDatas.id)
                 {
                     if(collision.contactCount > 0)
                     CollisionBetweenPlayers(playerCollided.myMouvementScript, collision.contacts[0]);
@@ -263,7 +263,6 @@ public class PlayerMouvement : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
-        print("exit");
         if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
         for (int i = 0; i < connectedPoints.Count; i++)
         {
@@ -285,18 +284,18 @@ public class PlayerMouvement : MonoBehaviour
 
 
     public void CollisionBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact)
-    {
-        int id = GetComponent<Player>().id;
-        int ido = playerCollided.GetComponent<Player>().id;
-        //float newVelMagnitudeP1 = playerCollided.velocityLastFrame.magnitude;
-        //float newVelMagnitudeP2 = velocityLastFrame.magnitude;
-
-        //Vector3 newDirP1 = Vector3.Reflect(velocityLastFrame.normalized, contact.normal);
-        //Vector3 newDirP2 = Vector3.Reflect(playerCollided.velocityLastFrame.normalized, contact.normal);
-
-        //rb.velocity = newDirP1 * newVelMagnitudeP1;
-        //playerCollided.rb.velocity = newDirP2 * newVelMagnitudeP2;
-
+    {
+        int id = GetComponent<Player>().id;
+        int ido = playerCollided.GetComponent<Player>().id;
+        //float newVelMagnitudeP1 = playerCollided.velocityLastFrame.magnitude;
+        //float newVelMagnitudeP2 = velocityLastFrame.magnitude;
+
+        //Vector3 newDirP1 = Vector3.Reflect(velocityLastFrame.normalized, contact.normal);
+        //Vector3 newDirP2 = Vector3.Reflect(playerCollided.velocityLastFrame.normalized, contact.normal);
+
+        //rb.velocity = newDirP1 * newVelMagnitudeP1;
+        //playerCollided.rb.velocity = newDirP2 * newVelMagnitudeP2;
+
         Vector3 v = Quaternion.Euler(0, 0, 90) * contact.normal;
         Debug.DrawRay(contact.point, v, Color.green);
         GameObject g = Instantiate(collisionEffect, contact.point, Quaternion.Euler(0,0, Vector3.Angle(contact.normal, v)));

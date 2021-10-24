@@ -7,6 +7,7 @@ public class Player : MonoBehaviour
 {
     private MultiplayerManager _multiplayerManager;
     public PlayerMouvement myMouvementScript;
+    public MultiplayerManager.PlayerData myDatas;
     public MMFeedbacks deathAnim;
     public GameObject deathPart;
     public int id;
@@ -34,7 +35,7 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(deathAnim.TotalDuration);
         GetComponentInChildren<MeshRenderer>().enabled = false;
         GameObject temp = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.rotation);
-        temp.GetComponent<ParticleSystemRenderer>().material = _multiplayerManager.materials[id];
+        temp.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
         yield return null;
         GameEvents.CameraShake_CEvent?.Invoke();
         
