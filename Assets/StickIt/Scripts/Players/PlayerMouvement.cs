@@ -129,24 +129,24 @@ public class PlayerMouvement : MonoBehaviour
 
     }
 
-    private void OnGUI()
-    {
-        GUILayout.BeginVertical();
-        GUIStyle style = new GUIStyle();
-        style.fontSize = 24;
-        style.normal.textColor = Color.white;
+    //private void OnGUI()
+    //{
+    //    GUILayout.BeginVertical();
+    //    GUIStyle style = new GUIStyle();
+    //    style.fontSize = 24;
+    //    style.normal.textColor = Color.white;
 
-        if (myPlayer.id == 0)
-        {
-            GUILayout.Label(" Velocity  = " + rb.velocity, style);
-            GUILayout.Label("Magnitude = " + rb.velocity.magnitude, style);
-            if(connectedPoints.Count>0)
-            GUILayout.Label("Attraction = " + connectedPoints[0].attractionStrength, style);
-        }
-        GUILayout.EndVertical();
+    //    if (myPlayer.id == 0)
+    //    {
+    //        GUILayout.Label(" Velocity  = " + rb.velocity, style);
+    //        GUILayout.Label("Magnitude = " + rb.velocity.magnitude, style);
+    //        if(connectedPoints.Count>0)
+    //        GUILayout.Label("Attraction = " + connectedPoints[0].attractionStrength, style);
+    //    }
+    //    GUILayout.EndVertical();
 
         
-    }
+    //}
 
     // ----- INPUTS -----
     #region Inputs
