@@ -85,6 +85,7 @@ public class MultiplayerManager : MonoBehaviour
     public void InstantiatePlayers()
     {
         players.Clear();
+        alivePlayers.Clear();
         for(int i = 0; i < datas.Count; i++)
         {
             PlayerInput newPlayer = null;

@@ -8,7 +8,7 @@ public class Level : MonoBehaviour
 
     public Transform startingPos;
 
-    void Start()
+    void Awake()
     {
         MultiplayerManager.instance.playersStartingPos = startingPos;
         MultiplayerManager.instance.InstantiatePlayers();
