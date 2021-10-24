@@ -53,10 +53,10 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void OnGUI()
-    {
-        if (GUI.Button(new Rect(10, 10, 100, 50), "Restart"))
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
+    //private void OnGUI()
+    //{
+    //    if (GUI.Button(new Rect(10, 10, 100, 50), "Restart"))
+    //        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    //}
    
 }
