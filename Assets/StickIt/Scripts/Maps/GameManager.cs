@@ -6,9 +6,9 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    //public GameObject[] players;
     public GameObject[] mapsChair;
     public GameObject currentMapInstance;
+    
     public enum TypeMods
     {
         CHAIR
@@ -24,8 +24,10 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
-        //players = GameObject.FindGameObjectsWithTag("Player");
+        
+
     }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -53,7 +55,8 @@ public class GameManager : MonoBehaviour
 
     private void OnGUI()
     {
-        if (GUI.Button(new Rect(10, 10, 50, 50), "Reload Scene"))
+        if (GUI.Button(new Rect(10, 10, 100, 50), "Restart"))
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
+   
 }
