@@ -84,6 +84,7 @@ public class MultiplayerManager : MonoBehaviour
 
     public void InstantiatePlayers()
     {
+        players.Clear();
         for(int i = 0; i < datas.Count; i++)
         {
             PlayerInput newPlayer = null;
@@ -98,8 +99,10 @@ public class MultiplayerManager : MonoBehaviour
             }
             newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, datas[i].id, "Gamepad", -1, gamepad);
             Player scriptPlayer = newPlayer.transform.GetComponent<Player>();
-            scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = materials[i];
+            scriptPlayer.myDatas = datas[i];
+            scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = scriptPlayer.myDatas.material;
             players.Add(scriptPlayer);
+            alivePlayers.Add(scriptPlayer);
 
 
             newPlayer.transform.position = playersStartingPos.GetChild(i).position;

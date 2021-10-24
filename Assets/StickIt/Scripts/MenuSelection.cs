@@ -60,14 +60,19 @@ public class MenuSelection : MonoBehaviour
 
         newPlayer.transform.position = _playersStartingPos.GetChild(i).position;
         Player scriptPlayer = newPlayer.transform.GetComponent<Player>();
+        // Set Datas
         scriptPlayer.myDatas.id = i;
         scriptPlayer.myDatas.deviceID = gamepad.deviceId;
         scriptPlayer.myDatas.name = "Player" + i.ToString();
+        scriptPlayer.myDatas.material = materials[i];
+
         newPlayer.gameObject.name = scriptPlayer.myDatas.name;
+        scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = scriptPlayer.myDatas.material;
+        
 
         MultiplayerManager.instance.players.Add(scriptPlayer);
 
-        scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = materials[i];
+        
     }
 
     public void LaunchGame()
