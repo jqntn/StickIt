@@ -21,6 +21,7 @@ public class MusicalChairManager : MonoBehaviour
     int maxChairsActive;
     [SerializeField] Color colorChairActive;
     [SerializeField] Color colorChairInactive;
+    public Color colorChairTaken;
     [Header("Players")]
     //public List<Player> playersInGame;
     public List<Player> chosenOnes;

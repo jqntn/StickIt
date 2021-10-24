@@ -9,6 +9,8 @@ public class Chair : MonoBehaviour
     public bool isTaken;
     public List<Player> playersInChair;
     public Player chosenOne;
+    Color activatedColor;
+    Color deactivatedColor;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,17 +26,34 @@ public class Chair : MonoBehaviour
             {
                 isTaken = true;
             }
+            else
+            {
+                isTaken = false;
+            }
+        }
+        if (isTaken)
+        {
+            gameObject.GetComponent<MeshRenderer>().material.color = musicalChairManager.colorChairTaken;
+        }
+        else if(!isTaken && isActive)
+        {
+            gameObject.GetComponent<MeshRenderer>().material.color = activatedColor;
+        }else if(!isTaken && !isActive)
+        {
+            gameObject.GetComponent<MeshRenderer>().material.color = deactivatedColor;
         }
     }
 
     public void ActivateChair(Color c)
     {
+        activatedColor = c;
         //FAIRE TREMBLER LA CHAISE
         isActive = true;
         gameObject.GetComponent<MeshRenderer>().material.color = c;
     }
     public void DeactivateChair(Color c)
     {
+        deactivatedColor = c;
         //FAIRE TREMBLER LA CHAISE A L'INVERSE
         if (isActive)
         {
@@ -64,19 +83,19 @@ public class Chair : MonoBehaviour
 
         if (isActive)
         {
-            
-            if (c.gameObject.TryGetComponent<Player>(out Player p))
+
+            if (c.gameObject.transform.parent.parent.CompareTag("Player"))
             {
-                playersInChair.Add(p);
+                playersInChair.Add(c.gameObject.GetComponentInParent<Player>());
             }
         }
     }
     private void OnTriggerExit(Collider c)
     {
-        if (c.gameObject.TryGetComponent<Player>(out Player p))
+        if (c.gameObject.transform.parent.parent.CompareTag("Player"))
         {
-            playersInChair.Remove(playersInChair.Find(x => p));
+            playersInChair.Remove(playersInChair.Find(x => c.gameObject.GetComponentInParent<Player>()));
         }
-        
+
     }
 }
