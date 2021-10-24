@@ -1,5 +1,526 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2054315540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2054315541}
+  - component: {fileID: 2054315543}
+  - component: {fileID: 2054315542}
+  m_Layer: 0
+  m_Name: DeathPlayerFeedback
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2054315541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054315540}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 477383131273025987}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2054315543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054315540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841b72de2996c5c40bfb394f3d0e0a98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Feedbacks:
+  - {fileID: 2054315542}
+  InitializationMode: 2
+  SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
+  AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
+  DebugActive: 0
+--- !u!114 &2054315542
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054315540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d958a52145b19904aa2a5bcb3849eafb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Active: 1
+  Label: Scale
+  Chance: 100
+  Timing:
+    TimescaleMode: 0
+    InitialDelay: 0
+    CooldownDuration: 0
+    ExcludeFromHoldingPauses: 0
+    InterruptsOnStop: 1
+    NumberOfRepeats: 0
+    RepeatForever: 0
+    DelayBetweenRepeats: 1
+    MMFeedbacksDirectionCondition: 0
+    PlayDirection: 0
+    ConstantIntensity: 0
+    UseIntensityInterval: 0
+    IntensityIntervalMin: 0
+    IntensityIntervalMax: 0
+    Sequence: {fileID: 0}
+    TrackID: 0
+    Quantized: 0
+    TargetBPM: 120
+  DebugActive: 0
+  Mode: 1
+  TimeScale: 0
+  AnimateScaleTarget: {fileID: 477383131273025987}
+  AnimateScaleDuration: 1
+  RemapCurveZero: 0
+  RemapCurveOne: 1
+  Offset: 0
+  AnimateX: 1
+  AnimateScaleX:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.07659675
+      value: 0.0894725
+      inSlope: -0.6397999
+      outSlope: -0.6397999
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.9714303
+    - serializedVersion: 3
+      time: 0.16261375
+      value: 0.067162216
+      inSlope: 0.09596071
+      outSlope: 0.09596071
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.21598563
+      value: 0.17190018
+      inSlope: -0.015841745
+      outSlope: -0.015841745
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.30267602
+      value: 0.12221223
+      inSlope: -0.062267344
+      outSlope: -0.062267344
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.38248342
+      value: 0.27859992
+      inSlope: -0.6506563
+      outSlope: -0.6506563
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.5591689
+    - serializedVersion: 3
+      time: 0.4766094
+      value: 0.20450538
+      inSlope: 0.12281105
+      outSlope: 0.12281105
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.8225774
+    - serializedVersion: 3
+      time: 0.5050678
+      value: 0.36964303
+      inSlope: 0.15245053
+      outSlope: 0.15245053
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.59485954
+      value: 0.3194407
+      inSlope: 0.3374999
+      outSlope: 0.3374999
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.45203507
+    - serializedVersion: 3
+      time: 0.6559629
+      value: 0.4560546
+      inSlope: -0.030587336
+      outSlope: -0.030587336
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.41877496
+    - serializedVersion: 3
+      time: 0.7616625
+      value: 0.41668344
+      inSlope: 0.0048173843
+      outSlope: 0.0048173843
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.5055857
+    - serializedVersion: 3
+      time: 0.80555356
+      value: 0.5860233
+      inSlope: 0.10075825
+      outSlope: 0.10075825
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.7128508
+    - serializedVersion: 3
+      time: 0.91439635
+      value: 0.58109415
+      inSlope: 2.6211526
+      outSlope: 2.6211526
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 0
+    m_RotationOrder: 4
+  AnimateY: 1
+  AnimateScaleY:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.07659675
+      value: 0.0894725
+      inSlope: -0.6397999
+      outSlope: -0.6397999
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.9714303
+    - serializedVersion: 3
+      time: 0.16261375
+      value: 0.067162216
+      inSlope: 0.09596071
+      outSlope: 0.09596071
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.21598563
+      value: 0.17190018
+      inSlope: -0.015841745
+      outSlope: -0.015841745
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.30267602
+      value: 0.12221223
+      inSlope: -0.062267344
+      outSlope: -0.062267344
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.38248342
+      value: 0.27859992
+      inSlope: -0.6506563
+      outSlope: -0.6506563
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.5591689
+    - serializedVersion: 3
+      time: 0.4766094
+      value: 0.20450538
+      inSlope: 0.12281105
+      outSlope: 0.12281105
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.8225774
+    - serializedVersion: 3
+      time: 0.5050678
+      value: 0.36964303
+      inSlope: 0.15245053
+      outSlope: 0.15245053
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.59485954
+      value: 0.3194407
+      inSlope: 0.3374999
+      outSlope: 0.3374999
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.45203507
+    - serializedVersion: 3
+      time: 0.6559629
+      value: 0.4560546
+      inSlope: -0.030587336
+      outSlope: -0.030587336
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.41877496
+    - serializedVersion: 3
+      time: 0.7616625
+      value: 0.41668344
+      inSlope: 0.0048173843
+      outSlope: 0.0048173843
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.5055857
+    - serializedVersion: 3
+      time: 0.80555356
+      value: 0.5860233
+      inSlope: 0.10075825
+      outSlope: 0.10075825
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.7128508
+    - serializedVersion: 3
+      time: 0.91439635
+      value: 0.58109415
+      inSlope: 2.6211526
+      outSlope: 2.6211526
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 0
+    m_RotationOrder: 4
+  AnimateZ: 1
+  AnimateScaleZ:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.07659675
+      value: 0.0894725
+      inSlope: -0.6397999
+      outSlope: -0.6397999
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.9714303
+    - serializedVersion: 3
+      time: 0.16261375
+      value: 0.067162216
+      inSlope: 0.09596071
+      outSlope: 0.09596071
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.21598563
+      value: 0.17190018
+      inSlope: -0.015841745
+      outSlope: -0.015841745
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.30267602
+      value: 0.12221223
+      inSlope: -0.062267344
+      outSlope: -0.062267344
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.38248342
+      value: 0.27859992
+      inSlope: -0.6506563
+      outSlope: -0.6506563
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.5591689
+    - serializedVersion: 3
+      time: 0.4766094
+      value: 0.20450538
+      inSlope: 0.12281105
+      outSlope: 0.12281105
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.8225774
+    - serializedVersion: 3
+      time: 0.5050678
+      value: 0.36964303
+      inSlope: 0.15245053
+      outSlope: 0.15245053
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 1
+    - serializedVersion: 3
+      time: 0.59485954
+      value: 0.3194407
+      inSlope: 0.3374999
+      outSlope: 0.3374999
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.45203507
+    - serializedVersion: 3
+      time: 0.6559629
+      value: 0.4560546
+      inSlope: -0.030587336
+      outSlope: -0.030587336
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.41877496
+    - serializedVersion: 3
+      time: 0.7616625
+      value: 0.41668344
+      inSlope: 0.0048173843
+      outSlope: 0.0048173843
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.5055857
+    - serializedVersion: 3
+      time: 0.80555356
+      value: 0.5860233
+      inSlope: 0.10075825
+      outSlope: 0.10075825
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.7128508
+    - serializedVersion: 3
+      time: 0.91439635
+      value: 0.58109415
+      inSlope: 2.6211526
+      outSlope: 2.6211526
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 0
+    m_RotationOrder: 4
+  AllowAdditivePlays: 0
+  DetermineScaleOnPlay: 0
+  DestinationScale: {x: 0.5, y: 0.5, z: 0.5}
 --- !u!1 &477383130380280549
 GameObject:
   m_ObjectHideFlags: 0
@@ -13,7 +534,7 @@ GameObject:
   - component: {fileID: 477383130380280551}
   - component: {fileID: 477383130380280548}
   - component: {fileID: 477383130380280568}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -125,7 +646,7 @@ GameObject:
   - component: {fileID: 477383130412878410}
   - component: {fileID: 477383130412878411}
   - component: {fileID: 477383130412878415}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -237,7 +758,7 @@ GameObject:
   - component: {fileID: 477383130466553012}
   - component: {fileID: 477383130466553013}
   - component: {fileID: 477383130466553033}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -347,7 +868,7 @@ GameObject:
   - component: {fileID: 477383130506279900}
   - component: {fileID: 477383130506279902}
   - component: {fileID: 477383130506279903}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -410,7 +931,7 @@ GameObject:
   - component: {fileID: 477383130661780559}
   - component: {fileID: 477383130661780556}
   - component: {fileID: 477383130661780544}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -740,7 +1261,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4916695, y: 1.5784345, z: 1}
+  m_Size: {x: 1.4916695, y: 1.5784345, z: 3.3}
   m_Center: {x: -0.01, y: 0.2, z: 0}
 --- !u!114 &477383130871562852
 MonoBehaviour:
@@ -829,14 +1350,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86ae92118b15de47a446a42a1edb052, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  durationValue: 100
-  transitionValue: 5
+  durationValue: 10
+  transitionValue: 2
   colorTextTransition: {r: 0.7169812, g: 0, b: 0, a: 1}
   colorTextRound: {r: 1, g: 1, b: 1, a: 1}
   countdown: {fileID: 477383131831954860}
   chairs: []
   colorChairActive: {r: 0, g: 0.6132076, b: 0.13071223, a: 1}
   colorChairInactive: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
+  chosenOnes: []
 --- !u!1 &477383131124566593
 GameObject:
   m_ObjectHideFlags: 0
@@ -850,7 +1372,7 @@ GameObject:
   - component: {fileID: 477383131124566595}
   - component: {fileID: 477383131124566592}
   - component: {fileID: 477383131124566596}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1044,7 +1566,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4916695, y: 1.5784345, z: 1}
+  m_Size: {x: 1.4916695, y: 1.5784345, z: 3.3}
   m_Center: {x: -0.01, y: 0.2, z: 0}
 --- !u!114 &477383131128841257
 MonoBehaviour:
@@ -1107,9 +1629,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 477383131273025984}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.41, y: -5, z: 1.67}
+  m_LocalPosition: {x: -10.37, y: -4.92, z: 1.67}
   m_LocalScale: {x: 1.8762, y: 1.8762, z: 1.8762}
-  m_Children: []
+  m_Children:
+  - {fileID: 2054315541}
   m_Father: {fileID: 477383130753047888}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1173,7 +1696,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4916695, y: 1.5784345, z: 1}
+  m_Size: {x: 1.4916695, y: 1.5784345, z: 3.3}
   m_Center: {x: -0.01, y: 0.2, z: 0}
 --- !u!114 &477383131273025991
 MonoBehaviour:
@@ -1302,7 +1825,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4916695, y: 1.5784345, z: 1}
+  m_Size: {x: 1.4916695, y: 1.5784345, z: 3.3}
   m_Center: {x: -0.01, y: 0.2, z: 0}
 --- !u!114 &477383131464913801
 MonoBehaviour:
@@ -1349,7 +1872,7 @@ GameObject:
   - component: {fileID: 477383131724314094}
   - component: {fileID: 477383131724314095}
   - component: {fileID: 477383131724314083}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1540,7 +2063,7 @@ GameObject:
   - component: {fileID: 477383131937439538}
   - component: {fileID: 477383131937439539}
   - component: {fileID: 477383131937439543}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1652,7 +2175,7 @@ GameObject:
   - component: {fileID: 477383132048890140}
   - component: {fileID: 477383132048890141}
   - component: {fileID: 477383132048890129}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1846,7 +2369,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4916695, y: 1.5784345, z: 1}
+  m_Size: {x: 1.4916695, y: 1.5784345, z: 3.3}
   m_Center: {x: -0.24583387, y: -0.048202846, z: 0}
 --- !u!114 &477383132308611294
 MonoBehaviour:
@@ -1975,7 +2498,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.4916695, y: 1.5784345, z: 1}
+  m_Size: {x: 1.4916695, y: 1.5784345, z: 3.3}
   m_Center: {x: -0.01, y: -0.23, z: 0}
 --- !u!114 &477383132376524807
 MonoBehaviour:
@@ -2020,7 +2543,7 @@ GameObject:
   - component: {fileID: 477383132440257191}
   - component: {fileID: 477383132440257209}
   - component: {fileID: 477383132440257190}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

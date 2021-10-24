@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager gameManager;
-    public GameObject[] players;
+    public static GameManager instance;
+    //public GameObject[] players;
     public GameObject[] mapsChair;
     public GameObject currentMapInstance;
     public enum TypeMods
@@ -16,15 +16,15 @@ public class GameManager : MonoBehaviour
     public TypeMods currentMod;
     private void Awake()
     {
-        if(gameManager != null)
+        if(instance != null)
         {
             Destroy(this);
         }
         else
         {
-            gameManager = this;
+            instance = this;
         }
-        players = GameObject.FindGameObjectsWithTag("Player");
+        //players = GameObject.FindGameObjectsWithTag("Player");
     }
     // Start is called before the first frame update
     void Start()
