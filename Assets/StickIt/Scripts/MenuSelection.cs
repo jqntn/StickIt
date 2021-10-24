@@ -13,6 +13,8 @@ public class MenuSelection : MonoBehaviour
 
     public string sceneToLoad;
 
+    [SerializeField] Animator animLaunchGame;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +28,22 @@ public class MenuSelection : MonoBehaviour
         {
             if (Gamepad.all[i].buttonSouth.isPressed)
             {
-                AddPlayer(Gamepad.all[i], i);
+                bool isAlreadyActivated = false;
+                foreach (Player player in MultiplayerManager.instance.players)
+                {
+                    if (player.myDatas.deviceID == Gamepad.all[i].deviceId)
+                    {
+                        isAlreadyActivated = true;
+                    }
+                }
+                if (isAlreadyActivated) return; // ----- RETURN CONDITION
+
+                int nextID = MultiplayerManager.instance.players.Count;
+                AddPlayer(Gamepad.all[i], nextID );
+                if(MultiplayerManager.instance.players.Count == 2)
+                {
+                    animLaunchGame.SetTrigger("Entry");
+                }
             } else if (MultiplayerManager.instance.players.Count >= 2)
             {
                 if (Gamepad.all[i].startButton.isPressed)
@@ -40,18 +57,8 @@ public class MenuSelection : MonoBehaviour
     private void AddPlayer(Gamepad gamepad, int i)
     {
 
-        bool isAlreadyActivated = false;
-        foreach (Player player in MultiplayerManager.instance.players)
-        {
-            if (player.myDatas.deviceID == gamepad.deviceId)
-            {
-                isAlreadyActivated = true;
-            }
-        }
-        if (isAlreadyActivated) return;
-
         PlayerInput newPlayer = null;
-        newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1, Gamepad.all[i]);
+        newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1, gamepad);
 
         newPlayer.transform.position = _playersStartingPos.GetChild(i).position;
         Player scriptPlayer = newPlayer.transform.GetComponent<Player>();

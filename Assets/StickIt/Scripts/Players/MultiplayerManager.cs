@@ -22,7 +22,7 @@ public class MultiplayerManager : MonoBehaviour
     public int nbrOfPlayer;
 
     [SerializeField] private Transform _prefabPlayer;
-    [SerializeField] private Transform _playersStartingPos;
+    public Transform playersStartingPos;
     [Header("------------DEBUG------------")]
     public List<Player> players = new List<Player>();
     public List<Player> alivePlayers = new List<Player>();
@@ -35,8 +35,9 @@ public class MultiplayerManager : MonoBehaviour
 
     int nbrDevicesLastFrame = 0;
     private void Awake()
-    {
-        Initialization();
+    {
+
+      // Initialization();
         if (instance == null) instance = this;
         else Destroy(gameObject);
 
@@ -59,7 +60,7 @@ public class MultiplayerManager : MonoBehaviour
             newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1, Gamepad.all[i]);
             else newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1);
 
-            newPlayer.transform.position = _playersStartingPos.GetChild(i).position;
+            newPlayer.transform.position = playersStartingPos.GetChild(i).position;
             Player scriptPlayer = newPlayer.transform.GetComponent<Player>();
             //scriptPlayer.id = i;
             newPlayer.gameObject.name = "Player" + i.ToString();
@@ -101,7 +102,7 @@ public class MultiplayerManager : MonoBehaviour
             players.Add(scriptPlayer);
 
 
-            newPlayer.transform.position = _playersStartingPos.GetChild(i).position;
+            newPlayer.transform.position = playersStartingPos.GetChild(i).position;
             
         }
     }
