@@ -32,7 +32,7 @@ public class MusicalChairManager : MonoBehaviour
         chairs = FindObjectsOfType<Chair>();
         inTransition = true;
         transition = transitionValue;
-        maxChairsActive = _multiplayerManager.players.Count - 1;
+        maxChairsActive = _multiplayerManager.alivePlayers.Count - 1;
     }
 
     // Update is called once per frame
@@ -94,9 +94,19 @@ public class MusicalChairManager : MonoBehaviour
         {
             c.DeactivateChair(colorChairInactive);
         }
+        /*for(int i = chosenOnes.Count-1; i >= 0; i--)
+        {
+            if (_multiplayerManager.alivePlayers.Find(x => chosenOnes[i].id != x.id))
+            {
+                //MAKE THE LOSERS EXPLODE
+                Debug.Log(_multiplayerManager.players[i].name + " DIES");
+                _multiplayerManager.alivePlayers[i].GetComponent<Player>().Death();
+            }
+        }*/
         for(int i = _multiplayerManager.alivePlayers.Count-1; i >= 0; i--)
         {
-            if (chosenOnes.Find(x => _multiplayerManager.alivePlayers[i].id != x.id))
+
+            if (!chosenOnes.Find(x => _multiplayerManager.alivePlayers[i] == x))
             {
                 //MAKE THE LOSERS EXPLODE
                 Debug.Log(_multiplayerManager.players[i].name + " DIES");

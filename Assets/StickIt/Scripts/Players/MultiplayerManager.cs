@@ -20,13 +20,13 @@ public class MultiplayerManager : MonoBehaviour
     public List<Material> materials = new List<Material>();
     private void Awake()
     {
+        Initialization();
         if (instance == null) instance = this;
         else Destroy(gameObject);
     }
 
     private void Start()
     {
-       Initialization();
        print(Gamepad.all.Count);
     }
 

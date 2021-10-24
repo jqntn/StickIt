@@ -23,14 +23,6 @@ public class Chair : MonoBehaviour
             if (playersInChair.Count > 0)
             {
                 isTaken = true;
-                chosenOne = playersInChair[0];
-                for (int i = 0; i < playersInChair.Count; i++)
-                {
-                    if(Vector3.Distance(chosenOne.transform.position, transform.position) > Vector3.Distance(playersInChair[i].transform.position, transform.position))
-                    {
-                        chosenOne = playersInChair[i];
-                    }
-                }
             }
         }
     }
@@ -46,6 +38,20 @@ public class Chair : MonoBehaviour
         //FAIRE TREMBLER LA CHAISE A L'INVERSE
         if (isActive)
         {
+            if (playersInChair.Count > 1)
+            {
+                chosenOne = playersInChair[0];
+                for (int i = 0; i < playersInChair.Count; i++)
+                {
+                    if (Vector3.Distance(chosenOne.transform.position, transform.position) > Vector3.Distance(playersInChair[i].transform.position, transform.position))
+                    {
+                        chosenOne = playersInChair[i];
+                    }
+                }
+            }else if (playersInChair.Count == 1)
+            {
+                chosenOne = playersInChair[0];
+            }
             gameObject.GetComponent<MeshRenderer>().material.color = c;
             if (isTaken)
                 musicalChairManager.chosenOnes.Add(chosenOne);
@@ -58,18 +64,19 @@ public class Chair : MonoBehaviour
 
         if (isActive)
         {
-            if (c.gameObject.transform.parent.parent.CompareTag("Player"))
+            
+            if (c.gameObject.TryGetComponent<Player>(out Player p))
             {
-                playersInChair.Add(c.gameObject.GetComponentInParent<Player>());
+                playersInChair.Add(p);
             }
         }
     }
     private void OnTriggerExit(Collider c)
     {
-            if (c.gameObject.transform.parent.parent.CompareTag("Player"))
-            {
-               playersInChair.Remove(playersInChair.Find(x => c.gameObject.GetComponentInParent<Player>()));
-            }
+        if (c.gameObject.TryGetComponent<Player>(out Player p))
+        {
+            playersInChair.Remove(playersInChair.Find(x => p));
+        }
         
     }
 }
