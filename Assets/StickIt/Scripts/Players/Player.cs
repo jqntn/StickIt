@@ -7,8 +7,10 @@ public class Player : MonoBehaviour
     private MultiplayerManager _multiplayerManager;
     public PlayerMouvement myMouvementScript;
 
-    public int id;
+    public MultiplayerManager.PlayerData myDatas;
+
     bool isDead;
+   
 
     void Start()
     {

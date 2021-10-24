@@ -96,7 +96,7 @@ public class MusicalChairManager : MonoBehaviour
         }
         for(int i = playersInGame.Count-1; i >= 0; i--)
         {
-            if (chosenOnes.Find(x => playersInGame[i].id != x.id))
+            if (chosenOnes.Find(x => playersInGame[i].myDatas.id != x.myDatas.id))
             {
                 //MAKE THE LOSERS EXPLODE
                 //g.GetComponent<Player>().Die();

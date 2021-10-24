@@ -133,7 +133,7 @@ public class PlayerMouvement : MonoBehaviour
         style.fontSize = 24;
         style.normal.textColor = Color.white;
 
-        if (myPlayer.id == 0)
+        if (myPlayer.myDatas.id == 0)
         {
             GUILayout.Label(" Velocity  = " + rb.velocity, style);
             GUILayout.Label("Magnitude = " + rb.velocity.magnitude, style);
@@ -211,7 +211,7 @@ public class PlayerMouvement : MonoBehaviour
         {
             case "Player":
                 Player playerCollided = collision.transform.GetComponent<Player>();
-                if (myPlayer.id < playerCollided.id)
+                if (myPlayer.myDatas.id < playerCollided.myDatas.id)
                 {
                     if(collision.contactCount > 0)
                     CollisionBetweenPlayers(playerCollided.myMouvementScript, collision.contacts[0]);
@@ -260,7 +260,6 @@ public class PlayerMouvement : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
-        print("exit");
         if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
         for (int i = 0; i < connectedPoints.Count; i++)
         {
