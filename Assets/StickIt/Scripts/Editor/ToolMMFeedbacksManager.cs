@@ -8,9 +8,13 @@ public class ToolMMFeedbacksManagerEditor : Editor
     {
         base.OnInspectorGUI();
         ToolMMFeedbacksManager script = (ToolMMFeedbacksManager)target;
-        if (GUILayout.Button("Generate Files"))
+        //if (GUILayout.Button("Generate Files"))
+        //{
+        //    script.GenerateFiles();
+        //}
+        if(GUILayout.Button("Update Files"))
         {
-            script.GenerateFiles();
+            script.UpdateFiles();
         }
     }
 }

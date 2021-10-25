@@ -8,15 +8,86 @@ public class ToolMMFeedbacksManager : MonoBehaviour
 {
     private string fileMMFeedbacksManager = "MMFeedbacksManager.cs";
     private string fileGameEvents = "GameEvents.cs";
-    private string sourceFileName = "CopyGameEvents.cs";
     private string subFolder = "/StickIt/Scripts/Utils/"; 
     private string startListeners = "// | Listeners";
-    private string endListeners = "// | End Listeners";
     private string startCalls= "// | Calls";
-    private string endCalls= "// | End Calls";
     private string startEvents= "// | Events";
-    private string endEvents= "// | End Events";
     private List<MMFeedbacks> feedbacksList;
+
+    /*
+    private string sourceFileName = "CopyGameEvents.cs";
+    private string endListeners = "// | End Listeners";
+    private string endCalls = "// | End Calls";
+    private string endEvents= "// | End Events";
+    */
+    public void UpdateFiles()
+    {
+        MMFeedbacksManager manager = GetComponent<MMFeedbacksManager>();
+        feedbacksList = manager.feedbacksList;
+        string pathMMFeedbacksManager = GetFilePath(fileMMFeedbacksManager);
+        string pathGameEvents = GetFilePath(fileGameEvents);
+        UpdateGameEvents(pathGameEvents);
+        UpdateMMFeedbacksManager(pathMMFeedbacksManager);
+    }
+
+    private void UpdateGameEvents(string path)
+    {
+        string text = File.ReadAllText(path);
+        int index = text.IndexOf(startEvents) + startEvents.Length;
+        foreach (MMFeedbacks feedbacks in feedbacksList)
+        {
+            int indexSearch = text.IndexOf(feedbacks.name);
+            // Feedbacks Not Found Add it
+            if(indexSearch == -1)
+            {
+                 text = text.Insert(index,
+                    "\n\tpublic static UnityEvent " +
+                     feedbacks.name +
+                    "Event = new UnityEvent();"
+                    );
+                File.WriteAllText(path, text);
+            }
+        }
+    }
+
+    private void UpdateMMFeedbacksManager(string path)
+    {
+        string text = File.ReadAllText(path);
+        int indexListeners = text.IndexOf(startListeners) + startListeners.Length;
+
+        for (int i = 0; i < feedbacksList.Count; i++)
+        {
+            int indexSearch = text.IndexOf(feedbacksList[i].name);
+            if (indexSearch == -1)
+            {
+                text = text.Insert(indexListeners,
+                "\n\t\tGameEvents." +
+                feedbacksList[i].name +
+                "Event.AddListener(" +
+                feedbacksList[i].name +
+                "Call" +
+                ");"
+                );
+                File.WriteAllText(path, text);
+
+                int indexCalls = text.IndexOf(startCalls) + startCalls.Length;
+                text = text.Insert(indexCalls,
+                    "\n\tpublic void " + feedbacksList[i].name + "Call()\n\t{" +
+                    "\n\t\tif (!feedbacksList[" + i + "].IsPlaying){" +
+                    "\n\t\t\tfeedbacksList[" + i + "].PlayFeedbacks();" +
+                    "\n\t\t}" +
+                    "\n\t}"
+                );
+                File.WriteAllText(path, text);
+            }
+        }
+    }
+    private string GetFilePath(string filename)
+    {
+        return Application.dataPath + subFolder + filename;
+    }
+
+    /*
     public void GenerateFiles()
     {
         string pathMMFeedbacksManager = GetFilePath(fileMMFeedbacksManager);
@@ -36,12 +107,6 @@ public class ToolMMFeedbacksManager : MonoBehaviour
         WriteInMMFeedbacksManager(pathMMFeedbacksManager);
         Debug.Log("File Generated");
     }
-
-    private string GetFilePath(string filename)
-    {
-        return Application.dataPath + subFolder + filename;
-    }
-
     private void DeleteOldText(string path, ref string text, string startText, string endText)
     {
         int start = text.IndexOf(startText) + startText.Length;
@@ -106,4 +171,5 @@ public class ToolMMFeedbacksManager : MonoBehaviour
         text = text.Insert(text.IndexOf(endEvents), "\n\t");
         File.WriteAllText(path, text);
     }
+    */
 }
