@@ -25,6 +25,8 @@ public class MusicalChairManager : MonoBehaviour
     [Header("Players")]
     //public List<Player> playersInGame;
     public List<Player> chosenOnes;
+
+    public GameObject winTxt;
     // Start is called before the first frame update
     void Start()
     {
@@ -97,7 +99,7 @@ public class MusicalChairManager : MonoBehaviour
         }
         /*for(int i = chosenOnes.Count-1; i >= 0; i--)
         {
-            if (_multiplayerManager.alivePlayers.Find(x => chosenOnes[i].id != x.id))
+            if (chosenOnes.Find(x => playersInGame[i].myDatas.id != x.myDatas.id))
             {
                 //MAKE THE LOSERS EXPLODE
                 Debug.Log(_multiplayerManager.players[i].name + " DIES");
@@ -116,5 +118,21 @@ public class MusicalChairManager : MonoBehaviour
         }
         maxChairsActive = _multiplayerManager.alivePlayers.Count - 1;
         chosenOnes.Clear();
+
+        // FIN LEVEL
+        if (_multiplayerManager.alivePlayers.Count == 1)
+        {
+            winTxt.transform.parent.parent.gameObject.SetActive(true);
+            winTxt.GetComponent<Text>().text = _multiplayerManager.alivePlayers[0].myDatas.name + " win!";
+            GameManager.instance.ChangeMod();
+        } else if(_multiplayerManager.alivePlayers.Count <= 0)
+        {
+            winTxt.transform.parent.parent.gameObject.SetActive(true);
+            winTxt.GetComponent<Text>().text = "Only losers...";
+            GameManager.instance.ChangeMod();
+        }
+
+      
+
     }
 }
