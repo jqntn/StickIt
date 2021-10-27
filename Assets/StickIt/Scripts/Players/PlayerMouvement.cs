@@ -285,8 +285,8 @@ public class PlayerMouvement : MonoBehaviour
 
     public void CollisionBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact)
     {
-        int id = GetComponent<Player>().id;
-        int ido = playerCollided.GetComponent<Player>().id;
+        int id = GetComponent<Player>().myDatas.id;
+        int ido = playerCollided.GetComponent<Player>().myDatas.id;
         //float newVelMagnitudeP1 = playerCollided.velocityLastFrame.magnitude;
         //float newVelMagnitudeP2 = velocityLastFrame.magnitude;
 
@@ -366,6 +366,11 @@ public class PlayerMouvement : MonoBehaviour
                 connectedPoints.RemoveAt(i);
             }
         }
+    }
+
+    public void PrepareToChangeLevel()
+    {
+        connectedPoints.Clear();
     }
 
     // ----- PREVIEW DOTS -----
