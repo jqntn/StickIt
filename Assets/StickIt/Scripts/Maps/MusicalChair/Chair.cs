@@ -73,7 +73,7 @@ public class Chair : MonoBehaviour
             }
             gameObject.GetComponent<MeshRenderer>().material.color = c;
             if (isTaken)
-                musicalChairManager.chosenOnes.Add(chosenOne);
+                musicalChairManager.winners.Add(chosenOne);
             isActive = false;
         }
     }
