@@ -20,15 +20,7 @@ public class Level : MonoBehaviour
     protected virtual void StartMap()
     {
         _multiplayerManager = MultiplayerManager.instance;
-        _multiplayerManager.playersStartingPos = startingPos;
-        if (SceneManager.GetActiveScene().buildIndex != 0)
-        {
-            _multiplayerManager.InstantiatePlayersWithData();
-        }
-        else
-        {
-            _multiplayerManager.InstantiatePlayers();
-        }
+        _multiplayerManager.ChangeMap();
 
         _gameManager = GameManager.instance;
     }
