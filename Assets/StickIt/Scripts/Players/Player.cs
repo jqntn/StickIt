@@ -17,6 +17,8 @@ public class Player : MonoBehaviour
         _multiplayerManager = MultiplayerManager.instance;
         myMouvementScript = GetComponent<PlayerMouvement>();
         myMouvementScript.myPlayer = this;
+
+        DontDestroyOnLoad(this);
     }
 
     public void Death()
