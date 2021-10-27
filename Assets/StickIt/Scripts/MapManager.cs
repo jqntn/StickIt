@@ -13,7 +13,7 @@ class MapManager : Unique<MapManager>
     {
         if (GUI.Button(new Rect(0, 0, 200, 100), "NextMap")) PrepNextMap();
     }
-    bool PrepNextMap()
+    public bool PrepNextMap()
     {
         if (_coroutine == null) _coroutine = StartCoroutine(NextMap(nextMap));
         else return false;
