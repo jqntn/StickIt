@@ -43,12 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb566c5b7b50d2c49a80e4f9351c4c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _curMapID: 0
-  _prevMapID: 0
-  _nextMapIDs: 
-  loadedMapsBufferSize: 2
-  mapNames:
-  - 1_Map
-  - 2_Map
-  - 3_Map
-  - 4_Map
+  smoothTime: 0.2
+  smoothApprox: 0.001
+  mapOffset: 50
+  nextMap: 1_Chairs
