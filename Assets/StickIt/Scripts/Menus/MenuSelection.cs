@@ -11,6 +11,7 @@ public class MenuSelection : MonoBehaviour
     private Transform _playersStartingPos;
     public List<Material> materials = new List<Material>();
 
+    int counterID = 0;
     [SerializeField] Animator animLaunchGame;
 
     [Header("----------- ANIMATIONS -----------")]
@@ -38,7 +39,7 @@ public class MenuSelection : MonoBehaviour
     {
         for (int i = 0; i < Gamepad.all.Count; i++)
         {
-            if (Gamepad.all[i].buttonSouth.isPressed)
+            if (Gamepad.all[i].buttonSouth.wasPressedThisFrame)
             {
                 bool isAlreadyActivated = false;
                 foreach (Player player in MultiplayerManager.instance.players)
@@ -50,8 +51,8 @@ public class MenuSelection : MonoBehaviour
                 }
                 if (isAlreadyActivated) continue; // ----- RETURN CONDITION
 
-                int nextID = MultiplayerManager.instance.players.Count;
-                AddPlayer(Gamepad.all[i], nextID );
+                AddPlayer(Gamepad.all[i], counterID );
+                counterID++;
                 if(MultiplayerManager.instance.players.Count == 2)
                 {
                     animLaunchGame.SetTrigger("Entry");
@@ -68,10 +69,11 @@ public class MenuSelection : MonoBehaviour
 
     private void AddPlayer(Gamepad gamepad, int i)
     {
+        print(i);
         if (!isSpawnDeactivated[i])
         {
             //SpawnPlayer( gamepad, i);
-
+            
             isSpawnDeactivated[i] = true;
             tuyauxList[i].menuSelection = this;
             tuyauxList[i].gamepad = gamepad;
@@ -87,6 +89,7 @@ public class MenuSelection : MonoBehaviour
     {
         // Instantiate Player
         PlayerInput newPlayer = null;
+
         newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1, gamepad);
 
         newPlayer.transform.position = _playersStartingPos.GetChild(i).position;
