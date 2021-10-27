@@ -4,6 +4,7 @@ public class SphereSoft : MonoBehaviour
 {
 
     [Header("Bones")]
+    public PhysicMaterial matBones;
     public GameObject root = null;
     public GameObject x = null;
     public GameObject x2 = null;
@@ -25,7 +26,7 @@ public class SphereSoft : MonoBehaviour
 
     private void Awake()
     {
-        Softbody.Init(Shape, ColliderSize, RigidbodyMass, Spring, Damper, RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ, PrefabLine, ViewLines);
+        Softbody.Init(Shape, ColliderSize, RigidbodyMass, Spring, Damper, RigidbodyConstraints.FreezeRotation | RigidbodyConstraints.FreezePositionZ, PrefabLine, ViewLines, matBones);
     }
     private void Start()
     {

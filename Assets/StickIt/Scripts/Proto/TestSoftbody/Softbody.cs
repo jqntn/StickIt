@@ -15,9 +15,10 @@ public static class Softbody
     public static float Spring;
     public static float Damper;
     public static RigidbodyConstraints Constraints;
+    public static PhysicMaterial matBones;
     public static LineRenderer PrefabLine;
     public static bool ViewLines;
-    public static void Init(ColliderShape shape, float collidersize, float rigidbodymass, float spring, float damper, RigidbodyConstraints constraints)
+    public static void Init(ColliderShape shape, float collidersize, float rigidbodymass, float spring, float damper, RigidbodyConstraints constraints, PhysicMaterial mat)
     {
         Shape = shape;
         ColliderSize = collidersize;
@@ -26,8 +27,9 @@ public static class Softbody
         Damper = damper;
         Constraints = constraints;
         ViewLines = false;
+        matBones = mat;
     }
-    public static void Init(ColliderShape shape, float collidersize, float rigidbodymass, float spring, float damper, RigidbodyConstraints constraints, LineRenderer prefabline, bool viewlines)
+    public static void Init(ColliderShape shape, float collidersize, float rigidbodymass, float spring, float damper, RigidbodyConstraints constraints, LineRenderer prefabline, bool viewlines, PhysicMaterial mat)
     {
         Shape = shape;
         ColliderSize = collidersize;
@@ -37,6 +39,7 @@ public static class Softbody
         Constraints = constraints;
         PrefabLine = prefabline;
         ViewLines = viewlines;
+        matBones = mat;
     }
     public static Rigidbody AddCollider(ref GameObject go)
     {
@@ -45,6 +48,8 @@ public static class Softbody
     public static SpringJoint AddSpring(ref GameObject go1, ref GameObject go2)
     {
         SpringJoint sp = AddSpring(ref go1, ref go2, Spring, Damper);
+        sp.enableCollision = true;
+        sp.tolerance = 0.01f;
         if (ViewLines == true)
             AddLine(ref go1, ref go2);
         return sp;

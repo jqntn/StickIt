@@ -79,8 +79,6 @@ public class Chair : MonoBehaviour
     }
     private void OnTriggerEnter(Collider c)
     {
-        Debug.Log(c.gameObject.name);
-
         if (isActive)
         {
 
