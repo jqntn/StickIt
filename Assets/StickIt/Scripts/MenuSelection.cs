@@ -20,12 +20,6 @@ public class MenuSelection : MonoBehaviour
     public AnimationCurve curve;
     private Coroutine coroutine;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
@@ -61,19 +55,15 @@ public class MenuSelection : MonoBehaviour
 
     private void AddPlayer(Gamepad gamepad, int i)
     {
-        // Play tuyau animation 
         if(coroutine == null)
         {
             coroutine = StartCoroutine(DoAddPlayer(gamepad, i));
         }
-
-        // make animation with tuyau where it's going to throw up the slime
-        // instantiate slime
-
     }
 
     private IEnumerator DoAddPlayer(Gamepad gamepad, int i)
     {
+        // Play tuyau showing
         float timer = 0;
         float startPosY = tuyauxList[i].transform.position.y;
         while(timer < animTime)
@@ -89,6 +79,7 @@ public class MenuSelection : MonoBehaviour
             yield return null;
         }
 
+        // Instantiate Player
         PlayerInput newPlayer = null;
         newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1, gamepad);
 
@@ -103,9 +94,9 @@ public class MenuSelection : MonoBehaviour
         newPlayer.gameObject.name = scriptPlayer.myDatas.name;
         scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = scriptPlayer.myDatas.material;
 
-
         MultiplayerManager.instance.players.Add(scriptPlayer);
 
+        // Play tuyau unshowing
         timer = 0;
         while (timer < animTime)
         {
@@ -129,6 +120,5 @@ public class MenuSelection : MonoBehaviour
         }
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1) ;
-
     }
 }
