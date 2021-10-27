@@ -1,18 +1,35 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+public class Level : MonoBehaviour
+{
+    // Start is called before the first frame update
 
-//public class Level : MonoBehaviour
-//{
-//    // Start is called before the first frame update
+    protected GameManager _gameManager;
+    protected MultiplayerManager _multiplayerManager;
+    public List<Player> winners;
+    public Transform startingPos;
 
-//    public Transform startingPos;
-
-//    void Awake()
-//    {
-//        MultiplayerManager.instance.playersStartingPos = startingPos;
-//        //MultiplayerManager.instance.InstantiatePlayers();
-//    }
+    void Start()
+    {
 
 
-//}
+        StartMap();
+    }
+    protected virtual void StartMap()
+    {
+        _multiplayerManager = MultiplayerManager.instance;
+        _multiplayerManager.playersStartingPos = startingPos;
+        if (SceneManager.GetActiveScene().buildIndex != 0)
+        {
+            _multiplayerManager.InstantiatePlayersWithData();
+        }
+        else
+        {
+            _multiplayerManager.InstantiatePlayers();
+        }
+
+        _gameManager = GameManager.instance;
+    }
+}

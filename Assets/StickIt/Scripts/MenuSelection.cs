@@ -13,6 +13,12 @@ public class MenuSelection : MonoBehaviour
 
     [SerializeField] Animator animLaunchGame;
 
+    [Header("----------- ANIMATIONS -----------")]
+    public List<GameObject> tuyauxList = new List<GameObject>();
+    public float animTime = 0.5f;
+    public float yOffset = 10.0f;
+    public AnimationCurve curve;
+    private Coroutine coroutine;
     // Start is called before the first frame update
     void Start()
     {
@@ -54,7 +60,31 @@ public class MenuSelection : MonoBehaviour
 
     private void AddPlayer(Gamepad gamepad, int i)
     {
+        if(coroutine == null)
+        {
+            coroutine = StartCoroutine(DoAddPlayer(gamepad, i));
+        }
+    }
 
+    private IEnumerator DoAddPlayer(Gamepad gamepad, int i)
+    {
+        // Play tuyau showing
+        float timer = 0;
+        float startPosY = tuyauxList[i].transform.position.y;
+        while(timer < animTime)
+        {
+            timer += Time.deltaTime;
+            float ratio = timer / animTime;
+            Vector3 newPos = new Vector3(
+                tuyauxList[i].transform.position.x,
+                Mathf.Lerp(startPosY, startPosY - yOffset, curve.Evaluate(ratio)),
+                tuyauxList[i].transform.position.z);
+
+            tuyauxList[i].transform.position = newPos;
+            yield return null;
+        }
+
+        // Instantiate Player
         PlayerInput newPlayer = null;
         newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1, gamepad);
 
@@ -68,13 +98,24 @@ public class MenuSelection : MonoBehaviour
 
         newPlayer.gameObject.name = scriptPlayer.myDatas.name;
         scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = scriptPlayer.myDatas.material;
-        
 
         MultiplayerManager.instance.players.Add(scriptPlayer);
 
-        
-    }
+        // Play tuyau unshowing
+        timer = 0;
+        while (timer < animTime)
+        {
+            timer += Time.deltaTime;
+            float ratio = timer / animTime;
+            Vector3 newPos = new Vector3(
+                tuyauxList[i].transform.position.x,
+                Mathf.Lerp(startPosY - yOffset, startPosY, curve.Evaluate(ratio)),
+                tuyauxList[i].transform.position.z);
 
+            tuyauxList[i].transform.position = newPos;
+            yield return null;
+        }
+    }
     public void LaunchGame()
     {
 
@@ -84,6 +125,5 @@ public class MenuSelection : MonoBehaviour
         }
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1) ;
-
     }
 }
