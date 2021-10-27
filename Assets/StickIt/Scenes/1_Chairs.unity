@@ -133,6 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 18635991}
   - component: {fileID: 18635992}
+  - component: {fileID: 18635993}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -170,6 +171,29 @@ MonoBehaviour:
   - {fileID: 958254458}
   currentMapInstance: {fileID: 0}
   currentMod: 0
+--- !u!114 &18635993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 18635990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d173294bcfafa7e469ee34d358e07bc6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nbrOfPlayer: 2
+  _prefabPlayer: {fileID: 8854867468096441738, guid: bd2e8aa23cf5c3341ac34eba02c200b7, type: 3}
+  playersStartingPos: {fileID: 458454506}
+  players: []
+  alivePlayers: []
+  deadPlayers: []
+  materials:
+  - {fileID: 2100000, guid: 8a8dc1da6dc9d8542a895257440dbfc6, type: 2}
+  - {fileID: 2100000, guid: b6dfdb6b5582dfa47bc62e8f0876bcef, type: 2}
+  - {fileID: 2100000, guid: 4a0d86f138e169c4885a0711c62c440a, type: 2}
+  - {fileID: 2100000, guid: cfc9bb33a760d504783203410585c1b0, type: 2}
 --- !u!1 &87854807
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,6 +735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a66046fc7a252443ac78a68894f6d5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  winners: []
   startingPos: {fileID: 458454506}
 --- !u!4 &474221124
 Transform:
@@ -1573,6 +1598,10 @@ PrefabInstance:
       propertyPath: winTxt
       value: 
       objectReference: {fileID: 156446580}
+    - target: {fileID: 477383130934292853, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: startingPos
+      value: 
+      objectReference: {fileID: 458454506}
     - target: {fileID: 477383130934292853, guid: a3bb0b8557534e147a397858207651a9, type: 3}
       propertyPath: colorChairTaken.a
       value: 1
