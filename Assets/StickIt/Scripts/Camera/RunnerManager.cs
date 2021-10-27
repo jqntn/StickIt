@@ -5,6 +5,14 @@ using UnityEngine;
 public class RunnerManager : Level
 {
     public RaceDirection direction;
+    [Header("-------- End Level Condition ---------\n" +
+        "If all player are dead the level will auto transition to next map")]
+    [Tooltip("The last one standing is the winner\n" +
+        "Do not need to pass end checkpoint")]
+    public bool isLastOneStanding = false;
+    [Tooltip("If one player still in game\n" +
+        "He still need to pass the end checkpoint")]
+    public bool needToPassEnd = false;
     [Header("Score Systems")]
     [Tooltip("False = dead don't gain\n" +
         "True = dead gain score")]
@@ -48,12 +56,17 @@ public class RunnerManager : Level
     }
     protected override void EndMap()
     {
-        int count = orderPlayer.Count + deadPlayer.Count;
-        if (count == _multiplayerManager.nbrOfPlayer)
-        {
-            hasEndLevel = true;
-            DistributeScore();
-        }
+        //if(_multiplayerManager.alivePlayers.Count == 1)
+        //{
+        //    orderPlayer.Enqueue(_multiplayerManager.alivePlayers[0]);
+        //}
+
+        //int count = orderPlayer.Count + deadPlayer.Count;
+        //if (count == _multiplayerManager.nbrOfPlayer)
+        //{
+        //    hasEndLevel = true;
+        //    DistributeScore();
+        //}
     }
 
     private void DistributeScore()

@@ -155,6 +155,9 @@ MonoBehaviour:
   winners: []
   startingPos: {fileID: 838287262}
   direction: 3
+  isLastOneStanding: 0
+  needToPassEnd: 0
+  doDeadGainScore: 0
   hasFixedScore: 0
   fixedScores: 64000000500000002800000014000000
   hasDivideScore: 0
@@ -162,11 +165,13 @@ MonoBehaviour:
   hasPercentageScore: 0
   maxScore: 100
   percentageScores: 64000000320000001900000000000000
-  hasFirstGetAllScore: 0
+  hasFirstOnlyGetScore: 0
   score: 100
   hasDynamicScore: 1
   maxDynamicScore: 100
-  timePlayers: []
+  arriveTimePlayers: []
+  deadTimePlayers: []
+  hasEndLevel: 0
 --- !u!4 &78472545
 Transform:
   m_ObjectHideFlags: 0
@@ -509,11 +514,11 @@ MonoBehaviour:
   - {fileID: 2100000, guid: cfc9bb33a760d504783203410585c1b0, type: 2}
   nbrOfPlayer: 2
   _prefabPlayer: {fileID: 8854867468096441738, guid: bd2e8aa23cf5c3341ac34eba02c200b7, type: 3}
-  playersStartingPos: {fileID: 838287262}
   players: []
   alivePlayers: []
   deadPlayers: []
   materials: []
+  isMenuSelection: 0
 --- !u!4 &396755828
 Transform:
   m_ObjectHideFlags: 0
@@ -975,8 +980,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 838287262}
+  - component: {fileID: 838287263}
   m_Layer: 0
-  m_Name: PlayersStartingPos
+  m_Name: PlayerStartingPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1000,6 +1006,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &838287263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 838287261}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108c98e22d78faa4485fcfe003c81f68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &958254458
 GameObject:
   m_ObjectHideFlags: 0
@@ -1627,15 +1645,19 @@ MonoBehaviour:
   offset_Y: 1
   centroidOffset_X: 0.5
   centroidOffset_Y: 0.5
+  deathOffset: 0.1
   playerList: []
   multiplayerManager: {fileID: 0}
   playerFirst: {fileID: 0}
+  cam: {fileID: 0}
+  runnerManager: {fileID: 0}
   currentDirection: 0
   positionToGoTo: {x: 0, y: 0}
   velocity: {x: 0, y: 0, z: 0}
   startPos: {x: 0, y: 0}
   centroid_X: 0
   centroid_Y: 0
+  timer: 0
 --- !u!1 &1901747470
 GameObject:
   m_ObjectHideFlags: 0

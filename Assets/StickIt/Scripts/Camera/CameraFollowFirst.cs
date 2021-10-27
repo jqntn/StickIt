@@ -177,7 +177,7 @@ public class CameraFollowFirst : MonoBehaviour
                 screenPoint.x > 0 - deathOffset && screenPoint.x < 1 + deathOffset &&
                 screenPoint.y > 0 - deathOffset && screenPoint.y < 1 + deathOffset;
 
-            if (!onScreen && !runnerManager.GetDead().Contains(player) && !runnerManager.GetOrder().Contains(player))
+            if (!onScreen && !runnerManager.GetDead().Contains(player))
             {
                 runnerManager.AddDeath(player);
                 runnerManager.AddDeadTime(timer);
