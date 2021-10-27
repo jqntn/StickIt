@@ -5,118 +5,145 @@ using UnityEngine;
 
 public class CameraFollowFirst : MonoBehaviour
 {
-    public List<Player> playerList = new List<Player>();
-    private MultiplayerManager multiplayerManager;
+    [Header("---------- ANIMATION ---------")]
+    public float smoothTime = 0.5f;
+    [Header("Offset between camera & first player")]
+    public float offset_X = 10.0f;
+    public float offset_Y = 5.0f;
+    [Header("Centroid of player")]
+    [Header("+ Offset in the direction first Player")]
+    public float centroidOffet_X = 0.5f;
+    public float centroidOffset_Y = 0.5f;
+
     [Header("----------- DEBUG ------------")]
-    public Player playerFirst;
+    [SerializeField] private List<Player> playerList = new List<Player>();
+    [SerializeField] private MultiplayerManager multiplayerManager;
+    [SerializeField] private Player playerFirst;
+    [SerializeField] private RaceDirection currentDirection;
+    [SerializeField] private Vector2 positionToGoTo;
+    [SerializeField] private Vector3 velocity;
+    [SerializeField] private Vector2 startPos;
+    [SerializeField] private float centroid_X;
+    [SerializeField] private float centroid_Y;
+    //private void OnEnable()
+    //{
+    //    // Getting the direction of the run
+    //    currentDirection = RunnerManager.Instance.direction;
+    //}
+
     private void Start()
     {
         multiplayerManager = MultiplayerManager.instance;
         playerList = multiplayerManager.players;
+        currentDirection = RunnerManager.Instance.direction;
+        startPos = transform.position;
     }
 
     public void SetCurrentFirst(Player first)
     {
         playerFirst = first;
     }
-    //[Header("---------- DEBUG ------------")]
-    //public RaceDirection direction = RaceDirection.RIGHT;
-    //[SerializeField] private Vector2 positionToGoTo;
-    //private Vector3 velocity;
-    //public float smoothTime = 0.2f;
-    //public GameObject first;
-    //public GameObject second;
-    //public int currentCheckpoint = 0;
 
+    #region Camera Movement
+    public void LateUpdate()
+    {
+        Vector3 newPos = new Vector3(
+            positionToGoTo.x,
+            positionToGoTo.y,
+            transform.position.z);
 
-    //public void GetFirst(GameObject _first)
-    //{
-    //    first = _first;
-    //    foreach(Player player in playerList)
-    //    {
-    //        if(_first != player.gameObject)
-    //        {
-    //            second = player.gameObject;
-    //        }
-    //    }
-    //}
+        transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
+    }
 
-    //private void SwitchFirst()
-    //{
-    //    if(second.GetComponent<RacePlayer>().raceCheckpoint == currentCheckpoint)
-    //    {
-    //        GameObject temp = first;
-    //        first = second;
-    //        second = temp;
-    //    }
+    public void Update()
+    {
+        if(playerFirst == null) { return; }
 
-    //    positionToGoTo = first.transform.position;
-    //}
+        // Update who is first
+        float first_Y = playerFirst.transform.position.y;
+        float first_X = playerFirst.transform.position.x;
+        
+        switch (currentDirection)
+        {
+            case RaceDirection.UP:
+                foreach (Player player in playerList)
+                {
+                    float player_Y = player.transform.position.y;
+                    if(first_Y < player_Y)
+                    {
+                        playerFirst = player;
+                        first_Y = playerFirst.transform.position.y;
+                    }
+                }
 
-    //public void Update()
-    //{
-    //    float first_Y = Mathf.Round(first.transform.position.y);
-    //    float first_X = Mathf.Round(first.transform.position.x);
-    //    float second_Y = Mathf.Round(second.transform.position.y);
-    //    float second_X = Mathf.Round(second.transform.position.x);
-    //    switch (direction)
-    //    {
-    //        case RaceDirection.UP:
-    //            if (first_Y >= second_Y && first.GetComponent<RacePlayer>().raceCheckpoint == currentCheckpoint)
-    //            {
-    //                positionToGoTo = first.transform.position;
-    //            }
-    //            else
-    //            {
-    //                SwitchFirst();
-    //            }
-    //            break;
-    //        case RaceDirection.DOWN: 
-    //            if (first_Y <= second_Y && first.GetComponent<RacePlayer>().raceCheckpoint == currentCheckpoint)
-    //            {
-    //                positionToGoTo = first.transform.position;
-    //            }
-    //            else
-    //            {
-    //                SwitchFirst();
-    //            }
-    //            break;
-    //        case RaceDirection.LEFT: 
-    //            if (first_X <= second_X && first.GetComponent<RacePlayer>().raceCheckpoint == currentCheckpoint)
-    //            {
-    //                positionToGoTo = first.transform.position;
-    //            }
-    //            else
-    //            {
-    //                SwitchFirst();
-    //            }
-    //            break;
-    //        case RaceDirection.RIGHT: 
-    //            if (first_X >= second_X && first.GetComponent<RacePlayer>().raceCheckpoint == currentCheckpoint)
-    //            {
-    //                positionToGoTo = first.transform.position;
-    //            }
-    //            else
-    //            {
-    //                SwitchFirst();
-    //            }
-    //            break;
-    //    }
-    //}
-    //void LateUpdate()
-    //{
-    //    Vector3 newPos = new Vector3(
-    //        positionToGoTo.x,
-    //        positionToGoTo.y,
-    //        transform.position.z);
+                // Adding Offset Camera Y
+                positionToGoTo = new Vector2(
+                    startPos.x + centroidOffet_X, 
+                    playerFirst.transform.position.y - offset_Y);
+                break;
+            case RaceDirection.DOWN:
+                foreach (Player player in playerList)
+                {
+                    float player_Y = player.transform.position.y;
+                    if (first_Y < player_Y)
+                    {
+                        playerFirst = player;
+                        first_Y = playerFirst.transform.position.y;
+                    }
+                }
 
-    //    transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
-    //}
+                // Adding Offset Camera Y
+                positionToGoTo = new Vector2(
+                    startPos.x + centroidOffet_X,
+                    playerFirst.transform.position.y + offset_Y);
+                break;
+            case RaceDirection.LEFT:
+                foreach (Player player in playerList)
+                {
+                    float player_X = player.transform.position.x;
+                    if (first_X < player_X)
+                    {
+                        playerFirst = player;
+                        first_X = playerFirst.transform.position.x;
+                    }
+                }
+
+                // Adding Offset Camera X
+                positionToGoTo = new Vector2(
+                    playerFirst.transform.position.x + offset_X,
+                    startPos.y + centroidOffset_Y);
+                // if player first is down offset should go up
+                // if player first is up offset should go down
+                break;
+            case RaceDirection.RIGHT:
+                foreach (Player player in playerList)
+                {
+                    float player_X = player.transform.position.x;
+                    if (first_X < player_X)
+                    {
+                        playerFirst = player;
+                        first_X = playerFirst.transform.position.x;
+                    }
+                }
+
+                
+                // Adding Offset Camera X
+                positionToGoTo = new Vector2(
+                    playerFirst.transform.position.x - offset_X,
+                    startPos.y + centroidOffset_Y);
+                break;
+        }
+    }
+    #endregion
 }
 
 public enum RaceDirection{
     UP,
     DOWN,
     LEFT,
-    RIGHT
+    RIGHT,
+    D_UPRIGHT,
+    D_UPLEFT,
+    D_DOWNRIGHT,
+    D_DOWNLEFT
 }

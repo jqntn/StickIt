@@ -42,10 +42,6 @@ public class MultiplayerManager : MonoBehaviour
 
         DontDestroyOnLoad(this);
 
-        if(SceneManager.sceneCountInBuildSettings != 0)
-        {
-            InstantiatePlayersWithData();
-        }
     }
 
     private void Start()

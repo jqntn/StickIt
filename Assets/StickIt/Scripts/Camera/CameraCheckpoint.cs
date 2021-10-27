@@ -4,31 +4,23 @@ using UnityEngine;
 
 public class CameraCheckpoint : MonoBehaviour
 {
-    public RaceDirection direction;
-    public int number = 0;
     private bool hasEnclenched = false;
+
+    private CameraFollowFirst _camera;
+    private void Awake()
+    {
+        _camera = Camera.main.GetComponent<CameraFollowFirst>();
+    }
     private void OnTriggerEnter(Collider other)
     {
         if (hasEnclenched) { return; }
 
-        Debug.Log("Checkpoint First Trigger");
-
         Player otherPlayer = other.GetComponentInParent<Player>();
         if(otherPlayer != null)
         {
-            Debug.Log("Player First");
-            
+            Debug.Log("Start Follow First Player");
+            _camera.SetCurrentFirst(otherPlayer);
             hasEnclenched = true;
-            //Debug.Log("Player detected");
-            //CameraFollowFirst camera = Camera.main.GetComponent<CameraFollowFirst>();
-            //camera.direction = direction;
-
-            //if (!hasEnclenched)
-            //{
-            //    camera.GetFirst(otherPlayer.gameObject);
-            //    hasEnclenched = true;
-            //    camera.currentCheckpoint = number;
-            //}
         }
     }
 }
