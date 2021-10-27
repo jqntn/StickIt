@@ -6,7 +6,6 @@ public class RunnerManager : Level
 {
     public RaceDirection direction;
     private Queue<Player> orderPlayer = new Queue<Player>();
-    private 
 
     public static RunnerManager Instance { get; private set; }
     private void Awake()
