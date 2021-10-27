@@ -12,9 +12,11 @@ public class Tuyau : MonoBehaviour
 
 
     private Animator anim;
+    [HideInInspector]
     public MenuSelection menuSelection;
-
+    [HideInInspector]
     public Gamepad gamepad;
+    [HideInInspector]
     public int id;
 
     private void Start()
