@@ -898,6 +898,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 4a0d86f138e169c4885a0711c62c440a, type: 2}
   - {fileID: 2100000, guid: b6dfdb6b5582dfa47bc62e8f0876bcef, type: 2}
   - {fileID: 2100000, guid: cfc9bb33a760d504783203410585c1b0, type: 2}
+  isMenuSelection: 1
 --- !u!4 &565900630
 Transform:
   m_ObjectHideFlags: 0
@@ -2193,7 +2194,7 @@ Light:
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 2
+    m_Type: 0
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -2734,7 +2735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefabPlayer: {fileID: 8854867468096441738, guid: bd2e8aa23cf5c3341ac34eba02c200b7, type: 3}
-  _playersStartingPos: {fileID: 1790456477}
+  _playersStartingPos: {fileID: 0}
   materials:
   - {fileID: 2100000, guid: bbab336ec81de7f4284a26e22ae426df, type: 2}
   - {fileID: 2100000, guid: 4a0d86f138e169c4885a0711c62c440a, type: 2}
