@@ -15,13 +15,14 @@ public class MultiplayerManager : MonoBehaviour
         public int id;
         public int deviceID;
         public Material material;
-
+        public uint score;
         public PlayerData(string _name, int _id, int _deviceID, Material _material)
         {
             name = _name;
             id = _id;
             deviceID = _deviceID;
             material = _material;
+            score = 0;
         }
     }
     

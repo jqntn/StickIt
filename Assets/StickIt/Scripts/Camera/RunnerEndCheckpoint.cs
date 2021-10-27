@@ -7,6 +7,7 @@ public class RunnerEndCheckpoint : MonoBehaviour
 {
     public RunnerManager runnerManager;
     [Header("-------- DEBUG ---------")]
+    [SerializeField] private float timer;
     [SerializeField] private BoxCollider boxCollider;
     private void Awake()
     {
@@ -19,6 +20,10 @@ public class RunnerEndCheckpoint : MonoBehaviour
         boxCollider.isTrigger = true;
     }
 
+    private void Update()
+    {
+        timer += Time.deltaTime;
+    }
     private void OnTriggerEnter(Collider other)
     {
         Player player = other.gameObject.GetComponentInParent<Player>();
@@ -26,6 +31,8 @@ public class RunnerEndCheckpoint : MonoBehaviour
         {
             if (!runnerManager.GetOrder().Contains(player))
             {
+                Debug.Log("Player End : " + player.name);
+                runnerManager.AddArriveTime(timer);
                 runnerManager.AddOrder(player);
             }
         }

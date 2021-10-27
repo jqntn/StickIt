@@ -15,13 +15,19 @@ public class Level : MonoBehaviour
     {
         StartMap();
     }
+
     protected virtual void StartMap()
     {
-        _multiplayerManager.InstantiatePlayers();
+       // _multiplayerManager.InstantiatePlayers();
         _multiplayerManager = MultiplayerManager.instance;
-        _multiplayerManager.playersStartingPos = startingPos;
+        //_multiplayerManager.playersStartingPos = startingPos;
         _multiplayerManager.ChangeMap();
 
         _gameManager = GameManager.instance;
+    }
+
+    protected virtual void EndMap()
+    {
+        Debug.Log("End Map");
     }
 }
