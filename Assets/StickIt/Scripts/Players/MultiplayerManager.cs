@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using System;
 using UnityEngine.Events;
-
+using UnityEngine.SceneManagement;
 public class MultiplayerManager : MonoBehaviour
 {
 
@@ -18,9 +18,8 @@ public class MultiplayerManager : MonoBehaviour
     }
 
     public static MultiplayerManager instance;
-
+    public List<Material> materialsTemp = new List<Material>();
     public int nbrOfPlayer;
-
     [SerializeField] private Transform _prefabPlayer;
     public Transform playersStartingPos;
     [Header("------------DEBUG------------")]
@@ -42,6 +41,7 @@ public class MultiplayerManager : MonoBehaviour
         else Destroy(gameObject);
 
         DontDestroyOnLoad(this);
+
     }
 
     private void Start()
@@ -105,9 +105,31 @@ public class MultiplayerManager : MonoBehaviour
             players.Add(scriptPlayer);
             alivePlayers.Add(scriptPlayer);
 
-
             newPlayer.transform.position = playersStartingPos.GetChild(i).position;
             
+        }
+    }
+
+    public void InstantiatePlayersWithData()
+    {
+        for(int i = 0; i < nbrOfPlayer; i++)
+        {
+            PlayerInput newPlayer = null;
+            Gamepad gamepad = Gamepad.all[i];
+            newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1, gamepad);
+
+            newPlayer.transform.position = playersStartingPos.GetChild(i).position;
+            Player scriptPlayer = newPlayer.transform.GetComponent<Player>();
+            // Set Datas
+            scriptPlayer.myDatas.id = i;
+            scriptPlayer.myDatas.deviceID = gamepad.deviceId;
+            scriptPlayer.myDatas.name = "Player" + i.ToString();
+            scriptPlayer.myDatas.material = materialsTemp[i];
+
+            newPlayer.gameObject.name = scriptPlayer.myDatas.name;
+            scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = scriptPlayer.myDatas.material;
+
+            players.Add(scriptPlayer);
         }
     }
 
@@ -146,7 +168,7 @@ public class MultiplayerManager : MonoBehaviour
     //    //}
     //}
 
-   
-        
-    
+
+
+
 }
