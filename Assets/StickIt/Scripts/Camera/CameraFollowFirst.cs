@@ -15,16 +15,28 @@ public class CameraFollowFirst : MonoBehaviour
     public float centroidOffset_X = 0.5f;
     public float centroidOffset_Y = 0.5f;
 
+    [Header("---------- CAMERA BOUNDS ---------")]
+    public float deathOffset = 0.1f;
+
     [Header("----------- DEBUG ------------")]
     [SerializeField] private List<Player> playerList = new List<Player>();
     [SerializeField] private MultiplayerManager multiplayerManager;
     [SerializeField] private Player playerFirst;
+    [SerializeField] private Camera cam;
+    [SerializeField] private RunnerManager runnerManager;
     [SerializeField] private RaceDirection currentDirection;
     [SerializeField] private Vector2 positionToGoTo;
     [SerializeField] private Vector3 velocity;
     [SerializeField] private Vector2 startPos;
     [SerializeField] private float centroid_X;
     [SerializeField] private float centroid_Y;
+    [SerializeField] private float timer = 0.0f;
+
+    private void Awake()
+    {
+        cam = Camera.main;
+    }
+
     //private void OnEnable()
     //{
     //    // Getting the direction of the run
@@ -35,7 +47,8 @@ public class CameraFollowFirst : MonoBehaviour
     {
         multiplayerManager = MultiplayerManager.instance;
         playerList = multiplayerManager.players;
-        currentDirection = RunnerManager.Instance.direction;
+        runnerManager = RunnerManager.Instance;
+        currentDirection = runnerManager.direction;
         startPos = transform.position;
     }
 
@@ -57,21 +70,12 @@ public class CameraFollowFirst : MonoBehaviour
 
     public void Update()
     {
+        timer += Time.deltaTime;
         if(playerFirst == null) { return; }
 
-        centroidOffset_X = 0;
-        centroidOffset_Y = 0;
-        // Get centroid
-        foreach(Player player in playerList)
-        {
-            centroidOffset_X += player.transform.position.x;
-            centroidOffset_Y += player.transform.position.y;
-        }
+        GetCentroid();
 
-        centroidOffset_X /= playerList.Count;
-        centroidOffset_Y /= playerList.Count;
-
-        // Update who is first
+        // Update position to go to
         float first_Y = playerFirst.transform.position.y;
         float first_X = playerFirst.transform.position.x;
         
@@ -88,7 +92,7 @@ public class CameraFollowFirst : MonoBehaviour
                     }
                 }
 
-                // Adding Offset Camera Y
+                // Adding Offset Camera
                 positionToGoTo = new Vector2(
                     startPos.x + centroidOffset_X, 
                     playerFirst.transform.position.y - offset_Y);
@@ -104,7 +108,7 @@ public class CameraFollowFirst : MonoBehaviour
                     }
                 }
 
-                // Adding Offset Camera Y
+                // Adding Offset Camera
                 positionToGoTo = new Vector2(
                     startPos.x + centroidOffset_X,
                     playerFirst.transform.position.y + offset_Y);
@@ -120,9 +124,9 @@ public class CameraFollowFirst : MonoBehaviour
                     }
                 }
 
-                // Adding Offset Camera X
+                // Adding Offset Camera
                 positionToGoTo = new Vector2(
-                    playerFirst.transform.position.x + offset_X,
+                    playerFirst.transform.position.x - offset_X,
                     startPos.y + centroidOffset_Y);
                 break;
             case RaceDirection.RIGHT:
@@ -142,9 +146,47 @@ public class CameraFollowFirst : MonoBehaviour
                     startPos.y + centroidOffset_Y);
                 break;
         }
+
+        UpdatePlayerOnCamera();
     }
     #endregion
+    private void GetCentroid()
+    {
+        centroidOffset_X = 0;
+        centroidOffset_Y = 0;
+        // Get centroid
+        foreach (Player player in playerList)
+        {
+            centroidOffset_X += player.transform.position.x;
+            centroidOffset_Y += player.transform.position.y;
+        }
+        centroidOffset_X /= playerList.Count;
+        centroidOffset_Y /= playerList.Count;
+    }
+
+    private void UpdatePlayerOnCamera()
+    {
+        if (runnerManager.hasEndLevel) {
+            timer = 0;
+            return;
+        }
+        foreach (Player player in playerList)
+        {
+            Vector3 screenPoint = cam.WorldToViewportPoint(player.transform.position);
+            bool onScreen = screenPoint.z > 0 &&
+                screenPoint.x > 0 - deathOffset && screenPoint.x < 1 + deathOffset &&
+                screenPoint.y > 0 - deathOffset && screenPoint.y < 1 + deathOffset;
+
+            if (!onScreen && !runnerManager.GetDead().Contains(player) && !runnerManager.GetOrder().Contains(player))
+            {
+                runnerManager.AddDeath(player);
+                runnerManager.AddDeadTime(timer);
+                player.Death();
+            }
+        }
+    }
 }
+
 
 public enum RaceDirection{
     UP,
