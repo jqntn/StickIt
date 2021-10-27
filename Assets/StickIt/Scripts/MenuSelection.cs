@@ -8,7 +8,7 @@ public class MenuSelection : MonoBehaviour
 {
 
     [SerializeField] private Transform _prefabPlayer;
-    [SerializeField] private Transform _playersStartingPos;
+    private Transform _playersStartingPos;
     public List<Material> materials = new List<Material>();
 
     [SerializeField] Animator animLaunchGame;
@@ -16,7 +16,7 @@ public class MenuSelection : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _playersStartingPos = FindObjectOfType<PlayerStartingPos>().transform;
     }
 
     // Update is called once per frame

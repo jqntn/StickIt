@@ -15,14 +15,22 @@ public class MultiplayerManager : MonoBehaviour
         public int id;
         public int deviceID;
         public Material material;
+
+        public PlayerData(string _name, int _id, int _deviceID, Material _material)
+        {
+            name = _name;
+            id = _id;
+            deviceID = _deviceID;
+            material = _material;
+        }
     }
+    
 
     public static MultiplayerManager instance;
 
     public int nbrOfPlayer;
-
     [SerializeField] private Transform _prefabPlayer;
-    public Transform playersStartingPos;
+    Transform playersStartingPos;
     [Header("------------DEBUG------------")]
     public List<Player> players = new List<Player>();
     public List<Player> alivePlayers = new List<Player>();
@@ -34,6 +42,11 @@ public class MultiplayerManager : MonoBehaviour
 
 
     int nbrDevicesLastFrame = 0;
+
+#if UNITY_EDITOR
+    [SerializeField] bool isMenuSelection = false;
+#endif
+
     private void Awake()
     {
 
@@ -46,8 +59,11 @@ public class MultiplayerManager : MonoBehaviour
 
     private void Start()
     {
-
-       print(Gamepad.all.Count);
+        playersStartingPos = FindObjectOfType<PlayerStartingPos>().transform;
+        print(Gamepad.all.Count);
+#if UNITY_EDITOR
+        InitializePlayersWithoutMenuSelector(nbrOfPlayer);
+#endif
     }
 
     //private void Initialization()
@@ -73,7 +89,7 @@ public class MultiplayerManager : MonoBehaviour
     //        //newPlayer.deviceLostEvent.AddListener((newPlayer) => LostDevice(newPlayer));
     //        //newPlayer.deviceRegainedEvent.AddListener((newPlayer) => RegainDevice(newPlayer));
 
-            
+
     //    }
     //}
 
@@ -82,11 +98,15 @@ public class MultiplayerManager : MonoBehaviour
         datas.Add(playerData);
     }
 
-    public void InstantiatePlayers()
+    void InitializePlayersWithoutMenuSelector(int numberOfPlayer)
     {
-        players.Clear();
-        alivePlayers.Clear();
-        for(int i = 0; i < datas.Count; i++)
+        for(int i = 0; i < numberOfPlayer; i++)
+        {
+            PlayerData newData = new PlayerData("Player" + i.ToString(), i, -1, materials[i]);
+            datas.Add(newData);
+        }
+
+        for (int i = 0; i < datas.Count; i++)
         {
             PlayerInput newPlayer = null;
             Gamepad gamepad = null;
@@ -107,9 +127,32 @@ public class MultiplayerManager : MonoBehaviour
 
 
             newPlayer.transform.position = playersStartingPos.GetChild(i).position;
-            
+
         }
+
     }
+
+
+
+    public void ChangeMap()
+    {
+        playersStartingPos = FindObjectOfType<PlayerStartingPos>().transform;
+        alivePlayers = players;
+        deadPlayers.Clear();
+        RespawnPlayers();
+    }
+
+    public void RespawnPlayers()
+    {
+
+    }
+
+    //public void InstantiatePlayers()
+    //{
+    //    players.Clear();
+    //    alivePlayers.Clear();
+        
+    //}
 
     //private void LateUpdate()
     //{
