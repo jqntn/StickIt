@@ -5,40 +5,62 @@ class MapManager : Unique<MapManager>
 {
     [Range(0, 1)]
     public float smoothTime;
-    public float smoothApprox;
+    public float slowTime;
+    public float smoothMOE;
     public int mapOffset;
     public string nextMap;
+    public float timeScale;
     Coroutine _coroutine;
-    Vector3 _velocity0,
-    _velocity1;
     void OnGUI()
     {
-        if (GUI.Button(new Rect(0, 0, 200, 100), "NextMap") && _coroutine == null) _coroutine = StartCoroutine(NextMap(nextMap));
+        if (GUI.Button(new Rect(0, 0, 200, 100), "NextMap")) PrepNextMap();
+    }
+    public bool PrepNextMap()
+    {
+        if (_coroutine == null) _coroutine = StartCoroutine(NextMap(nextMap));
+        else return false;
+        return true;
     }
     IEnumerator NextMap(string nextMapName)
     {
-        Time.timeScale = 0;
-        GameObject curMapRoot = GameObject.Find("MapRoot");
-        GameObject nextMapRoot = null;
-        Vector3 diff0 = Vector3.one, diff1 = Vector3.one;
-        AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(nextMapName, LoadSceneMode.Additive);
-        while (!asyncOperation.isDone)
+        Time.timeScale = .5f;
+        timeScale = Time.timeScale;
+        GameObject curMapRoot = GameObject.Find("MapRoot"), nextMapRoot = null;
+        Vector3 v0 = Vector3.zero, v1 = Vector3.zero, d0 = Vector3.one, d1 = Vector3.one;
+        AsyncOperation asyncOp = SceneManager.LoadSceneAsync(nextMapName, LoadSceneMode.Additive);
+        asyncOp.allowSceneActivation = false;
+        float timeToLoad = 0;
+        while (!asyncOp.isDone)
         {
+            timeToLoad += Time.unscaledDeltaTime;
+            if (asyncOp.progress >= .9f)
+            {
+                float t = 0;
+                while (t <= slowTime - timeToLoad)
+                {
+                    t += Time.unscaledDeltaTime;
+                    yield return null;
+                }
+                asyncOp.allowSceneActivation = true;
+            }
             yield return null;
         }
         foreach (var i in SceneManager.GetSceneByName(nextMapName).GetRootGameObjects())
             if (i.name == "MapRoot") { nextMapRoot = i; nextMapRoot.transform.position = new Vector3(mapOffset, 0); break; }
-        while (diff0.sqrMagnitude > smoothApprox && diff1.sqrMagnitude > smoothApprox)
+        Time.timeScale = 0;
+        timeScale = Time.timeScale;
+        while (d0.sqrMagnitude > smoothMOE && d1.sqrMagnitude > smoothMOE)
         {
-            curMapRoot.transform.position = Vector3.SmoothDamp(curMapRoot.transform.position, new Vector3(-mapOffset, 0), ref _velocity0, smoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
-            nextMapRoot.transform.position = Vector3.SmoothDamp(nextMapRoot.transform.position, Vector3.zero, ref _velocity1, smoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
-            diff0 = curMapRoot.transform.position - new Vector3(-mapOffset, 0);
-            diff1 = nextMapRoot.transform.position - Vector3.zero;
+            curMapRoot.transform.position = Vector3.SmoothDamp(curMapRoot.transform.position, new Vector3(-mapOffset, 0), ref v0, smoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
+            nextMapRoot.transform.position = Vector3.SmoothDamp(nextMapRoot.transform.position, Vector3.zero, ref v1, smoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
+            d0 = curMapRoot.transform.position - new Vector3(-mapOffset, 0);
+            d1 = nextMapRoot.transform.position - Vector3.zero;
             yield return null;
         }
         nextMapRoot.transform.position = Vector3.zero;
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        _coroutine = null;
         Time.timeScale = 1;
+        timeScale = Time.timeScale;
+        _coroutine = null;
     }
 }

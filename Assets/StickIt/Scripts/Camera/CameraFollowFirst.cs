@@ -12,7 +12,7 @@ public class CameraFollowFirst : MonoBehaviour
     public float offset_Y = 5.0f;
     [Header("Centroid of player")]
     [Header("+ Offset in the direction first Player")]
-    public float centroidOffet_X = 0.5f;
+    public float centroidOffset_X = 0.5f;
     public float centroidOffset_Y = 0.5f;
 
     [Header("----------- DEBUG ------------")]
@@ -59,6 +59,18 @@ public class CameraFollowFirst : MonoBehaviour
     {
         if(playerFirst == null) { return; }
 
+        centroidOffset_X = 0;
+        centroidOffset_Y = 0;
+        // Get centroid
+        foreach(Player player in playerList)
+        {
+            centroidOffset_X += player.transform.position.x;
+            centroidOffset_Y += player.transform.position.y;
+        }
+
+        centroidOffset_X /= playerList.Count;
+        centroidOffset_Y /= playerList.Count;
+
         // Update who is first
         float first_Y = playerFirst.transform.position.y;
         float first_X = playerFirst.transform.position.x;
@@ -78,14 +90,14 @@ public class CameraFollowFirst : MonoBehaviour
 
                 // Adding Offset Camera Y
                 positionToGoTo = new Vector2(
-                    startPos.x + centroidOffet_X, 
+                    startPos.x + centroidOffset_X, 
                     playerFirst.transform.position.y - offset_Y);
                 break;
             case RaceDirection.DOWN:
                 foreach (Player player in playerList)
                 {
                     float player_Y = player.transform.position.y;
-                    if (first_Y < player_Y)
+                    if (first_Y > player_Y)
                     {
                         playerFirst = player;
                         first_Y = playerFirst.transform.position.y;
@@ -94,14 +106,14 @@ public class CameraFollowFirst : MonoBehaviour
 
                 // Adding Offset Camera Y
                 positionToGoTo = new Vector2(
-                    startPos.x + centroidOffet_X,
+                    startPos.x + centroidOffset_X,
                     playerFirst.transform.position.y + offset_Y);
                 break;
             case RaceDirection.LEFT:
                 foreach (Player player in playerList)
                 {
                     float player_X = player.transform.position.x;
-                    if (first_X < player_X)
+                    if (first_X > player_X)
                     {
                         playerFirst = player;
                         first_X = playerFirst.transform.position.x;
@@ -112,8 +124,6 @@ public class CameraFollowFirst : MonoBehaviour
                 positionToGoTo = new Vector2(
                     playerFirst.transform.position.x + offset_X,
                     startPos.y + centroidOffset_Y);
-                // if player first is down offset should go up
-                // if player first is up offset should go down
                 break;
             case RaceDirection.RIGHT:
                 foreach (Player player in playerList)
@@ -126,7 +136,6 @@ public class CameraFollowFirst : MonoBehaviour
                     }
                 }
 
-                
                 // Adding Offset Camera X
                 positionToGoTo = new Vector2(
                     playerFirst.transform.position.x - offset_X,

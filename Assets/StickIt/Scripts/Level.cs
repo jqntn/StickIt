@@ -20,13 +20,7 @@ public class Level : MonoBehaviour
         _multiplayerManager.InstantiatePlayers();
         _multiplayerManager = MultiplayerManager.instance;
         _multiplayerManager.playersStartingPos = startingPos;
-        /*if (SceneManager.sceneCountInBuildSettings != 0)
-        {
-            _multiplayerManager.InstantiatePlayersWithData();
-        }
-        else
-        {
-        }*/
+        _multiplayerManager.ChangeMap();
 
         _gameManager = GameManager.instance;
     }
