@@ -43,6 +43,8 @@ public class MultiplayerManager : MonoBehaviour
 
     int nbrDevicesLastFrame = 0;
 
+    
+
 #if UNITY_EDITOR
     [SerializeField] bool isMenuSelection = false;
 #endif
@@ -63,6 +65,7 @@ public class MultiplayerManager : MonoBehaviour
         playersStartingPos = FindObjectOfType<PlayerStartingPos>().transform;
         print(Gamepad.all.Count);
 #if UNITY_EDITOR
+        if(!isMenuSelection)
         InitializePlayersWithoutMenuSelector(nbrOfPlayer);
 #endif
     }
