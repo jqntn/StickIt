@@ -8,30 +8,56 @@ class MapManager : Unique<MapManager>
     public float slowTime;
     public float smoothMOE;
     public int mapOffset;
-    public string nextMap;
     public float timeScale;
     public bool isBusy;
+    public GameObject curMapRoot;
     public GameObject nextMapRoot;
     public ModsData modsData;
+    public string nextMapManual;
+    public string prevMod;
+    public string prevMap;
+    public string curMod;
+    public string curMap;
     Coroutine _coroutine;
     void OnGUI()
     {
-        if (GUI.Button(new Rect(0, 0, 200, 100), "NextMap")) PrepNextMap();
+        if (GUI.Button(new Rect(0, 0, 200, 100), "NextMap")) NextMap(nextMapManual);
     }
-    public bool PrepNextMap()
+    public bool NextMap(string nextMap = "")
     {
-        if (_coroutine == null) _coroutine = StartCoroutine(NextMap(nextMap));
+        if (_coroutine == null) _coroutine = StartCoroutine(Transition(nextMap));
         else return false;
         return true;
     }
-    IEnumerator NextMap(string nextMapName)
+    string SelectNextMap()
+    {
+        ModsData.Mod mod;
+        string map = SceneManager.GetActiveScene().name;
+        if (modsData.mods.Count == 0) return map;
+        if (modsData.mods.Count > 1)
+            do mod = modsData.mods[Random.Range(0, modsData.mods.Count)];
+            while (mod.name == prevMod || mod.name == curMod);
+        else mod = modsData.mods[0];
+        if (mod.maps.Count == 0) return map;
+        if (mod.maps.Count > 1)
+            do map = mod.maps[Random.Range(0, mod.maps.Count)];
+            while (map == prevMap || map == curMap);
+        else map = mod.maps[0];
+        prevMod = curMod;
+        prevMap = curMap;
+        curMod = mod.name;
+        curMap = map;
+        return map;
+    }
+    IEnumerator Transition(string nextMap)
     {
         isBusy = true;
+        if (nextMap == "") nextMap = SelectNextMap();
         Time.timeScale = .5f;
         timeScale = Time.timeScale;
-        GameObject curMapRoot = GameObject.Find("MapRoot");
+        curMapRoot = GameObject.Find("MapRoot");
         Vector3 v0 = Vector3.zero, v1 = Vector3.zero, d0 = Vector3.one, d1 = Vector3.one;
-        AsyncOperation asyncOp = SceneManager.LoadSceneAsync(nextMapName, LoadSceneMode.Additive);
+        AsyncOperation asyncOp = SceneManager.LoadSceneAsync(nextMap, LoadSceneMode.Additive);
         asyncOp.allowSceneActivation = false;
         float timeToLoad = 0;
         while (!asyncOp.isDone)
@@ -52,7 +78,7 @@ class MapManager : Unique<MapManager>
             }
             yield return null;
         }
-        foreach (var i in SceneManager.GetSceneByName(nextMapName).GetRootGameObjects())
+        foreach (var i in SceneManager.GetSceneByName(nextMap).GetRootGameObjects())
             if (i.name == "MapRoot") { nextMapRoot = i; nextMapRoot.transform.position = new Vector3(mapOffset, 0); break; }
         Time.timeScale = 0;
         timeScale = Time.timeScale;
@@ -68,7 +94,9 @@ class MapManager : Unique<MapManager>
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         Time.timeScale = 1;
         timeScale = Time.timeScale;
-        isBusy = true;
+        curMapRoot = nextMapRoot;
+        nextMapRoot = null;
+        isBusy = false;
         _coroutine = null;
     }
 }
