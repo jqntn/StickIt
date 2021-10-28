@@ -55,35 +55,24 @@ class MapManager : Unique<MapManager>
         if (nextMap == "") nextMap = SelectNextMap();
         Time.timeScale = .5f;
         timeScale = Time.timeScale;
-        Vector3 v0 = Vector3.zero, v1 = Vector3.zero, d0 = Vector3.one, d1 = Vector3.one;
         if (curMapRoot == null) curMapRoot = GameObject.Find("MapRoot");
-        if (SceneManager.GetActiveScene().name == nextMap) nextMapRoot = Instantiate(curMapRoot, new Vector3(mapOffset, 0), Quaternion.identity);
-        else
+        Vector3 v0 = Vector3.zero, v1 = Vector3.zero, d0 = Vector3.one, d1 = Vector3.one;
+        AsyncOperation asyncOp = SceneManager.LoadSceneAsync(nextMap, LoadSceneMode.Additive);
+        asyncOp.allowSceneActivation = false;
+        float timeToLoad = 0;
+        while (!asyncOp.isDone)
         {
-            AsyncOperation asyncOp = SceneManager.LoadSceneAsync(nextMap, LoadSceneMode.Additive);
-            asyncOp.allowSceneActivation = false;
-            float timeToLoad = 0;
-            while (!asyncOp.isDone)
+            timeToLoad += Time.unscaledDeltaTime;
+            if (asyncOp.progress >= .9f)
             {
-                timeToLoad += Time.unscaledDeltaTime;
-                if (asyncOp.progress >= .9f)
-                {
-                    if (timeToLoad < slowTime)
-                    {
-                        float t = 0;
-                        while (t <= slowTime - timeToLoad)
-                        {
-                            t += Time.unscaledDeltaTime;
-                            yield return null;
-                        }
-                    }
-                    asyncOp.allowSceneActivation = true;
-                }
-                yield return null;
+                if (timeToLoad < slowTime) yield return new WaitForSecondsRealtime(slowTime - timeToLoad);
+                asyncOp.allowSceneActivation = true;
             }
-            foreach (var i in SceneManager.GetSceneByName(nextMap).GetRootGameObjects())
-                if (i.name == "MapRoot") { nextMapRoot = i; nextMapRoot.transform.position = new Vector3(mapOffset, 0); break; }
+            yield return null;
         }
+        foreach (var i in FindObjectsOfType<GameObject>())
+            if (i.name == "MapRoot") nextMapRoot = i;
+        nextMapRoot.transform.position = new Vector3(mapOffset, 0);
         // MultiplayerManager.StartChangeMap
         MultiplayerManager.instance.speedChangeMap = 1 / slowTime;
         MultiplayerManager.instance.StartChangeMap();
@@ -99,8 +88,7 @@ class MapManager : Unique<MapManager>
             yield return null;
         }
         nextMapRoot.transform.position = Vector3.zero;
-        if (SceneManager.GetActiveScene().name != nextMap) SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        else Destroy(curMapRoot);
+        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         Time.timeScale = 1;
         timeScale = Time.timeScale;
         curMapRoot = nextMapRoot;
