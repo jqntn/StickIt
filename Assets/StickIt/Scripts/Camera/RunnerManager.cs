@@ -196,7 +196,7 @@ public class RunnerManager : Level
     {
         player.myDatas.score += scoreToAdd;
         winners.Add(player);
-        Debug.Log("Player " + player.id + " gain " + scoreToAdd);
+        Debug.Log("Player " + player.myDatas.id + " gain " + scoreToAdd);
     }
 
 #region Public Methods

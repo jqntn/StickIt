@@ -15,14 +15,21 @@ public class MultiplayerManager : MonoBehaviour
         public int id;
         public int deviceID;
         public Material material;
+        public int mass;
+
         public uint score;
+        public uint nbrDeath;
+        public uint nbrVictories;
         public PlayerData(string _name, int _id, int _deviceID, Material _material)
         {
             name = _name;
             id = _id;
             deviceID = _deviceID;
             material = _material;
+            mass = 100;
             score = 0;
+            nbrDeath = 0;
+            nbrVictories = 0;
         }
     }
     
@@ -33,6 +40,12 @@ public class MultiplayerManager : MonoBehaviour
     [SerializeField] private Transform _prefabPlayer;
  
     Transform playersStartingPos;
+    private bool isChangingMap;
+    [HideInInspector]public float speedChangeMap = 1;
+    [SerializeField] AnimationCurve curve_ChangeMap_PosX;
+    [SerializeField] AnimationCurve curve_ChangeMap_PosY;
+    float t;
+    float y;
     float[] initPosX;
     float[] initPosY;
     float[] currentPosX;
@@ -72,14 +85,21 @@ public class MultiplayerManager : MonoBehaviour
     private void Start()
     {
         playersStartingPos = FindObjectOfType<PlayerStartingPos>().transform;
-        print(Gamepad.all.Count);
 #if UNITY_EDITOR
         if(!isMenuSelection)
         InitializePlayersWithoutMenuSelector(nbrOfPlayer);
 #endif
     }
 
- 
+
+    private void Update()
+    {
+        if (isChangingMap)
+        {
+            LerpDuringChangeMap();
+        }
+    }
+
 
     public void SaveDatas(PlayerData playerData)
     {
@@ -121,9 +141,60 @@ public class MultiplayerManager : MonoBehaviour
 
 
 
-    public void ChangeMap()
+    public void StartChangeMap()
     {
-        playersStartingPos = FindObjectOfType<PlayerStartingPos>().transform;
+        // Disable the players
+        foreach(Player player in players)
+        {
+            player.PrepareToChangeLevel();
+        }
+
+        // Prepare to lerp Players
+
+        foreach(Transform child in MapManager.instance.nextMapRoot.transform)
+        {
+            if (child.GetComponent<PlayerStartingPos>())
+            {
+                playersStartingPos = child;
+                break;
+            }
+        }
+        initPosX = new float[players.Count];
+        initPosY = new float[players.Count];
+        for(int i = 0; i < players.Count; i++)
+        {
+            initPosX[i] = players[i].transform.position.x;
+            initPosY[i] = players[i].transform.position.y;
+        }
+        t = 0f;
+        isChangingMap = true;
+    }
+
+    private void LerpDuringChangeMap()
+    {
+        for(int i = 0; i < players.Count; i++)
+        {
+            t += Time.unscaledDeltaTime * speedChangeMap;
+            y = t;
+            y = curve_ChangeMap_PosX.Evaluate(y);
+            float currentPosX = Mathf.Lerp(initPosX[i], playersStartingPos.GetChild(i).transform.position.x, y);
+            y = t;
+            y = curve_ChangeMap_PosY.Evaluate(y);
+            float currentPosY = Mathf.Lerp(playersStartingPos.GetChild(i).transform.position.y, initPosY[i] , 1-y);
+            print(y);
+            players[i].transform.position = new Vector3(currentPosX, currentPosY);
+            if(y >= 1)
+            {
+                EndChangeMap();
+            }
+        }
+    }
+
+    public void EndChangeMap()
+    {
+        isChangingMap = false;
+
+        // Reset the lists and re-enable the players
         alivePlayers = players;
         deadPlayers.Clear();
         RespawnPlayers();
@@ -133,7 +204,7 @@ public class MultiplayerManager : MonoBehaviour
     {
         for(int i = 0; i < players.Count; i++)
         {
-
+            players[i].Respawn();
         }
     }
 
