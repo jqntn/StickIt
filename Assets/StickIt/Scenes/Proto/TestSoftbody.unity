@@ -186,7 +186,6 @@ MonoBehaviour:
   materialsTemp: []
   nbrOfPlayer: 2
   _prefabPlayer: {fileID: 8854867468096441738, guid: bd2e8aa23cf5c3341ac34eba02c200b7, type: 3}
-  playersStartingPos: {fileID: 458454506}
   players: []
   alivePlayers: []
   deadPlayers: []
@@ -195,6 +194,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: b6dfdb6b5582dfa47bc62e8f0876bcef, type: 2}
   - {fileID: 2100000, guid: 4a0d86f138e169c4885a0711c62c440a, type: 2}
   - {fileID: 2100000, guid: cfc9bb33a760d504783203410585c1b0, type: 2}
+  isMenuSelection: 0
 --- !u!1 &87854807
 GameObject:
   m_ObjectHideFlags: 0
@@ -2272,7 +2272,7 @@ Transform:
   m_GameObject: {fileID: 919132147847613023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.02, y: 5.18, z: 0}
-  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children:
   - {fileID: 5094988295164125439}
   - {fileID: 397029995307757694}
@@ -2353,8 +2353,6 @@ GameObject:
   m_Component:
   - component: {fileID: 543450651786023141}
   - component: {fileID: 919132147847613024}
-  - component: {fileID: 919132147847613025}
-  - component: {fileID: 919132147847613026}
   m_Layer: 0
   m_Name: TestSoft02
   m_TagString: Untagged
@@ -2399,61 +2397,6 @@ MonoBehaviour:
   RigidbodyMass: 1
   PrefabLine: {fileID: 1666873409185668652, guid: c075358e34b312d47b1b3f9a3db0afe0, type: 3}
   ViewLines: 1
---- !u!114 &919132147847613025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132147847613023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 26bea88db41db674aaac0f563d8d8be0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myPlayer: {fileID: 919132147847613026}
-  state: 1
-  dotPreview: {fileID: 1563193181262515494, guid: d0c611942a4ded548aac09b0447276da, type: 3}
-  spaceBetweenDots: 0
-  numberOfDots: 1
-  maxSpeed: 10
-  animCurveJumpSpeed:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  minForceJumpMultiplicator: 0
-  speedIncreaseForceJump: 0
-  animCurveJumpGravity:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  gravityStrength: 0
-  velocityLastFrame: {x: 0, y: 0, z: 0}
-  attractionMultiplier: 0
-  repulsionMultiplier: 0
-  isSlippery: 0
-  maxNumberOfJumps: 0
-  collisionEffect: {fileID: 0}
---- !u!114 &919132147847613026
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132147847613023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff1fcb4431721a2478478bb50cb50330, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  myMouvementScript: {fileID: 0}
-  deathAnim: {fileID: 0}
-  deathPart: {fileID: 0}
-  id: 0
 --- !u!4 &929370227175363353
 Transform:
   m_ObjectHideFlags: 0
