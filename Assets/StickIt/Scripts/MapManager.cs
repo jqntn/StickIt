@@ -70,8 +70,8 @@ class MapManager : Unique<MapManager>
             }
             yield return null;
         }
-        foreach (var i in FindObjectsOfType<GameObject>())
-            if (i.name == "MapRoot") nextMapRoot = i;
+        var objs = GameObject.FindGameObjectsWithTag("MapRoot");
+        nextMapRoot = objs[objs.Length - 1];
         nextMapRoot.transform.position = new Vector3(mapOffset, 0);
         // MultiplayerManager.StartChangeMap
         MultiplayerManager.instance.speedChangeMap = 1 / slowTime;
