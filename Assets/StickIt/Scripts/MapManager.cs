@@ -11,6 +11,7 @@ class MapManager : Unique<MapManager>
     public string nextMap;
     public float timeScale;
     public bool isBusy;
+    public GameObject nextMapRoot;
     public ModsData modsData;
     Coroutine _coroutine;
     void OnGUI()
@@ -28,7 +29,7 @@ class MapManager : Unique<MapManager>
         isBusy = true;
         Time.timeScale = .5f;
         timeScale = Time.timeScale;
-        GameObject curMapRoot = GameObject.Find("MapRoot"), nextMapRoot = null;
+        GameObject curMapRoot = GameObject.Find("MapRoot");
         Vector3 v0 = Vector3.zero, v1 = Vector3.zero, d0 = Vector3.one, d1 = Vector3.one;
         AsyncOperation asyncOp = SceneManager.LoadSceneAsync(nextMapName, LoadSceneMode.Additive);
         asyncOp.allowSceneActivation = false;
