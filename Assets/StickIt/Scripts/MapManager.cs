@@ -36,12 +36,12 @@ class MapManager : Unique<MapManager>
         if (modsData.mods.Count == 0) return map;
         if (modsData.mods.Count > 1)
             do mod = modsData.mods[Random.Range(0, modsData.mods.Count)];
-            while (mod.name == prevMod || mod.name == curMod);
+            while (mod.name == curMod);
         else mod = modsData.mods[0];
         if (mod.maps.Count == 0) return map;
         if (mod.maps.Count > 1)
             do map = mod.maps[Random.Range(0, mod.maps.Count)];
-            while (map == prevMap || map == curMap);
+            while (map == curMap);
         else map = mod.maps[0];
         prevMod = curMod;
         prevMap = curMap;
@@ -55,32 +55,36 @@ class MapManager : Unique<MapManager>
         if (nextMap == "") nextMap = SelectNextMap();
         Time.timeScale = .5f;
         timeScale = Time.timeScale;
-        curMapRoot = GameObject.Find("MapRoot");
         Vector3 v0 = Vector3.zero, v1 = Vector3.zero, d0 = Vector3.one, d1 = Vector3.one;
-        AsyncOperation asyncOp = SceneManager.LoadSceneAsync(nextMap, LoadSceneMode.Additive);
-        asyncOp.allowSceneActivation = false;
-        float timeToLoad = 0;
-        while (!asyncOp.isDone)
+        if (curMapRoot == null) curMapRoot = GameObject.Find("MapRoot");
+        if (SceneManager.GetActiveScene().name == nextMap) nextMapRoot = Instantiate(curMapRoot, new Vector3(mapOffset, 0), Quaternion.identity);
+        else
         {
-            timeToLoad += Time.unscaledDeltaTime;
-            if (asyncOp.progress >= .9f)
+            AsyncOperation asyncOp = SceneManager.LoadSceneAsync(nextMap, LoadSceneMode.Additive);
+            asyncOp.allowSceneActivation = false;
+            float timeToLoad = 0;
+            while (!asyncOp.isDone)
             {
-                if (timeToLoad < slowTime)
+                timeToLoad += Time.unscaledDeltaTime;
+                if (asyncOp.progress >= .9f)
                 {
-                    float t = 0;
-                    while (t <= slowTime - timeToLoad)
+                    if (timeToLoad < slowTime)
                     {
-                        t += Time.unscaledDeltaTime;
-                        yield return null;
+                        float t = 0;
+                        while (t <= slowTime - timeToLoad)
+                        {
+                            t += Time.unscaledDeltaTime;
+                            yield return null;
+                        }
                     }
+                    asyncOp.allowSceneActivation = true;
                 }
-                asyncOp.allowSceneActivation = true;
+                yield return null;
             }
-            yield return null;
+            foreach (var i in SceneManager.GetSceneByName(nextMap).GetRootGameObjects())
+                if (i.name == "MapRoot") { nextMapRoot = i; nextMapRoot.transform.position = new Vector3(mapOffset, 0); break; }
         }
-        foreach (var i in SceneManager.GetSceneByName(nextMap).GetRootGameObjects())
-            if (i.name == "MapRoot") { nextMapRoot = i; nextMapRoot.transform.position = new Vector3(mapOffset, 0); break; }
-        // MultiplayerManager ChangeMap
+        // MultiplayerManager.StartChangeMap
         MultiplayerManager.instance.speedChangeMap = 1 / slowTime;
         MultiplayerManager.instance.StartChangeMap();
         //
@@ -95,7 +99,8 @@ class MapManager : Unique<MapManager>
             yield return null;
         }
         nextMapRoot.transform.position = Vector3.zero;
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        if (SceneManager.GetActiveScene().name != nextMap) SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        else Destroy(curMapRoot);
         Time.timeScale = 1;
         timeScale = Time.timeScale;
         curMapRoot = nextMapRoot;
