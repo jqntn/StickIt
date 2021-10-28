@@ -152,6 +152,6 @@ public class MenuSelection : MonoBehaviour
             MultiplayerManager.instance.SaveDatas(player.myDatas);
         }
 
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1) ;
+        MapManager.instance.PrepNextMap();
     }
 }

@@ -7,10 +7,10 @@ public class Player : MonoBehaviour
 {
     private MultiplayerManager _multiplayerManager;
     public PlayerMouvement myMouvementScript;
+    public P_Mouvement2 myMouvementScript2;
     public MultiplayerManager.PlayerData myDatas;
     public MMFeedbacks deathAnim;
     public GameObject deathPart;
-    public int id;
     bool isDead;
     void Start()
     {
@@ -31,6 +31,17 @@ public class Player : MonoBehaviour
         // Play Death Animation
         StartCoroutine(OnDeath());
     }
+
+    public void PrepareToChangeLevel()
+    {
+        if (!isDead)
+        {
+            myMouvementScript.PrepareToChangeLevel();
+            myMouvementScript.enabled = false;
+            GetComponentInChildren<Collider>().enabled = false;
+            GetComponent<Rigidbody>().isKinematic = true;
+        }
+    }
     IEnumerator OnDeath()
     {
         deathAnim.PlayFeedbacks();
@@ -46,8 +57,7 @@ public class Player : MonoBehaviour
     }
     public void Respawn()
     {
-        _multiplayerManager.alivePlayers.Add(this);
-        _multiplayerManager.deadPlayers.Remove(this);
+        print("respawn player");
         myMouvementScript.enabled = true;
         GetComponentInChildren<MeshRenderer>().enabled = true;
         GetComponentInChildren<Collider>().enabled = true;

@@ -123,6 +123,10 @@ public class MultiplayerManager : MonoBehaviour
 
     public void ChangeMap()
     {
+        foreach(Player player in players)
+        {
+            player.PrepareToChangeLevel();
+        }
         playersStartingPos = FindObjectOfType<PlayerStartingPos>().transform;
         alivePlayers = players;
         deadPlayers.Clear();
@@ -133,7 +137,7 @@ public class MultiplayerManager : MonoBehaviour
     {
         for(int i = 0; i < players.Count; i++)
         {
-
+            players[i].Respawn();
         }
     }
 
