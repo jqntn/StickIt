@@ -15,11 +15,17 @@ public class Level : MonoBehaviour
     {
         StartMap();
     }
+
     protected virtual void StartMap()
     {
         _multiplayerManager = MultiplayerManager.instance;
         _multiplayerManager.ChangeMap();
 
         _gameManager = GameManager.instance;
+    }
+
+    protected virtual void EndMap()
+    {
+        Debug.Log("End Map");
     }
 }

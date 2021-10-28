@@ -10,6 +10,7 @@ class MapManager : Unique<MapManager>
     public int mapOffset;
     public string nextMap;
     public float timeScale;
+    public bool isBusy;
     Coroutine _coroutine;
     void OnGUI()
     {
@@ -23,6 +24,7 @@ class MapManager : Unique<MapManager>
     }
     IEnumerator NextMap(string nextMapName)
     {
+        isBusy = true;
         Time.timeScale = .5f;
         timeScale = Time.timeScale;
         GameObject curMapRoot = GameObject.Find("MapRoot"), nextMapRoot = null;
@@ -35,11 +37,14 @@ class MapManager : Unique<MapManager>
             timeToLoad += Time.unscaledDeltaTime;
             if (asyncOp.progress >= .9f)
             {
-                float t = 0;
-                while (t <= slowTime - timeToLoad)
+                if (timeToLoad < slowTime)
                 {
-                    t += Time.unscaledDeltaTime;
-                    yield return null;
+                    float t = 0;
+                    while (t <= slowTime - timeToLoad)
+                    {
+                        t += Time.unscaledDeltaTime;
+                        yield return null;
+                    }
                 }
                 asyncOp.allowSceneActivation = true;
             }
@@ -61,6 +66,7 @@ class MapManager : Unique<MapManager>
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         Time.timeScale = 1;
         timeScale = Time.timeScale;
+        isBusy = true;
         _coroutine = null;
     }
 }
