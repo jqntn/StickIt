@@ -11,6 +11,7 @@ class MapManager : Unique<MapManager>
     public string nextMap;
     public float timeScale;
     public bool isBusy;
+    public ModsData modsData;
     Coroutine _coroutine;
     void OnGUI()
     {
