@@ -80,6 +80,10 @@ class MapManager : Unique<MapManager>
         }
         foreach (var i in SceneManager.GetSceneByName(nextMap).GetRootGameObjects())
             if (i.name == "MapRoot") { nextMapRoot = i; nextMapRoot.transform.position = new Vector3(mapOffset, 0); break; }
+        // MultiplayerManager ChangeMap
+        MultiplayerManager.instance.speedChangeMap = 1 / slowTime;
+        MultiplayerManager.instance.StartChangeMap();
+        //
         Time.timeScale = 0;
         timeScale = Time.timeScale;
         while (d0.sqrMagnitude > smoothMOE && d1.sqrMagnitude > smoothMOE)

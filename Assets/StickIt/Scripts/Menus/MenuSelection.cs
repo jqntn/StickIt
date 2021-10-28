@@ -31,7 +31,7 @@ public class MenuSelection : MonoBehaviour
     {
         for (int i = 0; i < Gamepad.all.Count; i++)
         {
-            if (Gamepad.all[i].buttonSouth.wasPressedThisFrame)
+            if (i < 4 && Gamepad.all[i].buttonSouth.wasPressedThisFrame)
             {
                 bool isAlreadyActivated = false;
                 foreach (Player player in MultiplayerManager.instance.players)
@@ -60,7 +60,6 @@ public class MenuSelection : MonoBehaviour
     }
     private void AddPlayer(Gamepad gamepad, int i)
     {
-        print(i);
         if (!isSpawnDeactivated[i])
         {
             //SpawnPlayer( gamepad, i);

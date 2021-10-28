@@ -19,7 +19,6 @@ public class Level : MonoBehaviour
     protected virtual void StartMap()
     {
         _multiplayerManager = MultiplayerManager.instance;
-        _multiplayerManager.ChangeMap();
 
         _gameManager = GameManager.instance;
     }
