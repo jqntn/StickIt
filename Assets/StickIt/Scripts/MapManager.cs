@@ -21,11 +21,11 @@ class MapManager : Unique<MapManager>
     Coroutine _coroutine;
     void OnGUI()
     {
-        if (GUI.Button(new Rect(0, 0, 200, 100), "NextMap")) NextMap(nextMapManual);
+        if (GUI.Button(new Rect(0, 0, 200, 100), "NextMap")) NextMap(nextMapManual, true);
     }
-    public bool NextMap(string nextMap = "")
+    public bool NextMap(string nextMap = "", bool fromMenu = false)
     {
-        if (_coroutine == null) _coroutine = StartCoroutine(Transition(nextMap));
+        if (_coroutine == null) _coroutine = StartCoroutine(Transition(nextMap, fromMenu));
         else return false;
         return true;
     }
@@ -49,7 +49,7 @@ class MapManager : Unique<MapManager>
         curMap = map;
         return map;
     }
-    IEnumerator Transition(string nextMap)
+    IEnumerator Transition(string nextMap, bool fromMenu)
     {
         isBusy = true;
         if (nextMap == "") nextMap = SelectNextMap();
@@ -65,7 +65,7 @@ class MapManager : Unique<MapManager>
             timeToLoad += Time.unscaledDeltaTime;
             if (asyncOp.progress >= .9f)
             {
-                if (timeToLoad < slowTime) yield return new WaitForSecondsRealtime(slowTime - timeToLoad);
+                if (!fromMenu && timeToLoad < slowTime) yield return new WaitForSecondsRealtime(slowTime - timeToLoad);
                 asyncOp.allowSceneActivation = true;
             }
             yield return null;
