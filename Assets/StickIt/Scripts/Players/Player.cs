@@ -56,11 +56,13 @@ public class Player : MonoBehaviour
     }
     public void Respawn()
     {
-        print("respawn player");
         myMouvementScript.enabled = true;
         GetComponentInChildren<MeshRenderer>().enabled = true;
         GetComponentInChildren<Collider>().enabled = true;
-        GetComponent<Rigidbody>().isKinematic = false;
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.isKinematic = false;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+
 
     }
 
