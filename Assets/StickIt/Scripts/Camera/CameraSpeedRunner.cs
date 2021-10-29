@@ -40,6 +40,7 @@ public class CameraSpeedRunner : CameraState
     [SerializeField] private Vector3 positionToGoTo;
     [SerializeField] private Vector3 moveVelocity;
     [SerializeField] private Vector3 zoomVelocity;
+    [SerializeField] private Vector3 roamingVelocity;
     [SerializeField] private float frustumHeight;
     [SerializeField] private float frustumWidth;
     [SerializeField] private float runTimer;
@@ -120,6 +121,8 @@ public class CameraSpeedRunner : CameraState
 
         UpdatePositionToGoTo();
         UpdateZoom();
+        // Update the camera viewport value in world space
+        CalculateFrustum();
         PlayerOffScreenShouldDie();
     }
     protected void LateUpdate()
@@ -136,8 +139,7 @@ public class CameraSpeedRunner : CameraState
                 break;
             }
         }
-        if (allDead) { return; }
-        //if (frontPlayer == null) { return; }
+        if (allDead && !hasFreeRoaming) { return; }
 
             if (hasFreeRoaming)
             {
@@ -433,6 +435,8 @@ public class CameraSpeedRunner : CameraState
             insideZoomOutBox =
                 player_X > minZoomOut_X && player_X < maxZoomOut_X &&
                 player_Y > minZoomOut_Y && player_Y < maxZoomOut_Y;
+
+            if (!insideZoomOutBox) { break; }
         }
 
         // Get New Zoom if outside of zoomOut box
@@ -472,9 +476,6 @@ public class CameraSpeedRunner : CameraState
         {
             positionToGoTo.z = Mathf.Clamp(transform.position.z + zoomInValue, maxOut_Z, maxIn_Z);
         }
-
-        // Update the camera viewport value in world space
-        CalculateFrustum();
     }
 
     private void PlayerOffScreenShouldDie()
@@ -550,7 +551,6 @@ public class CameraSpeedRunner : CameraState
 
     public void LoadCameraData()
     {
-        dataIndex++;
         CameraData current = datas[dataIndex];
 
         moveTime = current.moveTime;
@@ -568,8 +568,11 @@ public class CameraSpeedRunner : CameraState
         zoomOutValue = current.zoomOutSpeed;
         zoomInValue = current.zoomInSpeed;
         zoomTime = current.zoomTime;
+        hasZoomOutAtEnd = current.hasZoomOutAtEnd;
         deathMargin = current.deathMargin;
         timeBeforeDeath = current.timeBeforeDeath;
+
+        dataIndex++;
     }
     #endregion
 

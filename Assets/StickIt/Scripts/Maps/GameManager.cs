@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1);
         Time.timeScale = 1f;
         //InitMod(currentMod);
+        MultiplayerManager.instance.RespawnPlayers();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
     }

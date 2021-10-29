@@ -98,7 +98,6 @@ public class MusicalChairManager : Level
             if (!winners.Find(x => _multiplayerManager.alivePlayers[i] == x))
             {
                 //MAKE THE LOSERS EXPLODE
-                Debug.Log(_multiplayerManager.players[i].name + " DIES");
                 _multiplayerManager.alivePlayers[i].GetComponent<Player>().Death();
             }
         }
@@ -111,11 +110,17 @@ public class MusicalChairManager : Level
             winTxt.transform.parent.parent.gameObject.SetActive(true);
             winTxt.GetComponent<Text>().text = _multiplayerManager.alivePlayers[0].myDatas.name + " win!";
             GameManager.instance.ChangeMod();
+
         } else if(_multiplayerManager.alivePlayers.Count <= 0)
         {
             winTxt.transform.parent.parent.gameObject.SetActive(true);
             winTxt.GetComponent<Text>().text = "Only losers...";
             GameManager.instance.ChangeMod();
+
+
+
         }
+
     }
+
 }

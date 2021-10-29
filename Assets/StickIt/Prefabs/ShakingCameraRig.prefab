@@ -275,18 +275,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d3a40085f53a4c478015eda0b230bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hasMovement: 1
-  smoothTime: 1
-  hasZoom: 1
-  minZoom: -150
-  maxZoom: -100
-  zoomLimiter: 50
-  hasCameraBounds: 0
-  cameraBounds: {fileID: 0}
-  velocity: {x: 0, y: 0, z: 0}
-  centerPoint: {x: 0, y: 0, z: 0}
-  bounds_X: 0
-  bounds_Y: 0
+  datas:
+  - {fileID: 11400000, guid: 76da5ded0d99b8142a2d99df0e7dc309, type: 2}
+  - {fileID: 11400000, guid: 64ff73267b91f45498ae98a0bcbd625a, type: 2}
+  moveTime: 0.2
+  distanceBeforeBorder: 0
+  freezeX: 0
+  freezeY: 0
+  hasFollowOnlyPlayer: 0
+  hasFreeRoaming: 1
+  randomRadius: 5
+  roamingTime: 3
+  maxOut_Z: -110
+  maxIn_Z: -70
+  zoomOutMargin: -5
+  zoomInMargin: -10
+  zoomOutSpeed: 20
+  zoomInSpeed: 10
+  zoomTime: 0.1
+  deathMargin: 10
+  timeBeforeDeath: 0.2
+  currentDirection: 0
+  playerList: []
+  frontPlayer: {fileID: 0}
+  cam: {fileID: 0}
+  runnerManager: {fileID: 0}
+  mapManager: {fileID: 0}
+  centroid: {x: 0, y: 0, z: 0}
+  positionToGoTo: {x: 0, y: 0, z: 0}
+  moveVelocity: {x: 0, y: 0, z: 0}
+  zoomVelocity: {x: 0, y: 0, z: 0}
+  roamingVelocity: {x: 0, y: 0, z: 0}
+  frustumHeight: 0
+  frustumWidth: 0
+  runTimer: 0
+  deathTimer:
+  - 0
+  - 0
+  - 0
+  - 0
+  sceneIndex: 0
+  dataIndex: 0
+  hasTouchBorder: 0
+  isFollowingFirst: 0
 --- !u!1 &626349961553394816
 GameObject:
   m_ObjectHideFlags: 0

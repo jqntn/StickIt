@@ -69,8 +69,6 @@ public class PlayerMouvement : MonoBehaviour
         }
 
         currentNumberOfJumps = maxNumberOfJumps;
-
-
     }
 
     // Update is called once per frame
@@ -283,18 +281,30 @@ public class PlayerMouvement : MonoBehaviour
 
 
     public void CollisionBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact)
-    {
-        int id = GetComponent<Player>().myDatas.id;
-        int ido = playerCollided.GetComponent<Player>().myDatas.id;
-        //float newVelMagnitudeP1 = playerCollided.velocityLastFrame.magnitude;
-        //float newVelMagnitudeP2 = velocityLastFrame.magnitude;
-
-        //Vector3 newDirP1 = Vector3.Reflect(velocityLastFrame.normalized, contact.normal);
-        //Vector3 newDirP2 = Vector3.Reflect(playerCollided.velocityLastFrame.normalized, contact.normal);
-
-        //rb.velocity = newDirP1 * newVelMagnitudeP1;
-        //playerCollided.rb.velocity = newDirP2 * newVelMagnitudeP2;
-
+    {
+
+        int id = GetComponent<Player>().myDatas.id;
+
+        int ido = playerCollided.GetComponent<Player>().myDatas.id;
+
+        //float newVelMagnitudeP1 = playerCollided.velocityLastFrame.magnitude;
+
+        //float newVelMagnitudeP2 = velocityLastFrame.magnitude;
+
+
+
+        //Vector3 newDirP1 = Vector3.Reflect(velocityLastFrame.normalized, contact.normal);
+
+        //Vector3 newDirP2 = Vector3.Reflect(playerCollided.velocityLastFrame.normalized, contact.normal);
+
+
+
+        //rb.velocity = newDirP1 * newVelMagnitudeP1;
+
+        //playerCollided.rb.velocity = newDirP2 * newVelMagnitudeP2;
+
+
+
         Vector3 v = Quaternion.Euler(0, 0, 90) * contact.normal;
         Debug.DrawRay(contact.point, v, Color.green);
         GameObject g = Instantiate(collisionEffect, contact.point, Quaternion.Euler(0,0, Vector3.Angle(contact.normal, v)));

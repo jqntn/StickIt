@@ -60,7 +60,15 @@ public class MultiplayerManager : MonoBehaviour
 
     public List<Material> materials = new List<Material>();
 
-    List<PlayerData> datas = new List<PlayerData>();
+    private List<PlayerData> datas = new List<PlayerData>();
+    private Transform playersStartingPos;
+  //  private int nbrDevicesLastFrame = 0;
+    [HideInInspector] public float speedChangeMap = 1;
+    private float t = 0f;
+    private float y = 0f;
+    private float[] initPosX;
+    private float[] initPosY;
+    private bool isChangingMap = false;
 
 
     int nbrDevicesLastFrame = 0;
@@ -68,7 +76,7 @@ public class MultiplayerManager : MonoBehaviour
     
 
 #if UNITY_EDITOR
-    [SerializeField] bool isMenuSelection = false;
+    [SerializeField] public bool isMenuSelection = false; // should be private
 #endif
 
     private void Awake()
@@ -79,7 +87,17 @@ public class MultiplayerManager : MonoBehaviour
         else Destroy(gameObject);
 
         DontDestroyOnLoad(this);
-
+#if UNITY_EDITOR
+        // Is Menu Selection ?
+        if(SceneManager.GetActiveScene().name == "0_MenuSelection")
+        {
+            isMenuSelection = true;
+        }
+        else
+        {
+            isMenuSelection = false;
+        }
+#endif
     }
 
     private void Start()
@@ -106,7 +124,7 @@ public class MultiplayerManager : MonoBehaviour
         datas.Add(playerData);
     }
 
-    void InitializePlayersWithoutMenuSelector(int numberOfPlayer)
+    public void InitializePlayersWithoutMenuSelector(int numberOfPlayer)
     {
         for(int i = 0; i < numberOfPlayer; i++)
         {
@@ -181,7 +199,6 @@ public class MultiplayerManager : MonoBehaviour
             y = t;
             y = curve_ChangeMap_PosY.Evaluate(y);
             float currentPosY = Mathf.Lerp(playersStartingPos.GetChild(i).transform.position.y, initPosY[i] , 1-y);
-            print(y);
             players[i].transform.position = new Vector3(currentPosX, currentPosY);
             if(y >= 1)
             {

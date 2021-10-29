@@ -12,6 +12,7 @@ public class MenuSelection : MonoBehaviour
     [SerializeField] Animator animLaunchGame;
     [Header("----------- ANIMATIONS -----------")]
     private bool[] isSpawnDeactivated = new bool[4];
+    private List<int> devicesID = new List<int>();
     private List<Tuyau> tuyauxList = new List<Tuyau>();
     public float animTime = 0.5f;
     public float yOffset = 1f;
@@ -34,20 +35,27 @@ public class MenuSelection : MonoBehaviour
             if (i < 4 && Gamepad.all[i].buttonSouth.wasPressedThisFrame)
             {
                 bool isAlreadyActivated = false;
-                foreach (Player player in MultiplayerManager.instance.players)
+                // --- CHECK PLAYERS DEVICE ID
+                //foreach (Player player in MultiplayerManager.instance.players)
+                //{
+                //    if (player.myDatas.deviceID == Gamepad.all[i].deviceId)
+                //    {
+                //        isAlreadyActivated = true;
+                //    }
+                //}
+                // --- CHECK FOR DEVICES ID IN LIST
+                for (int j = 0; j < devicesID.Count; j++)
                 {
-                    if (player.myDatas.deviceID == Gamepad.all[i].deviceId)
+                    if (Gamepad.all[i].deviceId == devicesID[j])
                     {
                         isAlreadyActivated = true;
                     }
                 }
                 if (isAlreadyActivated) continue; // ----- RETURN CONDITION
+                devicesID.Add(Gamepad.all[i].deviceId);
                 AddPlayer(Gamepad.all[i], counterID);
                 counterID++;
-                if (MultiplayerManager.instance.players.Count == 2)
-                {
-                    animLaunchGame.SetTrigger("Entry");
-                }
+               
             }
             else if (MultiplayerManager.instance.players.Count >= 2)
             {
@@ -60,16 +68,16 @@ public class MenuSelection : MonoBehaviour
     }
     private void AddPlayer(Gamepad gamepad, int i)
     {
-        if (!isSpawnDeactivated[i])
-        {
-            //SpawnPlayer( gamepad, i);
-            isSpawnDeactivated[i] = true;
-            tuyauxList[i].menuSelection = this;
-            tuyauxList[i].gamepad = gamepad;
-            tuyauxList[i].id = i;
-            tuyauxList[i].PlayAnimation();
-            //StartCoroutine(DoAddPlayer(gamepad, i));
-        }
+        //if (!isSpawnDeactivated[i])
+        //{
+        //    //SpawnPlayer( gamepad, i);
+        //    isSpawnDeactivated[i] = true;
+        tuyauxList[i].menuSelection = this;
+        tuyauxList[i].gamepad = gamepad;
+        tuyauxList[i].id = i;
+        tuyauxList[i].PlayAnimation();
+        //StartCoroutine(DoAddPlayer(gamepad, i));
+        //}
     }
     public void SpawnPlayer(Gamepad gamepad, int i)
     {
@@ -86,6 +94,11 @@ public class MenuSelection : MonoBehaviour
         newPlayer.gameObject.name = scriptPlayer.myDatas.name;
         scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = scriptPlayer.myDatas.material;
         MultiplayerManager.instance.players.Add(scriptPlayer);
+        MultiplayerManager.instance.alivePlayers.Add(scriptPlayer);
+        if (MultiplayerManager.instance.players.Count == 2)
+        {
+            animLaunchGame.SetTrigger("Entry");
+        }
     }
     private IEnumerator DoAddPlayer(Gamepad gamepad, int i)
     {
@@ -125,7 +138,8 @@ public class MenuSelection : MonoBehaviour
         foreach (Player player in MultiplayerManager.instance.players)
         {
             MultiplayerManager.instance.SaveDatas(player.myDatas);
+            player.myMouvementScript.PrepareToChangeLevel();
         }
-        MapManager.instance.NextMap();
+        MapManager.instance.NextMap("", true);
     }
 }
