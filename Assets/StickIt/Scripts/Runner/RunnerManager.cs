@@ -49,7 +49,6 @@ public class RunnerManager : Level
     [SerializeField] private bool hasStopTimer = false;
     private Queue<Player> orderPlayer = new Queue<Player>();
     private Stack<Player> deadPlayer = new Stack<Player>();
-   
     public bool hasEndLevel = false;
 
     private void Update()
@@ -68,9 +67,10 @@ public class RunnerManager : Level
         if (!needToPassEnd && _multiplayerManager.alivePlayers.Count == 1)
         {
             Player player = _multiplayerManager.alivePlayers[0];
-            orderPlayer.Enqueue(player);
+            if(!orderPlayer.Contains(player)) orderPlayer.Enqueue(player);
             arriveTimePlayers.Add(timer);
             hasStopTimer = true;
+            hasEndLevel = true;
         }
 
         int count = orderPlayer.Count + deadPlayer.Count;
@@ -107,7 +107,6 @@ public class RunnerManager : Level
 
             if (!doDeadGainScore)
             {
-                Debug.Log("Dead Player don't gain anything");
                 return;
             }
 
@@ -226,7 +225,6 @@ public class RunnerManager : Level
     {
         player.myDatas.score += scoreToAdd;
         winners.Add(player);
-        Debug.Log("Player " + player.id + " gain " + scoreToAdd);
     }
 
     private void AddBonus(short i, ref uint scoreToAdd)
