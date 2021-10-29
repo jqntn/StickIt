@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class CameraBarycenter : MonoBehaviour
 {
     [Header("----------- CAMERA MOVEMENT -----------")]
@@ -24,6 +24,7 @@ public class CameraBarycenter : MonoBehaviour
     [SerializeField] private Vector3 centerPoint = new Vector3(0.0f, 0.0f, 0.0f);
     [SerializeField] float bounds_X = 0.0f;
     [SerializeField] float bounds_Y = 0.0f;
+    [SerializeField] MapManager mapManager;
     private void Awake()
     {
         velocity = new Vector3(0.0f, 0.0f, 0.0f);
@@ -37,11 +38,14 @@ public class CameraBarycenter : MonoBehaviour
     private void Start()
     {
         multiplayerManager = MultiplayerManager.instance;
+        mapManager = MapManager.instance;
     }
 
     private void LateUpdate()
     {
-        if (multiplayerManager.players.Count <= 0) { return; }
+        //if (mapManager.isBusy) { return; }
+        if (mapManager.isActiveAndEnabled) { return; }
+        if (multiplayerManager.players.Count <= 0 && SceneManager.GetActiveScene().buildIndex == 0) { return; }
 
         if (hasMovement) { FollowPlayers(); }
         if (hasZoom) { Zoom(); }
@@ -64,7 +68,7 @@ public class CameraBarycenter : MonoBehaviour
 
     private void Zoom()
     {
-        float newZoom = Mathf.Lerp(maxZoom, minZoom, GetGreatestDistance() / zoomLimiter);
+        float newZoom = Mathf.Lerp(maxZoom, minZoom, GetGreatestDistance() / (maxZoom + minZoom));
         transform.position = new Vector3(
             transform.position.x,
             transform.position.y,
