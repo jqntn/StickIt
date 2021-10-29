@@ -70,7 +70,7 @@ public class PlayerMouvement : MonoBehaviour
 
         currentNumberOfJumps = maxNumberOfJumps;
 
-
+        print(GetComponent<PlayerInput>().devices.Count);
     }
 
     // Update is called once per frame
