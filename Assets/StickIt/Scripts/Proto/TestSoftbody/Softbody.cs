@@ -19,6 +19,7 @@ public static class Softbody
     public static LineRenderer PrefabLine;
     public static bool ViewLines;
 
+    public static P_Mouvement2 plm;
 
     public static void Init(ColliderShape shape, float collidersize, float rigidbodymass, float spring, float damper, RigidbodyConstraints constraints, PhysicMaterial mat)
     {
@@ -43,10 +44,6 @@ public static class Softbody
         ViewLines = viewlines;
         matBones = mat;
     }
-    /*public static StickyPoint AddStick(ref GameObject go)
-    {
-        
-    }*/
     public static Rigidbody AddCollider(ref GameObject go)
     {
         return AddCollider(ref go, Shape, ColliderSize, RigidbodyMass);

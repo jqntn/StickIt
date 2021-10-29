@@ -19,22 +19,22 @@ public class OurSphereSoft : MonoBehaviour
     public float RigidbodyMass = 1f;
     public LineRenderer PrefabLine = null;
     public bool ViewLines = true;
+    [Header("Player Movements")]
+    public P_Mouvement2 playerMovements;
 
     private void Awake()
     {
         Softbody.Init(Shape, ColliderSize, RigidbodyMass, Spring, Damper, RigidbodyConstraints.FreezeRotation , PrefabLine, ViewLines, matBones);
-    }
-    private void Start()
-    {
-        Softbody.AddCollider(ref root, Softbody.ColliderShape.Sphere, ColliderSizeRoot, 0.5f);
-        GameObject boneAfter;
-        boneAfter = bones[1];
-        for (int i = 0; i < bones.Length;i++)
+        for (int i = 0; i < bones.Length; i++)
         {
             Softbody.AddCollider(ref bones[i]);
             Softbody.AddSpring(ref bones[i], ref root);
-            //Softbody.AddStick(ref bones[i]);
         }
+    }
+    private void Start()
+    {
+        //Softbody.AddCollider(ref root, Softbody.ColliderShape.Sphere, ColliderSizeRoot, 0.5f);
+        
     }
 
     private void Update()

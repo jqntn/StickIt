@@ -15,9 +15,11 @@ public class Player : MonoBehaviour
     void Start()
     {
         _multiplayerManager = MultiplayerManager.instance;
-        myMouvementScript = GetComponent<PlayerMouvement>();
-        myMouvementScript.myPlayer = this;
-
+        if(TryGetComponent<PlayerMouvement>(out PlayerMouvement pm))
+        {
+            myMouvementScript = pm;
+            myMouvementScript.myPlayer = this;
+        }
         DontDestroyOnLoad(this);
     }
 
