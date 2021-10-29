@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public MultiplayerManager.PlayerData myDatas;
     public MMFeedbacks deathAnim;
     public GameObject deathPart;
-    bool isDead;
+    public bool isDead;
     void Start()
     {
         _multiplayerManager = MultiplayerManager.instance;

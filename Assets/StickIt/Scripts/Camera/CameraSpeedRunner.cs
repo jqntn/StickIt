@@ -141,14 +141,19 @@ public class CameraSpeedRunner : CameraState
         }
         if (allDead && !hasFreeRoaming) { return; }
 
-            if (hasFreeRoaming)
-            {
-                transform.position = Vector3.SmoothDamp(transform.position, positionToGoTo, ref roamingVelocity, roamingTime);
-            }
-
+        if (hasFreeRoaming)
+        {
+            positionToGoTo.z = maxOut_Z;
+            transform.position = Vector3.SmoothDamp(transform.position, positionToGoTo, ref roamingVelocity, roamingTime);
+        }
+        if(hasCenterCamera && allDead)
+        {
+            if (center == null) { return; }
+            positionToGoTo = center.transform.position;
+            positionToGoTo.z = maxOut_Z;
+            transform.position = Vector3.SmoothDamp(transform.position, positionToGoTo, ref moveVelocity, moveTime);
             return;
         }
-
         if (hasCenterCamera && onlyOnePlayerLeft)
         {
             if(center == null) { return; }

@@ -38,20 +38,8 @@ public class MultiplayerManager : MonoBehaviour
     public List<Material> materialsTemp = new List<Material>();
     public int nbrOfPlayer;
     [SerializeField] private Transform _prefabPlayer;
- 
-    Transform playersStartingPos;
-    private bool isChangingMap;
-    [HideInInspector]public float speedChangeMap = 1;
     [SerializeField] AnimationCurve curve_ChangeMap_PosX;
     [SerializeField] AnimationCurve curve_ChangeMap_PosY;
-    float t;
-    float y;
-    float[] initPosX;
-    float[] initPosY;
-    float[] currentPosX;
-    float[] currentPosY;
-
-
 
     [Header("------------DEBUG------------")]
     public List<Player> players = new List<Player>();
