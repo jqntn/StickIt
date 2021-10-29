@@ -16,7 +16,7 @@ public class CameraFollowFirst : MonoBehaviour
     public float centroidOffset_Y = 0.5f;
 
     [Header("---------- CAMERA BOUNDS ---------")]
-    public float deathOffset = 0.1f;
+    public float deathOffset = 0.2f;
 
     [Header("----------- DEBUG ------------")]
     [SerializeField] private List<Player> playerList = new List<Player>();
@@ -28,8 +28,7 @@ public class CameraFollowFirst : MonoBehaviour
     [SerializeField] private Vector2 positionToGoTo;
     [SerializeField] private Vector3 velocity;
     [SerializeField] private Vector2 startPos;
-    [SerializeField] private float centroid_X;
-    [SerializeField] private float centroid_Y;
+    [SerializeField] private Vector3 centroid;
     [SerializeField] private float timer = 0.0f;
 
     private void Awake()
@@ -60,6 +59,7 @@ public class CameraFollowFirst : MonoBehaviour
     #region Camera Movement
     public void LateUpdate()
     {
+        // Move camera
         Vector3 newPos = new Vector3(
             positionToGoTo.x,
             positionToGoTo.y,
@@ -74,94 +74,186 @@ public class CameraFollowFirst : MonoBehaviour
         if(playerFirst == null) { return; }
 
         GetCentroid();
-
-        // Update position to go to
-        float first_Y = playerFirst.transform.position.y;
-        float first_X = playerFirst.transform.position.x;
-        
-        switch (currentDirection)
-        {
-            case RaceDirection.UP:
-                foreach (Player player in playerList)
-                {
-                    float player_Y = player.transform.position.y;
-                    if(first_Y < player_Y)
-                    {
-                        playerFirst = player;
-                        first_Y = playerFirst.transform.position.y;
-                    }
-                }
-
-                // Adding Offset Camera
-                positionToGoTo = new Vector2(
-                    startPos.x + centroidOffset_X, 
-                    playerFirst.transform.position.y - offset_Y);
-                break;
-            case RaceDirection.DOWN:
-                foreach (Player player in playerList)
-                {
-                    float player_Y = player.transform.position.y;
-                    if (first_Y > player_Y)
-                    {
-                        playerFirst = player;
-                        first_Y = playerFirst.transform.position.y;
-                    }
-                }
-
-                // Adding Offset Camera
-                positionToGoTo = new Vector2(
-                    startPos.x + centroidOffset_X,
-                    playerFirst.transform.position.y + offset_Y);
-                break;
-            case RaceDirection.LEFT:
-                foreach (Player player in playerList)
-                {
-                    float player_X = player.transform.position.x;
-                    if (first_X > player_X)
-                    {
-                        playerFirst = player;
-                        first_X = playerFirst.transform.position.x;
-                    }
-                }
-
-                // Adding Offset Camera
-                positionToGoTo = new Vector2(
-                    playerFirst.transform.position.x - offset_X,
-                    startPos.y + centroidOffset_Y);
-                break;
-            case RaceDirection.RIGHT:
-                foreach (Player player in playerList)
-                {
-                    float player_X = player.transform.position.x;
-                    if (first_X < player_X)
-                    {
-                        playerFirst = player;
-                        first_X = playerFirst.transform.position.x;
-                    }
-                }
-
-                // Adding Offset Camera X
-                positionToGoTo = new Vector2(
-                    playerFirst.transform.position.x - offset_X,
-                    startPos.y + centroidOffset_Y);
-                break;
-        }
-
+        UpdatePositionToGoTo();
         UpdatePlayerOnCamera();
     }
     #endregion
     private void GetCentroid()
     {
-        centroidOffset_X = 0;
-        centroidOffset_Y = 0;
-        // Get centroid
+        centroid = new Vector3(0, 0, 0);
         foreach (Player player in playerList)
         {
-            centroidOffset_X += player.transform.position.x;
-            centroidOffset_Y += player.transform.position.y;
+            centroid += player.transform.position;
         }
-        centroidOffset_X /= playerList.Count;
-        centroidOffset_Y /= playerList.Count;
+        centroid /= playerList.Count;
+
+        //Debug
+        float val = 0;
+        foreach (Player player in playerList)
+        {
+            Debug.DrawLine(player.transform.position, centroid, Color.red + new Color(-val, val, 0));
+            val += 0.25f;
+        }
+    }
+
+    private void UpdatePositionToGoTo()
+    {
+        positionToGoTo = centroid;
+        float first_Y = playerFirst.transform.position.y;
+        float first_X = playerFirst.transform.position.x;
+
+        //Front = direction + the first who is in that direction
+        // calculate camera bounds to first
+        //switch (currentDirection)
+        //{
+        //    case RaceDirection.UP:
+        //        foreach (Player player in playerList)
+        //        {
+        //            float player_Y = player.transform.position.y;
+        //            if (first_Y < player_Y)
+        //            {
+        //                playerFirst = player;
+        //                first_Y = player_Y;
+        //            }
+        //        }
+
+        //        // Adding Offset Camera
+        //        positionToGoTo = new Vector2(
+        //            startPos.x + centroidOffset_X,
+        //            playerFirst.transform.position.y - offset_Y);
+        //        break;
+
+        //    case RaceDirection.DOWN:
+        //        foreach (Player player in playerList)
+        //        {
+        //            float player_Y = player.transform.position.y;
+        //            if (first_Y > player_Y)
+        //            {
+        //                playerFirst = player;
+        //                first_Y = player_Y;
+        //            }
+        //        }
+
+        //        // Adding Offset Camera
+        //        positionToGoTo = new Vector2(
+        //            startPos.x + centroidOffset_X,
+        //            playerFirst.transform.position.y + offset_Y);
+        //        break;
+
+        //    case RaceDirection.LEFT:
+        //        foreach (Player player in playerList)
+        //        {
+        //            float player_X = player.transform.position.x;
+        //            if (first_X > player_X)
+        //            {
+        //                playerFirst = player;
+        //                first_X = player_X;
+        //            }
+        //        }
+
+        //        // Adding Offset Camera
+        //        positionToGoTo = new Vector2(
+        //            playerFirst.transform.position.x - offset_X,
+        //            startPos.y + centroidOffset_Y);
+        //        break;
+
+        //    case RaceDirection.RIGHT:
+        //        foreach (Player player in playerList)
+        //        {
+        //            float player_X = player.transform.position.x;
+        //            if (first_X < player_X)
+        //            {
+        //                playerFirst = player;
+        //                first_X = player_X;
+        //            }
+        //        }
+
+        //        // Adding Offset Camera
+        //        positionToGoTo = new Vector2(
+        //            playerFirst.transform.position.x - offset_X,
+        //            startPos.y + centroidOffset_Y);
+        //        break;
+
+        //    case RaceDirection.D_UPRIGHT:
+        //        foreach (Player player in playerList)
+        //        {
+        //            float player_X = player.transform.position.x;
+        //            float player_Y = player.transform.position.y;
+
+        //            if (first_X < player_X && first_Y < player_Y)
+        //            {
+        //                playerFirst = player;
+        //                first_X = player_X;
+        //                first_Y = player_Y;
+        //            }
+        //        }
+
+        //        // Adding Offset Camera
+        //        positionToGoTo = new Vector2(
+        //            playerFirst.transform.position.x - offset_X,
+        //            startPos.y + centroidOffset_Y - offset_Y);
+        //        break;
+
+        //    case RaceDirection.D_UPLEFT:
+        //        foreach (Player player in playerList)
+        //        {
+        //            float player_X = player.transform.position.x;
+        //            float player_Y = player.transform.position.y;
+
+        //            if (first_X < player_Y && first_Y < player_Y)
+        //            {
+        //                playerFirst = player;
+        //                first_X = player_X;
+        //                first_Y = player_Y;
+        //            }
+        //        }
+
+        //        // Adding Offset Camera
+        //        positionToGoTo = new Vector2(
+        //            playerFirst.transform.position.x - offset_X,
+        //            startPos.y + centroidOffset_Y - offset_Y);
+        //        break;
+
+        //    case RaceDirection.D_DOWNRIGHT:
+        //        foreach (Player player in playerList)
+        //        {
+        //            float player_X = player.transform.position.x;
+        //            float player_Y = player.transform.position.y;
+
+        //            if (first_X > player_X && first_Y < player_Y)
+        //            {
+        //                playerFirst = player;
+        //                first_X = player_X;
+        //                first_Y = player_Y;
+        //            }
+        //        }
+
+        //        // Adding Offset Camera
+        //        positionToGoTo = new Vector2(
+        //            playerFirst.transform.position.x + offset_X,
+        //            startPos.y + centroidOffset_Y + offset_Y);
+        //        break;
+
+        //    case RaceDirection.D_DOWNLEFT:
+        //        foreach (Player player in playerList)
+        //        {
+        //            float player_X = player.transform.position.x;
+        //            float player_Y = player.transform.position.y;
+
+        //            if (first_X < player_X && first_Y > player_Y)
+        //            {
+        //                playerFirst = player;
+        //                first_X = player_X;
+        //                first_Y = player_Y;
+        //            }
+        //        }
+
+        //        // Adding Offset Camera
+        //        positionToGoTo = new Vector2(
+        //            playerFirst.transform.position.x - offset_X,
+        //            startPos.y + centroidOffset_Y - offset_Y);
+        //        break;
+        //}
     }
 
     private void UpdatePlayerOnCamera()
@@ -177,11 +269,11 @@ public class CameraFollowFirst : MonoBehaviour
                 screenPoint.x > 0 - deathOffset && screenPoint.x < 1 + deathOffset &&
                 screenPoint.y > 0 - deathOffset && screenPoint.y < 1 + deathOffset;
 
-            if (!onScreen && !runnerManager.GetDead().Contains(player) && !runnerManager.GetOrder().Contains(player))
+            if (!onScreen && !runnerManager.GetDead().Contains(player))
             {
+                player.Death();
                 runnerManager.AddDeath(player);
                 runnerManager.AddDeadTime(timer);
-                player.Death();
             }
         }
     }

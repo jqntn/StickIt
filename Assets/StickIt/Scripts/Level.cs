@@ -4,10 +4,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class Level : MonoBehaviour
 {
-    // Start is called before the first frame update
-
-    protected GameManager _gameManager;
     protected MultiplayerManager _multiplayerManager;
+    protected GameManager _gameManager;
     public List<Player> winners;
     public Transform startingPos;
 
@@ -19,8 +17,6 @@ public class Level : MonoBehaviour
     protected virtual void StartMap()
     {
         _multiplayerManager = MultiplayerManager.instance;
-        _multiplayerManager.ChangeMap();
-
         _gameManager = GameManager.instance;
     }
 

@@ -6,10 +6,12 @@ public class CameraCheckpoint : MonoBehaviour
 {
     private bool hasEnclenched = false;
 
-    private CameraFollowFirst _camera;
+    //private CameraFollowFirst _camera;
+    private CameraSpeedRunner _camera;
     private void Awake()
     {
-        _camera = Camera.main.GetComponent<CameraFollowFirst>();
+        //_camera = Camera.main.GetComponent<CameraFollowFirst>();
+        _camera = Camera.main.GetComponent<CameraSpeedRunner>();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -18,7 +20,6 @@ public class CameraCheckpoint : MonoBehaviour
         Player otherPlayer = other.GetComponentInParent<Player>();
         if(otherPlayer != null)
         {
-            Debug.Log("Start Follow First Player");
             _camera.SetCurrentFirst(otherPlayer);
             hasEnclenched = true;
         }
