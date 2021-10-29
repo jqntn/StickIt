@@ -13,14 +13,19 @@ public class CameraSpeedRunner : MonoBehaviour
     public bool freezeX = false;
     public bool freezeY = false;
     public bool hasFollowOnlyPlayer = false;
+    public bool hasFreeRoaming = false;
+    public int randomRadius = 5;
+    public float roamingTime = 3.0f;
 
     [Header("------ Zoom ------")]
     public float maxOut_Z = -110.0f;
     public float maxIn_Z = -70.0f;
     public float zoomOutMargin = -5.0f;
     public float zoomInMargin = -10.0f;
-    public float zoomValue = 10.0f;
+    public float zoomOutSpeed = 20.0f;
+    public float zoomInSpeed = 10.0f;
     public float zoomTime = 0.2f;
+    public bool hasZoomOutAtEnd = true;
 
     [Header("------ Death ------")]
     public float deathMargin = 10.0f;
@@ -37,6 +42,7 @@ public class CameraSpeedRunner : MonoBehaviour
     [SerializeField] private Vector3 positionToGoTo;
     [SerializeField] private Vector3 moveVelocity;
     [SerializeField] private Vector3 zoomVelocity;
+    [SerializeField] private Vector3 roamingVelocity;
     [SerializeField] private float frustumHeight;
     [SerializeField] private float frustumWidth;
     [SerializeField] private float runTimer;
@@ -79,12 +85,32 @@ public class CameraSpeedRunner : MonoBehaviour
                 break;
             }
         }
-        if (allDead) { return; }
-        //if (frontPlayer == null) { return; }
+        if (allDead && !hasFreeRoaming) { return; }
+
+        // End Cam Animation
+        if (allDead) {
+            if (hasFreeRoaming)
+            {
+                positionToGoTo = Random.insideUnitCircle * randomRadius;
+            }
+
+            if (hasZoomOutAtEnd)
+            {
+                positionToGoTo.z = maxOut_Z;
+                CalculateFrustum();
+            }
+            return;
+        }
         if (isFollowingFirst) { return; }
+
+        // Protections for running only
+        //if (frontPlayer == null) { return; }
+
 
         UpdatePositionToGoTo();
         UpdateZoom();
+        // Update the camera viewport value in world space
+        CalculateFrustum();
         PlayerOffScreenShouldDie();
     }
     private void LateUpdate()
@@ -101,8 +127,27 @@ public class CameraSpeedRunner : MonoBehaviour
                 break;
             }
         }
-        if (allDead) { return; }
-        //if (frontPlayer == null) { return; }
+        if (allDead && !hasFreeRoaming) { return; }
+
+        // End Cam Animation
+        if (allDead)
+        {
+            if (hasZoomOutAtEnd)
+            {
+                positionToGoTo.z = maxOut_Z;
+            }
+            else
+            {
+                positionToGoTo.z = transform.position.z;
+            }
+
+            if (hasFreeRoaming)
+            {
+                transform.position = Vector3.SmoothDamp(transform.position, positionToGoTo, ref roamingVelocity, roamingTime);
+            }
+
+            return;
+        }
 
         // If only 1 player alive > Camera Follow Player
         if (isFollowingFirst && hasFollowOnlyPlayer)
@@ -111,6 +156,9 @@ public class CameraSpeedRunner : MonoBehaviour
             transform.position = Vector3.SmoothDamp(transform.position, firstPos, ref moveVelocity, moveTime);
             return;
         }
+
+        // Protection for running only
+        //if (frontPlayer == null) { return; }
 
         // Move Camera
         Vector3 newPos = new Vector3(
@@ -369,12 +417,15 @@ public class CameraSpeedRunner : MonoBehaviour
             insideZoomOutBox =
                 player_X > minZoomOut_X && player_X < maxZoomOut_X &&
                 player_Y > minZoomOut_Y && player_Y < maxZoomOut_Y;
+
+            if (!insideZoomOutBox) { break; }
         }
 
         // Get New Zoom if outside of zoomOut box
         if (!insideZoomOutBox)
         {
-            positionToGoTo.z = Mathf.Clamp(transform.position.z - zoomValue, maxOut_Z, maxIn_Z);
+            positionToGoTo.z = Mathf.Clamp(transform.position.z - zoomOutSpeed, maxOut_Z, maxIn_Z);
+            return;
         }
 
         // Zoom In
@@ -405,11 +456,8 @@ public class CameraSpeedRunner : MonoBehaviour
         // Get New Zoom if player inside zoomIn box
         if (insideZoomInBox)
         {
-            positionToGoTo.z = Mathf.Clamp(transform.position.z + zoomValue, maxOut_Z, maxIn_Z);
+            positionToGoTo.z = Mathf.Clamp(transform.position.z + zoomInSpeed, maxOut_Z, maxIn_Z);
         }
-
-        // Update the camera viewport value in world space
-        CalculateFrustum();
     }
 
     private void PlayerOffScreenShouldDie()
@@ -487,7 +535,6 @@ public class CameraSpeedRunner : MonoBehaviour
 
     public void LoadCameraData()
     {
-        dataIndex++;
         CameraData current = datas[dataIndex];
 
         moveTime = current.moveTime;
@@ -495,14 +542,21 @@ public class CameraSpeedRunner : MonoBehaviour
         freezeX = current.freezeX;
         freezeY = current.freezeY;
         hasFollowOnlyPlayer = current.hasFollowOnlyPlayer;
+        hasFreeRoaming = current.hasFreeRoaming;
+        randomRadius = current.randomRadius;
+        roamingTime = current.roamingTime;
         maxOut_Z = current.maxOut_Z;
         maxIn_Z = current.maxIn_Z;
         zoomOutMargin = current.zoomOutMargin;
         zoomInMargin = current.zoomInMargin;
-        zoomValue = current.zoomValue;
+        zoomOutSpeed = current.zoomOutSpeed;
+        zoomInSpeed = current.zoomInSpeed;
         zoomTime = current.zoomTime;
+        hasZoomOutAtEnd = current.hasZoomOutAtEnd;
         deathMargin = current.deathMargin;
         timeBeforeDeath = current.timeBeforeDeath;
+
+        dataIndex++;
     }
     #endregion
 

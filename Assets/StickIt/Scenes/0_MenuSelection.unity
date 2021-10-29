@@ -649,8 +649,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 539608441321555275, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
-      propertyPath: datas.Array.size
-      value: 2
+      propertyPath: maxOut_Z
+      value: -130
+      objectReference: {fileID: 0}
+    - target: {fileID: 539608441321555275, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: zoomTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 539608441321555275, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: zoomValue
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 539608441321555275, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: zoomInMargin
+      value: -15
+      objectReference: {fileID: 0}
+    - target: {fileID: 539608441321555275, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: zoomOutMargin
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 539608441321555275, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: hasZoomOutAtEnd
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 539608441321555275, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: datas.Array.data[2]

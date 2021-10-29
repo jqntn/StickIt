@@ -283,11 +283,15 @@ MonoBehaviour:
   freezeX: 0
   freezeY: 0
   hasFollowOnlyPlayer: 0
+  hasFreeRoaming: 1
+  randomRadius: 5
+  roamingTime: 3
   maxOut_Z: -110
   maxIn_Z: -70
   zoomOutMargin: -5
   zoomInMargin: -10
-  zoomValue: 10
+  zoomOutSpeed: 20
+  zoomInSpeed: 10
   zoomTime: 0.1
   deathMargin: 10
   timeBeforeDeath: 0.2
@@ -301,6 +305,7 @@ MonoBehaviour:
   positionToGoTo: {x: 0, y: 0, z: 0}
   moveVelocity: {x: 0, y: 0, z: 0}
   zoomVelocity: {x: 0, y: 0, z: 0}
+  roamingVelocity: {x: 0, y: 0, z: 0}
   frustumHeight: 0
   frustumWidth: 0
   runTimer: 0
