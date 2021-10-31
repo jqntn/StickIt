@@ -2,23 +2,22 @@ using System.Collections;
 using UnityEngine;
 using MoreMountains.Feedbacks;
 
-public class Player : MonoBehaviour
+public class Player2 : MonoBehaviour
 {
-    private MultiplayerManager _multiplayerManager;
-    public PlayerMouvement myMouvementScript;
-    public P_Mouvement2 myMouvementScript2;
+    //private MultiplayerManager _multiplayerManager;
+    [HideInInspector]
+    public PlayerMouvement2 myMouvementScript;
     public PlayerData myDatas;
     public MMFeedbacks deathAnim;
     public GameObject deathPart;
+    [HideInInspector]
     public bool isDead;
     void Start()
     {
-        _multiplayerManager = MultiplayerManager.instance;
-        if(TryGetComponent<PlayerMouvement>(out PlayerMouvement pm))
-        {
-            myMouvementScript = pm;
-            myMouvementScript.myPlayer = this;
-        }
+  //      _multiplayerManager = MultiplayerManager.instance;
+        myMouvementScript = GetComponentInChildren<PlayerMouvement2>();
+        myMouvementScript.myPlayer = this;
+   
         DontDestroyOnLoad(this);
     }
 
@@ -26,8 +25,8 @@ public class Player : MonoBehaviour
     {
         isDead = true;
         myMouvementScript.enabled = false;
-        _multiplayerManager.alivePlayers.Remove(this);
-        _multiplayerManager.deadPlayers.Add(this);
+        //_multiplayerManager.alivePlayers.Remove(this);
+        //_multiplayerManager.deadPlayers.Add(this);
 
         // Play Death Animation
         StartCoroutine(OnDeath());
@@ -54,7 +53,7 @@ public class Player : MonoBehaviour
         temp.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
         yield return null;
         GameEvents.CameraShake_CEvent?.Invoke();
-        
+
     }
     public void Respawn()
     {
@@ -75,27 +74,4 @@ public class Player : MonoBehaviour
     }
 }
 
-[System.Serializable]
-public struct PlayerData
-{
-    public string name;
-    public int id;
-    public int deviceID;
-    public Material material;
-    public int mass;
 
-    public uint score;
-    public uint nbrDeath;
-    public uint nbrVictories;
-    public PlayerData(string _name, int _id, int _deviceID, Material _material)
-    {
-        name = _name;
-        id = _id;
-        deviceID = _deviceID;
-        material = _material;
-        mass = 100;
-        score = 0;
-        nbrDeath = 0;
-        nbrVictories = 0;
-    }
-}

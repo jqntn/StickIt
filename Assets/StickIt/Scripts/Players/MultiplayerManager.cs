@@ -20,18 +20,16 @@ public class MultiplayerManager : MonoBehaviour
 
     private List<PlayerData> datas = new List<PlayerData>();
     private Transform playersStartingPos;
-    private int nbrDevicesLastFrame = 0;
+  //  private int nbrDevicesLastFrame = 0;
     [HideInInspector] public float speedChangeMap = 1;
     private float t = 0f;
     private float y = 0f;
     private float[] initPosX;
     private float[] initPosY;
-    private float[] currentPosX;
-    private float[] currentPosY;
     private bool isChangingMap = false;
 
 #if UNITY_EDITOR
-    [SerializeField] private bool isMenuSelection = false;
+    [SerializeField] public bool isMenuSelection = false; // should be private
 #endif
 
     public static MultiplayerManager instance;
@@ -76,7 +74,7 @@ public class MultiplayerManager : MonoBehaviour
         datas.Add(playerData);
     }
 
-    void InitializePlayersWithoutMenuSelector(int numberOfPlayer)
+    public void InitializePlayersWithoutMenuSelector(int numberOfPlayer)
     {
         for (int i = 0; i < numberOfPlayer; i++)
         {
@@ -147,7 +145,6 @@ public class MultiplayerManager : MonoBehaviour
             y = t;
             y = curve_ChangeMap_PosY.Evaluate(y);
             float currentPosY = Mathf.Lerp(playersStartingPos.GetChild(i).transform.position.y, initPosY[i] , 1-y);
-            print(y);
             players[i].transform.position = new Vector3(currentPosX, currentPosY);
             if(y >= 1)
             {
