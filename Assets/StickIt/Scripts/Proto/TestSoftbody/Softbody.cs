@@ -18,6 +18,9 @@ public static class Softbody
     public static PhysicMaterial matBones;
     public static LineRenderer PrefabLine;
     public static bool ViewLines;
+
+    public static P_Mouvement2 plm;
+
     public static void Init(ColliderShape shape, float collidersize, float rigidbodymass, float spring, float damper, RigidbodyConstraints constraints, PhysicMaterial mat)
     {
         Shape = shape;
