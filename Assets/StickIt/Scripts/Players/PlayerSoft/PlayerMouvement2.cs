@@ -72,7 +72,9 @@ public class PlayerMouvement2 : MonoBehaviour
 
         currentNumberOfJumps = maxNumberOfJumps;
 
+
         GetComponent<PlayerInput>().SwitchCurrentControlScheme(Gamepad.all[0]);
+        print(GetComponent<PlayerInput>().devices.Count);
     }
 
     // Update is called once per frame
@@ -81,13 +83,13 @@ public class PlayerMouvement2 : MonoBehaviour
 
         PreviewDirection();
 
-        if (isChargingJump && connectedPoints.Count > 0)
+        if (isChargingJump/* && connectedPoints.Count > 0 */)
         {
-
+            print("charging");
             if (!isDotsEnabled)
             {
                 EnableDots(true);
-
+                print("trululu");
             }
 
             IncreaseForceJump();
@@ -155,6 +157,7 @@ public class PlayerMouvement2 : MonoBehaviour
 
     public void InputDirection(InputAction.CallbackContext context)
     {
+      
         if (context.performed) direction = context.ReadValue<Vector2>();
         else if (context.canceled) direction = Vector2.zero;
     }

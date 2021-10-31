@@ -69,6 +69,9 @@ public class PlayerMouvement : MonoBehaviour
         }
 
         currentNumberOfJumps = maxNumberOfJumps;
+
+        GetComponent<PlayerInput>().SwitchCurrentControlScheme(Gamepad.all[0]);
+        print(GetComponent<PlayerInput>().devices.Count);
     }
 
     // Update is called once per frame
