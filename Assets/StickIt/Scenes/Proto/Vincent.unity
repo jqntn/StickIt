@@ -1002,7 +1002,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 761489390457479455, guid: 06b8251ce0dd99b44bd6230cc6e792bc, type: 3}
       propertyPath: m_ClearFlags
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 06b8251ce0dd99b44bd6230cc6e792bc, type: 3}
@@ -1988,8 +1988,8 @@ MonoBehaviour:
   - {fileID: 1139600952}
   - {fileID: 73457268}
   matBones: {fileID: 13400000, guid: b4a9cef7130b7ec4eb4a2a937d5ad794, type: 2}
-  Spring: 100
-  Damper: 1
+  Spring: 200
+  Damper: 50
   Shape: 1
   ColliderSizeRoot: 0.0011
   ColliderSize: 0.0004
@@ -2664,7 +2664,7 @@ MonoBehaviour:
   myPlayer: {fileID: 0}
   state: 1
   dotPreview: {fileID: 1563193181262515494, guid: d0c611942a4ded548aac09b0447276da, type: 3}
-  spaceBetweenDots: 0.02
+  spaceBetweenDots: 0.005
   numberOfDots: 10
   maxSpeed: 100
   animCurveJumpSpeed:
