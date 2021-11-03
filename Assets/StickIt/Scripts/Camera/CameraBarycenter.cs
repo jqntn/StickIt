@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-public class CameraBarycenter : MonoBehaviour
+public class CameraBarycenter : CameraState
 {
     [Header("----------- CAMERA MOVEMENT -----------")]
     public bool hasMovement = true;

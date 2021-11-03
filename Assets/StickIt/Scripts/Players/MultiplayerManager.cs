@@ -1,42 +1,76 @@
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 public class MultiplayerManager : MonoBehaviour
 {
-    [Range(0, 4)]
+
+    public struct PlayerData
+    {
+        public string name;
+        public int id;
+        public int deviceID;
+        public Material material;
+        public int mass;
+
+        public uint score;
+        public uint nbrDeath;
+        public uint nbrVictories;
+        public PlayerData(string _name, int _id, int _deviceID, Material _material)
+        {
+            name = _name;
+            id = _id;
+            deviceID = _deviceID;
+            material = _material;
+            mass = 100;
+            score = 0;
+            nbrDeath = 0;
+            nbrVictories = 0;
+        }
+    }
+    
+
+    public static MultiplayerManager instance;
+    public List<Material> materialsTemp = new List<Material>();
     public int nbrOfPlayer;
     [SerializeField] private Transform _prefabPlayer;
-
-    [Header("----------- Animation -----------")]
-    public AnimationCurve curve_ChangeMap_PosX;
-    public AnimationCurve curve_ChangeMap_PosY;
+    [SerializeField] AnimationCurve curve_ChangeMap_PosX;
+    [SerializeField] AnimationCurve curve_ChangeMap_PosY;
 
     [Header("------------DEBUG------------")]
     public List<Player> players = new List<Player>();
     public List<Player> alivePlayers = new List<Player>();
     public List<Player> deadPlayers = new List<Player>();
+
     public List<Material> materials = new List<Material>();
 
     private List<PlayerData> datas = new List<PlayerData>();
     private Transform playersStartingPos;
-    private int nbrDevicesLastFrame = 0;
+  //  private int nbrDevicesLastFrame = 0;
     [HideInInspector] public float speedChangeMap = 1;
     private float t = 0f;
     private float y = 0f;
     private float[] initPosX;
     private float[] initPosY;
-    private float[] currentPosX;
-    private float[] currentPosY;
     private bool isChangingMap = false;
 
+
+    int nbrDevicesLastFrame = 0;
+
+    
+
 #if UNITY_EDITOR
-    [SerializeField] private bool isMenuSelection = false;
+    [SerializeField] public bool isMenuSelection = false; // should be private
 #endif
 
-    public static MultiplayerManager instance;
     private void Awake()
     {
+
+      // Initialization();
         if (instance == null) instance = this;
         else Destroy(gameObject);
 
@@ -63,6 +97,7 @@ public class MultiplayerManager : MonoBehaviour
 #endif
     }
 
+
     private void Update()
     {
         if (isChangingMap)
@@ -71,20 +106,23 @@ public class MultiplayerManager : MonoBehaviour
         }
     }
 
+
     public void SaveDatas(PlayerData playerData)
     {
         datas.Add(playerData);
     }
 
-    void InitializePlayersWithoutMenuSelector(int numberOfPlayer)
+    public void InitializePlayersWithoutMenuSelector(int numberOfPlayer)
     {
-        for (int i = 0; i < numberOfPlayer; i++)
+        for(int i = 0; i < numberOfPlayer; i++)
         {
-            // Creating player data
             PlayerData newData = new PlayerData("Player" + i.ToString(), i, -1, materials[i]);
             datas.Add(newData);
+        }
 
-            // Pair device to player
+        for (int i = 0; i < datas.Count; i++)
+        {
+            PlayerInput newPlayer = null;
             Gamepad gamepad = null;
             foreach (Gamepad pad in Gamepad.all)
             {
@@ -94,19 +132,20 @@ public class MultiplayerManager : MonoBehaviour
                     break;
                 }
             }
-
-            // Creating New Player
-            PlayerInput newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, datas[i].id, "Gamepad", -1, gamepad);
+            newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, datas[i].id, "Gamepad", -1, gamepad);
             Player scriptPlayer = newPlayer.transform.GetComponent<Player>();
             scriptPlayer.myDatas = datas[i];
             scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = scriptPlayer.myDatas.material;
             players.Add(scriptPlayer);
             alivePlayers.Add(scriptPlayer);
 
-            // Spawning player at Spawn Point
             newPlayer.transform.position = playersStartingPos.GetChild(i).position;
+
         }
+
     }
+
+
 
     public void StartChangeMap()
     {
@@ -117,6 +156,7 @@ public class MultiplayerManager : MonoBehaviour
         }
 
         // Prepare to lerp Players
+
         foreach(Transform child in MapManager.instance.nextMapRoot.transform)
         {
             if (child.GetComponent<PlayerStartingPos>())
@@ -147,7 +187,6 @@ public class MultiplayerManager : MonoBehaviour
             y = t;
             y = curve_ChangeMap_PosY.Evaluate(y);
             float currentPosY = Mathf.Lerp(playersStartingPos.GetChild(i).transform.position.y, initPosY[i] , 1-y);
-            print(y);
             players[i].transform.position = new Vector3(currentPosX, currentPosY);
             if(y >= 1)
             {
@@ -173,5 +212,9 @@ public class MultiplayerManager : MonoBehaviour
             players[i].Respawn();
         }
     }
-}
 
+
+
+
+
+}

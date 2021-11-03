@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
 
@@ -7,7 +8,7 @@ public class Player : MonoBehaviour
     private MultiplayerManager _multiplayerManager;
     public PlayerMouvement myMouvementScript;
     public P_Mouvement2 myMouvementScript2;
-    public PlayerData myDatas;
+    public MultiplayerManager.PlayerData myDatas;
     public MMFeedbacks deathAnim;
     public GameObject deathPart;
     public bool isDead;
@@ -56,11 +57,13 @@ public class Player : MonoBehaviour
     }
     public void Respawn()
     {
-        print("respawn player");
         myMouvementScript.enabled = true;
         GetComponentInChildren<MeshRenderer>().enabled = true;
         GetComponentInChildren<Collider>().enabled = true;
-        GetComponent<Rigidbody>().isKinematic = false;
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.isKinematic = false;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+
 
     }
 
@@ -68,30 +71,5 @@ public class Player : MonoBehaviour
     {
         Debug.Log("Quit Application");
         Application.Quit();
-    }
-}
-
-[System.Serializable]
-public struct PlayerData
-{
-    public string name;
-    public int id;
-    public int deviceID;
-    public Material material;
-    public int mass;
-
-    public uint score;
-    public uint nbrDeath;
-    public uint nbrVictories;
-    public PlayerData(string _name, int _id, int _deviceID, Material _material)
-    {
-        name = _name;
-        id = _id;
-        deviceID = _deviceID;
-        material = _material;
-        mass = 100;
-        score = 0;
-        nbrDeath = 0;
-        nbrVictories = 0;
     }
 }

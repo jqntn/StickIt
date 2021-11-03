@@ -774,9 +774,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myMouvementScript: {fileID: 0}
+  myMouvementScript2: {fileID: 0}
+  myDatas:
+    name: 
+    id: 0
+    deviceID: 0
+    material: {fileID: 0}
+    mass: 0
+    score: 0
+    nbrDeath: 0
+    nbrVictories: 0
   deathAnim: {fileID: 6880079989461215208}
   deathPart: {fileID: 5927887047650766570, guid: d2f8aa8663903e24d8046d9e962db60e, type: 3}
-  id: 0
+  isDead: 0
 --- !u!114 &6669668126102612396
 MonoBehaviour:
   m_ObjectHideFlags: 0

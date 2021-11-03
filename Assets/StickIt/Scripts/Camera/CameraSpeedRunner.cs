@@ -2,17 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class CameraSpeedRunner : MonoBehaviour
+public class CameraSpeedRunner : CameraState
 {
-    [Header("------- Data -------")]
-    public List<CameraData> datas = new List<CameraData>();
-
     [Header("------ Move ------")]
     public float moveTime = 0.2f;
     public float distanceBeforeBorder = 0.0f;
     public bool freezeX = false;
     public bool freezeY = false;
-    public bool hasFollowOnlyPlayer = false;
+    public bool hasCenterCamera = false;
+    public bool hasFollowLastPlayer = false;
     public bool hasFreeRoaming = false;
     public int randomRadius = 5;
     public float roamingTime = 3.0f;
@@ -22,10 +20,10 @@ public class CameraSpeedRunner : MonoBehaviour
     public float maxIn_Z = -70.0f;
     public float zoomOutMargin = -5.0f;
     public float zoomInMargin = -10.0f;
-    public float zoomOutSpeed = 20.0f;
-    public float zoomInSpeed = 10.0f;
+    public float zoomOutValue = 20.0f;
+    public float zoomInValue = 10.0f;
     public float zoomTime = 0.2f;
-    public bool hasZoomOutAtEnd = true;
+    public bool hasZoomOutAtEnd = false;
 
     [Header("------ Death ------")]
     public float deathMargin = 10.0f;
@@ -49,30 +47,31 @@ public class CameraSpeedRunner : MonoBehaviour
     [SerializeField] private float[] deathTimer = { 0.0f, 0.0f, 0.0f, 0.0f };
     [SerializeField] private int sceneIndex = 0;
     [SerializeField] private int dataIndex = 0;
+    [SerializeField] private int numberPlayers = 0;
     [SerializeField] private bool hasTouchBorder = false;
-    [SerializeField] private bool isFollowingFirst = false;
-
-
-
-    private void Awake()
+    [SerializeField] private bool onlyOnePlayerLeft = false;
+    [SerializeField] private CenterCamera center;
+    protected void Awake()
     {
         cam = Camera.main;
         CalculateFrustum();
         positionToGoTo.z = transform.position.z;
         sceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
-    private void Start()
+    protected void Start()
     {
         playerList = MultiplayerManager.instance.players;
+        numberPlayers = MultiplayerManager.instance.nbrOfPlayer;
         runnerManager = RunnerManager.Instance;
         mapManager = MapManager.instance;
+        center = CenterCamera.Instance;
 
         if(runnerManager != null)
         {
             currentDirection = runnerManager.direction;
         }
     }
-    private void Update()
+    protected void Update()
     {
         // Protections
         if (SceneManager.GetActiveScene().buildIndex == 0) { return; }
@@ -101,11 +100,24 @@ public class CameraSpeedRunner : MonoBehaviour
             }
             return;
         }
-        if (isFollowingFirst) { return; }
-
-        // Protections for running only
-        //if (frontPlayer == null) { return; }
-
+        if (hasCenterCamera && onlyOnePlayerLeft) { return; }
+        int count = 0;
+        foreach (Player player in playerList)
+        {
+            if (!player.isDead)
+            {
+                count++;
+                if(count > 1)
+                {
+                    break;
+                }
+            }
+        }
+        if(count == 1)
+        {
+            onlyOnePlayerLeft = true;
+        }
+        if (onlyOnePlayerLeft) { return; }
 
         UpdatePositionToGoTo();
         UpdateZoom();
@@ -113,7 +125,7 @@ public class CameraSpeedRunner : MonoBehaviour
         CalculateFrustum();
         PlayerOffScreenShouldDie();
     }
-    private void LateUpdate()
+    protected void LateUpdate()
     {
         // Protections
         if (SceneManager.GetActiveScene().buildIndex == 0) { return; }
@@ -129,33 +141,44 @@ public class CameraSpeedRunner : MonoBehaviour
         }
         if (allDead && !hasFreeRoaming) { return; }
 
-        // End Cam Animation
-        if (allDead)
+        if (hasFreeRoaming)
         {
-            if (hasZoomOutAtEnd)
-            {
-                positionToGoTo.z = maxOut_Z;
-            }
-            else
-            {
-                positionToGoTo.z = transform.position.z;
-            }
-
-            if (hasFreeRoaming)
-            {
-                transform.position = Vector3.SmoothDamp(transform.position, positionToGoTo, ref roamingVelocity, roamingTime);
-            }
-
+            positionToGoTo.z = maxOut_Z;
+            transform.position = Vector3.SmoothDamp(transform.position, positionToGoTo, ref roamingVelocity, roamingTime);
+        }
+        if(hasCenterCamera && allDead)
+        {
+            if (center == null) { return; }
+            positionToGoTo = center.transform.position;
+            positionToGoTo.z = maxOut_Z;
+            transform.position = Vector3.SmoothDamp(transform.position, positionToGoTo, ref moveVelocity, moveTime);
             return;
         }
-
-        // If only 1 player alive > Camera Follow Player
-        if (isFollowingFirst && hasFollowOnlyPlayer)
+        if (hasCenterCamera && onlyOnePlayerLeft)
         {
+            if(center == null) { return; }
+            positionToGoTo = center.transform.position;
+            positionToGoTo.z = maxOut_Z;
+            transform.position = Vector3.SmoothDamp(transform.position, positionToGoTo, ref moveVelocity, moveTime);
+            return;
+        }
+        // If only 1 player alive > Camera Follow Player
+        if (onlyOnePlayerLeft && hasFollowLastPlayer)
+        {
+            foreach(Player player in playerList)
+            {
+                if (!player.isDead)
+                {
+                    frontPlayer = player;
+                    break;
+                }
+            }
             Vector3 firstPos = new Vector3(frontPlayer.transform.position.x, frontPlayer.transform.position.y, transform.position.z);
             transform.position = Vector3.SmoothDamp(transform.position, firstPos, ref moveVelocity, moveTime);
             return;
         }
+
+        if(onlyOnePlayerLeft) { return; }
 
         // Protection for running only
         //if (frontPlayer == null) { return; }
@@ -424,7 +447,7 @@ public class CameraSpeedRunner : MonoBehaviour
         // Get New Zoom if outside of zoomOut box
         if (!insideZoomOutBox)
         {
-            positionToGoTo.z = Mathf.Clamp(transform.position.z - zoomOutSpeed, maxOut_Z, maxIn_Z);
+            positionToGoTo.z = Mathf.Clamp(transform.position.z - zoomOutValue, maxOut_Z, maxIn_Z);
             return;
         }
 
@@ -456,7 +479,7 @@ public class CameraSpeedRunner : MonoBehaviour
         // Get New Zoom if player inside zoomIn box
         if (insideZoomInBox)
         {
-            positionToGoTo.z = Mathf.Clamp(transform.position.z + zoomInSpeed, maxOut_Z, maxIn_Z);
+            positionToGoTo.z = Mathf.Clamp(transform.position.z + zoomInValue, maxOut_Z, maxIn_Z);
         }
     }
 
@@ -470,8 +493,6 @@ public class CameraSpeedRunner : MonoBehaviour
             return;
         }
         
-
-
         int i = 0;
         foreach (Player player in playerList)
         {
@@ -512,12 +533,12 @@ public class CameraSpeedRunner : MonoBehaviour
             // If only one player left > Camera follow only player left
             if (runnerManager.hasEndLevel)
             {
-                isFollowingFirst = true;
+                onlyOnePlayerLeft = true;
             }
-
             // Increment Death Timer Index
             i++;
         }
+
     }
 
     private void CalculateFrustum()
@@ -541,7 +562,7 @@ public class CameraSpeedRunner : MonoBehaviour
         distanceBeforeBorder = current.distanceBeforeBorder;
         freezeX = current.freezeX;
         freezeY = current.freezeY;
-        hasFollowOnlyPlayer = current.hasFollowOnlyPlayer;
+        hasFollowLastPlayer = current.hasFollowOnlyPlayer;
         hasFreeRoaming = current.hasFreeRoaming;
         randomRadius = current.randomRadius;
         roamingTime = current.roamingTime;
@@ -549,8 +570,8 @@ public class CameraSpeedRunner : MonoBehaviour
         maxIn_Z = current.maxIn_Z;
         zoomOutMargin = current.zoomOutMargin;
         zoomInMargin = current.zoomInMargin;
-        zoomOutSpeed = current.zoomOutSpeed;
-        zoomInSpeed = current.zoomInSpeed;
+        zoomOutValue = current.zoomOutSpeed;
+        zoomInValue = current.zoomInSpeed;
         zoomTime = current.zoomTime;
         hasZoomOutAtEnd = current.hasZoomOutAtEnd;
         deathMargin = current.deathMargin;

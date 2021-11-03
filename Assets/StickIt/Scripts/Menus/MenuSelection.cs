@@ -44,22 +44,18 @@ public class MenuSelection : MonoBehaviour
                 //    }
                 //}
                 // --- CHECK FOR DEVICES ID IN LIST
-                for(int j = 0; j < devicesID.Count; j++)
+                for (int j = 0; j < devicesID.Count; j++)
                 {
-                    if(Gamepad.all[i].deviceId == devicesID[j])
+                    if (Gamepad.all[i].deviceId == devicesID[j])
                     {
                         isAlreadyActivated = true;
                     }
                 }
                 if (isAlreadyActivated) continue; // ----- RETURN CONDITION
-
                 devicesID.Add(Gamepad.all[i].deviceId);
-                AddPlayer(Gamepad.all[i], counterID );
+                AddPlayer(Gamepad.all[i], counterID);
                 counterID++;
-                if (MultiplayerManager.instance.players.Count == 2)
-                {
-                    animLaunchGame.SetTrigger("Entry");
-                }
+               
             }
             else if (MultiplayerManager.instance.players.Count >= 2)
             {
@@ -75,15 +71,13 @@ public class MenuSelection : MonoBehaviour
         //if (!isSpawnDeactivated[i])
         //{
         //    //SpawnPlayer( gamepad, i);
-            
         //    isSpawnDeactivated[i] = true;
-            tuyauxList[i].menuSelection = this;
-            tuyauxList[i].gamepad = gamepad;
-            tuyauxList[i].id = i;
-            tuyauxList[i].PlayAnimation();
-            //StartCoroutine(DoAddPlayer(gamepad, i));
+        tuyauxList[i].menuSelection = this;
+        tuyauxList[i].gamepad = gamepad;
+        tuyauxList[i].id = i;
+        tuyauxList[i].PlayAnimation();
+        //StartCoroutine(DoAddPlayer(gamepad, i));
         //}
-
     }
     public void SpawnPlayer(Gamepad gamepad, int i)
     {
@@ -100,6 +94,11 @@ public class MenuSelection : MonoBehaviour
         newPlayer.gameObject.name = scriptPlayer.myDatas.name;
         scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = scriptPlayer.myDatas.material;
         MultiplayerManager.instance.players.Add(scriptPlayer);
+        MultiplayerManager.instance.alivePlayers.Add(scriptPlayer);
+        if (MultiplayerManager.instance.players.Count == 2)
+        {
+            animLaunchGame.SetTrigger("Entry");
+        }
     }
     private IEnumerator DoAddPlayer(Gamepad gamepad, int i)
     {
@@ -139,7 +138,8 @@ public class MenuSelection : MonoBehaviour
         foreach (Player player in MultiplayerManager.instance.players)
         {
             MultiplayerManager.instance.SaveDatas(player.myDatas);
+            player.myMouvementScript.PrepareToChangeLevel();
         }
-        MapManager.instance.NextMap();
+        MapManager.instance.NextMap("", true);
     }
 }
