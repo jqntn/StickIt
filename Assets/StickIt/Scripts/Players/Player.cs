@@ -20,6 +20,8 @@ public class Player : MonoBehaviour
             myMouvementScript.myPlayer = this;
         }
         DontDestroyOnLoad(this);
+
+        print(myDatas.deviceID);
     }
 
     public void Death()
@@ -37,10 +39,15 @@ public class Player : MonoBehaviour
     {
         if (!isDead)
         {
-            myMouvementScript.PrepareToChangeLevel();
             myMouvementScript.enabled = false;
-            GetComponentInChildren<Collider>().enabled = false;
-            GetComponentInChildren<Rigidbody>().isKinematic = true;
+            foreach(Collider col in GetComponentsInChildren<Collider>())
+            {
+                col.enabled = false;
+            }
+            foreach(Rigidbody rb in GetComponentsInChildren<Rigidbody>())
+            {
+                rb.isKinematic = true;
+            }
         }
     }
     IEnumerator OnDeath()
@@ -59,11 +66,27 @@ public class Player : MonoBehaviour
     public void Respawn()
     {
         myMouvementScript.enabled = true;
-        GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
-        GetComponentInChildren<Collider>().enabled = true;
-        Rigidbody rb = GetComponentInChildren<Rigidbody>();
-        rb.isKinematic = false;
-        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        myMouvementScript.Respawn();
+        if (isDead)
+        {
+            isDead = false;
+            
+            GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+            GetComponentInChildren<Collider>().enabled = true;
+            Rigidbody rb = GetComponentInChildren<Rigidbody>();
+            rb.isKinematic = false;
+            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        }else
+        {
+            foreach (Collider col in GetComponentsInChildren<Collider>())
+            {
+                col.enabled = true;
+            }
+            foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
+            {
+                rb.isKinematic = false;
+            }
+        }
 
 
     }

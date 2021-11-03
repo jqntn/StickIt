@@ -69,9 +69,6 @@ public class PlayerMouvement : MonoBehaviour
         }
 
         currentNumberOfJumps = maxNumberOfJumps;
-
-        GetComponent<PlayerInput>().SwitchCurrentControlScheme(Gamepad.all[0]);
-        print(GetComponent<PlayerInput>().devices.Count);
     }
 
     // Update is called once per frame
@@ -286,9 +283,9 @@ public class PlayerMouvement : MonoBehaviour
     public void CollisionBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact)
     {
 
-        int id = GetComponent<Player>().myDatas.id;
+        //int id = GetComponent<Player>().myDatas.id;
 
-        int ido = playerCollided.GetComponent<Player>().myDatas.id;
+        //int ido = playerCollided.GetComponent<Player>().myDatas.id;
 
         //float newVelMagnitudeP1 = playerCollided.velocityLastFrame.magnitude;
 
@@ -308,13 +305,13 @@ public class PlayerMouvement : MonoBehaviour
 
 
 
-        Vector3 v = Quaternion.Euler(0, 0, 90) * contact.normal;
-        Debug.DrawRay(contact.point, v, Color.green);
-        GameObject g = Instantiate(collisionEffect, contact.point, Quaternion.Euler(0,0, Vector3.Angle(contact.normal, v)));
-        g.GetComponent<ParticleSystemRenderer>().material.color = new Color((MultiplayerManager.instance.materials[id].color.r + MultiplayerManager.instance.materials[ido].color.r) /2, (MultiplayerManager.instance.materials[id].color.g + MultiplayerManager.instance.materials[ido].color.g)/2, (MultiplayerManager.instance.materials[id].color.b + MultiplayerManager.instance.materials[ido].color.b)/2);
-        //Debug.Break();
-        rb.velocity = playerCollided.velocityLastFrame;
-        playerCollided.rb.velocity = velocityLastFrame;
+        //Vector3 v = Quaternion.Euler(0, 0, 90) * contact.normal;
+        //Debug.DrawRay(contact.point, v, Color.green);
+        //GameObject g = Instantiate(collisionEffect, contact.point, Quaternion.Euler(0,0, Vector3.Angle(contact.normal, v)));
+        //g.GetComponent<ParticleSystemRenderer>().material.color = new Color((MultiplayerManager.instance.materials[id].color.r + MultiplayerManager.instance.materials[ido].color.r) /2, (MultiplayerManager.instance.materials[id].color.g + MultiplayerManager.instance.materials[ido].color.g)/2, (MultiplayerManager.instance.materials[id].color.b + MultiplayerManager.instance.materials[ido].color.b)/2);
+        ////Debug.Break();
+        //rb.velocity = playerCollided.velocityLastFrame;
+        //playerCollided.rb.velocity = velocityLastFrame;
 
        /* #region debug
         print(playerCollided.velocityLastFrame);
@@ -380,7 +377,7 @@ public class PlayerMouvement : MonoBehaviour
         }
     }
 
-    public void PrepareToChangeLevel()
+    public void Respawn()
     {
         connectedPoints.Clear();
         state = STATE.AIR;
