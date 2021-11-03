@@ -215,6 +215,7 @@ public class PlayerMouvement2 : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
 
+        Debug.Log(collision.gameObject.name);
         switch (collision.transform.tag)
         {
             case "Player":
@@ -225,7 +226,6 @@ public class PlayerMouvement2 : MonoBehaviour
                         CollisionBetweenPlayers(playerCollided.myMouvementScript, collision.contacts[0]);
                 }
                 break;
-
             default:
                 if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
                 #region Collision Untagged
@@ -253,9 +253,7 @@ public class PlayerMouvement2 : MonoBehaviour
                 #endregion
                 break;
         }
-
     }
-
 
     private void OnCollisionStay(Collision collision)
     {

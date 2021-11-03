@@ -8,6 +8,7 @@ public class OurSphereSoft : MonoBehaviour
     public GameObject[] bones;
     public PhysicMaterial matBones;
     [Header("Spring Joint Settings")]
+    public bool ConfigurableJoint;
     [Tooltip("Strength of spring")]
     public float Spring = 100f;
     [Tooltip("Higher the value the faster the spring oscillation stops")]
@@ -19,8 +20,6 @@ public class OurSphereSoft : MonoBehaviour
     public float RigidbodyMass = 1f;
     public LineRenderer PrefabLine = null;
     public bool ViewLines = true;
-    [Header("Player Movements")]
-    public P_Mouvement2 playerMovements;
 
     private void Awake()
     {
@@ -28,17 +27,11 @@ public class OurSphereSoft : MonoBehaviour
         for (int i = 0; i < bones.Length; i++)
         {
             Softbody.AddCollider(ref bones[i]);
-            Softbody.AddSpring(ref bones[i], ref root);
+            if(ConfigurableJoint)
+                Softbody.AddConfJoint(ref bones[i], ref root);
+            else
+                Softbody.AddSpring(ref bones[i], ref root);
         }
     }
-    private void Start()
-    {
-        //Softbody.AddCollider(ref root, Softbody.ColliderShape.Sphere, ColliderSizeRoot, 0.5f);
-        
-    }
 
-    private void Update()
-    {
-        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
-    }
 }

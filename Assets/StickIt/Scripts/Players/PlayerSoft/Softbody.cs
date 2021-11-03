@@ -97,4 +97,28 @@ public static class Softbody
         line.SetPosition(1, go2.transform.position);
         return line;
     }
+    public static ConfigurableJoint AddConfJoint(ref GameObject go1, ref GameObject go2)
+    {
+        ConfigurableJoint cj = AddConfJoint(ref go1, ref go2, Spring, Damper);
+        cj.enableCollision = true;
+        //cj.tolerance = 0.01f;
+        if (ViewLines == true)
+            AddLine(ref go1, ref go2);
+        return cj;
+    }
+    public static ConfigurableJoint AddConfJoint(ref GameObject go1, ref GameObject go2, float spring, float damper)
+    {
+        ConfigurableJoint cj = go1.AddComponent<ConfigurableJoint>();
+        cj.connectedBody = go2.GetComponent<Rigidbody>();
+        SoftJointLimitSpring sp = new SoftJointLimitSpring();
+        sp.spring = spring;
+        sp.damper = damper;
+        cj.linearLimitSpring = sp;
+        JointDrive jd = new JointDrive();
+        jd.maximumForce = 0;
+        cj.angularXDrive = jd;
+        cj.angularYZDrive = jd;
+        cj.slerpDrive = jd;
+        return cj;
+    }
 }
