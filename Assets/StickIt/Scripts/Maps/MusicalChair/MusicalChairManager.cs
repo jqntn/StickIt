@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
 public class MusicalChairManager : Level
 {
     [Header("Countdown")]
@@ -20,15 +19,12 @@ public class MusicalChairManager : Level
     [SerializeField] Color colorChairActive;
     [SerializeField] Color colorChairInactive;
     public Color colorChairTaken;
-
     public GameObject winTxt;
-
     // Update is called once per frame
     void Update()
     {
         UpdateText();
     }
-
     private void UpdateText()
     {
         if (inTransition)
@@ -49,16 +45,14 @@ public class MusicalChairManager : Level
             countdown.color = colorTextRound;
             duration -= Time.deltaTime;
             textValue = Mathf.Round(duration);
-            if(duration <= 0)
+            if (duration <= 0)
             {
                 inTransition = true;
                 ResetChairPool();
             }
         }
-
         countdown.text = textValue.ToString();
     }
-
     protected override void StartMap()
     {
         base.StartMap();
@@ -67,8 +61,6 @@ public class MusicalChairManager : Level
         transition = transitionValue;
         maxChairsActive = _multiplayerManager.alivePlayers.Count - 1;
     }
-
-
     private void ChangeChairPool()
     {
         int rand = Random.Range(0, chairs.Length);
@@ -92,9 +84,8 @@ public class MusicalChairManager : Level
         {
             c.DeactivateChair(colorChairInactive);
         }
-        for(int i = _multiplayerManager.alivePlayers.Count-1; i >= 0; i--)
+        for (int i = _multiplayerManager.alivePlayers.Count - 1; i >= 0; i--)
         {
-
             if (!winners.Find(x => _multiplayerManager.alivePlayers[i] == x))
             {
                 //MAKE THE LOSERS EXPLODE
@@ -103,24 +94,17 @@ public class MusicalChairManager : Level
         }
         maxChairsActive = _multiplayerManager.alivePlayers.Count - 1;
         winners.Clear();
-
         // FIN LEVEL
         if (_multiplayerManager.alivePlayers.Count == 1)
         {
             winTxt.transform.parent.parent.gameObject.SetActive(true);
             winTxt.GetComponent<Text>().text = _multiplayerManager.alivePlayers[0].myDatas.name + " win!";
-            GameManager.instance.ChangeMod();
-
-        } else if(_multiplayerManager.alivePlayers.Count <= 0)
+        }
+        else if (_multiplayerManager.alivePlayers.Count <= 0)
         {
             winTxt.transform.parent.parent.gameObject.SetActive(true);
             winTxt.GetComponent<Text>().text = "Only losers...";
-            GameManager.instance.ChangeMod();
-
-
-
         }
-
+        MapManager.instance.EndLevel();
     }
-
 }
