@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1035697218560108509}
   - component: {fileID: 1035697218560108510}
-  - component: {fileID: 1035697218560108511}
+  - component: {fileID: 6030131670665901155}
   m_Layer: 0
   m_Name: PlayerSoft
   m_TagString: Untagged
@@ -102,7 +102,7 @@ MonoBehaviour:
   RigidbodyMass: 0.5
   PrefabLine: {fileID: 1666873409185668652, guid: c075358e34b312d47b1b3f9a3db0afe0, type: 3}
   ViewLines: 1
---- !u!114 &1035697218560108511
+--- !u!114 &6030131670665901155
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -111,10 +111,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1035697218560108504}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6629dfb33b838b040b4e1ee9c65dc236, type: 3}
+  m_Script: {fileID: 11500000, guid: ff1fcb4431721a2478478bb50cb50330, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myMouvementScript: {fileID: 0}
+  myMouvementScript: {fileID: 1338040130523560860}
   deathAnim: {fileID: 1035697220056890612}
   deathPart: {fileID: 5927887047650766570, guid: d2f8aa8663903e24d8046d9e962db60e, type: 3}
   isDead: 0
@@ -645,7 +645,7 @@ MonoBehaviour:
   DebugActive: 0
   Mode: 1
   TimeScale: 0
-  AnimateScaleTarget: {fileID: 0}
+  AnimateScaleTarget: {fileID: 1035697218560108509}
   AnimateScaleDuration: 1
   RemapCurveZero: 0
   RemapCurveOne: 1
@@ -1121,7 +1121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1035697220203649033}
-  - component: {fileID: 1035697220203649037}
+  - component: {fileID: 1338040130523560860}
   - component: {fileID: 1035697220203649038}
   - component: {fileID: 1035697220203649039}
   - component: {fileID: 1035697220203649032}
@@ -1146,7 +1146,7 @@ Transform:
   m_Father: {fileID: 1035697219836455908}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1035697220203649037
+--- !u!114 &1338040130523560860
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1155,10 +1155,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1035697220203649034}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f4a0c760bea5ce4faf511d94928f080, type: 3}
+  m_Script: {fileID: 11500000, guid: 26bea88db41db674aaac0f563d8d8be0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myPlayer: {fileID: 0}
+  myPlayer: {fileID: 6030131670665901155}
   state: 1
   dotPreview: {fileID: 1563193181262515494, guid: d0c611942a4ded548aac09b0447276da, type: 3}
   spaceBetweenDots: 0.01
@@ -1242,8 +1242,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1035697220203649037}
-        m_TargetAssemblyTypeName: PlayerMouvement2, Assembly-CSharp
+      - m_Target: {fileID: 1338040130523560860}
+        m_TargetAssemblyTypeName: PlayerMouvement, Assembly-CSharp
         m_MethodName: InputJump
         m_Mode: 0
         m_Arguments:
@@ -1258,8 +1258,8 @@ MonoBehaviour:
     m_ActionName: NormalInputs/Jump[/Keyboard/space,/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1035697220203649037}
-        m_TargetAssemblyTypeName: PlayerMouvement2, Assembly-CSharp
+      - m_Target: {fileID: 1338040130523560860}
+        m_TargetAssemblyTypeName: PlayerMouvement, Assembly-CSharp
         m_MethodName: InputDirection
         m_Mode: 0
         m_Arguments:
