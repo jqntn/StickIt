@@ -23,6 +23,17 @@ class MapManager : Unique<MapManager>
     {
         if (GUI.Button(new Rect(0, 0, 200, 100), "NextMap")) NextMap(nextMapManual, true);
     }
+    public void EndLevel()
+    {
+        if (MultiplayerManager.instance.alivePlayers.Count == 1)
+        {
+            NextMap();
+        }
+        else if (MultiplayerManager.instance.alivePlayers.Count <= 0)
+        {
+            NextMap();
+        }
+    }
     public bool NextMap(string nextMap = "", bool fromMenu = false)
     {
         if (_coroutine == null) _coroutine = StartCoroutine(Transition(nextMap, fromMenu));
