@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraFollowFirst : MonoBehaviour
+public class CameraFollowFirst : CameraState
 {
     [Header("---------- ANIMATION ---------")]
     public float smoothTime = 0.5f;
