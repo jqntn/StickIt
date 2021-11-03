@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class CameraFollowFirst : CameraState
 {
+    /*
     [Header("---------- ANIMATION ---------")]
     public float smoothTime = 0.5f;
     [Header("Offset between camera & first player")]
@@ -277,6 +278,7 @@ public class CameraFollowFirst : CameraState
             }
         }
     }
+    */
 }
 
 

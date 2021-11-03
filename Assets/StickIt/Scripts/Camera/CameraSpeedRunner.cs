@@ -4,6 +4,12 @@ using UnityEngine.SceneManagement;
 
 public class CameraSpeedRunner : CameraState
 {
+    protected override void Update()
+    {
+        base.Update();
+    }
+
+    /*
     [Header("------ Move ------")]
     public float moveTime = 0.2f;
     public float distanceBeforeBorder = 0.0f;
@@ -579,6 +585,8 @@ public class CameraSpeedRunner : CameraState
 
         dataIndex++;
     }
+
+
     #endregion
 
     #region Debug
@@ -596,4 +604,5 @@ public class CameraSpeedRunner : CameraState
         Gizmos.DrawWireCube(transform.position, new Vector3(frustumWidth + zoomInMargin, frustumHeight + zoomInMargin, 1));
     }
     #endregion
+    */
 }

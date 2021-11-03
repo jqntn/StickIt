@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class CameraBarycenter : CameraState
 {
+    /*
     [Header("----------- CAMERA MOVEMENT -----------")]
     public bool hasMovement = true;
     public float smoothTime = 0.5f;
@@ -107,4 +108,5 @@ public class CameraBarycenter : CameraState
 
         return bounds.size.x;
     }
+    */
 }
