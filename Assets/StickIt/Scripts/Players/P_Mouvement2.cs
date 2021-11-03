@@ -23,43 +23,56 @@ public class P_Mouvement2 : MonoBehaviour
     [Header("Movement")]     //-----------------------
     [Tooltip("Force maximale du jump, et clamp de la v�locit� maximale")]
     public float maxSpeed;
-    bool isAnimCurveSpeed;
-    Vector3 addedVector;
+    [HideInInspector]
+    public bool isAnimCurveSpeed;
+    [HideInInspector]
+    public Vector3 addedVector;
     [Tooltip("% de la velocit� ajout�e au saut en fonction du temps, cette valeur doit finir � 1")]
     [SerializeField] AnimationCurve animCurveJumpSpeed;
-    float t_speed;
-    float y_speed = 1;
+    [HideInInspector]
+    public float t_speed;
+    [HideInInspector]
+    public float y_speed = 1;
     Vector2 direction;
-    bool isChargingJump = false;
+    [HideInInspector]
+    public bool isChargingJump = false;
     [SerializeField]
     private float minForceJumpMultiplicator;
     float forceJumpMultiplicator;
     [SerializeField]
     float speedIncreaseForceJump;
-    bool hasJumped = false;
+    [HideInInspector]
+    public bool hasJumped = false;
     [SerializeField] AnimationCurve animCurveJumpGravity;
+    [HideInInspector]
     float t_jump;
+    [HideInInspector]
     float y_jump = 1;
     public float gravityStrength;
-    private Rigidbody rb;
+    [HideInInspector]
+    public Rigidbody rb;
     public Vector3 velocityLastFrame = Vector3.zero;
 
-    private List<ContactPointSurface> connectedPoints = new List<ContactPointSurface>();
+    [HideInInspector]
+    public List<ContactPointSurface> connectedPoints = new List<ContactPointSurface>();
     public float attractionMultiplier;
     [Range(0, 1)] public float repulsionMultiplier;
     [SerializeField] bool isSlippery;
 
     public int maxNumberOfJumps;
-    private int currentNumberOfJumps;
+    [HideInInspector]
+    public int currentNumberOfJumps;
 
     [Header("CollisionVariables")]
     public GameObject collisionEffect;
+    public bool contactWithPlayer;
 
-    List<StickPoint> stickPoints = new List<StickPoint>();
+    public List<StickPoint> stickPoints = new List<StickPoint>();
 
     // Start is called before the first frame update
     void Start()
     {
+        myPlayer = GetComponentInParent<Player>();
         rb = GetComponent<Rigidbody>();
         dots = new Transform[numberOfDots];
         for (int i = 0; i < dots.Length; i++)
@@ -69,6 +82,7 @@ public class P_Mouvement2 : MonoBehaviour
             dots[i] = newDot;
         }
 
+        print(GetComponent<PlayerInput>().devices.Count);
         currentNumberOfJumps = maxNumberOfJumps;
 
 
@@ -77,7 +91,14 @@ public class P_Mouvement2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if(stickPoints.Count > 0)
+        {
+            contactWithPlayer = true;
+        }
+        else
+        {
+            contactWithPlayer = false;
+        }
         PreviewDirection();
 
         if (isChargingJump && connectedPoints.Count > 0)
@@ -105,13 +126,6 @@ public class P_Mouvement2 : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (Physics.Raycast(transform.GetChild(0).position, new Vector3(0, -1, 0), 0.1f))
-        {
-            isGrounded = true;
-        }
-        else isGrounded = false;
-
-
         if (state != STATE.STICK)
         {
             // realVelocity += new Vector2(0, -gravityStrength) * y_jump * Time.fixedDeltaTime;
@@ -160,7 +174,11 @@ public class P_Mouvement2 : MonoBehaviour
 
     public void InputJump(InputAction.CallbackContext context)
     {
-        if (context.started) isChargingJump = true;
+        if (context.started)
+        {
+            isChargingJump = true;
+            print("JUMPING");
+        }
         else if (context.canceled && direction != Vector2.zero) Jump();
     }
 
@@ -207,10 +225,8 @@ public class P_Mouvement2 : MonoBehaviour
     #endregion
 
 
-    private void Attraction()
+    public void Attraction()
     {
-
-
         for (int i = connectedPoints.Count - 1; i >= 0; i--)
         {
             Vector3 localPlayerPosition = connectedPoints[i].transform.position - transform.position;
@@ -258,7 +274,7 @@ public class P_Mouvement2 : MonoBehaviour
 
     // ----- PREVIEW DOTS -----
     #region PreviewDots
-    private void EnableDots(bool isTrue)
+    public void EnableDots(bool isTrue)
     {
         for (int i = 0; i < dots.Length; i++)
         {
@@ -290,7 +306,36 @@ public class P_Mouvement2 : MonoBehaviour
 
     }
     #endregion
+    public void CollisionBetweenPlayers(P_Mouvement2 playerCollided)
+    {
 
+        int id = GetComponentInParent<Player>().myDatas.id;
+
+        int ido = playerCollided.GetComponentInParent<Player>().myDatas.id;
+        RaycastHit hit;
+        Vector3 dir = playerCollided.transform.position - transform.position;
+        Physics.Raycast(transform.position, dir, out hit, 50f, LayerMask.NameToLayer("Player"));
+        
+
+        Vector3 v = Quaternion.Euler(0, 0, 90) * hit.normal;
+        
+        Debug.DrawRay(hit.point, v, Color.green);
+        rb.velocity = playerCollided.velocityLastFrame;
+        playerCollided.rb.velocity = velocityLastFrame;
+
+        #region debug
+         print(playerCollided.velocityLastFrame);
+         //Last velocities
+         Debug.DrawRay(transform.position,  -velocityLastFrame, Color.blue, 3f);
+         Debug.DrawRay(playerCollided.transform.position, -playerCollided.velocityLastFrame, Color.gray, 3f);
+
+
+         // Normal
+         Debug.DrawRay(hit.point, hit.point + hit.normal * 100f, Color.red, 3f);
+         //Debug.Break();
+         #endregion
+
+    }
     // ----- ANIMATIONS CURVE -----
     #region Animations curve
     void AnimCurveJumpGravity()
@@ -325,7 +370,17 @@ public class P_Mouvement2 : MonoBehaviour
     }
     #endregion
 
-
+    private void OnCollisionEnter(Collision c)
+    {
+        if (c.transform.tag == "Bone" && contactWithPlayer)
+        {
+            if(myPlayer.myDatas.id != c.gameObject.GetComponentInParent<Player>().myDatas.id)
+            {
+                if(stickPoints[0].playerColl)
+                    CollisionBetweenPlayers(stickPoints[0].playerColl);
+            }
+        }
+    }
 }
 
 

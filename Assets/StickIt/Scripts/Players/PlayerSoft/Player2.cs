@@ -1,25 +1,23 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
 
-public class Player : MonoBehaviour
+public class Player2 : MonoBehaviour
 {
-    private MultiplayerManager _multiplayerManager;
-    public PlayerMouvement myMouvementScript;
-    public P_Mouvement2 myMouvementScript2;
+    //private MultiplayerManager _multiplayerManager;
+    [HideInInspector]
+    public PlayerMouvement2 myMouvementScript;
     public MultiplayerManager.PlayerData myDatas;
     public MMFeedbacks deathAnim;
     public GameObject deathPart;
+    [HideInInspector]
     public bool isDead;
     void Start()
     {
-        _multiplayerManager = MultiplayerManager.instance;
-        if(TryGetComponent<PlayerMouvement>(out PlayerMouvement pm))
-        {
-            myMouvementScript = pm;
-            myMouvementScript.myPlayer = this;
-        }
+  //      _multiplayerManager = MultiplayerManager.instance;
+        myMouvementScript = GetComponentInChildren<PlayerMouvement2>();
+        myMouvementScript.myPlayer = this;
+   
         DontDestroyOnLoad(this);
     }
 
@@ -27,8 +25,8 @@ public class Player : MonoBehaviour
     {
         isDead = true;
         myMouvementScript.enabled = false;
-        _multiplayerManager.alivePlayers.Remove(this);
-        _multiplayerManager.deadPlayers.Add(this);
+        //_multiplayerManager.alivePlayers.Remove(this);
+        //_multiplayerManager.deadPlayers.Add(this);
 
         // Play Death Animation
         StartCoroutine(OnDeath());
@@ -55,7 +53,7 @@ public class Player : MonoBehaviour
         temp.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
         yield return null;
         GameEvents.CameraShake_CEvent?.Invoke();
-        
+
     }
     public void Respawn()
     {
@@ -75,3 +73,5 @@ public class Player : MonoBehaviour
         Application.Quit();
     }
 }
+
+
