@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0.99999905, b: 0.99999905, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -243,7 +243,7 @@ Transform:
   m_GameObject: {fileID: 148635716}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -17.0417, y: 3.32, z: 0}
-  m_LocalScale: {x: 3.7635, y: 20, z: 1}
+  m_LocalScale: {x: 3.7635, y: 20, z: 7.7306}
   m_Children: []
   m_Father: {fileID: 958254459}
   m_RootOrder: 2
@@ -716,7 +716,7 @@ Transform:
   m_GameObject: {fileID: 356446395}
   m_LocalRotation: {x: -0, y: -0, z: -0.38268343, w: 0.92387956}
   m_LocalPosition: {x: 12.63, y: 7.25, z: 0}
-  m_LocalScale: {x: 20, y: 10, z: 1}
+  m_LocalScale: {x: 20, y: 10, z: 7.7306}
   m_Children: []
   m_Father: {fileID: 958254459}
   m_RootOrder: 7
@@ -811,7 +811,7 @@ Transform:
   m_GameObject: {fileID: 403922668}
   m_LocalRotation: {x: -0, y: -0, z: 0.38268343, w: 0.92387956}
   m_LocalPosition: {x: -14.26, y: 8.58, z: 0}
-  m_LocalScale: {x: 10, y: 3, z: 1}
+  m_LocalScale: {x: 10, y: 3, z: 7.7306}
   m_Children: []
   m_Father: {fileID: 958254459}
   m_RootOrder: 6
@@ -906,7 +906,7 @@ Transform:
   m_GameObject: {fileID: 436336193}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: -7.4, z: 0}
-  m_LocalScale: {x: 38, y: 5, z: 1}
+  m_LocalScale: {x: 38, y: 5, z: 7.7306}
   m_Children: []
   m_Father: {fileID: 958254459}
   m_RootOrder: 0
@@ -1334,7 +1334,7 @@ Transform:
   m_GameObject: {fileID: 745961032}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0.58, y: 1.77, z: 0}
-  m_LocalScale: {x: 6.75, y: 1, z: 1}
+  m_LocalScale: {x: 6.75, y: 1, z: 7.7306}
   m_Children: []
   m_Father: {fileID: 958254459}
   m_RootOrder: 5
@@ -1988,12 +1988,12 @@ MonoBehaviour:
   - {fileID: 1139600952}
   - {fileID: 73457268}
   matBones: {fileID: 13400000, guid: b4a9cef7130b7ec4eb4a2a937d5ad794, type: 2}
-  Spring: 100
+  Spring: 1000
   Damper: 1
   Shape: 1
   ColliderSizeRoot: 0.0011
-  ColliderSize: 0.0004
-  RigidbodyMass: 0.1
+  ColliderSize: 0.0003
+  RigidbodyMass: 0.5
   PrefabLine: {fileID: 1666873409185668652, guid: c075358e34b312d47b1b3f9a3db0afe0, type: 3}
   ViewLines: 1
   playerMovements: {fileID: 0}
@@ -2164,7 +2164,7 @@ Transform:
   m_GameObject: {fileID: 1211566565}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 17.1203, y: 3.32, z: 0}
-  m_LocalScale: {x: 4.0206733, y: 20, z: 1}
+  m_LocalScale: {x: 4.0206733, y: 20, z: 7.7306}
   m_Children: []
   m_Father: {fileID: 958254459}
   m_RootOrder: 3
@@ -2547,10 +2547,10 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1673909747}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 5
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 120
@@ -2664,9 +2664,9 @@ MonoBehaviour:
   myPlayer: {fileID: 0}
   state: 1
   dotPreview: {fileID: 1563193181262515494, guid: d0c611942a4ded548aac09b0447276da, type: 3}
-  spaceBetweenDots: 0.02
-  numberOfDots: 10
-  maxSpeed: 100
+  spaceBetweenDots: 0.01
+  numberOfDots: 8
+  maxSpeed: 50
   animCurveJumpSpeed:
     serializedVersion: 2
     m_Curve: []
@@ -2699,7 +2699,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  gravityStrength: 100
+  gravityStrength: 150
   velocityLastFrame: {x: 0, y: 0, z: 0}
   attractionMultiplier: 15
   repulsionMultiplier: 0.01
@@ -2886,7 +2886,7 @@ Transform:
   m_GameObject: {fileID: 2072929555}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 12.29, z: 0}
-  m_LocalScale: {x: 38, y: 5, z: 1}
+  m_LocalScale: {x: 38, y: 5, z: 7.7306}
   m_Children: []
   m_Father: {fileID: 958254459}
   m_RootOrder: 1
@@ -2981,7 +2981,7 @@ Transform:
   m_GameObject: {fileID: 2095252281}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -13.29, y: 0.7, z: 0}
-  m_LocalScale: {x: 5, y: 1, z: 1}
+  m_LocalScale: {x: 5, y: 1, z: 7.7306}
   m_Children: []
   m_Father: {fileID: 958254459}
   m_RootOrder: 4
@@ -3054,7 +3054,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!54 &2267642136661161119
 Rigidbody:
   m_ObjectHideFlags: 0

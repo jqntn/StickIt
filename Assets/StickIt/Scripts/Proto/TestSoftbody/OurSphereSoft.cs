@@ -24,7 +24,7 @@ public class OurSphereSoft : MonoBehaviour
 
     private void Awake()
     {
-        Softbody.Init(Shape, ColliderSize, RigidbodyMass, Spring, Damper, RigidbodyConstraints.FreezeRotation , PrefabLine, ViewLines, matBones);
+        Softbody.Init(Shape, ColliderSize, RigidbodyMass, Spring, Damper, RigidbodyConstraints.FreezeRotation |RigidbodyConstraints.FreezePositionZ , PrefabLine, ViewLines, matBones);
         for (int i = 0; i < bones.Length; i++)
         {
             Softbody.AddCollider(ref bones[i]);
