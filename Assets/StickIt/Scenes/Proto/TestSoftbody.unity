@@ -183,6 +183,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d173294bcfafa7e469ee34d358e07bc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  materialsTemp: []
   nbrOfPlayer: 2
   _prefabPlayer: {fileID: 8854867468096441738, guid: bd2e8aa23cf5c3341ac34eba02c200b7, type: 3}
   curve_ChangeMap_PosX:
@@ -2263,7 +2264,6 @@ MonoBehaviour:
   ConfigurableJoint: 0
   Spring: 200
   Damper: 2
-  Shape: 1
   ColliderSizeRoot: 0.0011
   ColliderSize: 0.0004
   RigidbodyMass: 1
@@ -2322,15 +2322,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myMouvementScript: {fileID: 0}
   myMouvementScript2: {fileID: 0}
-  myDatas:
-    name: 
-    id: 0
-    deviceID: 0
-    material: {fileID: 0}
-    mass: 0
-    score: 0
-    nbrDeath: 0
-    nbrVictories: 0
   deathAnim: {fileID: 0}
   deathPart: {fileID: 0}
   isDead: 0
@@ -2371,7 +2362,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1035697218560108504, guid: 1d217ace6ffad85418d044dc6cbd68a4, type: 3}
       propertyPath: m_Name
-      value: PlayerSoftBody
+      value: PlayerSoft
       objectReference: {fileID: 0}
     - target: {fileID: 1035697218560108509, guid: 1d217ace6ffad85418d044dc6cbd68a4, type: 3}
       propertyPath: m_RootOrder
@@ -3886,15 +3877,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myMouvementScript: {fileID: 0}
   myMouvementScript2: {fileID: 0}
-  myDatas:
-    name: 
-    id: 0
-    deviceID: 0
-    material: {fileID: 0}
-    mass: 0
-    score: 0
-    nbrDeath: 0
-    nbrVictories: 0
   deathAnim: {fileID: 6880079988084302195}
   deathPart: {fileID: 5927887047650766570, guid: d2f8aa8663903e24d8046d9e962db60e, type: 3}
   isDead: 0

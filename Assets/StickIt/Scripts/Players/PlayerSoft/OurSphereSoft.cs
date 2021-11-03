@@ -14,16 +14,17 @@ public class OurSphereSoft : MonoBehaviour
     [Tooltip("Higher the value the faster the spring oscillation stops")]
     public float Damper = 0.2f;
     [Header("Other Settings")]
-    public Softbody.ColliderShape Shape = Softbody.ColliderShape.Sphere;
     public float ColliderSizeRoot = 0.0003f;
     public float ColliderSize = 0.0003f;
     public float RigidbodyMass = 1f;
     public LineRenderer PrefabLine = null;
-    public bool ViewLines = true;
+    public bool ViewLines = false;
+
+    //[Header("Configurable joints settings")]
 
     private void Awake()
     {
-        Softbody.Init(Shape, ColliderSize, RigidbodyMass, Spring, Damper, RigidbodyConstraints.FreezeRotation |RigidbodyConstraints.FreezePositionZ , PrefabLine, ViewLines, matBones);
+        Softbody.Init(ColliderSize, RigidbodyMass, Spring, Damper, RigidbodyConstraints.FreezeRotation |RigidbodyConstraints.FreezePositionZ , PrefabLine, ViewLines, matBones);
         for (int i = 0; i < bones.Length; i++)
         {
             Softbody.AddCollider(ref bones[i]);

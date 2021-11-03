@@ -7,7 +7,7 @@ public class Player2 : MonoBehaviour
     //private MultiplayerManager _multiplayerManager;
     [HideInInspector]
     public PlayerMouvement2 myMouvementScript;
-    public PlayerData myDatas;
+    public MultiplayerManager.PlayerData myDatas;
     public MMFeedbacks deathAnim;
     public GameObject deathPart;
     [HideInInspector]
