@@ -7,7 +7,6 @@ public class Player : MonoBehaviour
 {
     private MultiplayerManager _multiplayerManager;
     public PlayerMouvement myMouvementScript;
-    public P_Mouvement2 myMouvementScript2;
     public MultiplayerManager.PlayerData myDatas;
     public MMFeedbacks deathAnim;
     public GameObject deathPart;
@@ -41,28 +40,28 @@ public class Player : MonoBehaviour
             myMouvementScript.PrepareToChangeLevel();
             myMouvementScript.enabled = false;
             GetComponentInChildren<Collider>().enabled = false;
-            GetComponent<Rigidbody>().isKinematic = true;
+            GetComponentInChildren<Rigidbody>().isKinematic = true;
         }
     }
     IEnumerator OnDeath()
     {
         deathAnim.PlayFeedbacks();
         yield return new WaitForSeconds(deathAnim.TotalDuration);
-        GetComponentInChildren<MeshRenderer>().enabled = false;
+        GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
         GetComponentInChildren<Collider>().enabled = false;
-        GetComponent<Rigidbody>().isKinematic = true;
+        GetComponentInChildren<Rigidbody>().isKinematic = true;
         GameObject temp = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.rotation);
         temp.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
-        yield return null;
         GameEvents.CameraShake_CEvent?.Invoke();
-        
+        yield return new WaitForSeconds(2.0f);
+        MapManager.instance.EndLevel();
     }
     public void Respawn()
     {
         myMouvementScript.enabled = true;
-        GetComponentInChildren<MeshRenderer>().enabled = true;
+        GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
         GetComponentInChildren<Collider>().enabled = true;
-        Rigidbody rb = GetComponent<Rigidbody>();
+        Rigidbody rb = GetComponentInChildren<Rigidbody>();
         rb.isKinematic = false;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
 

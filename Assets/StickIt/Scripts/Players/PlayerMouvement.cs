@@ -440,7 +440,7 @@ public class PlayerMouvement : MonoBehaviour
     }
     void AnimCurveJumpSpeed()
     {
-        if (t_speed < animCurveJumpSpeed.keys[animCurveJumpSpeed.length - 1].time)
+        /*if (t_speed < animCurveJumpSpeed.keys[animCurveJumpSpeed.length - 1].time)
         {
 
             t_speed += Time.deltaTime;
@@ -451,7 +451,7 @@ public class PlayerMouvement : MonoBehaviour
         {
 
             isAnimCurveSpeed = false;
-        }
+        }*/
     }
     #endregion
 
