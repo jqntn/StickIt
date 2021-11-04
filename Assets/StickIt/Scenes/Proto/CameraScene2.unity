@@ -606,6 +606,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 626349961222977373, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -100
+      objectReference: {fileID: 0}
     - target: {fileID: 626349961553394816, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: m_Name
       value: ShakingCameraRig
@@ -1136,6 +1140,8 @@ MonoBehaviour:
   zoomInMargin: -10
   zoomOutValue: 20
   zoomInValue: 10
+  zoomOut_Margin: 5
+  zoomIn_Margin: 10
   hasZoomOutAtEnd: 1
   hasCenterCamera: 1
   datas: []
@@ -1145,6 +1151,7 @@ MonoBehaviour:
   playerList: []
   positionToGoTo: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
+  barycenter: {x: 0, y: 0, z: 0}
   bounds_X: 0
   bounds_Y: 0
   min_bounds_X: 0
@@ -1153,6 +1160,14 @@ MonoBehaviour:
   max_bounds_Y: 0
   frustumHeight: 0
   frustumWidth: 0
+  min_viewport_X: 0
+  max_viewport_X: 0
+  min_viewport_Y: 0
+  max_viewport_Y: 0
+  playersBounds_X: 0
+  playersBounds_Y: 0
+  min_playersBounds_X: 0
+  max_playersBounds_X: 0
 --- !u!1001 &671381389
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1440,6 +1455,8 @@ MonoBehaviour:
   zoomInMargin: -10
   zoomOutValue: 20
   zoomInValue: 10
+  zoomOut_Margin: 5
+  zoomIn_Margin: 10
   hasZoomOutAtEnd: 1
   hasCenterCamera: 1
   datas: []
@@ -1449,6 +1466,7 @@ MonoBehaviour:
   playerList: []
   positionToGoTo: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
+  barycenter: {x: 0, y: 0, z: 0}
   bounds_X: 0
   bounds_Y: 0
   min_bounds_X: 0
@@ -1457,6 +1475,14 @@ MonoBehaviour:
   max_bounds_Y: 0
   frustumHeight: 0
   frustumWidth: 0
+  min_viewport_X: 0
+  max_viewport_X: 0
+  min_viewport_Y: 0
+  max_viewport_Y: 0
+  playersBounds_X: 0
+  playersBounds_Y: 0
+  min_playersBounds_X: 0
+  max_playersBounds_X: 0
 --- !u!1 &958254458
 GameObject:
   m_ObjectHideFlags: 0
@@ -2019,6 +2045,8 @@ MonoBehaviour:
   zoomInMargin: -12
   zoomOutValue: -20
   zoomInValue: 10
+  zoomOut_Margin: 1
+  zoomIn_Margin: 5
   hasZoomOutAtEnd: 1
   hasCenterCamera: 1
   datas: []
@@ -2028,6 +2056,7 @@ MonoBehaviour:
   playerList: []
   positionToGoTo: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
+  barycenter: {x: 0, y: 0, z: 0}
   bounds_X: 0
   bounds_Y: 0
   min_bounds_X: 0
@@ -2036,7 +2065,14 @@ MonoBehaviour:
   max_bounds_Y: 0
   frustumHeight: 0
   frustumWidth: 0
-  barycenter: {x: 0, y: 0, z: 0}
+  min_viewport_X: 0
+  max_viewport_X: 0
+  min_viewport_Y: 0
+  max_viewport_Y: 0
+  playersBounds_X: 0
+  playersBounds_Y: 0
+  min_playersBounds_X: 0
+  max_playersBounds_X: 0
 --- !u!1001 &1548400509
 PrefabInstance:
   m_ObjectHideFlags: 0

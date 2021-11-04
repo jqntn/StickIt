@@ -25,6 +25,9 @@ public abstract class CameraState : MonoBehaviour
     public float zoomInMargin = 10.0f;
     public float zoomOutValue = -20.0f;
     public float zoomInValue = -10.0f;
+    public float zoomOut_Margin = 5.0f;
+    public float zoomIn_Margin = 10.0f;
+
 
     [Header("----- End Animation -----")]
     public bool hasZoomOutAtEnd = true;
@@ -43,6 +46,7 @@ public abstract class CameraState : MonoBehaviour
     [SerializeField] protected List<Player> playerList = new List<Player>();
     [SerializeField] protected Vector3 positionToGoTo = new Vector3(0.0f, 0.0f, 0.0f);
     [SerializeField] protected Vector3 velocity = new Vector3(0.0f, 0.0f, 0.0f);
+    [SerializeField] protected Vector3 barycenter = new Vector3(0.0f, 0.0f, 0.0f);
     [SerializeField] protected float bounds_X = 0.0f;
     [SerializeField] protected float bounds_Y = 0.0f;
     [SerializeField] protected float min_bounds_X = 0.0f;
@@ -51,6 +55,15 @@ public abstract class CameraState : MonoBehaviour
     [SerializeField] protected float max_bounds_Y = 0.0f;
     [SerializeField] protected float frustumHeight = 0.0f;
     [SerializeField] protected float frustumWidth = 0.0f;
+    [SerializeField] protected float min_viewport_X = 0.0f;
+    [SerializeField] protected float max_viewport_X = 0.0f;
+    [SerializeField] protected float min_viewport_Y = 0.0f;
+    [SerializeField] protected float max_viewport_Y = 0.0f;
+    [SerializeField] protected float playersBounds_X = 0.0f;
+    [SerializeField] protected float playersBounds_Y = 0.0f;
+    [SerializeField] protected float min_playersBounds_X = 0.0f;
+    [SerializeField] protected float max_playersBounds_X = 0.0f;
+
     protected virtual void Start()
     {
         cam = Camera.main;
@@ -61,21 +74,18 @@ public abstract class CameraState : MonoBehaviour
             playerList = multiplayerManager.players;
         }
 
+        UpdateFrustrum();
+
         if (bounds == null)
         {
             Debug.Log("Please add camera bounds to CameraBarycenter");
         }
         else
         {
-            bounds_X = bounds.bounds.extents.x;
-            bounds_Y = bounds.bounds.extents.y;
-            min_bounds_X = bounds.transform.position.x - bounds_X / 2.0f;
-            max_bounds_X = bounds.transform.position.x + bounds_X / 2.0f;
-            min_bounds_Y = bounds.transform.position.y - bounds_Y / 2.0f;
-            max_bounds_Y = bounds.transform.position.y + bounds_Y / 2.0f;
+            bounds_X = bounds.bounds.size.x;
+            bounds_Y = bounds.bounds.size.y;
+            UpdateBounds();
         }
-
-        CalculateFrustum();
     }
 
     protected virtual void Update()
@@ -88,8 +98,9 @@ public abstract class CameraState : MonoBehaviour
         if (mapManager.isBusy) { return; }
         if (playerList.Count == 0) { return; }
 
-        CalculateFrustum();
-
+        UpdateFrustrum();
+        UpdateBounds();
+        UpdatePlayersBounds();
     }
 
     protected virtual void LateUpdate()
@@ -102,7 +113,7 @@ public abstract class CameraState : MonoBehaviour
         if (mapManager.isBusy) { return; }
         if (playerList.Count == 0) { return; }
 
-        //if (canZoom) { UpdateZoom(); }
+        if (canZoom) { UpdateZoom(); }
         UpdateCamera();
     }
 
@@ -114,66 +125,74 @@ public abstract class CameraState : MonoBehaviour
     private void UpdateZoom()
     {
         // Zoom Out
-        // Only 1 player have to be oustide zoomOut box to zoom out
-        bool insideZoomOutBox = false;
-        foreach (Player player in playerList)
-        {
-            float player_X = player.transform.position.x;
-            float player_Y = player.transform.position.y;
-            float zoomOutWidth = (frustumWidth + zoomOutMargin) / 2.0f;
-            float zoomOutHeight = (frustumHeight + zoomOutMargin) / 2.0f;
-            float minZoomOut_X = transform.position.x - zoomOutWidth;
-            float maxZoomOut_X = transform.position.x + zoomOutWidth;
-            float minZoomOut_Y = transform.position.y - zoomOutHeight;
-            float maxZoomOut_Y = transform.position.y + zoomOutHeight;
+        float min_zoomOut_X = min_playersBounds_X - zoomOut_Margin;
+        float max_zoomOut_X = max_playersBounds_X + zoomOut_Margin;
+        bool canZoomOut = (min_viewport_X >= min_zoomOut_X && max_viewport_X <= max_zoomOut_X)
+                          && transform.parent.position.z >= maxOut_Z;
 
-            insideZoomOutBox =
-                player_X > minZoomOut_X && player_X < maxZoomOut_X &&
-                player_Y > minZoomOut_Y && player_Y < maxZoomOut_Y;
-
-            if (!insideZoomOutBox) { break; }
-        }
-
-        // Get New Zoom if outside of zoomOut box
-        if (!insideZoomOutBox)
+        Debug.Log("Zoom out : " + canZoomOut);
+        // if viewport is too small compare to greatest distance between players
+        if (canZoomOut)
         {
             positionToGoTo.z = Mathf.Clamp(transform.position.z + zoomOutValue, maxOut_Z, maxIn_Z);
             return;
         }
 
         // Zoom In
-        // All player have to be inside zoomIn Box to zoom In
-        bool insideZoomInBox = true;
-        foreach (Player player in playerList)
-        {
-            float player_X = player.transform.position.x;
-            float player_Y = player.transform.position.y;
-            float zoomInWidth = (frustumWidth + zoomInMargin) / 2.0f;
-            float zoomInHeight = (frustumHeight + zoomInMargin) / 2.0f;
-            float minZoomIn_X = transform.position.x - zoomInWidth;
-            float maxZoomIn_X = transform.position.x + zoomInWidth;
-            float minZoomIn_Y = transform.position.y - zoomInHeight;
-            float maxZoomIn_Y = transform.position.y + zoomInHeight;
+        float min_zoomIn_X = min_playersBounds_X - zoomIn_Margin;
+        float max_zoomIn_X = max_playersBounds_X + zoomIn_Margin;
 
-            insideZoomInBox =
-                player_X > minZoomIn_X && player_X < maxZoomIn_X &&
-                player_Y > minZoomIn_Y && player_Y < maxZoomIn_Y;
+        // if viewport is too big compare to greatest distance between players
+        bool canZoomIn = (min_viewport_X <= min_zoomIn_X || max_viewport_X >= max_zoomIn_X)
+                         && transform.parent.position.z <= maxIn_Z;
 
-            if (!insideZoomInBox) { break; }
-        }
-
-        // Get New Zoom if player inside zoomIn box
-        if (insideZoomInBox)
+        if (canZoomIn)
         {
             positionToGoTo.z = Mathf.Clamp(transform.position.z + zoomInValue, maxOut_Z, maxIn_Z);
         }
+        Debug.Log("Zoom In : " + canZoomIn);
+
     }
 
-    protected void CalculateFrustum()
+
+    protected void UpdateFrustrum()
     {
         float distance = -transform.parent.position.z;
         frustumHeight = 2.0f * distance * Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
         frustumWidth = frustumHeight * cam.aspect;
+
+        float offsetX = frustumWidth / 2.0f;
+        float offsetY = frustumHeight / 2.0f;
+        min_viewport_X = transform.parent.position.x - offsetX;
+        max_viewport_X = transform.parent.position.x + offsetX;
+        min_viewport_Y = transform.parent.position.y - offsetY;
+        max_viewport_Y = transform.parent.position.y + offsetY;
+    }
+    
+    protected void UpdateBounds()
+    {
+        float offsetX = (bounds_X - frustumWidth) / 2.0f;
+        float offsetY = (bounds_Y - frustumHeight) / 2.0f;
+        min_bounds_X = bounds.transform.position.x - offsetX;
+        max_bounds_X = bounds.transform.position.x + offsetX;
+        min_bounds_Y = bounds.transform.position.y - offsetY;
+        max_bounds_Y = bounds.transform.position.y + offsetY;
+    }
+
+    protected void UpdatePlayersBounds()
+    {
+        Bounds playersBounds = new Bounds(playerList[0].transform.position, Vector3.zero);
+
+        foreach (Player player in playerList)
+        {
+            playersBounds.Encapsulate(player.transform.position);
+        }
+
+        playersBounds_X = playersBounds.size.x;
+
+        float offsetX = playersBounds_X;
+        min_playersBounds_X = barycenter.x - offsetX;
+        max_playersBounds_X = barycenter.x + offsetX;
     }
 
     #region Public Method
@@ -184,7 +203,7 @@ public abstract class CameraState : MonoBehaviour
     #endregion
 
     #region Debug
-    void OnDrawGizmosSelected()
+    protected virtual void OnDrawGizmosSelected()
     {
         // Draw Camera Viewport
         Gizmos.color = Color.yellow;
@@ -197,12 +216,22 @@ public abstract class CameraState : MonoBehaviour
 
         // Draw Camera Bounds
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(bounds.transform.position, new Vector3(bounds_X * 2.0f, bounds_Y * 2.0f, 1));
-
-        // Draw Camera Movement Bounds
-        Gizmos.color = Color.magenta;
         Gizmos.DrawWireCube(bounds.transform.position, new Vector3(bounds_X, bounds_Y, 1));
 
+        // Draw Camera Movement Clamp
+        Gizmos.color = Color.black;
+        Gizmos.DrawWireCube(bounds.transform.position, new Vector3(bounds_X - frustumWidth, bounds_Y - frustumHeight, 1));
+
+        // Draw Players Bounds
+        Gizmos.color = Color.grey;
+        Gizmos.DrawWireCube(barycenter, new Vector3(playersBounds_X, playersBounds_Y, 1));
+
+        // Draw Zoom Out Margin from PlayerBounds
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireCube(barycenter, new Vector3(playersBounds_X + zoomOut_Margin, playersBounds_Y + zoomOut_Margin, 1));
+
+        // Draw Zoom In Margin from PlayerBounds
+        Gizmos.DrawWireCube(barycenter, new Vector3(playersBounds_X + zoomIn_Margin, playersBounds_Y + zoomIn_Margin, 1));
     }
     #endregion
 }
