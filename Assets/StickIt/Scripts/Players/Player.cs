@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using MoreMountains.Feedbacks;
-
+using UnityEngine;
 public class Player : MonoBehaviour
 {
     private MultiplayerManager _multiplayerManager;
@@ -14,46 +13,42 @@ public class Player : MonoBehaviour
     void Start()
     {
         _multiplayerManager = MultiplayerManager.instance;
-        if(TryGetComponent<PlayerMouvement>(out PlayerMouvement pm))
+        if (TryGetComponent<PlayerMouvement>(out PlayerMouvement pm))
         {
             myMouvementScript = pm;
             myMouvementScript.myPlayer = this;
         }
         DontDestroyOnLoad(this);
-
         print(myDatas.deviceID);
     }
-
-    public void Death()
+    public void Death(bool intensityAnim = false)
     {
         isDead = true;
         myMouvementScript.enabled = false;
         _multiplayerManager.alivePlayers.Remove(this);
         _multiplayerManager.deadPlayers.Add(this);
-
         // Play Death Animation
-        StartCoroutine(OnDeath());
+        StartCoroutine(OnDeath(intensityAnim));
     }
-
     public void PrepareToChangeLevel()
     {
         if (!isDead)
         {
             myMouvementScript.enabled = false;
-            foreach(Collider col in GetComponentsInChildren<Collider>())
+            foreach (Collider col in GetComponentsInChildren<Collider>())
             {
                 col.enabled = false;
             }
-            foreach(Rigidbody rb in GetComponentsInChildren<Rigidbody>())
+            foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
             {
                 rb.isKinematic = true;
             }
         }
     }
-    IEnumerator OnDeath()
+    IEnumerator OnDeath(bool intensityAnim)
     {
         deathAnim.PlayFeedbacks();
-        yield return new WaitForSeconds(deathAnim.TotalDuration);
+        if (intensityAnim) yield return new WaitForSeconds(deathAnim.TotalDuration);
         GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
         GetComponentInChildren<Collider>().enabled = false;
         GetComponentInChildren<Rigidbody>().isKinematic = true;
@@ -70,13 +65,13 @@ public class Player : MonoBehaviour
         if (isDead)
         {
             isDead = false;
-            
             GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
             GetComponentInChildren<Collider>().enabled = true;
             Rigidbody rb = GetComponentInChildren<Rigidbody>();
             rb.isKinematic = false;
             rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-        }else
+        }
+        else
         {
             foreach (Collider col in GetComponentsInChildren<Collider>())
             {
@@ -87,10 +82,7 @@ public class Player : MonoBehaviour
                 rb.isKinematic = false;
             }
         }
-
-
     }
-
     public void QuitGame()
     {
         Debug.Log("Quit Application");
