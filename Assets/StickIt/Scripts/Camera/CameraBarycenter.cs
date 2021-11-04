@@ -1,112 +1,64 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 public class CameraBarycenter : CameraState
 {
-    /*
-    [Header("----------- CAMERA MOVEMENT -----------")]
-    public bool hasMovement = true;
-    public float smoothTime = 0.5f;
-    [Header("----------- CAMERA ZOOM    -----------")]
-    public bool hasZoom = true;
-    [Header("Zoom on Z Axis, take negative value ")]
-    public float minZoom = -150.0f;
-    public float maxZoom = -100.0f;
-    [Header("high value = stronger zoom depending on distance between player")]
-    public float zoomLimiter = 50.0f;
-    //public float zoomTime = 0.2f;
-    //public AnimationCurve zoomCurve;
-    [Header("----------- CAMERA BOUNDS ------------")]
-    public bool hasCameraBounds = false;
-    public Collider2D cameraBounds;
-    private MultiplayerManager multiplayerManager;
-    [Header("----------- DEBUG --------------------")]
-    [SerializeField] private Vector3 velocity = new Vector3(0.0f, 0.0f, 0.0f);
-    [SerializeField] private Vector3 centerPoint = new Vector3(0.0f, 0.0f, 0.0f);
-    [SerializeField] float bounds_X = 0.0f;
-    [SerializeField] float bounds_Y = 0.0f;
-    [SerializeField] MapManager mapManager;
-    private void Awake()
+    [Header("----- Debug -----")]
+    [SerializeField] private Vector3 barycenter;        // make it local before sending
+
+    protected override void Update()
     {
-        velocity = new Vector3(0.0f, 0.0f, 0.0f);
-        if(hasCameraBounds)
+        base.Update();
+        if (canMove) { UpdateBarycenter(); }
+
+    }
+
+    private void UpdateBarycenter()
+    {
+        barycenter = new Vector3(0.0f, 0.0f, cam.transform.position.z);
+        foreach(Player player in playerList)
         {
-            bounds_X = cameraBounds.bounds.extents.x / 2;
-            bounds_Y = cameraBounds.bounds.extents.y / 2;
+            barycenter += player.transform.position;
+        }
+        barycenter /= playerList.Count;
+
+        // Reset Z
+        barycenter = new Vector3(barycenter.x, barycenter.y, cam.transform.position.z);
+
+        if (bounds != null)
+        {
+            barycenter.x = Mathf.Clamp(barycenter.x, -bounds_X, bounds_X);
+            barycenter.y = Mathf.Clamp(barycenter.y, -bounds_Y, bounds_Y);
         }
 
-    }
-    private void Start()
-    {
-        multiplayerManager = MultiplayerManager.instance;
-        mapManager = MapManager.instance;
-    }
-
-    private void LateUpdate()
-    {
-        //if (mapManager.isBusy) { return; }
-        if (mapManager.isActiveAndEnabled) { return; }
-        if (multiplayerManager.players.Count <= 0 && SceneManager.GetActiveScene().buildIndex == 0) { return; }
-
-        if (hasMovement) { FollowPlayers(); }
-        if (hasZoom) { Zoom(); }
-    }
-
-    private void FollowPlayers()
-    {
-        centerPoint = GetCentroid();
-        if (hasCameraBounds)
+        // Freeze X axis
+        if (freezeX)
         {
-            centerPoint.x = Mathf.Clamp(centerPoint.x, -bounds_X, bounds_X);
-            centerPoint.y = Mathf.Clamp(centerPoint.y, -bounds_Y, bounds_Y);
+            barycenter = new Vector3(cam.transform.position.x, barycenter.y, cam.transform.position.z);
         }
-        Vector3 newPos = new Vector3(
-            centerPoint.x,
-            centerPoint.y,
-            transform.position.z);
-        transform.position = Vector3.SmoothDamp(transform.position, newPos, ref velocity, smoothTime);
-    }
 
-    private void Zoom()
-    {
-        float newZoom = Mathf.Lerp(maxZoom, minZoom, GetGreatestDistance() / (maxZoom + minZoom));
-        transform.position = new Vector3(
-            transform.position.x,
-            transform.position.y,
-            Mathf.Lerp(transform.position.z, newZoom, Time.deltaTime));
-    }
-
-    private Vector3 GetCentroid()
-    {
-        Vector3 center = new Vector3(0, 0, 0);
-        for (int i = 0; i < multiplayerManager.players.Count; i++)
+        // Freeze Y axis
+        if (freezeY)
         {
-            center += multiplayerManager.players[i].transform.position;
+            barycenter = new Vector3(barycenter.x, cam.transform.position.y, cam.transform.position.z);
         }
-        center /= multiplayerManager.players.Count;
+
+        // Update Position to Go To
+        float newPos_X = Mathf.Clamp(barycenter.x, min_bounds_X, max_bounds_X);
+        float newPos_Y = Mathf.Clamp(barycenter.y, min_bounds_Y, max_bounds_Y);
+        positionToGoTo = new Vector3(
+            newPos_X,
+            newPos_Y,
+            cam.transform.position.z);
 
         //Debug
         float val = 0;
-        List<Player> players = multiplayerManager.players;
-        foreach(Player player in players)
+        foreach (Player player in playerList)
         {
-            Debug.DrawLine(player.transform.position, center, Color.red + new Color(-val, val, 0));
-            val += 0.25f;
+            Debug.DrawLine(player.transform.position, barycenter, Color.red + new Color(-val, val, 0));
+            val += 0.20f;
         }
-
-        return center;
     }
 
-    private float GetGreatestDistance()
-    {
-        List<Player> players = multiplayerManager.players;
-        var bounds = new Bounds(players[0].transform.position, Vector3.zero);
-        for (int i = 0; i < players.Count; i++)
-        {
-            bounds.Encapsulate(players[i].transform.position);
-        }
-
-        return bounds.size.x;
-    }
-    */
 }

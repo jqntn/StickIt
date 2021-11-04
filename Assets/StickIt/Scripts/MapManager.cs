@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-class MapManager : Unique<MapManager>
+public class MapManager : Unique<MapManager>
 {
     [Range(0, 1)]
     public float smoothTime;

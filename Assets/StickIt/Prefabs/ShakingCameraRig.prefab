@@ -103,8 +103,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 626349961222977440}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.39, z: -100}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 626349962122285698}
@@ -275,51 +275,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39ca3d1031aaaf741849fd95649c4f25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  datas: []
-  moveTime: 0.2
-  distanceBeforeBorder: 0
+  type: 0
+  bounds: {fileID: 0}
+  animTime: 0.5
+  canMove: 1
   freezeX: 0
   freezeY: 0
-  hasCenterCamera: 1
-  hasFollowLastPlayer: 0
-  hasFreeRoaming: 1
-  randomRadius: 5
-  roamingTime: 3
+  canZoom: 1
   maxOut_Z: -130
   maxIn_Z: -70
   zoomOutMargin: -5
   zoomInMargin: -10
   zoomOutValue: 20
   zoomInValue: 10
-  zoomTime: 0.2
   hasZoomOutAtEnd: 0
-  deathMargin: 10
-  timeBeforeDeath: 0.2
-  currentDirection: 0
-  playerList: []
-  frontPlayer: {fileID: 0}
+  hasCenterCamera: 1
+  datas: []
   cam: {fileID: 0}
-  runnerManager: {fileID: 0}
   mapManager: {fileID: 0}
-  centroid: {x: 0, y: 0, z: 0}
+  multiplayerManager: {fileID: 0}
+  playerList: []
   positionToGoTo: {x: 0, y: 0, z: 0}
-  moveVelocity: {x: 0, y: 0, z: 0}
-  zoomVelocity: {x: 0, y: 0, z: 0}
-  roamingVelocity: {x: 0, y: 0, z: 0}
+  velocity: {x: 0, y: 0, z: 0}
+  bounds_X: 0
+  bounds_Y: 0
+  min_bounds_X: 0
+  max_bounds_X: 0
+  min_bounds_Y: 0
+  max_bounds_Y: 0
   frustumHeight: 0
   frustumWidth: 0
-  runTimer: 0
-  deathTimer:
-  - 0
-  - 0
-  - 0
-  - 0
-  sceneIndex: 0
-  dataIndex: 0
-  numberPlayers: 0
-  hasTouchBorder: 0
-  onlyOnePlayerLeft: 0
-  center: {fileID: 0}
 --- !u!1 &626349961553394816
 GameObject:
   m_ObjectHideFlags: 0

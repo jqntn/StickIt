@@ -9,7 +9,6 @@ public class CameraStateDriven : MonoBehaviour
     [Header("------- DEBUG ------")]
     public CameraState currentState;
 
-
     public void DeactivateAllCameraState()
     {
         foreach (CameraState state in statesList)
