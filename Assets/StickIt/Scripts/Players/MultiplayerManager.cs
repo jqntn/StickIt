@@ -126,6 +126,7 @@ public class MultiplayerManager : MonoBehaviour
             PlayerInput newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, datas[i].id, "Gamepad", -1, pad);
             Player scriptPlayer = newPlayer.transform.GetComponent<Player>();
             scriptPlayer.myDatas = datas[i];
+            scriptPlayer.transform.gameObject.name = scriptPlayer.myDatas.name;
             scriptPlayer.transform.GetComponentInChildren<SkinnedMeshRenderer>().material = scriptPlayer.myDatas.material;
             players.Add(scriptPlayer);
             alivePlayers.Add(scriptPlayer);

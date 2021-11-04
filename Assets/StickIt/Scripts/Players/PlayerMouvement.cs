@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMouvement : MonoBehaviour
 {
+    [HideInInspector]
     public Player myPlayer;
 
     public enum STATE { STICK, AIR }
@@ -54,6 +55,7 @@ public class PlayerMouvement : MonoBehaviour
 
     [Header("CollisionVariables")]
     public GameObject collisionEffect;
+    [SerializeField] float strengthRequiredToBigImpact;
 
 
     // Start is called before the first frame update
@@ -98,6 +100,7 @@ public class PlayerMouvement : MonoBehaviour
         {
             AnimCurveJumpSpeed();
         }
+
     }
 
     private void FixedUpdate()
@@ -167,7 +170,7 @@ public class PlayerMouvement : MonoBehaviour
     #region JUMP
     void Jump()
     {
-        if (currentNumberOfJumps > 0 && state == STATE.STICK)
+        if (currentNumberOfJumps > 0 && connectedPoints.Count >0)
         {
             // Debug.Break();
             float forceJump = maxSpeed * forceJumpMultiplicator;
@@ -192,6 +195,7 @@ public class PlayerMouvement : MonoBehaviour
         }
 
 
+
     }
     void IncreaseForceJump()
     {
@@ -207,22 +211,28 @@ public class PlayerMouvement : MonoBehaviour
     #region Collisions
     private void OnCollisionEnter(Collision collision)
     {
-
+        currentNumberOfJumps = maxNumberOfJumps;
         switch (collision.transform.tag)
         {
-            case "Player":
-                Player playerCollided = collision.transform.GetComponent<Player>();
-                if (myPlayer.myDatas.id < playerCollided.myDatas.id)
+            case "Player":             
+                Vector3 localContactPos = collision.transform.position - collision.contacts[0].point;
+                ContactPointSurface contact = new ContactPointSurface(collision.transform, localContactPos, 0);
+                contact.localPosition.z = transform.position.z;
+
+                connectedPoints.Add(contact);
+
+
+                PlayerMouvement playerCollided = collision.transform.GetComponent<PlayerMouvement>();
+                if (velocityLastFrame.magnitude > playerCollided.velocityLastFrame.magnitude)
                 {
-                    if(collision.contactCount > 0)
-                    CollisionBetweenPlayers(playerCollided.myMouvementScript, collision.contacts[0]);
+                    BigImpactBetweenPlayers(playerCollided, collision.contacts[0]);
                 }
                     break;
 
             default:
                 if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
                 #region Collision Untagged
-                currentNumberOfJumps = maxNumberOfJumps;
+
 
                 if (isChargingJump)
                 {
@@ -231,8 +241,8 @@ public class PlayerMouvement : MonoBehaviour
 
                 Vector3 contactNormal = collision.contacts[0].normal;
                 float dot = Vector2.Dot(contactNormal, velocityLastFrame);
-                Vector3 localContactPos = collision.transform.position - collision.contacts[0].point;
-                ContactPointSurface contact = new ContactPointSurface(collision.transform, localContactPos, -dot * attractionMultiplier);
+                localContactPos = collision.transform.position - collision.contacts[0].point;
+                contact = new ContactPointSurface(collision.transform, localContactPos, -dot * attractionMultiplier);
                 contact.localPosition.z = transform.position.z;
 
                 connectedPoints.Add(contact);
@@ -250,6 +260,7 @@ public class PlayerMouvement : MonoBehaviour
     }
 
 
+
     private void OnCollisionStay(Collision collision)
     {
         if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
@@ -260,7 +271,7 @@ public class PlayerMouvement : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
+        //if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
         for (int i = 0; i < connectedPoints.Count; i++)
         {
             if (connectedPoints[i].transform == collision.transform)
@@ -273,63 +284,38 @@ public class PlayerMouvement : MonoBehaviour
             state = STATE.AIR;
             if (!hasJumped)
             {
-                currentNumberOfJumps--;
+                currentNumberOfJumps = 0;
                 EnableDots(false);
             }
         }
     }
 
 
-    public void CollisionBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact)
+    private void BigImpactBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact)
     {
 
-        //int id = GetComponent<Player>().myDatas.id;
 
-        //int ido = playerCollided.GetComponent<Player>().myDatas.id;
+        Vector3 dir = (playerCollided.transform.position - transform.position).normalized;
+        rb.velocity = -dir;
+        GetComponent<Collider>().enabled = false;
+        foreach (Collider col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = false;
+        }
 
-        //float newVelMagnitudeP1 = playerCollided.velocityLastFrame.magnitude;
+        float strength = velocityLastFrame.magnitude;
+        playerCollided.GetBigImpacted(dir, strength);   
 
-        //float newVelMagnitudeP2 = velocityLastFrame.magnitude;
-
-
-
-        //Vector3 newDirP1 = Vector3.Reflect(velocityLastFrame.normalized, contact.normal);
-
-        //Vector3 newDirP2 = Vector3.Reflect(playerCollided.velocityLastFrame.normalized, contact.normal);
-
-
-
-        //rb.velocity = newDirP1 * newVelMagnitudeP1;
-
-        //playerCollided.rb.velocity = newDirP2 * newVelMagnitudeP2;
-
-
-
-        //Vector3 v = Quaternion.Euler(0, 0, 90) * contact.normal;
-        //Debug.DrawRay(contact.point, v, Color.green);
-        //GameObject g = Instantiate(collisionEffect, contact.point, Quaternion.Euler(0,0, Vector3.Angle(contact.normal, v)));
-        //g.GetComponent<ParticleSystemRenderer>().material.color = new Color((MultiplayerManager.instance.materials[id].color.r + MultiplayerManager.instance.materials[ido].color.r) /2, (MultiplayerManager.instance.materials[id].color.g + MultiplayerManager.instance.materials[ido].color.g)/2, (MultiplayerManager.instance.materials[id].color.b + MultiplayerManager.instance.materials[ido].color.b)/2);
-        ////Debug.Break();
-        //rb.velocity = playerCollided.velocityLastFrame;
-        //playerCollided.rb.velocity = velocityLastFrame;
-
-       /* #region debug
-        print(playerCollided.velocityLastFrame);
-        //Last velocities
-        Debug.DrawRay(transform.position,  -velocityLastFrame, Color.blue, 3f);
-        Debug.DrawRay(playerCollided.transform.position, -playerCollided.velocityLastFrame, Color.gray, 3f);
-
-        //New velocities
-        //Debug.DrawRay(playerCollided.transform.position, newDirP2 * velocityLastFrame.magnitude, Color.yellow, 3f);
-        //Debug.DrawRay(transform.position, newDirP1 * playerCollided.velocityLastFrame.magnitude, Color.green, 3f);
-
-        // Normal
-        Debug.DrawRay(contact.point,contact.point + contact.normal * 100f, Color.red, 3f);
-       // Debug.Break();
-        #endregion*/
+        StartCoroutine(ImmunityStrongImpact());
 
     }
 
+    public void GetBigImpacted(Vector3 dir, float strength)
+    {
+        rb.velocity = dir * strength * 2;
+        rb.detectCollisions = false;
+        StartCoroutine(DelayStrongImpacted());
+    }
 
 
     #endregion
@@ -338,6 +324,7 @@ public class PlayerMouvement : MonoBehaviour
     {
         for (int i = connectedPoints.Count - 1; i >= 0; i--)
         {
+            if (connectedPoints[i].transform.tag != "Untagged") return; // RETURN CONDITION
             Vector3 localPlayerPosition = connectedPoints[i].transform.position - transform.position;
             Vector3 direction = (connectedPoints[i].localPosition - localPlayerPosition).normalized;
 
@@ -364,7 +351,6 @@ public class PlayerMouvement : MonoBehaviour
                         }
                     }
                 }
-
             }
 
 
@@ -378,9 +364,8 @@ public class PlayerMouvement : MonoBehaviour
     public void Death()
     {
         GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
-        GetComponent<Collider>().enabled = false;
-        rb.isKinematic = true;
-        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+        
+       
 
         foreach(Collider col in GetComponentsInChildren<Collider>())
         {
@@ -482,6 +467,42 @@ public class PlayerMouvement : MonoBehaviour
     }
     #endregion
 
+
+    public IEnumerator ImmunityStrongImpact()
+    {
+        
+        yield return new WaitForSeconds(0.1f);
+
+        connectedPoints.Clear();
+        state = STATE.AIR;
+        GetComponent<Collider>().enabled = true;
+        foreach (Collider col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = true;
+        }
+
+
+        rb.isKinematic = false;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+
+        //foreach (Collider col in GetComponentsInChildren<Collider>())
+        //{
+        //    col.enabled = true;
+        //}
+        //foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
+        //{
+        //    rb.isKinematic = false;
+        //    rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        //}
+    }
+
+    public IEnumerator DelayStrongImpacted()
+    {
+
+        yield return new WaitForSeconds(0.1f);
+        connectedPoints.Clear();
+        rb.detectCollisions = true;
+    }
 
 }
 
