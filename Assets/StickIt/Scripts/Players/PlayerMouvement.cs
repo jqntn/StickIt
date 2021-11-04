@@ -283,9 +283,9 @@ public class PlayerMouvement : MonoBehaviour
     public void CollisionBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact)
     {
 
-        int id = GetComponent<Player>().myDatas.id;
+        //int id = GetComponent<Player>().myDatas.id;
 
-        int ido = playerCollided.GetComponent<Player>().myDatas.id;
+        //int ido = playerCollided.GetComponent<Player>().myDatas.id;
 
         //float newVelMagnitudeP1 = playerCollided.velocityLastFrame.magnitude;
 
@@ -305,13 +305,13 @@ public class PlayerMouvement : MonoBehaviour
 
 
 
-        Vector3 v = Quaternion.Euler(0, 0, 90) * contact.normal;
-        Debug.DrawRay(contact.point, v, Color.green);
-        GameObject g = Instantiate(collisionEffect, contact.point, Quaternion.Euler(0,0, Vector3.Angle(contact.normal, v)));
-        g.GetComponent<ParticleSystemRenderer>().material.color = new Color((MultiplayerManager.instance.materials[id].color.r + MultiplayerManager.instance.materials[ido].color.r) /2, (MultiplayerManager.instance.materials[id].color.g + MultiplayerManager.instance.materials[ido].color.g)/2, (MultiplayerManager.instance.materials[id].color.b + MultiplayerManager.instance.materials[ido].color.b)/2);
-        //Debug.Break();
-        rb.velocity = playerCollided.velocityLastFrame;
-        playerCollided.rb.velocity = velocityLastFrame;
+        //Vector3 v = Quaternion.Euler(0, 0, 90) * contact.normal;
+        //Debug.DrawRay(contact.point, v, Color.green);
+        //GameObject g = Instantiate(collisionEffect, contact.point, Quaternion.Euler(0,0, Vector3.Angle(contact.normal, v)));
+        //g.GetComponent<ParticleSystemRenderer>().material.color = new Color((MultiplayerManager.instance.materials[id].color.r + MultiplayerManager.instance.materials[ido].color.r) /2, (MultiplayerManager.instance.materials[id].color.g + MultiplayerManager.instance.materials[ido].color.g)/2, (MultiplayerManager.instance.materials[id].color.b + MultiplayerManager.instance.materials[ido].color.b)/2);
+        ////Debug.Break();
+        //rb.velocity = playerCollided.velocityLastFrame;
+        //playerCollided.rb.velocity = velocityLastFrame;
 
        /* #region debug
         print(playerCollided.velocityLastFrame);
@@ -336,8 +336,6 @@ public class PlayerMouvement : MonoBehaviour
 
     private void Attraction()
     {
-
-
         for (int i = connectedPoints.Count - 1; i >= 0; i--)
         {
             Vector3 localPlayerPosition = connectedPoints[i].transform.position - transform.position;
@@ -377,10 +375,42 @@ public class PlayerMouvement : MonoBehaviour
         }
     }
 
-    public void PrepareToChangeLevel()
+    public void Death()
+    {
+        GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
+        rb.isKinematic = true;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+
+        foreach(Collider col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = false;
+        }
+        foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
+        {
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+            rb.isKinematic = true;
+        }
+    }
+
+    public void Respawn()
     {
         connectedPoints.Clear();
         state = STATE.AIR;
+        GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+        GetComponent<Collider>().enabled = true;
+        rb.isKinematic = false;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+
+        foreach (Collider col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = true;
+        }
+        foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
+        {
+            rb.isKinematic = false;
+            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        }
     }
 
     // ----- PREVIEW DOTS -----
@@ -437,7 +467,7 @@ public class PlayerMouvement : MonoBehaviour
     }
     void AnimCurveJumpSpeed()
     {
-        if (t_speed < animCurveJumpSpeed.keys[animCurveJumpSpeed.length - 1].time)
+        /*if (t_speed < animCurveJumpSpeed.keys[animCurveJumpSpeed.length - 1].time)
         {
 
             t_speed += Time.deltaTime;
@@ -448,7 +478,7 @@ public class PlayerMouvement : MonoBehaviour
         {
 
             isAnimCurveSpeed = false;
-        }
+        }*/
     }
     #endregion
 

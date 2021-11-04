@@ -1,13 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using MoreMountains.Feedbacks;
-
+using UnityEngine;
 public class Player : MonoBehaviour
 {
     private MultiplayerManager _multiplayerManager;
     public PlayerMouvement myMouvementScript;
-    public P_Mouvement2 myMouvementScript2;
     public MultiplayerManager.PlayerData myDatas;
     public MMFeedbacks deathAnim;
     public GameObject deathPart;
@@ -15,58 +13,54 @@ public class Player : MonoBehaviour
     void Start()
     {
         _multiplayerManager = MultiplayerManager.instance;
-        myMouvementScript = GetComponent<PlayerMouvement>();
-        myMouvementScript.myPlayer = this;
-
+        if (TryGetComponent<PlayerMouvement>(out PlayerMouvement pm))
+        {
+            myMouvementScript = pm;
+            myMouvementScript.myPlayer = this;
+        }
         DontDestroyOnLoad(this);
     }
-
-    public void Death()
+    public void Death(bool intensityAnim = false)
     {
         isDead = true;
         myMouvementScript.enabled = false;
         _multiplayerManager.alivePlayers.Remove(this);
         _multiplayerManager.deadPlayers.Add(this);
-
         // Play Death Animation
-        StartCoroutine(OnDeath());
+        StartCoroutine(OnDeath(intensityAnim));
     }
-
-    public void PrepareToChangeLevel()
+    IEnumerator OnDeath(bool intensityAnim)
+    {
+        deathAnim.PlayFeedbacks();
+        if (intensityAnim) yield return new WaitForSeconds(deathAnim.TotalDuration);
+        myMouvementScript.Death();
+        GameObject temp = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.rotation);
+        temp.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
+        GameEvents.CameraShake_CEvent?.Invoke();
+        MapManager.instance.EndLevel();
+    }
+    public void PrepareToChangeLevel() // When the player is still alive
     {
         if (!isDead)
         {
-            myMouvementScript.PrepareToChangeLevel();
             myMouvementScript.enabled = false;
-            GetComponentInChildren<Collider>().enabled = false;
-            GetComponent<Rigidbody>().isKinematic = true;
+            foreach (Collider col in GetComponentsInChildren<Collider>())
+            {
+                col.enabled = false;
+            }
+            foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
+            {
+                rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+                rb.isKinematic = true;
+            }
         }
-    }
-    IEnumerator OnDeath()
-    {
-        deathAnim.PlayFeedbacks();
-        yield return new WaitForSeconds(deathAnim.TotalDuration);
-        GetComponentInChildren<MeshRenderer>().enabled = false;
-        GetComponentInChildren<Collider>().enabled = false;
-        GetComponent<Rigidbody>().isKinematic = true;
-        GameObject temp = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.rotation);
-        temp.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
-        yield return null;
-        GameEvents.CameraShake_CEvent?.Invoke();
-        
     }
     public void Respawn()
     {
         myMouvementScript.enabled = true;
-        GetComponentInChildren<MeshRenderer>().enabled = true;
-        GetComponentInChildren<Collider>().enabled = true;
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.isKinematic = false;
-        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-
-
+        myMouvementScript.Respawn();
+        isDead = false;
     }
-
     public void QuitGame()
     {
         Debug.Log("Quit Application");

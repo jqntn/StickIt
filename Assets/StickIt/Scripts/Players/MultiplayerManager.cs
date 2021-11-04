@@ -121,21 +121,12 @@ public class MultiplayerManager : MonoBehaviour
         }
 
         for (int i = 0; i < datas.Count; i++)
-        {
-            PlayerInput newPlayer = null;
-            Gamepad gamepad = null;
-            foreach (Gamepad pad in Gamepad.all)
-            {
-                if (pad.deviceId == datas[i].deviceID)
-                {
-                    gamepad = pad;
-                    break;
-                }
-            }
-            newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, datas[i].id, "Gamepad", -1, gamepad);
+        {          
+            Gamepad pad = null;
+            PlayerInput newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, datas[i].id, "Gamepad", -1, pad);
             Player scriptPlayer = newPlayer.transform.GetComponent<Player>();
             scriptPlayer.myDatas = datas[i];
-            scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = scriptPlayer.myDatas.material;
+            scriptPlayer.transform.GetComponentInChildren<SkinnedMeshRenderer>().material = scriptPlayer.myDatas.material;
             players.Add(scriptPlayer);
             alivePlayers.Add(scriptPlayer);
 
@@ -198,9 +189,8 @@ public class MultiplayerManager : MonoBehaviour
     public void EndChangeMap()
     {
         isChangingMap = false;
-
         // Reset the lists and re-enable the players
-        alivePlayers = players;
+        alivePlayers = new List<Player>(players);
         deadPlayers.Clear();
         RespawnPlayers();
     }
@@ -210,6 +200,7 @@ public class MultiplayerManager : MonoBehaviour
         for(int i = 0; i < players.Count; i++)
         {
             players[i].Respawn();
+            print("Respawn");
         }
     }
 

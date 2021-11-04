@@ -82,7 +82,7 @@ public class Chair : MonoBehaviour
         if (isActive)
         {
 
-            if (c.gameObject.transform.parent.parent.CompareTag("Player"))
+            if (c.tag == "Player")
             {
                 playersInChair.Add(c.gameObject.GetComponentInParent<Player>());
             }
@@ -90,7 +90,7 @@ public class Chair : MonoBehaviour
     }
     private void OnTriggerExit(Collider c)
     {
-        if (c.gameObject.transform.parent.parent.CompareTag("Player"))
+        if (c.tag == "Player")
         {
             playersInChair.Remove(playersInChair.Find(x => c.gameObject.GetComponentInParent<Player>()));
         }
