@@ -150,7 +150,7 @@ public class MenuSelection : MonoBehaviour
         foreach (Player player in MultiplayerManager.instance.players)
         {
             MultiplayerManager.instance.SaveDatas(player.myDatas);
-            player.myMouvementScript.PrepareToChangeLevel();
+            player.PrepareToChangeLevel();
         }
         MapManager.instance.NextMap("", true);
     }
