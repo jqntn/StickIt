@@ -336,8 +336,6 @@ public class PlayerMouvement : MonoBehaviour
 
     private void Attraction()
     {
-
-
         for (int i = connectedPoints.Count - 1; i >= 0; i--)
         {
             Vector3 localPlayerPosition = connectedPoints[i].transform.position - transform.position;
@@ -377,10 +375,42 @@ public class PlayerMouvement : MonoBehaviour
         }
     }
 
+    public void Death()
+    {
+        GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
+        rb.isKinematic = true;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+
+        foreach(Collider col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = false;
+        }
+        foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
+        {
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+            rb.isKinematic = true;
+        }
+    }
+
     public void Respawn()
     {
         connectedPoints.Clear();
         state = STATE.AIR;
+        GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+        GetComponent<Collider>().enabled = true;
+        rb.isKinematic = false;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+
+        foreach (Collider col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = true;
+        }
+        foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
+        {
+            rb.isKinematic = false;
+            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        }
     }
 
     // ----- PREVIEW DOTS -----

@@ -189,9 +189,8 @@ public class MultiplayerManager : MonoBehaviour
     public void EndChangeMap()
     {
         isChangingMap = false;
-
         // Reset the lists and re-enable the players
-        alivePlayers = players;
+        alivePlayers = new List<Player>(players);
         deadPlayers.Clear();
         RespawnPlayers();
     }
@@ -201,6 +200,7 @@ public class MultiplayerManager : MonoBehaviour
         for(int i = 0; i < players.Count; i++)
         {
             players[i].Respawn();
+            print("Respawn");
         }
     }
 
