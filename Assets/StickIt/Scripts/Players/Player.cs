@@ -29,18 +29,16 @@ public class Player : MonoBehaviour
         // Play Death Animation
         StartCoroutine(OnDeath(intensityAnim));
     }
-
-    IEnumerator OnDeath()
+    IEnumerator OnDeath(bool intensityAnim)
     {
         deathAnim.PlayFeedbacks();
-        yield return new WaitForSeconds(deathAnim.TotalDuration);
+        if (intensityAnim) yield return new WaitForSeconds(deathAnim.TotalDuration);
         myMouvementScript.Death();
         GameObject temp = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.rotation);
         temp.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
         GameEvents.CameraShake_CEvent?.Invoke();
         MapManager.instance.EndLevel();
     }
-
     public void PrepareToChangeLevel() // When the player is still alive
     {
         if (!isDead)
@@ -57,12 +55,11 @@ public class Player : MonoBehaviour
             }
         }
     }
-   
     public void Respawn()
     {
         myMouvementScript.enabled = true;
         myMouvementScript.Respawn();
-        isDead = false;                      
+        isDead = false;
     }
     public void QuitGame()
     {
