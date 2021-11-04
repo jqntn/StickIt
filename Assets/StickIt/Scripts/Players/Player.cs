@@ -34,9 +34,18 @@ public class Player : MonoBehaviour
         deathAnim.PlayFeedbacks();
         if (intensityAnim) yield return new WaitForSeconds(deathAnim.TotalDuration);
         myMouvementScript.Death();
-        GameObject temp = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.rotation);
-        temp.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
+        GameObject obj = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Quaternion.identity);
+        obj.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
         GameEvents.CameraShake_CEvent?.Invoke();
+        //
+        // ParticleSystem ps = obj.GetComponent<ParticleSystem>();
+        // ParticleSystem.Particle[] particles = new ParticleSystem.Particle[ps.particleCount];
+        // int length = ps.GetParticles(particles);
+        // for (int i = 0; i < length; i++)
+        // {
+        //     particles[i].position = Vector3.zero;
+        // }
+        //
         MapManager.instance.EndLevel();
     }
     public void PrepareToChangeLevel() // When the player is still alive
