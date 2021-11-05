@@ -768,6 +768,50 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 477383130934292851, guid: a3bb0b8557534e147a397858207651a9, type: 3}
   m_PrefabInstance: {fileID: 477383130782104585}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &958254459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 958254458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841b72de2996c5c40bfb394f3d0e0a98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Feedbacks: []
+  InitializationMode: 2
+  SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
+  AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
+  DebugActive: 0
 --- !u!1001 &1038180909
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1481,6 +1525,34 @@ PrefabInstance:
       propertyPath: winTxt
       value: 
       objectReference: {fileID: 156446580}
+    - target: {fileID: 477383130934292853, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: durationSpawn
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 477383130934292853, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: durationValue
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 477383130934292853, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: transitionValue
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 477383131273025991, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: posCubeGUI.x
+      value: -12.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 477383131273025991, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: posCubeGUI.y
+      value: 7.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505617182186153634, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: posCubeGUI.x
+      value: -11.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5505617182186153634, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: posCubeGUI.y
+      value: -4.18
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a3bb0b8557534e147a397858207651a9, type: 3}
 --- !u!4 &477383130782104586 stripped
