@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using MoreMountains.Feedbacks;
 using UnityEngine.UI;
 public class MusicalChairManager : Level
 {
@@ -18,8 +19,17 @@ public class MusicalChairManager : Level
     int maxChairsActive;
     [SerializeField] Color colorChairActive;
     [SerializeField] Color colorChairInactive;
+    bool spawning = true;
+    bool despawning = true;
+    [HideInInspector]
+    public float durationSpawn;
     public Color colorChairTaken;
     public GameObject winTxt;
+    public MMFeedbacks spawnFeedback;
+    private void Awake()
+    {
+        durationSpawn = transitionValue / 3;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -33,10 +43,16 @@ public class MusicalChairManager : Level
             countdown.color = colorTextTransition;
             transition -= Time.deltaTime;
             textValue = Mathf.Round(transition);
+
             if (transition <= 0)
             {
                 inTransition = false;
+                despawning = true;
+            }
+            else if(spawning && transition <= durationSpawn && transition > 0)
+            {
                 ChangeChairPool();
+                spawning = false;
             }
         }
         else
@@ -48,6 +64,7 @@ public class MusicalChairManager : Level
             if (duration <= 0)
             {
                 inTransition = true;
+                spawning = true;
                 ResetChairPool();
             }
         }
@@ -64,6 +81,7 @@ public class MusicalChairManager : Level
     }
     private void ChangeChairPool()
     {
+        //spawnFeedback.PlayFeedbacks();
         int rand = Random.Range(0, chairs.Length);
         int chairsChanged = 0;
         while (chairsChanged < maxChairsActive)
@@ -81,6 +99,7 @@ public class MusicalChairManager : Level
     }
     private void ResetChairPool()
     {
+        //spawnFeedback.PlayFeedbacksInReverse();
         foreach (Chair c in chairs)
         {
             c.DeactivateChair(colorChairInactive);
