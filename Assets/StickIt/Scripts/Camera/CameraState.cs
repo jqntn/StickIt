@@ -21,10 +21,11 @@ public abstract class CameraState : MonoBehaviour
     public bool autoMaxOut_Z = false;
     public float maxOut_Z = -110.0f;
     public float maxIn_Z = -70.0f;
+    public float zoomOutValue = -20.0f;
+    public float zoomInValue = 10.0f;
     public float zoomOutMargin = 2.0f;
     public float zoomInMargin = 5.0f;
-    public float zoomOutValue = -10.0f;
-    public float zoomInValue = 10.0f;
+    public bool canClampZoom = false;
 
     [Header("----- End Animation -----")]
     public bool hasZoomOutAtEnd = true;
@@ -91,10 +92,6 @@ public abstract class CameraState : MonoBehaviour
 
         // Search Max Zoom Out
         SearchMaxOut_Z();
-
-        if (SceneManager.GetActiveScene().name == "0_MenuSelection" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
-
-        ResetCamera();
     }
 
     protected virtual void UpdateBounds()
@@ -148,7 +145,7 @@ public abstract class CameraState : MonoBehaviour
         // if zooming out and is touching border > return and wait to move first
         bool isTouchingBorder = 
             min_viewport_X <= min_bounds_X || max_viewport_X >= max_bounds_X;
-        if (positionToGoTo.z < transform.parent.position.z && isTouchingBorder) { return; }
+        if (canClampZoom && positionToGoTo.z < transform.parent.position.z && isTouchingBorder) { return; }
         
         // Zoom Camera
         Vector3 newZoom = new Vector3(
