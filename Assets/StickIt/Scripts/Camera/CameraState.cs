@@ -21,17 +21,14 @@ public abstract class CameraState : MonoBehaviour
     public bool autoMaxOut_Z = false;
     public float maxOut_Z = -110.0f;
     public float maxIn_Z = -70.0f;
-    public float zoomOutMargin = 1.0f;
-    public float zoomInMargin = 3.0f;
+    public float zoomOutMargin = 2.0f;
+    public float zoomInMargin = 5.0f;
     public float zoomOutValue = -10.0f;
     public float zoomInValue = 10.0f;
 
     [Header("----- End Animation -----")]
     public bool hasZoomOutAtEnd = true;
     public bool hasCenterCamera = true;
-    //public bool hasFreeRoaming = false;
-    //public int randomRadius = 5;
-    //public float roamingTime = 3.0f;
 
     [Header("----- Prototype -----")]
     public List<CameraData> datas = new List<CameraData>();
@@ -84,14 +81,7 @@ public abstract class CameraState : MonoBehaviour
         }
         else
         {
-            bounds_X = bounds.bounds.size.x;
-            bounds_Y = bounds.bounds.size.y;
-            float offsetX = bounds_X / 2.0f;
-            float offsetY = bounds_Y / 2.0f;
-            min_bounds_X = bounds.gameObject.transform.position.x - offsetX;
-            max_bounds_X = bounds.gameObject.transform.position.x + offsetX;
-            min_bounds_Y = bounds.gameObject.transform.position.y - offsetY;
-            max_bounds_Y = bounds.gameObject.transform.position.y + offsetY;
+            UpdateBounds();
             UpdateMoveBounds();
         }
 
@@ -115,6 +105,17 @@ public abstract class CameraState : MonoBehaviour
         }
     }
 
+    protected virtual void UpdateBounds()
+    {
+        bounds_X = bounds.bounds.size.x;
+        bounds_Y = bounds.bounds.size.y;
+        float offsetX = bounds_X / 2.0f;
+        float offsetY = bounds_Y / 2.0f;
+        min_bounds_X = bounds.gameObject.transform.position.x - offsetX;
+        max_bounds_X = bounds.gameObject.transform.position.x + offsetX;
+        min_bounds_Y = bounds.gameObject.transform.position.y - offsetY;
+        max_bounds_Y = bounds.gameObject.transform.position.y + offsetY;
+    }
     protected virtual void Update()
     {
         // Protections
@@ -153,8 +154,8 @@ public abstract class CameraState : MonoBehaviour
         transform.parent.position = Vector3.SmoothDamp(transform.parent.position, newPos, ref moveVelocity, moveTime);
 
         // if zooming out and is touching border > return and wait to move first
-        bool isTouchingBorder = false;
-
+        bool isTouchingBorder = 
+            min_viewport_X <= min_bounds_X || max_viewport_X >= max_bounds_X;
         if (positionToGoTo.z < transform.parent.position.z && isTouchingBorder) { return; }
         
         // Zoom Camera
@@ -163,33 +164,6 @@ public abstract class CameraState : MonoBehaviour
             transform.parent.position.y,
             positionToGoTo.z);
         transform.parent.position = Vector3.SmoothDamp(transform.parent.position, newZoom, ref zoomVelocity, zoomTime);
-    }
-
-    protected void UpdateZoom()
-    {
-        // Zoom Out
-        float min_zoomOut_X = min_playersBounds_X - zoomOutMargin;
-        float max_zoomOut_X = max_playersBounds_X + zoomOutMargin;
-        bool canZoomOut = (min_viewport_X >= min_zoomOut_X && max_viewport_X <= max_zoomOut_X)
-                          && -Mathf.Floor(-transform.parent.position.z) > maxOut_Z;
-        // If Viewport is too small compare to bounds players
-        if (canZoomOut)
-        {
-            positionToGoTo.z = Mathf.Clamp(transform.position.z + zoomOutValue, maxOut_Z, maxIn_Z);
-            return;
-        }
-
-        // Zoom In
-        float min_zoomIn_X = min_playersBounds_X - zoomInMargin;
-        float max_zoomIn_X = max_playersBounds_X + zoomInMargin;
-
-        // If Viewport is too big compare to bounds players
-        bool canZoomIn = (min_viewport_X <= min_zoomIn_X || max_viewport_X >= max_zoomIn_X)
-                         && -Mathf.Floor(-transform.parent.position.z) < maxIn_Z;
-        if (canZoomIn)
-        {
-            positionToGoTo.z = Mathf.Clamp(transform.position.z + zoomInValue, maxOut_Z, maxIn_Z);
-        }
     }
 
     protected void UpdateFrustrum()
@@ -233,6 +207,32 @@ public abstract class CameraState : MonoBehaviour
         max_playersBounds_X = barycenter.x + offsetX;
     }
 
+    protected virtual void UpdateZoom() {
+        // Zoom Out
+        float min_zoomOut_X = min_playersBounds_X - zoomOutMargin;
+        float max_zoomOut_X = max_playersBounds_X + zoomOutMargin;
+        bool canZoomOut = (min_viewport_X >= min_zoomOut_X && max_viewport_X <= max_zoomOut_X)
+                          && -Mathf.Floor(-transform.parent.position.z) > maxOut_Z;
+        // If Viewport is too small compare to bounds players
+        if (canZoomOut)
+        {
+            positionToGoTo.z = Mathf.Clamp(transform.position.z + zoomOutValue, maxOut_Z, maxIn_Z);
+            return;
+        }
+
+        // Zoom In
+        float min_zoomIn_X = min_playersBounds_X - zoomInMargin;
+        float max_zoomIn_X = max_playersBounds_X + zoomInMargin;
+
+        // If Viewport is too big compare to bounds players
+        bool canZoomIn = (min_viewport_X <= min_zoomIn_X || max_viewport_X >= max_zoomIn_X)
+                         && -Mathf.Floor(-transform.parent.position.z) < maxIn_Z;
+        if (canZoomIn)
+        {
+            positionToGoTo.z = Mathf.Clamp(transform.position.z + zoomInValue, maxOut_Z, maxIn_Z);
+        }
+    }
+
     #region Public Method
     public CameraType GetCameraType()
     {
@@ -267,4 +267,32 @@ public abstract class CameraState : MonoBehaviour
         Gizmos.DrawWireCube(barycenter, new Vector3(playersBounds_X + zoomInMargin, playersBounds_Y + zoomInMargin, 1));
     }
     #endregion
+
+/* PROTOTYPE
+    public void LoadCameraData()
+    {
+        CameraData current = datas[dataIndex];
+
+        moveTime = current.moveTime;
+        distanceBeforeBorder = current.distanceBeforeBorder;
+        freezeX = current.freezeX;
+        freezeY = current.freezeY;
+        hasFollowLastPlayer = current.hasFollowOnlyPlayer;
+        hasFreeRoaming = current.hasFreeRoaming;
+        randomRadius = current.randomRadius;
+        roamingTime = current.roamingTime;
+        maxOut_Z = current.maxOut_Z;
+        maxIn_Z = current.maxIn_Z;
+        zoomOutMargin = current.zoomOutMargin;
+        zoomInMargin = current.zoomInMargin;
+        zoomOutValue = current.zoomOutSpeed;
+        zoomInValue = current.zoomInSpeed;
+        zoomTime = current.zoomTime;
+        hasZoomOutAtEnd = current.hasZoomOutAtEnd;
+        deathMargin = current.deathMargin;
+        timeBeforeDeath = current.timeBeforeDeath;
+
+        dataIndex++;
+    }
+*/
 }

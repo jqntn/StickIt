@@ -1093,7 +1093,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 599922464}
-  - component: {fileID: 599922466}
+  - component: {fileID: 599922465}
   m_Layer: 0
   m_Name: Camera State FollowFirst
   m_TagString: Untagged
@@ -1115,7 +1115,7 @@ Transform:
   m_Father: {fileID: 1502935009}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &599922466
+--- !u!114 &599922465
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1134,13 +1134,13 @@ MonoBehaviour:
   freezeX: 0
   freezeY: 0
   canZoom: 1
-  zoomTime: 0.5
+  zoomTime: 1
   autoMaxOut_Z: 0
   maxOut_Z: -110
   maxIn_Z: -70
-  zoomOutMargin: -5
-  zoomInMargin: 10
-  zoomOutValue: 20
+  zoomOutMargin: 2
+  zoomInMargin: 5
+  zoomOutValue: -10
   zoomInValue: 10
   hasZoomOutAtEnd: 1
   hasCenterCamera: 1
@@ -1159,6 +1159,10 @@ MonoBehaviour:
   max_bounds_X: 0
   min_bounds_Y: 0
   max_bounds_Y: 0
+  min_moveBounds_X: 0
+  max_moveBounds_X: 0
+  min_moveBounds_Y: 0
+  max_moveBounds_Y: 0
   frustumHeight: 0
   frustumWidth: 0
   min_viewport_X: 0
@@ -1169,6 +1173,7 @@ MonoBehaviour:
   playersBounds_Y: 0
   min_playersBounds_X: 0
   max_playersBounds_X: 0
+  hasZoom: 0
 --- !u!1001 &671381389
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1273,7 +1278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fbccf2c9f6ee1a4a916c214258132d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 0
+  type: 3
   bounds: {fileID: 0}
   canMove: 1
   moveTime: 0.5
@@ -1284,8 +1289,8 @@ MonoBehaviour:
   autoMaxOut_Z: 0
   maxOut_Z: -110
   maxIn_Z: -70
-  zoomOutMargin: 1
-  zoomInMargin: 3
+  zoomOutMargin: 2
+  zoomInMargin: 5
   zoomOutValue: -10
   zoomInValue: 10
   hasZoomOutAtEnd: 1
@@ -1305,6 +1310,10 @@ MonoBehaviour:
   max_bounds_X: 0
   min_bounds_Y: 0
   max_bounds_Y: 0
+  min_moveBounds_X: 0
+  max_moveBounds_X: 0
+  min_moveBounds_Y: 0
+  max_moveBounds_Y: 0
   frustumHeight: 0
   frustumWidth: 0
   min_viewport_X: 0
@@ -1315,6 +1324,7 @@ MonoBehaviour:
   playersBounds_Y: 0
   min_playersBounds_X: 0
   max_playersBounds_X: 0
+  hasZoom: 0
 --- !u!1 &838287261
 GameObject:
   m_ObjectHideFlags: 0
@@ -1494,14 +1504,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 956793740}
-  - component: {fileID: 956793742}
+  - component: {fileID: 956793741}
   m_Layer: 0
   m_Name: Camera State SpeedRunner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &956793740
 Transform:
   m_ObjectHideFlags: 0
@@ -1516,7 +1526,7 @@ Transform:
   m_Father: {fileID: 1502935009}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &956793742
+--- !u!114 &956793741
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1529,19 +1539,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  bounds: {fileID: 0}
+  bounds: {fileID: 899214362}
   canMove: 1
   moveTime: 0.5
   freezeX: 0
   freezeY: 0
   canZoom: 1
-  zoomTime: 0.5
-  autoMaxOut_Z: 0
+  zoomTime: 1
+  autoMaxOut_Z: 1
   maxOut_Z: -110
   maxIn_Z: -70
-  zoomOutMargin: -5
-  zoomInMargin: 10
-  zoomOutValue: 20
+  zoomOutMargin: 2
+  zoomInMargin: 5
+  zoomOutValue: -10
   zoomInValue: 10
   hasZoomOutAtEnd: 1
   hasCenterCamera: 1
@@ -1560,6 +1570,10 @@ MonoBehaviour:
   max_bounds_X: 0
   min_bounds_Y: 0
   max_bounds_Y: 0
+  min_moveBounds_X: 0
+  max_moveBounds_X: 0
+  min_moveBounds_Y: 0
+  max_moveBounds_Y: 0
   frustumHeight: 0
   frustumWidth: 0
   min_viewport_X: 0
@@ -1570,6 +1584,7 @@ MonoBehaviour:
   playersBounds_Y: 0
   min_playersBounds_X: 0
   max_playersBounds_X: 0
+  hasZoom: 0
 --- !u!1 &958254458
 GameObject:
   m_ObjectHideFlags: 0
@@ -1601,7 +1616,6 @@ Transform:
   - {fileID: 1807252403}
   - {fileID: 516433668}
   - {fileID: 1247801949}
-  - {fileID: 1985745008}
   - {fileID: 1004629193}
   m_Father: {fileID: 0}
   m_RootOrder: 3
@@ -1634,11 +1648,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1004629192}
   m_LocalRotation: {x: 0, y: 0, z: 0.09150162, w: 0.99580497}
-  m_LocalPosition: {x: -11.4, y: 0.7, z: 0}
+  m_LocalPosition: {x: -12.3, y: 5.5, z: 0}
   m_LocalScale: {x: 57.6, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 958254459}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 10.5}
 --- !u!54 &1004629194
 Rigidbody:
@@ -2073,8 +2087,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statesList:
   - {fileID: 1540560966}
-  - {fileID: 956793742}
-  - {fileID: 599922466}
+  - {fileID: 0}
+  - {fileID: 0}
   currentState: {fileID: 0}
 --- !u!1 &1540560964
 GameObject:
@@ -2092,7 +2106,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1540560965
 Transform:
   m_ObjectHideFlags: 0
@@ -2131,7 +2145,7 @@ MonoBehaviour:
   maxOut_Z: -300
   maxIn_Z: -70
   zoomOutMargin: 1
-  zoomInMargin: 3
+  zoomInMargin: 5
   zoomOutValue: -10
   zoomInValue: 10
   hasZoomOutAtEnd: 1
@@ -2151,6 +2165,10 @@ MonoBehaviour:
   max_bounds_X: 0
   min_bounds_Y: 0
   max_bounds_Y: 0
+  min_moveBounds_X: 0
+  max_moveBounds_X: 0
+  min_moveBounds_Y: 0
+  max_moveBounds_Y: 0
   frustumHeight: 0
   frustumWidth: 0
   min_viewport_X: 0
@@ -2161,6 +2179,7 @@ MonoBehaviour:
   playersBounds_Y: 0
   min_playersBounds_X: 0
   max_playersBounds_X: 0
+  hasZoom: 0
 --- !u!1001 &1548400509
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2701,115 +2720,3 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1985745007
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1985745008}
-  - component: {fileID: 1985745012}
-  - component: {fileID: 1985745011}
-  - component: {fileID: 1985745010}
-  - component: {fileID: 1985745009}
-  m_Layer: 0
-  m_Name: Wall Middle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &1985745008
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1985745007}
-  m_LocalRotation: {x: 0, y: 0, z: 0.15901972, w: 0.9872754}
-  m_LocalPosition: {x: -13.9, y: 3.6, z: 0}
-  m_LocalScale: {x: 57.6, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 958254459}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 18.3}
---- !u!54 &1985745009
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1985745007}
-  serializedVersion: 2
-  m_Mass: 100
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
---- !u!65 &1985745010
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1985745007}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &1985745011
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1985745007}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 8a8dc1da6dc9d8542a895257440dbfc6, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1985745012
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1985745007}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}

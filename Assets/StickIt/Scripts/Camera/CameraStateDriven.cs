@@ -18,7 +18,6 @@ public class CameraStateDriven : MonoBehaviour
     }
     public void SwitchStates(CameraType type)
     {
-
         DeactivateAllCameraState();
         foreach(CameraState state in statesList)
         {
@@ -45,11 +44,4 @@ public class CameraStateDriven : MonoBehaviour
     {
         SwitchStates(CameraType.BARYCENTER);
     }
-}
-
-public enum CameraType
-{
-    BARYCENTER,
-    FOLLOW,
-    RUNNER,
 }
