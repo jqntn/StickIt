@@ -54,7 +54,9 @@ public class PlayerMouvement : MonoBehaviour
     private SkinnedMeshRenderer mesh;
     public Transform firstBone;
     public GameObject collisionEffect;
+    [SerializeField] float strengthRequiredToImpact;
     [SerializeField] float strengthRequiredToBigImpact;
+    public ParticleSystem ChocParticles;
 
     [Header("DEBUG")]
     public int connexions;
@@ -132,29 +134,27 @@ public class PlayerMouvement : MonoBehaviour
 
     }
 
-    //private void OnGUI()
-    //{
-    //    GUILayout.BeginVertical();
-    //    GUIStyle style = new GUIStyle();
-    //    style.fontSize = 24;
-    //    style.normal.textColor = Color.white;
+    private void OnGUI()
+    {
+        GUILayout.BeginVertical();
+        GUIStyle style = new GUIStyle();
+        style.fontSize = 24;
+        style.normal.textColor = Color.white;
 
-    //    if (myPlayer.id == 0)
-    //    {
-    //        GUILayout.Label(" Velocity  = " + rb.velocity, style);
-    //        GUILayout.Label("Magnitude = " + rb.velocity.magnitude, style);
-    //        if(connectedPoints.Count>0)
-    //        GUILayout.Label("Attraction = " + connectedPoints[0].attractionStrength, style);
-    //    }
-    //    GUILayout.EndVertical();
+        if (myPlayer.myDatas.id == 0)
+        {
+            GUILayout.Label(" Velocity  = " + rb.velocity, style);
+            GUILayout.Label("Magnitude = " + rb.velocity.magnitude, style);
+        }
+        GUILayout.EndVertical();
 
-        
-    //}
 
-    // ----- INPUTS -----
-    #region Inputs
+    }
 
-    public void InputDirection(InputAction.CallbackContext context)
+        // ----- INPUTS -----
+        #region Inputs
+
+        public void InputDirection(InputAction.CallbackContext context)
     {
         if (context.performed) direction = context.ReadValue<Vector2>();
         else if (context.canceled) direction = Vector2.zero;
@@ -232,9 +232,7 @@ public class PlayerMouvement : MonoBehaviour
                 PlayerMouvement playerCollided = collision.transform.GetComponent<PlayerMouvement>();
                 if (velocityLastFrame.magnitude > playerCollided.velocityLastFrame.magnitude)
                 {
-                    print(velocityLastFrame.magnitude);
-                    print(gameObject.name);
-                    if(velocityLastFrame.magnitude >= strengthRequiredToBigImpact) 
+                    if(velocityLastFrame.magnitude >= strengthRequiredToImpact) 
                     BigImpactBetweenPlayers(playerCollided, collision.contacts[0]);
                 }
                     break;
@@ -306,8 +304,8 @@ public class PlayerMouvement : MonoBehaviour
         //{
         //    col.enabled = false;
         //}
-        Vector3 dir = (playerCollided.firstBone.position - firstBone.position).normalized;
-        rb.velocity = -dir;
+        Vector3 dir = (playerCollided.transform.position - transform.position).normalized;
+        rb.velocity = -dir*60;
         float strength = velocityLastFrame.magnitude;
         playerCollided.GetBigImpacted(dir, strength);
         foreach(ContactPointSurface point in connectedPoints)
@@ -326,14 +324,19 @@ public class PlayerMouvement : MonoBehaviour
                 break;
             }
         }
-        StartCoroutine(ImmunityStrongImpact());
-        Debug.DrawRay(firstBone.position, -dir * 2, Color.red);
-        Debug.DrawRay(playerCollided.firstBone.position, dir * strength * 2, Color.yellow);
+        bool isPowerfull = strength >= strengthRequiredToBigImpact;
+        StartCoroutine(StrongImpact(isPowerfull));
+        if (isPowerfull) {
+            float angleNormal = Mathf.Atan(contact.normal.y / contact.normal.x) * Mathf.Rad2Deg;
+
+            Instantiate(ChocParticles, contact.point, Quaternion.Euler(-angleNormal, 80, 0));
+                }
 
     }
 
     public void GetBigImpacted(Vector3 dir, float strength)
     {
+        
         rb.velocity = dir * strength * 2;
         rb.detectCollisions = false;
        
@@ -473,11 +476,17 @@ public class PlayerMouvement : MonoBehaviour
     #endregion
 
 
-    public IEnumerator ImmunityStrongImpact()
+    public IEnumerator StrongImpact(bool isPowerful)
     {
-        
-        yield return new WaitForSeconds(0.1f);
-
+        if (isPowerful)
+        {
+            float slowmo = 0.1f;
+            Time.timeScale = slowmo;
+            Time.fixedDeltaTime *= slowmo;
+            yield return new WaitForSeconds(0.05f);
+            Time.fixedDeltaTime /= slowmo;
+            Time.timeScale = 1;
+        }
 
         state = STATE.AIR;
         //GetComponent<Collider>().enabled = true;

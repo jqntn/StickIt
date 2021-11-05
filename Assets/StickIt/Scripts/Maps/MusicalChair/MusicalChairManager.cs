@@ -60,6 +60,7 @@ public class MusicalChairManager : Level
         inTransition = true;
         transition = transitionValue;
         maxChairsActive = _multiplayerManager.alivePlayers.Count - 1;
+        print(_multiplayerManager.alivePlayers.Count);
     }
     private void ChangeChairPool()
     {

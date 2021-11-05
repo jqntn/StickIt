@@ -900,12 +900,6 @@ MonoBehaviour:
   spaceBetweenDots: 0.01
   numberOfDots: 8
   maxSpeed: 100
-  animCurveJumpSpeed:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   minForceJumpMultiplicator: 0.2
   speedIncreaseForceJump: 10
   animCurveJumpGravity:
@@ -940,7 +934,10 @@ MonoBehaviour:
   maxNumberOfJumps: 1
   firstBone: {fileID: 0}
   collisionEffect: {fileID: 5841708613005531541, guid: 1b01c863f9f117c4bb49a34c08394ff4, type: 3}
-  strengthRequiredToBigImpact: 20
+  strengthRequiredToImpact: 70
+  strengthRequiredToBigImpact: 15
+  ChocParticles: {fileID: 8597058350541634597, guid: 97e8fd232753b2f458d475cb5677f886, type: 3}
+  connexions: 0
 --- !u!114 &4145983037377531704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1097,7 +1094,7 @@ MonoBehaviour:
   Spring: 500
   Damper: 0.5
   ColliderSizeRoot: 0.0011
-  ColliderSize: 0.0006
+  ColliderSize: 0.0004
   RigidbodyMass: 0.5
   PrefabLine: {fileID: 1666873409185668652, guid: c075358e34b312d47b1b3f9a3db0afe0, type: 3}
   ViewLines: 1
