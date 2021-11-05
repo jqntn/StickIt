@@ -28,7 +28,7 @@ public abstract class CameraState : MonoBehaviour
 
     [Header("----- End Animation -----")]
     public bool hasZoomOutAtEnd = true;
-    public bool hasCenterCamera = true;
+    public bool hasCenterMapCamera = true;
 
     [Header("----- Prototype -----")]
     public List<CameraData> datas = new List<CameraData>();
@@ -62,7 +62,11 @@ public abstract class CameraState : MonoBehaviour
     [SerializeField] protected float playersBounds_Y = 0.0f;
     [SerializeField] protected float min_playersBounds_X = 0.0f;
     [SerializeField] protected float max_playersBounds_X = 0.0f;
-    [SerializeField] protected bool hasZoom = false;
+
+    protected virtual void Awake()
+    {
+        GameEvents.OnSceneUnloaded.AddListener(ResetCamera);
+    }
     protected virtual void Start()
     {
         cam = Camera.main;
@@ -73,7 +77,7 @@ public abstract class CameraState : MonoBehaviour
             playerList = multiplayerManager.players;
         }
 
-        UpdateFrustrum();
+        UpdateFrustum();
 
         if (bounds == null)
         {
@@ -86,23 +90,11 @@ public abstract class CameraState : MonoBehaviour
         }
 
         // Search Max Zoom Out
-        if (autoMaxOut_Z)
-        {
-            float maxFrustumHeight = 0.0f;
-            if (bounds_X < bounds_Y)
-            {
-                float maxFrustumWidth = bounds_X;
-                maxFrustumHeight = maxFrustumWidth / cam.aspect;
-            }
-            else
-            {
-                maxFrustumHeight = bounds_Y;
-            }
+        SearchMaxOut_Z();
 
-            float distance = -maxFrustumHeight * 0.5f / Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
-            Debug.Log("Distance : " + distance);
-            maxOut_Z = distance;
-        }
+        if (SceneManager.GetActiveScene().name == "0_MenuSelection" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
+
+        ResetCamera();
     }
 
     protected virtual void UpdateBounds()
@@ -126,7 +118,7 @@ public abstract class CameraState : MonoBehaviour
         if (mapManager.isBusy) { return; }
         if (playerList.Count == 0) { return; }
 
-        UpdateFrustrum();
+        UpdateFrustum();
         UpdateMoveBounds();
         UpdatePlayersBounds();
     }
@@ -166,7 +158,7 @@ public abstract class CameraState : MonoBehaviour
         transform.parent.position = Vector3.SmoothDamp(transform.parent.position, newZoom, ref zoomVelocity, zoomTime);
     }
 
-    protected void UpdateFrustrum()
+    protected void UpdateFrustum()
     {
         float distance = -transform.parent.position.z;
         frustumHeight = 2.0f * distance * Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
@@ -233,16 +225,47 @@ public abstract class CameraState : MonoBehaviour
         }
     }
 
+    private void SearchMaxOut_Z()
+    {
+        // Search Max Zoom Out
+        if (autoMaxOut_Z)
+        {
+            float maxFrustumHeight = 0.0f;
+            if (bounds_X < bounds_Y)
+            {
+                float maxFrustumWidth = bounds_X;
+                maxFrustumHeight = maxFrustumWidth / cam.aspect;
+            }
+            else
+            {
+                maxFrustumHeight = bounds_Y;
+            }
+
+            float distance = -maxFrustumHeight * 0.5f / Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+            maxOut_Z = distance;
+        }
+    }
     #region Public Method
     public CameraType GetCameraType()
     {
         return type;
+    }
+
+    public void ResetCamera()
+    {
+        bounds = CameraBounds.Instance.GetComponent<Collider>();
+        UpdateFrustum();
+        UpdateBounds();
+        UpdateMoveBounds();
+        UpdatePlayersBounds();
+        SearchMaxOut_Z();
     }
     #endregion
 
     #region Debug
     protected virtual void OnDrawGizmosSelected()
     {
+        if(bounds == null) { return; }
         // Draw Camera Viewport
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(transform.parent.position, new Vector3(frustumWidth, frustumHeight, 1));

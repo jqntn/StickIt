@@ -10,7 +10,6 @@ public class CameraBarycenter : CameraState
         base.Update();
         if (canMove) { UpdateBarycenter(); }
         if (canZoom) { UpdateZoom(); }
-
     }
 
     private void UpdateBarycenter()

@@ -18,7 +18,6 @@ public class CameraSpeedRunner : CameraState
     [SerializeField] private float runTimer = 0.0f;
     [SerializeField] private float[] deathTimer = { 0.0f, 0.0f, 0.0f, 0.0f };
     [SerializeField] private bool hasTouchBorder = false;
-    [SerializeField] private bool onlyOnePlayerLeft = false;
     [SerializeField] private int deadPlayersCount = 0;
     [SerializeField] private int numberOfPlayers = 0;
 
@@ -126,11 +125,6 @@ public class CameraSpeedRunner : CameraState
                 deathTimer[i] = 0f;
             }
 
-            // If only one player left > Camera follow only player left
-            if (runnerManager.hasEndLevel)
-            {
-                onlyOnePlayerLeft = true;
-            }
             // Increment Death Timer Index
             i++;
         }
