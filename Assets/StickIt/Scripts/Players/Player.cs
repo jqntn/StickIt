@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using MoreMountains.Feedbacks;
-
+using UnityEngine;
 public class Player : MonoBehaviour
 {
     private MultiplayerManager _multiplayerManager;
@@ -14,83 +13,63 @@ public class Player : MonoBehaviour
     void Start()
     {
         _multiplayerManager = MultiplayerManager.instance;
-        if(TryGetComponent<PlayerMouvement>(out PlayerMouvement pm))
+        if (TryGetComponent<PlayerMouvement>(out PlayerMouvement pm))
         {
             myMouvementScript = pm;
             myMouvementScript.myPlayer = this;
         }
         DontDestroyOnLoad(this);
-
-        print(myDatas.deviceID);
     }
-
-    public void Death()
+    public void Death(bool intensityAnim = false)
     {
         isDead = true;
         myMouvementScript.enabled = false;
         _multiplayerManager.alivePlayers.Remove(this);
         _multiplayerManager.deadPlayers.Add(this);
-
         // Play Death Animation
-        StartCoroutine(OnDeath());
+        StartCoroutine(OnDeath(intensityAnim));
     }
-
-    public void PrepareToChangeLevel()
+    IEnumerator OnDeath(bool intensityAnim)
+    {
+        deathAnim.PlayFeedbacks();
+        if (intensityAnim) yield return new WaitForSeconds(deathAnim.TotalDuration);
+        myMouvementScript.Death();
+        GameObject obj = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Quaternion.identity);
+        obj.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
+        GameEvents.CameraShake_CEvent?.Invoke();
+        //
+        // ParticleSystem ps = obj.GetComponent<ParticleSystem>();
+        // ParticleSystem.Particle[] particles = new ParticleSystem.Particle[ps.particleCount];
+        // int length = ps.GetParticles(particles);
+        // for (int i = 0; i < length; i++)
+        // {
+        //     particles[i].position = Vector3.zero;
+        // }
+        //
+        MapManager.instance.EndLevel();
+    }
+    public void PrepareToChangeLevel() // When the player is still alive
     {
         if (!isDead)
         {
             myMouvementScript.enabled = false;
-            foreach(Collider col in GetComponentsInChildren<Collider>())
+            foreach (Collider col in GetComponentsInChildren<Collider>())
             {
                 col.enabled = false;
             }
-            foreach(Rigidbody rb in GetComponentsInChildren<Rigidbody>())
+            foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
             {
+                rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
                 rb.isKinematic = true;
             }
         }
-    }
-    IEnumerator OnDeath()
-    {
-        deathAnim.PlayFeedbacks();
-        yield return new WaitForSeconds(deathAnim.TotalDuration);
-        GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
-        GetComponentInChildren<Collider>().enabled = false;
-        GetComponentInChildren<Rigidbody>().isKinematic = true;
-        GameObject temp = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.rotation);
-        temp.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
-        GameEvents.CameraShake_CEvent?.Invoke();
-        yield return new WaitForSeconds(2.0f);
-        MapManager.instance.EndLevel();
     }
     public void Respawn()
     {
         myMouvementScript.enabled = true;
         myMouvementScript.Respawn();
-        if (isDead)
-        {
-            isDead = false;
-            
-            GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
-            GetComponentInChildren<Collider>().enabled = true;
-            Rigidbody rb = GetComponentInChildren<Rigidbody>();
-            rb.isKinematic = false;
-            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
-        }else
-        {
-            foreach (Collider col in GetComponentsInChildren<Collider>())
-            {
-                col.enabled = true;
-            }
-            foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
-            {
-                rb.isKinematic = false;
-            }
-        }
-
-
+        isDead = false;
     }
-
     public void QuitGame()
     {
         Debug.Log("Quit Application");
