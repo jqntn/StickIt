@@ -859,8 +859,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4145983037377531708}
   m_LocalRotation: {x: -0.00084251165, y: -0.703123, z: -0.0008521378, w: 0.71106726}
-  m_LocalPosition: {x: -4.0422215, y: -0.5155473, z: 0.90590096}
-  m_LocalScale: {x: 300, y: 300, z: 300}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 400, y: 400, z: 400}
   m_Children:
   - {fileID: 3588627512122107978}
   - {fileID: 4145983038473312006}
@@ -907,7 +907,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   minForceJumpMultiplicator: 0.2
-  speedIncreaseForceJump: 2
+  speedIncreaseForceJump: 10
   animCurveJumpGravity:
     serializedVersion: 2
     m_Curve:
@@ -938,7 +938,9 @@ MonoBehaviour:
   repulsionMultiplier: 0.01
   isSlippery: 1
   maxNumberOfJumps: 1
+  firstBone: {fileID: 0}
   collisionEffect: {fileID: 5841708613005531541, guid: 1b01c863f9f117c4bb49a34c08394ff4, type: 3}
+  strengthRequiredToBigImpact: 20
 --- !u!114 &4145983037377531704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1060,8 +1062,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.0011
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.0015
+  m_Center: {x: -4.272185e-14, y: -1.5897913e-15, z: 0.000040470564}
 --- !u!114 &1053407355108592945
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1095,7 +1097,7 @@ MonoBehaviour:
   Spring: 500
   Damper: 0.5
   ColliderSizeRoot: 0.0011
-  ColliderSize: 0.0003
+  ColliderSize: 0.0006
   RigidbodyMass: 0.5
   PrefabLine: {fileID: 1666873409185668652, guid: c075358e34b312d47b1b3f9a3db0afe0, type: 3}
   ViewLines: 1
