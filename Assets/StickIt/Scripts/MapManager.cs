@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-class MapManager : Unique<MapManager>
+public class MapManager : Unique<MapManager>
 {
     [Range(0, 1)]
     public float smoothTime;
@@ -25,23 +25,20 @@ class MapManager : Unique<MapManager>
     }
     public bool EndLevel()
     {
-        if (MultiplayerManager.instance.alivePlayers.Count == 1)
+        if (MultiplayerManager.instance.alivePlayers.Count <= 1)
         {
             NextMap();
             return true;
         }
-        else if (MultiplayerManager.instance.alivePlayers.Count <= 0)
-        {
-            NextMap();
-            return true;
-        }
+
         return false;
     }
     public bool NextMap(string nextMap = "", bool fromMenu = false)
     {
         foreach(Player player in MultiplayerManager.instance.players)
         {
-            player.PrepareToChangeLevel();        }
+            player.PrepareToChangeLevel();        
+        }
         if (_coroutine == null) _coroutine = StartCoroutine(Transition(nextMap, fromMenu));
         else return false;
         return true;
@@ -106,6 +103,8 @@ class MapManager : Unique<MapManager>
         }
         nextMapRoot.transform.position = Vector3.zero;
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        GameEvents.OnSceneUnloaded.Invoke();
+        yield return null;
         Time.timeScale = 1;
         timeScale = Time.timeScale;
         curMapRoot = nextMapRoot;
