@@ -24,12 +24,8 @@ public class PlayerMouvement : MonoBehaviour
     [Header("Movement")]     //-----------------------
     [Tooltip("Force maximale du jump, et clamp de la v�locit� maximale")]
     public float maxSpeed;
-    bool isAnimCurveSpeed;
     Vector3 addedVector;
     [Tooltip("% de la velocit� ajout�e au saut en fonction du temps, cette valeur doit finir � 1")]
-    [SerializeField] AnimationCurve animCurveJumpSpeed;
-    float t_speed;
-    float y_speed = 1;
     Vector2 direction;
     bool isChargingJump = false;
     [SerializeField]
@@ -53,15 +49,23 @@ public class PlayerMouvement : MonoBehaviour
     public int maxNumberOfJumps;
     private int currentNumberOfJumps;
 
+
     [Header("CollisionVariables")]
+    private SkinnedMeshRenderer mesh;
+    public Transform firstBone;
     public GameObject collisionEffect;
     [SerializeField] float strengthRequiredToBigImpact;
+
+    [Header("DEBUG")]
+    public int connexions;
 
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        mesh = GetComponentInChildren<SkinnedMeshRenderer>();
+        firstBone = transform.GetChild(1);
         dots = new Transform[numberOfDots];
         for (int i = 0; i < dots.Length; i++)
         {
@@ -96,10 +100,8 @@ public class PlayerMouvement : MonoBehaviour
             AnimCurveJumpGravity();
 
         }
-        if (isAnimCurveSpeed)
-        {
-            AnimCurveJumpSpeed();
-        }
+
+        connexions = connectedPoints.Count;
 
     }
 
@@ -180,12 +182,10 @@ public class PlayerMouvement : MonoBehaviour
             forceJumpMultiplicator = minForceJumpMultiplicator;
             isChargingJump = false;
             EnableDots(false);
-            isAnimCurveSpeed = true;
             hasJumped = true;
             t_jump = 0;
             y_jump = 0;
-            t_speed = 0;
-            y_speed = 0;
+
             addedVector = Vector3.zero;
 
             foreach(ContactPointSurface contact in connectedPoints)
@@ -201,9 +201,16 @@ public class PlayerMouvement : MonoBehaviour
     {
         forceJumpMultiplicator += Time.deltaTime * speedIncreaseForceJump;
         forceJumpMultiplicator = Mathf.Clamp(forceJumpMultiplicator, minForceJumpMultiplicator, 1);
-
+        print(speedIncreaseForceJump);
     }
 
+    void GetPossibleAngle()
+    {
+        foreach(ContactPointSurface point in connectedPoints)
+        {
+
+        }
+    }
 
     #endregion
 
@@ -225,6 +232,9 @@ public class PlayerMouvement : MonoBehaviour
                 PlayerMouvement playerCollided = collision.transform.GetComponent<PlayerMouvement>();
                 if (velocityLastFrame.magnitude > playerCollided.velocityLastFrame.magnitude)
                 {
+                    print(velocityLastFrame.magnitude);
+                    print(gameObject.name);
+                    if(velocityLastFrame.magnitude >= strengthRequiredToBigImpact) 
                     BigImpactBetweenPlayers(playerCollided, collision.contacts[0]);
                 }
                     break;
@@ -248,10 +258,7 @@ public class PlayerMouvement : MonoBehaviour
                 connectedPoints.Add(contact);
 
                 state = STATE.STICK;
-                isAnimCurveSpeed = false;
                 addedVector = Vector2.zero;
-                y_speed = 0;
-                t_speed = 0;
                 hasJumped = false;
                 #endregion
                 break;
@@ -293,20 +300,35 @@ public class PlayerMouvement : MonoBehaviour
 
     private void BigImpactBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact)
     {
-
-
-        Vector3 dir = (playerCollided.transform.position - transform.position).normalized;
+        rb.velocity = Vector3.zero;
+        //GetComponent<Collider>().enabled = false;
+        //foreach (Collider col in GetComponentsInChildren<Collider>())
+        //{
+        //    col.enabled = false;
+        //}
+        Vector3 dir = (playerCollided.firstBone.position - firstBone.position).normalized;
         rb.velocity = -dir;
-        GetComponent<Collider>().enabled = false;
-        foreach (Collider col in GetComponentsInChildren<Collider>())
-        {
-            col.enabled = false;
-        }
-
         float strength = velocityLastFrame.magnitude;
-        playerCollided.GetBigImpacted(dir, strength);   
-
+        playerCollided.GetBigImpacted(dir, strength);
+        foreach(ContactPointSurface point in connectedPoints)
+        {
+            if(point.transform == playerCollided.transform)
+            {
+                connectedPoints.Remove(point);
+                break;
+            }
+        }
+        foreach (ContactPointSurface point in playerCollided.connectedPoints)
+        {
+            if (point.transform == transform)
+            {
+                connectedPoints.Remove(point);
+                break;
+            }
+        }
         StartCoroutine(ImmunityStrongImpact());
+        Debug.DrawRay(firstBone.position, -dir * 2, Color.red);
+        Debug.DrawRay(playerCollided.firstBone.position, dir * strength * 2, Color.yellow);
 
     }
 
@@ -314,6 +336,7 @@ public class PlayerMouvement : MonoBehaviour
     {
         rb.velocity = dir * strength * 2;
         rb.detectCollisions = false;
+       
         StartCoroutine(DelayStrongImpacted());
     }
 
@@ -363,10 +386,7 @@ public class PlayerMouvement : MonoBehaviour
 
     public void Death()
     {
-        GetComponentInChildren<SkinnedMeshRenderer>().enabled = false;
-        
-       
-
+        mesh.enabled = false;
         foreach(Collider col in GetComponentsInChildren<Collider>())
         {
             col.enabled = false;
@@ -382,7 +402,7 @@ public class PlayerMouvement : MonoBehaviour
     {
         connectedPoints.Clear();
         state = STATE.AIR;
-        GetComponentInChildren<SkinnedMeshRenderer>().enabled = true;
+        mesh.enabled = true;
         GetComponent<Collider>().enabled = true;
         rb.isKinematic = false;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
@@ -450,21 +470,6 @@ public class PlayerMouvement : MonoBehaviour
 
         }
     }
-    void AnimCurveJumpSpeed()
-    {
-        /*if (t_speed < animCurveJumpSpeed.keys[animCurveJumpSpeed.length - 1].time)
-        {
-
-            t_speed += Time.deltaTime;
-            y_speed = t_speed;
-            y_speed = animCurveJumpSpeed.Evaluate(y_speed);
-        }
-        else
-        {
-
-            isAnimCurveSpeed = false;
-        }*/
-    }
     #endregion
 
 
@@ -473,13 +478,13 @@ public class PlayerMouvement : MonoBehaviour
         
         yield return new WaitForSeconds(0.1f);
 
-        connectedPoints.Clear();
+
         state = STATE.AIR;
-        GetComponent<Collider>().enabled = true;
-        foreach (Collider col in GetComponentsInChildren<Collider>())
-        {
-            col.enabled = true;
-        }
+        //GetComponent<Collider>().enabled = true;
+        //foreach (Collider col in GetComponentsInChildren<Collider>())
+        //{
+        //    col.enabled = true;
+        //}
 
 
         rb.isKinematic = false;
@@ -500,9 +505,26 @@ public class PlayerMouvement : MonoBehaviour
     {
 
         yield return new WaitForSeconds(0.1f);
-        connectedPoints.Clear();
+
         rb.detectCollisions = true;
     }
+
+}
+
+public class ContactPointSurface
+{
+    public Transform transform;
+    public Vector3 localPosition;
+    public float attractionStrength;
+
+    public ContactPointSurface(Transform transform, Vector3 position, float attractionStrength)
+    {
+        this.transform = transform;
+        this.localPosition = position;
+        this.attractionStrength = attractionStrength;
+    }
+
+    public ContactPointSurface() { }
 
 }
 

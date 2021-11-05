@@ -95,6 +95,9 @@ public class MultiplayerManager : MonoBehaviour
         if(!isMenuSelection)
         InitializePlayersWithoutMenuSelector(nbrOfPlayer);
 #endif
+
+
+        print(Gamepad.all.Count);
     }
 
 

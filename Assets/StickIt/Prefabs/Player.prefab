@@ -103,7 +103,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   minForceJumpMultiplicator: 0.2
-  speedIncreaseForceJump: 2
+  speedIncreaseForceJump: 50
   animCurveJumpGravity:
     serializedVersion: 2
     m_Curve:
@@ -143,6 +143,7 @@ MonoBehaviour:
   repulsionMultiplier: 0.01
   isSlippery: 1
   maxNumberOfJumps: 1
+  firstBone: {fileID: 0}
   collisionEffect: {fileID: 0}
   strengthRequiredToBigImpact: 30
 --- !u!114 &8854867468096441737
