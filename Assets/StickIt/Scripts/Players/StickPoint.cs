@@ -175,19 +175,4 @@ public class StickPoint : MonoBehaviour
     #endregion
 }
 
-public class ContactPointSurface
-{
-    public Transform transform;
-    public Vector3 localPosition;
-    public float attractionStrength;
 
-    public ContactPointSurface(Transform transform, Vector3 position, float attractionStrength)
-    {
-        this.transform = transform;
-        this.localPosition = position;
-        this.attractionStrength = attractionStrength;
-    }
-
-    public ContactPointSurface() { }
-
-}

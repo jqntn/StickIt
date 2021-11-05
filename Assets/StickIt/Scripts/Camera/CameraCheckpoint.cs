@@ -20,7 +20,7 @@ public class CameraCheckpoint : MonoBehaviour
         Player otherPlayer = other.GetComponentInParent<Player>();
         if(otherPlayer != null)
         {
-            _camera.SetCurrentFirst(otherPlayer);
+            //_camera.SetCurrentFirst(otherPlayer);
             hasEnclenched = true;
         }
     }

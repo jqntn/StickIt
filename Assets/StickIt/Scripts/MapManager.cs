@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-class MapManager : Unique<MapManager>
+public class MapManager : Unique<MapManager>
 {
     [Range(0, 1)]
     public float smoothTime;
@@ -25,12 +25,7 @@ class MapManager : Unique<MapManager>
     }
     public bool EndLevel()
     {
-        if (MultiplayerManager.instance.alivePlayers.Count == 1)
-        {
-            NextMap();
-            return true;
-        }
-        else if (MultiplayerManager.instance.alivePlayers.Count <= 0)
+        if (MultiplayerManager.instance.alivePlayers.Count <= 1)
         {
             NextMap();
             return true;
@@ -39,10 +34,8 @@ class MapManager : Unique<MapManager>
     }
     public bool NextMap(string nextMap = "", bool fromMenu = false)
     {
-        foreach(Player player in MultiplayerManager.instance.players)
-        {
-            player.PrepareToChangeLevel();        }
-        if (_coroutine == null) _coroutine = StartCoroutine(Transition(nextMap, fromMenu));
+        foreach (Player player in MultiplayerManager.instance.players) player.PrepareToChangeLevel();
+        if (_coroutine == null) _coroutine = StartCoroutine(BeginTransition(nextMap, fromMenu));
         else return false;
         return true;
     }
@@ -66,14 +59,13 @@ class MapManager : Unique<MapManager>
         curMap = map;
         return map;
     }
-    IEnumerator Transition(string nextMap, bool fromMenu)
+    IEnumerator BeginTransition(string nextMap, bool fromMenu)
     {
         isBusy = true;
         if (nextMap == "") nextMap = SelectNextMap();
         Time.timeScale = .5f;
         timeScale = Time.timeScale;
         if (curMapRoot == null) curMapRoot = GameObject.Find("MapRoot");
-        Vector3 v0 = Vector3.zero, v1 = Vector3.zero, d0 = Vector3.one, d1 = Vector3.one;
         AsyncOperation asyncOp = SceneManager.LoadSceneAsync(nextMap, LoadSceneMode.Additive);
         asyncOp.allowSceneActivation = false;
         float timeToLoad = 0;
@@ -90,10 +82,15 @@ class MapManager : Unique<MapManager>
         var objs = GameObject.FindGameObjectsWithTag("MapRoot");
         nextMapRoot = objs[objs.Length - 1];
         nextMapRoot.transform.position = new Vector3(mapOffset, 0);
+        var tmp = GameObject.FindGameObjectsWithTag("StartPos");
+        tmp[tmp.Length - 1].transform.position = Vector3.zero;
         // MultiplayerManager.StartChangeMap
         MultiplayerManager.instance.speedChangeMap = 1 / slowTime;
         MultiplayerManager.instance.StartChangeMap();
-        //
+    }
+    public IEnumerator EndTransition()
+    {
+        Vector3 v0 = Vector3.zero, v1 = Vector3.zero, d0 = Vector3.one, d1 = Vector3.one;
         Time.timeScale = 0;
         timeScale = Time.timeScale;
         while (d0.sqrMagnitude > smoothMOE && d1.sqrMagnitude > smoothMOE)
@@ -106,6 +103,8 @@ class MapManager : Unique<MapManager>
         }
         nextMapRoot.transform.position = Vector3.zero;
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        GameEvents.OnSceneUnloaded.Invoke();
+        yield return null;
         Time.timeScale = 1;
         timeScale = Time.timeScale;
         curMapRoot = nextMapRoot;

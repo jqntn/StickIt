@@ -52,7 +52,7 @@ public class Player2 : MonoBehaviour
         GameObject temp = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), transform.rotation);
         temp.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
         yield return null;
-        GameEvents.CameraShake_CEvent?.Invoke();
+        GameEvents.CameraShake_CEvent?.Invoke(2.0f);
 
     }
     public void Respawn()
