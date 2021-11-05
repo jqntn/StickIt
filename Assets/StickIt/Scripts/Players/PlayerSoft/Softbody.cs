@@ -19,7 +19,7 @@ public static class Softbody
     public static bool ViewLines;
     public static SoftJointLimitSpring limitSpring;
 
-    public static P_Mouvement2 plm;
+   // public static P_Mouvement2 plm;
 
     public static void Init(float collidersize, float rigidbodymass, float spring, float damper, RigidbodyConstraints constraints, PhysicMaterial mat)
     {
