@@ -79,6 +79,8 @@ public class MapManager : Unique<MapManager>
             }
             yield return null;
         }
+        Time.timeScale = 0;
+        timeScale = Time.timeScale;
         var objs = GameObject.FindGameObjectsWithTag("MapRoot");
         nextMapRoot = objs[objs.Length - 1];
         nextMapRoot.transform.position = new Vector3(mapOffset, 0);
@@ -91,8 +93,6 @@ public class MapManager : Unique<MapManager>
     public IEnumerator EndTransition()
     {
         Vector3 v0 = Vector3.zero, v1 = Vector3.zero, d0 = Vector3.one, d1 = Vector3.one;
-        Time.timeScale = 0;
-        timeScale = Time.timeScale;
         while (d0.sqrMagnitude > smoothMOE && d1.sqrMagnitude > smoothMOE)
         {
             curMapRoot.transform.position = Vector3.SmoothDamp(curMapRoot.transform.position, new Vector3(-mapOffset, 0), ref v0, smoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
