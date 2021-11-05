@@ -1095,7 +1095,7 @@ GameObject:
   - component: {fileID: 599922464}
   - component: {fileID: 599922466}
   m_Layer: 0
-  m_Name: Camera FollowFirst
+  m_Name: Camera State FollowFirst
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1129,19 +1129,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 1
   bounds: {fileID: 0}
-  animTime: 0.5
   canMove: 1
+  moveTime: 0.5
   freezeX: 0
   freezeY: 0
   canZoom: 1
+  zoomTime: 0.5
+  autoMaxOut_Z: 0
   maxOut_Z: -110
   maxIn_Z: -70
   zoomOutMargin: -5
-  zoomInMargin: -10
+  zoomInMargin: 10
   zoomOutValue: 20
   zoomInValue: 10
-  zoomOut_Margin: 5
-  zoomIn_Margin: 10
   hasZoomOutAtEnd: 1
   hasCenterCamera: 1
   datas: []
@@ -1150,7 +1150,8 @@ MonoBehaviour:
   multiplayerManager: {fileID: 0}
   playerList: []
   positionToGoTo: {x: 0, y: 0, z: 0}
-  velocity: {x: 0, y: 0, z: 0}
+  moveVelocity: {x: 0, y: 0, z: 0}
+  zoomVelocity: {x: 0, y: 0, z: 0}
   barycenter: {x: 0, y: 0, z: 0}
   bounds_X: 0
   bounds_Y: 0
@@ -1229,6 +1230,91 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2ee1942826cebe4183a8eff1e05dbaa, type: 3}
+--- !u!1 &763934882
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 763934883}
+  - component: {fileID: 763934884}
+  m_Layer: 0
+  m_Name: Camera State Static
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &763934883
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763934882}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1502935009}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &763934884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 763934882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8fbccf2c9f6ee1a4a916c214258132d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  bounds: {fileID: 0}
+  canMove: 1
+  moveTime: 0.5
+  freezeX: 0
+  freezeY: 0
+  canZoom: 1
+  zoomTime: 1
+  autoMaxOut_Z: 0
+  maxOut_Z: -110
+  maxIn_Z: -70
+  zoomOutMargin: 1
+  zoomInMargin: 3
+  zoomOutValue: -10
+  zoomInValue: 10
+  hasZoomOutAtEnd: 1
+  hasCenterCamera: 1
+  datas: []
+  cam: {fileID: 0}
+  mapManager: {fileID: 0}
+  multiplayerManager: {fileID: 0}
+  playerList: []
+  positionToGoTo: {x: 0, y: 0, z: 0}
+  moveVelocity: {x: 0, y: 0, z: 0}
+  zoomVelocity: {x: 0, y: 0, z: 0}
+  barycenter: {x: 0, y: 0, z: 0}
+  bounds_X: 0
+  bounds_Y: 0
+  min_bounds_X: 0
+  max_bounds_X: 0
+  min_bounds_Y: 0
+  max_bounds_Y: 0
+  frustumHeight: 0
+  frustumWidth: 0
+  min_viewport_X: 0
+  max_viewport_X: 0
+  min_viewport_Y: 0
+  max_viewport_Y: 0
+  playersBounds_X: 0
+  playersBounds_Y: 0
+  min_playersBounds_X: 0
+  max_playersBounds_X: 0
 --- !u!1 &838287261
 GameObject:
   m_ObjectHideFlags: 0
@@ -1304,7 +1390,7 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 40.6, y: 16.5, z: 1}
+  m_Size: {x: 40, y: 16, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &899214363
 Transform:
@@ -1410,7 +1496,7 @@ GameObject:
   - component: {fileID: 956793740}
   - component: {fileID: 956793742}
   m_Layer: 0
-  m_Name: Camera SpeedRunner
+  m_Name: Camera State SpeedRunner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1444,19 +1530,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 2
   bounds: {fileID: 0}
-  animTime: 0.5
   canMove: 1
+  moveTime: 0.5
   freezeX: 0
   freezeY: 0
   canZoom: 1
+  zoomTime: 0.5
+  autoMaxOut_Z: 0
   maxOut_Z: -110
   maxIn_Z: -70
   zoomOutMargin: -5
-  zoomInMargin: -10
+  zoomInMargin: 10
   zoomOutValue: 20
   zoomInValue: 10
-  zoomOut_Margin: 5
-  zoomIn_Margin: 10
   hasZoomOutAtEnd: 1
   hasCenterCamera: 1
   datas: []
@@ -1465,7 +1551,8 @@ MonoBehaviour:
   multiplayerManager: {fileID: 0}
   playerList: []
   positionToGoTo: {x: 0, y: 0, z: 0}
-  velocity: {x: 0, y: 0, z: 0}
+  moveVelocity: {x: 0, y: 0, z: 0}
+  zoomVelocity: {x: 0, y: 0, z: 0}
   barycenter: {x: 0, y: 0, z: 0}
   bounds_X: 0
   bounds_Y: 0
@@ -2000,7 +2087,7 @@ GameObject:
   - component: {fileID: 1540560965}
   - component: {fileID: 1540560966}
   m_Layer: 0
-  m_Name: Camera Barycenter
+  m_Name: Camera State Barycenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2034,19 +2121,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   type: 0
   bounds: {fileID: 899214362}
-  animTime: 0.5
   canMove: 1
+  moveTime: 0.5
   freezeX: 0
   freezeY: 0
   canZoom: 1
-  maxOut_Z: -110
+  zoomTime: 0.5
+  autoMaxOut_Z: 1
+  maxOut_Z: -300
   maxIn_Z: -70
-  zoomOutMargin: -5
-  zoomInMargin: -12
-  zoomOutValue: -20
+  zoomOutMargin: 1
+  zoomInMargin: 3
+  zoomOutValue: -10
   zoomInValue: 10
-  zoomOut_Margin: 1
-  zoomIn_Margin: 5
   hasZoomOutAtEnd: 1
   hasCenterCamera: 1
   datas: []
@@ -2055,7 +2142,8 @@ MonoBehaviour:
   multiplayerManager: {fileID: 0}
   playerList: []
   positionToGoTo: {x: 0, y: 0, z: 0}
-  velocity: {x: 0, y: 0, z: 0}
+  moveVelocity: {x: 0, y: 0, z: 0}
+  zoomVelocity: {x: 0, y: 0, z: 0}
   barycenter: {x: 0, y: 0, z: 0}
   bounds_X: 0
   bounds_Y: 0
@@ -2082,7 +2170,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 9077988289994645689, guid: 9eb730b0588a2b24f8476f7a876a2272, type: 3}
       propertyPath: Feedbacks.Array.size
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 9077988289994645689, guid: 9eb730b0588a2b24f8476f7a876a2272, type: 3}
       propertyPath: Feedbacks.Array.data[9]

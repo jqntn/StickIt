@@ -9,6 +9,7 @@ public class CameraBarycenter : CameraState
     {
         base.Update();
         if (canMove) { UpdateBarycenter(); }
+        if (canZoom) { UpdateZoom(); }
 
     }
 
@@ -34,8 +35,8 @@ public class CameraBarycenter : CameraState
         }
 
         // Clamp Value into bounds
-        float newPos_X = Mathf.Clamp(base.barycenter.x, min_bounds_X, max_bounds_X);
-        float newPos_Y = Mathf.Clamp(base.barycenter.y, min_bounds_Y, max_bounds_Y);
+        float newPos_X = Mathf.Clamp(base.barycenter.x, min_moveBounds_X, max_moveBounds_X);
+        float newPos_Y = Mathf.Clamp(base.barycenter.y, min_moveBounds_Y, max_moveBounds_Y);
 
         // Update Position to Go To
         positionToGoTo = new Vector3(
