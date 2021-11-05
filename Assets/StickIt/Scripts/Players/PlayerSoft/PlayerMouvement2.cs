@@ -371,7 +371,6 @@ public class PlayerMouvement2 : MonoBehaviour
                         }
                     }
                 }
-
             }
 
 

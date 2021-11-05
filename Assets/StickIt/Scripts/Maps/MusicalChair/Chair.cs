@@ -11,7 +11,7 @@ public class Chair : MonoBehaviour
     public Player chosenOne;
     [Header("Settings")]
     public float offsetSpawn;
-    public float duration;
+    float duration;
     public AnimationCurve animCurve;
     [HideInInspector]
     public bool isActive;
@@ -25,13 +25,17 @@ public class Chair : MonoBehaviour
     void Start()
     {
         musicalChairManager = FindObjectOfType<MusicalChairManager>();
+        duration = musicalChairManager.durationSpawn;
         spawnPosition = transform.position + transform.up * offsetSpawn;
         originalPos = transform.position;
-        
     }
 
     // Update is called once per frame
     void Update()
+    {
+        TestPlayer();
+    }
+    void TestPlayer()
     {
         if (isActive)
         {
@@ -48,21 +52,20 @@ public class Chair : MonoBehaviour
         {
             gameObject.GetComponent<MeshRenderer>().material.color = musicalChairManager.colorChairTaken;
         }
-        else if(!isTaken && isActive)
+        else if (!isTaken && isActive)
         {
             gameObject.GetComponent<MeshRenderer>().material.color = activatedColor;
-        }else if(!isTaken && !isActive)
+        }
+        else if (!isTaken && !isActive)
         {
             gameObject.GetComponent<MeshRenderer>().material.color = deactivatedColor;
         }
     }
-
     public void ActivateChair(Color c)
     {
         activatedColor = c;
-        SpawnChair();
+        SpawnChair(c);
         isActive = true;
-        gameObject.GetComponent<MeshRenderer>().material.color = c;
     }
     public void DeactivateChair(Color c)
     {
@@ -91,15 +94,15 @@ public class Chair : MonoBehaviour
             DespawnChair();
         }
     }
-    void SpawnChair() 
+    void SpawnChair(Color c) 
     {
-        StartCoroutine(SpawnChairCor());
+        StartCoroutine(SpawnChairCor(c));
     }
     void DespawnChair()
     {
         StartCoroutine(DespawnChairCor());
     }
-    IEnumerator SpawnChairCor() 
+    IEnumerator SpawnChairCor(Color c)
     {
         float elapsed = 0;
         float ratio = 0;
@@ -111,6 +114,7 @@ public class Chair : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
+        gameObject.GetComponent<MeshRenderer>().material.color = c;
     }
     IEnumerator DespawnChairCor()
     {
