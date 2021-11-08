@@ -15,17 +15,21 @@ public class OurSphereSoftEditor : Editor
         }
         var sphereSoft = target as OurSphereSoft;
         var serializedObject = new SerializedObject(target);
-        /*var property = serializedObject.FindProperty("bones");
+        var property = serializedObject.FindProperty("bones");
         GUILayout.Label("\nBones");
-        sphereSoft.root = (GameObject)EditorGUILayout.ObjectField("Root  ", sphereSoft.root, typeof(GameObject), allowSceneObjects: true);
-        EditorGUILayout.PropertyField(property, true);*/
+       // sphereSoft.root = (GameObject)EditorGUILayout.ObjectField("Root  ", sphereSoft.root, typeof(GameObject), allowSceneObjects: true);
+        EditorGUILayout.PropertyField(property, true);
         sphereSoft.matBones = (PhysicMaterial)EditorGUILayout.ObjectField("Material Bones  ", sphereSoft.matBones, typeof(PhysicMaterial), allowSceneObjects: true);
+
+
         GUILayout.Label("\nColliders settings");
         sphereSoft.ColliderSizeRoot = EditorGUILayout.IntSlider("Size collider root", sphereSoft.ColliderSizeRoot, 8 , 15);
-        sphereSoft.collSizeRoot = sphereSoft.ColliderSizeRoot / 10000f;
         sphereSoft.ColliderSize = EditorGUILayout.IntSlider("Size collider bones", sphereSoft.ColliderSize, 1, 7);
+        sphereSoft.collSizeRoot = sphereSoft.ColliderSizeRoot / 10000f;
         sphereSoft.collSizeBones = sphereSoft.ColliderSize / 10000f;
-        sphereSoft.RigidbodyMass = EditorGUILayout.FloatField("Mass of the Rigidbody", sphereSoft.RigidbodyMass);
+        sphereSoft.RigidbodyMass = EditorGUILayout.FloatField("Mass of the each bone's rigibody", sphereSoft.RigidbodyMass);
+
+
         GUILayout.Label("\nJoints Settings");
         sphereSoft.ConfigurableJoint = EditorGUILayout.Toggle("Configurable Joint ?", sphereSoft.ConfigurableJoint);
         if (sphereSoft.ConfigurableJoint)

@@ -199,7 +199,7 @@ public class PlayerMouvement : MonoBehaviour
     {
         forceJumpMultiplicator += Time.deltaTime * speedIncreaseForceJump;
         forceJumpMultiplicator = Mathf.Clamp(forceJumpMultiplicator, minForceJumpMultiplicator, 1);
-        print(speedIncreaseForceJump);
+        //print(speedIncreaseForceJump);
     }
 
     void GetPossibleAngle()

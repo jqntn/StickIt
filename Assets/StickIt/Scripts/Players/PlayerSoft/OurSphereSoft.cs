@@ -5,7 +5,7 @@ public class OurSphereSoft : MonoBehaviour
 
     [Header("Bones")]
     GameObject root = null;
-    GameObject[] bones;
+    public GameObject[] bones;
     public PhysicMaterial matBones;
     [Header("Spring Joint Settings")]
     public bool ConfigurableJoint;
@@ -28,7 +28,10 @@ public class OurSphereSoft : MonoBehaviour
 
     private void Awake()
     {
-        Softbody.Init(ColliderSize, RigidbodyMass, Spring, Damper, RigidbodyConstraints.FreezeRotation |RigidbodyConstraints.FreezePositionZ , PrefabLine, ViewLines, matBones);
+        root = this.gameObject;
+        root.GetComponent<SphereCollider>().radius = collSizeRoot;
+        Softbody.Init(collSizeBones, RigidbodyMass, Spring, Damper, RigidbodyConstraints.FreezeRotation |RigidbodyConstraints.FreezePositionZ , PrefabLine, ViewLines, matBones);
+
         for (int i = 0; i < bones.Length; i++)
         {
             Softbody.AddCollider(ref bones[i]);
