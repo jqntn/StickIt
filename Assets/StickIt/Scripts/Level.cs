@@ -6,24 +6,19 @@ public class Level : MonoBehaviour
 {
     // Start is called before the first frame update
 
-    protected GameManager _gameManager;
-    protected MultiplayerManager _multiplayerManager;
     public List<Player> winners;
     public Transform startingPos;
 
     void Start()
     {
-        StartMap();
+        Init();
     }
 
-    protected virtual void StartMap()
+    public virtual void Init()
     {
-        _multiplayerManager = MultiplayerManager.instance;
-
-        _gameManager = GameManager.instance;
     }
 
-    protected virtual void EndMap()
+    public virtual void EndMap()
     {
         Debug.Log("End Map");
     }

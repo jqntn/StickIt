@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
         }
         DontDestroyOnLoad(this);
     }
-    public void Death(bool intensityAnim = true)
+    public void Death(bool intensityAnim = false)
     {
         isDead = true;
         myMouvementScript.enabled = false;
@@ -33,8 +33,7 @@ public class Player : MonoBehaviour
     {
         deathAnim.PlayFeedbacks();
 
-        //if (intensityAnim) yield return new WaitForSeconds(deathAnim.TotalDuration);
-        yield return new WaitForSeconds(deathAnim.TotalDuration / deathAnim.DurationMultiplier);
+        if (intensityAnim) yield return new WaitForSeconds(deathAnim.TotalDuration / deathAnim.DurationMultiplier);
         myMouvementScript.Death();
         GameObject obj = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Quaternion.identity);
         obj.GetComponent<ParticleSystemRenderer>().material = myDatas.material;

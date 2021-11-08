@@ -48,7 +48,7 @@ public class PlayerMouvement : MonoBehaviour
 
     public int maxNumberOfJumps;
     private int currentNumberOfJumps;
-
+    Vector3 scal; 
 
     [Header("CollisionVariables")]
     private SkinnedMeshRenderer mesh;
@@ -59,10 +59,9 @@ public class PlayerMouvement : MonoBehaviour
     [Header("DEBUG")]
     public int connexions;
 
-
-    // Start is called before the first frame update
     void Start()
     {
+        scal = transform.localScale;
         rb = GetComponent<Rigidbody>();
         mesh = GetComponentInChildren<SkinnedMeshRenderer>();
         firstBone = transform.GetChild(1);
@@ -77,7 +76,6 @@ public class PlayerMouvement : MonoBehaviour
         currentNumberOfJumps = maxNumberOfJumps;
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -201,7 +199,7 @@ public class PlayerMouvement : MonoBehaviour
     {
         forceJumpMultiplicator += Time.deltaTime * speedIncreaseForceJump;
         forceJumpMultiplicator = Mathf.Clamp(forceJumpMultiplicator, minForceJumpMultiplicator, 1);
-        print(speedIncreaseForceJump);
+        //print(speedIncreaseForceJump);
     }
 
     void GetPossibleAngle()
@@ -401,6 +399,7 @@ public class PlayerMouvement : MonoBehaviour
     public void Respawn()
     {
         connectedPoints.Clear();
+        transform.localScale = scal;
         state = STATE.AIR;
         mesh.enabled = true;
         GetComponent<Collider>().enabled = true;
