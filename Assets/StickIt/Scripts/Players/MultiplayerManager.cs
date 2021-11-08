@@ -114,22 +114,23 @@ public class MultiplayerManager : MonoBehaviour
             newPlayer.transform.position = playersStartingPos.GetChild(i).position;
         }
     }
-    public void StartChangeMap()
+    public void StartChangeMap(Transform nextStartPos)
     {
+        playersStartingPos = nextStartPos;
         // Disable the players
         foreach (Player player in players)
         {
             player.PrepareToChangeLevel();
         }
         // Prepare to lerp Players
-        foreach (Transform child in MapManager.instance.nextMapRoot.transform)
-        {
-            if (child.GetComponent<PlayerStartingPos>())
-            {
-                playersStartingPos = child;
-                break;
-            }
-        }
+        // foreach (Transform child in MapManager.instance.nextMapRoot.transform)
+        // {
+        //     if (child.GetComponent<PlayerStartingPos>())
+        //     {
+        //         playersStartingPos = child;
+        //         break;
+        //     }
+        // }
         initPosX = new float[players.Count];
         initPosY = new float[players.Count];
         for (int i = 0; i < players.Count; i++)
@@ -165,6 +166,7 @@ public class MultiplayerManager : MonoBehaviour
         alivePlayers = new List<Player>(players);
         deadPlayers.Clear();
         RespawnPlayers();
+        StartCoroutine(MapManager.instance.EndTransition());
     }
     public void RespawnPlayers()
     {
@@ -172,6 +174,5 @@ public class MultiplayerManager : MonoBehaviour
         {
             players[i].Respawn();
         }
-        StartCoroutine(MapManager.instance.EndTransition());
     }
 }
