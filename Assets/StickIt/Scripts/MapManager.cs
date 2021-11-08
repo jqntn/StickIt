@@ -87,6 +87,8 @@ public class MapManager : Unique<MapManager>
         var nextStartPos = GameObject.FindGameObjectsWithTag("StartPos");
         MultiplayerManager.instance.speedChangeMap = 1 / slowTime;
         MultiplayerManager.instance.StartChangeMap(nextStartPos[nextStartPos.Length - 1].transform);
+        while (MultiplayerManager.instance.isChangingMap) yield return null;
+        StartCoroutine(EndTransition());
     }
     public IEnumerator EndTransition()
     {
