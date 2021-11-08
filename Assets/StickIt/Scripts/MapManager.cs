@@ -84,11 +84,11 @@ public class MapManager : Unique<MapManager>
         var objs = GameObject.FindGameObjectsWithTag("MapRoot");
         nextMapRoot = objs[objs.Length - 1];
         nextMapRoot.transform.position = new Vector3(mapOffset, 0);
-        var tmp = GameObject.FindGameObjectsWithTag("StartPos");
-        tmp[tmp.Length - 1].transform.position = Vector3.zero;
-        // MultiplayerManager.StartChangeMap
+        var nextStartPos = GameObject.FindGameObjectsWithTag("StartPos");
         MultiplayerManager.instance.speedChangeMap = 1 / slowTime;
-        MultiplayerManager.instance.StartChangeMap();
+        MultiplayerManager.instance.StartChangeMap(nextStartPos[nextStartPos.Length - 1].transform);
+        while (MultiplayerManager.instance.isChangingMap) yield return null;
+        StartCoroutine(EndTransition());
     }
     public IEnumerator EndTransition()
     {

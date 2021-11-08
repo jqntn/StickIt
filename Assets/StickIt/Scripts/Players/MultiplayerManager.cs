@@ -49,7 +49,7 @@ public class MultiplayerManager : MonoBehaviour
     private float y = 0f;
     private float[] initPosX;
     private float[] initPosY;
-    private bool isChangingMap = false;
+    public bool isChangingMap = false;
     int nbrDevicesLastFrame = 0;
 #if UNITY_EDITOR
     [SerializeField] public bool isMenuSelection = false; // should be private
@@ -112,21 +112,13 @@ public class MultiplayerManager : MonoBehaviour
             newPlayer.transform.position = playersStartingPos.GetChild(i).position;
         }
     }
-    public void StartChangeMap()
+    public void StartChangeMap(Transform nextStartPos)
     {
+        playersStartingPos = nextStartPos;
         // Disable the players
         foreach (Player player in players)
         {
             player.PrepareToChangeLevel();
-        }
-        // Prepare to lerp Players
-        foreach (Transform child in MapManager.instance.nextMapRoot.transform)
-        {
-            if (child.GetComponent<PlayerStartingPos>())
-            {
-                playersStartingPos = child;
-                break;
-            }
         }
         initPosX = new float[players.Count];
         initPosY = new float[players.Count];
@@ -171,6 +163,5 @@ public class MultiplayerManager : MonoBehaviour
             players[i].Respawn();
             print("Respawn");
         }
-        StartCoroutine(MapManager.instance.EndTransition());
     }
 }
