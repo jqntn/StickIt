@@ -49,7 +49,7 @@ public class MultiplayerManager : MonoBehaviour
     private float y = 0f;
     private float[] initPosX;
     private float[] initPosY;
-    private bool isChangingMap = false;
+    public bool isChangingMap = false;
     int nbrDevicesLastFrame = 0;
 #if UNITY_EDITOR
     [SerializeField] public bool isMenuSelection = false; // should be private
@@ -120,15 +120,6 @@ public class MultiplayerManager : MonoBehaviour
         {
             player.PrepareToChangeLevel();
         }
-        // Prepare to lerp Players
-        // foreach (Transform child in MapManager.instance.nextMapRoot.transform)
-        // {
-        //     if (child.GetComponent<PlayerStartingPos>())
-        //     {
-        //         playersStartingPos = child;
-        //         break;
-        //     }
-        // }
         initPosX = new float[players.Count];
         initPosY = new float[players.Count];
         for (int i = 0; i < players.Count; i++)
@@ -164,7 +155,6 @@ public class MultiplayerManager : MonoBehaviour
         alivePlayers = new List<Player>(players);
         deadPlayers.Clear();
         RespawnPlayers();
-        StartCoroutine(MapManager.instance.EndTransition());
     }
     public void RespawnPlayers()
     {
