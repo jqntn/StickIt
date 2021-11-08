@@ -4,8 +4,8 @@ public class OurSphereSoft : MonoBehaviour
 {
 
     [Header("Bones")]
-    public GameObject root = null;
-    public GameObject[] bones;
+    GameObject root = null;
+    GameObject[] bones;
     public PhysicMaterial matBones;
     [Header("Spring Joint Settings")]
     public bool ConfigurableJoint;
@@ -14,8 +14,12 @@ public class OurSphereSoft : MonoBehaviour
     [Tooltip("Higher the value the faster the spring oscillation stops")]
     public float Damper = 0.2f;
     [Header("Other Settings")]
-    public float ColliderSizeRoot = 0.0003f;
-    public float ColliderSize = 0.0003f;
+    public int ColliderSizeRoot;
+    [HideInInspector]
+    public float collSizeRoot;
+    public int ColliderSize;
+    [HideInInspector]
+    public float collSizeBones;
     public float RigidbodyMass = 1f;
     public LineRenderer PrefabLine = null;
     public bool ViewLines = false;
