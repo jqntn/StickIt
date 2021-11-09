@@ -588,6 +588,7 @@ GameObject:
   m_Component:
   - component: {fileID: 477383130934292850}
   - component: {fileID: 477383130934292853}
+  - component: {fileID: 958254459}
   m_Layer: 0
   m_Name: MAP_CHAIRMUSIC_01
   m_TagString: Untagged
@@ -635,16 +636,62 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   winners: []
   startingPos: {fileID: 0}
-  durationValue: 10
-  transitionValue: 2
+  durationValue: 8
+  transitionValue: 5
   colorTextTransition: {r: 0.7169812, g: 0, b: 0, a: 1}
   colorTextRound: {r: 1, g: 1, b: 1, a: 1}
   countdown: {fileID: 477383131831954860}
   chairs: []
   colorChairActive: {r: 0, g: 0.6132076, b: 0.13071223, a: 1}
   colorChairInactive: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
+  durationSpawn: 2
   colorChairTaken: {r: 0.11894804, g: 0.5309555, b: 0.764151, a: 1}
   winTxt: {fileID: 0}
+  spawnFeedback: {fileID: 0}
+--- !u!114 &958254459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477383130934292851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 841b72de2996c5c40bfb394f3d0e0a98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Feedbacks: []
+  InitializationMode: 2
+  SafeMode: 3
+  Direction: 0
+  AutoChangeDirectionOnEnd: 0
+  AutoPlayOnStart: 0
+  AutoPlayOnEnable: 0
+  DurationMultiplier: 1
+  DisplayFullDurationDetails: 0
+  CooldownDuration: 0
+  InitialDelay: 0
+  CanPlayWhileAlreadyPlaying: 1
+  FeedbacksIntensity: 1
+  Events:
+    TriggerMMFeedbacksEvents: 0
+    TriggerUnityEvents: 1
+    OnPlay:
+      m_PersistentCalls:
+        m_Calls: []
+    OnPause:
+      m_PersistentCalls:
+        m_Calls: []
+    OnResume:
+      m_PersistentCalls:
+        m_Calls: []
+    OnRevert:
+      m_PersistentCalls:
+        m_Calls: []
+    OnComplete:
+      m_PersistentCalls:
+        m_Calls: []
+  DebugActive: 0
 --- !u!1 &477383131124566593
 GameObject:
   m_ObjectHideFlags: 0

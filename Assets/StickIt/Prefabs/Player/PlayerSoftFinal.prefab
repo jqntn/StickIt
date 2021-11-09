@@ -365,7 +365,7 @@ MonoBehaviour:
   AnimateScaleTarget: {fileID: 4145983037377531711}
   AnimateScaleDuration: 1
   RemapCurveZero: 0
-  RemapCurveOne: 150
+  RemapCurveOne: 300
   Offset: 0
   AnimateX: 1
   AnimateScaleX:
@@ -899,7 +899,7 @@ MonoBehaviour:
   dotPreview: {fileID: 1563193181262515494, guid: d0c611942a4ded548aac09b0447276da, type: 3}
   spaceBetweenDots: 0.01
   numberOfDots: 8
-  maxSpeed: 100
+  maxSpeed: 70
   minForceJumpMultiplicator: 0.2
   speedIncreaseForceJump: 10
   animCurveJumpGravity:
@@ -934,9 +934,7 @@ MonoBehaviour:
   maxNumberOfJumps: 1
   firstBone: {fileID: 0}
   collisionEffect: {fileID: 5841708613005531541, guid: 1b01c863f9f117c4bb49a34c08394ff4, type: 3}
-  strengthRequiredToImpact: 70
-  strengthRequiredToBigImpact: 15
-  ChocParticles: {fileID: 8597058350541634597, guid: 97e8fd232753b2f458d475cb5677f886, type: 3}
+  strengthRequiredToBigImpact: 20
   connexions: 0
 --- !u!114 &4145983037377531704
 MonoBehaviour:
@@ -1073,7 +1071,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26b225e695aca674fab9fa33177fefda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  root: {fileID: 4145983037377531708}
   bones:
   - {fileID: 4145983038473312007}
   - {fileID: 4145983037547532679}
@@ -1093,8 +1090,10 @@ MonoBehaviour:
   ConfigurableJoint: 1
   Spring: 500
   Damper: 0.5
-  ColliderSizeRoot: 0.0011
-  ColliderSize: 0.0004
+  ColliderSizeRoot: 13
+  collSizeRoot: 0.0013
+  ColliderSize: 5
+  collSizeBones: 0.0005
   RigidbodyMass: 0.5
   PrefabLine: {fileID: 1666873409185668652, guid: c075358e34b312d47b1b3f9a3db0afe0, type: 3}
   ViewLines: 1

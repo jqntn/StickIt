@@ -70,14 +70,13 @@ public class MusicalChairManager : Level
         }
         countdown.text = textValue.ToString();
     }
-    protected override void StartMap()
+    public override void Init()
     {
-        base.StartMap();
+        base.Init();
         chairs = FindObjectsOfType<Chair>();
         inTransition = true;
         transition = transitionValue;
-        maxChairsActive = _multiplayerManager.alivePlayers.Count - 1;
-        print(_multiplayerManager.alivePlayers.Count);
+        maxChairsActive = MultiplayerManager.instance.alivePlayers.Count - 1;
     }
     private void ChangeChairPool()
     {
@@ -104,23 +103,23 @@ public class MusicalChairManager : Level
         {
             c.DeactivateChair(colorChairInactive);
         }
-        for (int i = _multiplayerManager.alivePlayers.Count - 1; i >= 0; i--)
+        for (int i = MultiplayerManager.instance.alivePlayers.Count - 1; i >= 0; i--)
         {
-            if (!winners.Find(x => _multiplayerManager.alivePlayers[i] == x))
+            if (!winners.Find(x => MultiplayerManager.instance.alivePlayers[i] == x))
             {
                 //MAKE THE LOSERS EXPLODE
-                _multiplayerManager.alivePlayers[i].GetComponent<Player>().Death();
+                MultiplayerManager.instance.alivePlayers[i].GetComponent<Player>().Death(true);
             }
         }
-        maxChairsActive = _multiplayerManager.alivePlayers.Count - 1;
+        maxChairsActive = MultiplayerManager.instance.alivePlayers.Count - 1;
         winners.Clear();
         // FIN LEVEL
-        if (_multiplayerManager.alivePlayers.Count == 1)
+        if (MultiplayerManager.instance.alivePlayers.Count == 1)
         {
             winTxt.transform.parent.parent.gameObject.SetActive(true);
-            winTxt.GetComponent<Text>().text = _multiplayerManager.alivePlayers[0].myDatas.name + " win!";
+            winTxt.GetComponent<Text>().text = MultiplayerManager.instance.alivePlayers[0].myDatas.name + " win!";
         }
-        else if (_multiplayerManager.alivePlayers.Count <= 0)
+        else if (MultiplayerManager.instance.alivePlayers.Count <= 0)
         {
             winTxt.transform.parent.parent.gameObject.SetActive(true);
             winTxt.GetComponent<Text>().text = "Only losers...";

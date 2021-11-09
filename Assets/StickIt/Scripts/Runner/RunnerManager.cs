@@ -62,19 +62,19 @@ public class RunnerManager : Level
     {
         Instance = this;
     }
-    protected override void EndMap()
+    public override void EndMap()
     {
         // Last player does not need to pass last checkpoint
-        if (!needToPassEnd && _multiplayerManager.alivePlayers.Count == 1)
+        if (!needToPassEnd && MultiplayerManager.instance.alivePlayers.Count == 1)
         {
-            Player player = _multiplayerManager.alivePlayers[0];
+            Player player = MultiplayerManager.instance.alivePlayers[0];
             orderPlayer.Enqueue(player);
             arriveTimePlayers.Add(timer);
             hasStopTimer = true;
         }
 
         int count = orderPlayer.Count + deadPlayer.Count;
-        if (count == _multiplayerManager.nbrOfPlayer)
+        if (count == MultiplayerManager.instance.nbrOfPlayer)
         {
             hasEndLevel = true;
             DistributeScore();
