@@ -86,6 +86,8 @@ public class MultiplayerManager : MonoBehaviour
         {
             LerpDuringChangeMap();
         }
+
+        print(alivePlayers.Count);
     }
     public void SaveDatas(PlayerData playerData)
     {
@@ -160,7 +162,6 @@ public class MultiplayerManager : MonoBehaviour
         for (int i = 0; i < players.Count; i++)
         {
             players[i].Respawn();
-            print("Respawn");
         }
     }
 }

@@ -25,14 +25,16 @@ public class MusicalChairManager : Level
     public Color colorChairTaken;
     public GameObject winTxt;
     public MMFeedbacks spawnFeedback;
+    bool GameLaunched = false;
     private void Awake()
     {
         durationSpawn = transitionValue / 3;
     }
     // Update is called once per frame
     void Update()
-    {
-        UpdateText();
+    {   
+        if(GameLaunched)
+            UpdateText();
     }
     public override void Init()
     {
@@ -41,6 +43,7 @@ public class MusicalChairManager : Level
         inTransition = true;
         transition = transitionValue;
         maxChairsActive = MultiplayerManager.instance.alivePlayers.Count - 1;
+        GameLaunched = true;
     }
     private void UpdateText()
     {
