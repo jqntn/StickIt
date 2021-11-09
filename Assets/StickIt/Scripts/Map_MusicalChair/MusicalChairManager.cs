@@ -20,7 +20,6 @@ public class MusicalChairManager : Level
     [SerializeField] Color colorChairActive;
     [SerializeField] Color colorChairInactive;
     bool spawning = true;
-    bool despawning = true;
     [HideInInspector]
     public float durationSpawn;
     public Color colorChairTaken;
@@ -35,6 +34,14 @@ public class MusicalChairManager : Level
     {
         UpdateText();
     }
+    public override void Init()
+    {
+        base.Init();
+        chairs = FindObjectsOfType<Chair>();
+        inTransition = true;
+        transition = transitionValue;
+        maxChairsActive = MultiplayerManager.instance.alivePlayers.Count - 1;
+    }
     private void UpdateText()
     {
         if (inTransition)
@@ -47,7 +54,6 @@ public class MusicalChairManager : Level
             if (transition <= 0)
             {
                 inTransition = false;
-                despawning = true;
             }
             else if(spawning && transition <= durationSpawn && transition > 0)
             {
@@ -69,14 +75,6 @@ public class MusicalChairManager : Level
             }
         }
         countdown.text = textValue.ToString();
-    }
-    public override void Init()
-    {
-        base.Init();
-        chairs = FindObjectsOfType<Chair>();
-        inTransition = true;
-        transition = transitionValue;
-        maxChairsActive = MultiplayerManager.instance.alivePlayers.Count - 1;
     }
     private void ChangeChairPool()
     {

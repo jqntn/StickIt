@@ -21,8 +21,6 @@ public class OurSphereSoft : MonoBehaviour
     [HideInInspector]
     public float collSizeBones;
     public float RigidbodyMass = 1f;
-    public LineRenderer PrefabLine = null;
-    public bool ViewLines = false;
 
     //[Header("Configurable joints settings")]
 
@@ -30,7 +28,7 @@ public class OurSphereSoft : MonoBehaviour
     {
         root = this.gameObject;
         root.GetComponent<SphereCollider>().radius = collSizeRoot;
-        Softbody.Init(collSizeBones, RigidbodyMass, Spring, Damper, RigidbodyConstraints.FreezeRotation |RigidbodyConstraints.FreezePositionZ , PrefabLine, ViewLines, matBones);
+        Softbody.Init(collSizeBones, RigidbodyMass, Spring, Damper, RigidbodyConstraints.FreezeRotation |RigidbodyConstraints.FreezePositionZ, matBones);
 
         for (int i = 0; i < bones.Length; i++)
         {
