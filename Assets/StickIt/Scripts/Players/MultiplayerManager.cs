@@ -86,8 +86,6 @@ public class MultiplayerManager : MonoBehaviour
         {
             LerpDuringChangeMap();
         }
-
-        print(alivePlayers.Count);
     }
     public void SaveDatas(PlayerData playerData)
     {
