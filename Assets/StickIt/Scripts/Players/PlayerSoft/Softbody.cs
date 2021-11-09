@@ -19,7 +19,6 @@ public static class Softbody
     public static bool ViewLines;
     public static SoftJointLimitSpring limitSpring;
 
-   // public static P_Mouvement2 plm;
 
     public static void Init(float collidersize, float rigidbodymass, float spring, float damper, RigidbodyConstraints constraints, PhysicMaterial mat)
     {
@@ -28,18 +27,6 @@ public static class Softbody
         Spring = spring;
         Damper = damper;
         Constraints = constraints;
-        ViewLines = false;
-        matBones = mat;
-    }
-    public static void Init(float collidersize, float rigidbodymass, float spring, float damper, RigidbodyConstraints constraints, LineRenderer prefabline, bool viewlines, PhysicMaterial mat)
-    {
-        ColliderSize = collidersize;
-        RigidbodyMass = rigidbodymass;
-        Spring = spring;
-        Damper = damper;
-        Constraints = constraints;
-        PrefabLine = prefabline;
-        ViewLines = viewlines;
         matBones = mat;
     }
     public static Rigidbody AddCollider(ref GameObject go)
@@ -51,13 +38,7 @@ public static class Softbody
         SpringJoint sp = AddSpring(ref go1, ref go2, Spring, Damper);
         sp.enableCollision = true;
         sp.tolerance = 0.01f;
-        if (ViewLines == true)
-            AddLine(ref go1, ref go2);
         return sp;
-    }
-    public static LineRenderer AddLine(ref GameObject go1, ref GameObject go2)
-    {
-        return AddLine(ref go1, ref go2, ref PrefabLine);
     }
     public static Rigidbody AddCollider(ref GameObject go, float size, float mass)
     {
@@ -78,21 +59,11 @@ public static class Softbody
         sp.damper = damper;
         return sp;
     }
-    public static LineRenderer AddLine(ref GameObject go1, ref GameObject go2, ref LineRenderer prefab)
-    {
-        LineRenderer line = Object.Instantiate(prefab);
-        line.positionCount = 2;
-        line.SetPosition(0, go1.transform.position);
-        line.SetPosition(1, go2.transform.position);
-        return line;
-    }
     public static ConfigurableJoint AddConfJoint(ref GameObject go1, ref GameObject go2)
     {
         ConfigurableJoint cj = AddConfJoint(ref go1, ref go2, Spring, Damper);
         cj.enableCollision = true;
         //cj.tolerance = 0.01f;
-        if (ViewLines == true)
-            AddLine(ref go1, ref go2);
         return cj;
     }
     public static ConfigurableJoint AddConfJoint(ref GameObject go1, ref GameObject go2, float spring, float damper)

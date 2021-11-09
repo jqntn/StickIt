@@ -50,7 +50,6 @@ public class MultiplayerManager : MonoBehaviour
     private float[] initPosX;
     private float[] initPosY;
     public bool isChangingMap = false;
-    int nbrDevicesLastFrame = 0;
 #if UNITY_EDITOR
     [SerializeField] public bool isMenuSelection = false; // should be private
 #endif
