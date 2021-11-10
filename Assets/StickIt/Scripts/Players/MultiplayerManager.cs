@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 public class MultiplayerManager : MonoBehaviour
 {
+    [Serializable]
     public struct PlayerData
     {
         public string name;
@@ -78,7 +79,6 @@ public class MultiplayerManager : MonoBehaviour
         if (!isMenuSelection)
             InitializePlayersWithoutMenuSelector(nbrOfPlayer);
 #endif
-        print(Gamepad.all.Count);
     }
     private void Update()
     {

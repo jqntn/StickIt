@@ -49,6 +49,14 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Test"",
+                    ""type"": ""Button"",
+                    ""id"": ""b9b77ec6-9fc8-4ad8-a2f8-fcf304d35387"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -104,6 +112,17 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad;Keyboard"",
                     ""action"": ""Quit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f1c24fb3-58ad-419d-8e3a-cad8c4b9f8de"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Test"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -459,6 +478,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         m_NormalInputs_Direction = m_NormalInputs.FindAction("Direction", throwIfNotFound: true);
         m_NormalInputs_MousePosition = m_NormalInputs.FindAction("MousePosition", throwIfNotFound: true);
         m_NormalInputs_Quit = m_NormalInputs.FindAction("Quit", throwIfNotFound: true);
+        m_NormalInputs_Test = m_NormalInputs.FindAction("Test", throwIfNotFound: true);
         // UIInputs
         m_UIInputs = asset.FindActionMap("UIInputs", throwIfNotFound: true);
         m_UIInputs_Validate = m_UIInputs.FindAction("Validate", throwIfNotFound: true);
@@ -517,6 +537,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
     private readonly InputAction m_NormalInputs_Direction;
     private readonly InputAction m_NormalInputs_MousePosition;
     private readonly InputAction m_NormalInputs_Quit;
+    private readonly InputAction m_NormalInputs_Test;
     public struct NormalInputsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -525,6 +546,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         public InputAction @Direction => m_Wrapper.m_NormalInputs_Direction;
         public InputAction @MousePosition => m_Wrapper.m_NormalInputs_MousePosition;
         public InputAction @Quit => m_Wrapper.m_NormalInputs_Quit;
+        public InputAction @Test => m_Wrapper.m_NormalInputs_Test;
         public InputActionMap Get() { return m_Wrapper.m_NormalInputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -546,6 +568,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Quit.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnQuit;
                 @Quit.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnQuit;
                 @Quit.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnQuit;
+                @Test.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest;
+                @Test.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest;
+                @Test.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest;
             }
             m_Wrapper.m_NormalInputsActionsCallbackInterface = instance;
             if (instance != null)
@@ -562,6 +587,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Quit.started += instance.OnQuit;
                 @Quit.performed += instance.OnQuit;
                 @Quit.canceled += instance.OnQuit;
+                @Test.started += instance.OnTest;
+                @Test.performed += instance.OnTest;
+                @Test.canceled += instance.OnTest;
             }
         }
     }
@@ -639,6 +667,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         void OnDirection(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnQuit(InputAction.CallbackContext context);
+        void OnTest(InputAction.CallbackContext context);
     }
     public interface IUIInputsActions
     {

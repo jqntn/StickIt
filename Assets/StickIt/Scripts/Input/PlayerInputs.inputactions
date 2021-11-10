@@ -36,6 +36,14 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Test",
+                    "type": "Button",
+                    "id": "b9b77ec6-9fc8-4ad8-a2f8-fcf304d35387",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -91,6 +99,17 @@
                     "processors": "",
                     "groups": "Gamepad;Keyboard",
                     "action": "Quit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f1c24fb3-58ad-419d-8e3a-cad8c4b9f8de",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Test",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
