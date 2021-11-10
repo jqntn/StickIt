@@ -4,7 +4,7 @@ public class OurSphereSoft : MonoBehaviour
 {
 
     [Header("Bones")]
-    public GameObject root = null;
+    GameObject root = null;
     public GameObject[] bones;
     public PhysicMaterial matBones;
     [Header("Spring Joint Settings")]
@@ -14,17 +14,22 @@ public class OurSphereSoft : MonoBehaviour
     [Tooltip("Higher the value the faster the spring oscillation stops")]
     public float Damper = 0.2f;
     [Header("Other Settings")]
-    public float ColliderSizeRoot = 0.0003f;
-    public float ColliderSize = 0.0003f;
+    public int ColliderSizeRoot;
+    [HideInInspector]
+    public float collSizeRoot;
+    public int ColliderSize;
+    [HideInInspector]
+    public float collSizeBones;
     public float RigidbodyMass = 1f;
-    public LineRenderer PrefabLine = null;
-    public bool ViewLines = false;
 
     //[Header("Configurable joints settings")]
 
     private void Awake()
     {
-        Softbody.Init(ColliderSize, RigidbodyMass, Spring, Damper, RigidbodyConstraints.FreezeRotation |RigidbodyConstraints.FreezePositionZ , PrefabLine, ViewLines, matBones);
+        root = this.gameObject;
+        root.GetComponent<SphereCollider>().radius = collSizeRoot;
+        Softbody.Init(collSizeBones, RigidbodyMass, Spring, Damper, RigidbodyConstraints.FreezeRotation |RigidbodyConstraints.FreezePositionZ, matBones);
+
         for (int i = 0; i < bones.Length; i++)
         {
             Softbody.AddCollider(ref bones[i]);

@@ -111,5 +111,7 @@ public class MapManager : Unique<MapManager>
         nextMapRoot = null;
         isBusy = false;
         _coroutine = null;
+        var lvl = FindObjectOfType<Level>();
+        if (lvl != null) lvl.Init();
     }
 }

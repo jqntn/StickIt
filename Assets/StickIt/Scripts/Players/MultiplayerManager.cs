@@ -50,7 +50,6 @@ public class MultiplayerManager : MonoBehaviour
     private float[] initPosX;
     private float[] initPosY;
     public bool isChangingMap = false;
-    int nbrDevicesLastFrame = 0;
 #if UNITY_EDITOR
     [SerializeField] public bool isMenuSelection = false; // should be private
 #endif
@@ -161,7 +160,6 @@ public class MultiplayerManager : MonoBehaviour
         for (int i = 0; i < players.Count; i++)
         {
             players[i].Respawn();
-            print("Respawn");
         }
     }
 }
