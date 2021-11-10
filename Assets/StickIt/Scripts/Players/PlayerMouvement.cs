@@ -22,23 +22,24 @@ public class PlayerMouvement : MonoBehaviour
     private bool isDotsEnabled = false;
 
     [Header("Movement")]     //-----------------------
-    [Tooltip("Force maximale du jump, et clamp de la v�locit� maximale")]
+    [Tooltip("Force maximale du jump, et clamp de la velocite maximale")]
     public float maxSpeed;
     Vector3 addedVector;
-    [Tooltip("% de la velocit� ajout�e au saut en fonction du temps, cette valeur doit finir � 1")]
+    [Tooltip("% de la velocite ajoutee au saut en fonction du temps, cette valeur doit finir a 1")]
     Vector2 direction;
     bool isChargingJump = false;
     [SerializeField]
     private float minForceJumpMultiplicator;
     float forceJumpMultiplicator;
     [SerializeField]
-    float speedIncreaseForceJump;
+    float speedIncreaseForceJump, coefSpeedIncreaseForceJumpByMass;
     bool hasJumped = false;
     [SerializeField] AnimationCurve animCurveJumpGravity;
     float t_jump;
     float y_jump = 1;
     public float gravityStrength;
     private Rigidbody rb;
+    private float ratioMass;
     public Vector3 velocityLastFrame = Vector3.zero;
 
     private List<ContactPointSurface> connectedPoints = new List<ContactPointSurface>();
@@ -48,24 +49,32 @@ public class PlayerMouvement : MonoBehaviour
 
     public int maxNumberOfJumps;
     private int currentNumberOfJumps;
-    Vector3 scal; 
+    Vector3 initScale; 
 
     [Header("CollisionVariables")]
-    private SkinnedMeshRenderer mesh;
     public Transform firstBone;
     public GameObject collisionEffect;
     [SerializeField] float strengthRequiredToImpact;
     [SerializeField] float strengthRequiredToBigImpact;
     public ParticleSystem ChocParticles;
 
+
+
+    [Header("Mesh")]
+    private SkinnedMeshRenderer mesh;
+    private OurSphereSoft myScriptSoftBody;
+
     [Header("DEBUG")]
     public int connexions;
 
+
+
     void Start()
     {
-        scal = transform.localScale;
+        initScale = transform.localScale;
         rb = GetComponent<Rigidbody>();
         mesh = GetComponentInChildren<SkinnedMeshRenderer>();
+        myScriptSoftBody = GetComponent<OurSphereSoft>();
         firstBone = transform.GetChild(1);
         dots = new Transform[numberOfDots];
         for (int i = 0; i < dots.Length; i++)
@@ -75,7 +84,9 @@ public class PlayerMouvement : MonoBehaviour
             dots[i] = newDot;
         }
 
+        RescaleMeshWithMass();
         currentNumberOfJumps = maxNumberOfJumps;
+
     }
 
     void Update()
@@ -149,8 +160,8 @@ public class PlayerMouvement : MonoBehaviour
 
     }
 
-        // ----- INPUTS -----
-        #region Inputs
+    // ----- INPUTS -----
+    #region Inputs
 
         public void InputDirection(InputAction.CallbackContext context)
     {
@@ -161,7 +172,11 @@ public class PlayerMouvement : MonoBehaviour
     public void InputJump(InputAction.CallbackContext context)
     {
         if (context.started) isChargingJump = true;
-        else if (context.canceled && direction != Vector2.zero) Jump();
+        else if (context.canceled ) {
+            if (direction != Vector2.zero) Jump();
+            forceJumpMultiplicator = minForceJumpMultiplicator;
+        }
+                
     }
 
     #endregion
@@ -177,7 +192,7 @@ public class PlayerMouvement : MonoBehaviour
 
             rb.velocity = direction * forceJump;
 
-            forceJumpMultiplicator = minForceJumpMultiplicator;
+            
             isChargingJump = false;
             EnableDots(false);
             hasJumped = true;
@@ -197,8 +212,12 @@ public class PlayerMouvement : MonoBehaviour
     }
     void IncreaseForceJump()
     {
-        forceJumpMultiplicator += Time.deltaTime * speedIncreaseForceJump;
-        forceJumpMultiplicator = Mathf.Clamp(forceJumpMultiplicator, minForceJumpMultiplicator, 1);
+        if (direction != Vector2.zero)
+        {
+            forceJumpMultiplicator += Time.deltaTime * (speedIncreaseForceJump / ratioMass);
+            forceJumpMultiplicator = Mathf.Clamp(forceJumpMultiplicator, minForceJumpMultiplicator, 1);
+        }
+        else forceJumpMultiplicator = minForceJumpMultiplicator;
         //print(speedIncreaseForceJump);
     }
 
@@ -230,7 +249,7 @@ public class PlayerMouvement : MonoBehaviour
                 PlayerMouvement playerCollided = collision.transform.GetComponent<PlayerMouvement>();
                 if (velocityLastFrame.magnitude > playerCollided.velocityLastFrame.magnitude)
                 {
-                    float strength = (velocityLastFrame - playerCollided.velocityLastFrame).magnitude;
+                    float strength = (velocityLastFrame - playerCollided.velocityLastFrame).magnitude * ratioMass;
                     if (strength >= strengthRequiredToImpact) 
                     ImpactBetweenPlayers(playerCollided, collision.contacts[0], strength);
                 }
@@ -299,24 +318,24 @@ public class PlayerMouvement : MonoBehaviour
     {
 
         Vector3 dir = (playerCollided.transform.position - transform.position).normalized;
-        rb.velocity = -velocityLastFrame;
+        rb.velocity = Vector3.zero;
         playerCollided.GetBigImpacted(dir, strength);
-        foreach(ContactPointSurface point in connectedPoints)
-        {
-            if(point.transform == playerCollided.transform)
-            {
-                connectedPoints.Remove(point);
-                break;
-            }
-        }
-        foreach (ContactPointSurface point in playerCollided.connectedPoints)
-        {
-            if (point.transform == transform)
-            {
-                connectedPoints.Remove(point);
-                break;
-            }
-        }
+        //foreach(ContactPointSurface point in connectedPoints)
+        //{
+        //    if(point.transform == playerCollided.transform)
+        //    {
+        //        connectedPoints.Remove(point);
+        //        break;
+        //    }
+        //}
+        //foreach (ContactPointSurface point in playerCollided.connectedPoints)
+        //{
+        //    if (point.transform == transform)
+        //    {
+        //        connectedPoints.Remove(point);
+        //        break;
+        //    }
+        //}
         bool isPowerfull = strength >= strengthRequiredToBigImpact;
         StartCoroutine(StrongImpact(isPowerfull));
         if (isPowerfull) {
@@ -379,6 +398,7 @@ public class PlayerMouvement : MonoBehaviour
         }
     }
 
+    // ----- DEATH & RESPAWN -----
     public void Death()
     {
         mesh.enabled = false;
@@ -396,12 +416,13 @@ public class PlayerMouvement : MonoBehaviour
     public void Respawn()
     {
         connectedPoints.Clear();
-        transform.localScale = scal;
+        transform.localScale = initScale;
         state = STATE.AIR;
         mesh.enabled = true;
         GetComponent<Collider>().enabled = true;
         rb.isKinematic = false;
         rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        RescaleMeshWithMass();
 
         foreach (Collider col in GetComponentsInChildren<Collider>())
         {
@@ -434,7 +455,8 @@ public class PlayerMouvement : MonoBehaviour
 
             for (int i = 0; i < dots.Length; i++)
             {
-                dots[i].transform.position = GetDotPosition(i * spaceBetweenDots, potentialVelocity);
+                
+                dots[i].transform.position = GetDotPosition(i * (spaceBetweenDots * ratioMass) , potentialVelocity);
             }
 
         }
@@ -509,6 +531,20 @@ public class PlayerMouvement : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         rb.detectCollisions = true;
+    }
+
+    void RescaleMeshWithMass()
+    {
+        ratioMass = myPlayer.myDatas.mass / 100f;
+        float newScale = initScale.x * ratioMass;
+        transform.localScale = new Vector3(newScale, newScale, newScale);
+        GameObject bonesParent = transform.Find("Bones").gameObject;
+        bonesParent.SetActive(false);
+        myScriptSoftBody.ReplaceBones(ratioMass);
+        bonesParent.SetActive(true);
+
+
+        rb.mass = myPlayer.myDatas.mass;
     }
 
 }
