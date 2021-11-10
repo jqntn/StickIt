@@ -83,16 +83,28 @@ public class MenuSelection : MonoBehaviour
     {
         // Instantiate Player
         PlayerInput newPlayer = null;
+            
         newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1, gamepad);
-        newPlayer.transform.position = _playersStartingPos.GetChild(i).position;
-        Player scriptPlayer = newPlayer.transform.GetComponent<Player>();
+        Player scriptPlayer = newPlayer.transform.GetComponentInParent<Player>();
+
+        //newPlayer.transform.position = _playersStartingPos.GetChild(i).position;
+        scriptPlayer.transform.position = _playersStartingPos.GetChild(i).position;
         // Set Datas
         scriptPlayer.myDatas.id = i;
         scriptPlayer.myDatas.deviceID = gamepad.deviceId;
         scriptPlayer.myDatas.name = "Player" + i.ToString();
         scriptPlayer.myDatas.material = materials[i];
-        newPlayer.gameObject.name = scriptPlayer.myDatas.name;
-        scriptPlayer.transform.GetChild(0).GetChild(0).GetComponent<MeshRenderer>().material = scriptPlayer.myDatas.material;
+
+        scriptPlayer.gameObject.name = scriptPlayer.myDatas.name;
+        if (scriptPlayer.transform.parent)
+        {
+            scriptPlayer.transform.GetComponentInChildren<MeshRenderer>().material = scriptPlayer.myDatas.material;
+        }
+        else
+        {
+            scriptPlayer.transform.GetComponentInChildren<SkinnedMeshRenderer>().material = scriptPlayer.myDatas.material;
+        }
+
         MultiplayerManager.instance.players.Add(scriptPlayer);
         MultiplayerManager.instance.alivePlayers.Add(scriptPlayer);
         if (MultiplayerManager.instance.players.Count == 2)
@@ -138,7 +150,7 @@ public class MenuSelection : MonoBehaviour
         foreach (Player player in MultiplayerManager.instance.players)
         {
             MultiplayerManager.instance.SaveDatas(player.myDatas);
-            player.myMouvementScript.PrepareToChangeLevel();
+            player.PrepareToChangeLevel();
         }
         MapManager.instance.NextMap("", true);
     }

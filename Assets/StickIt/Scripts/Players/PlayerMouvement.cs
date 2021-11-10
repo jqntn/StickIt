@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMouvement : MonoBehaviour
 {
+    [HideInInspector]
     public Player myPlayer;
 
     public enum STATE { STICK, AIR }
@@ -23,12 +24,8 @@ public class PlayerMouvement : MonoBehaviour
     [Header("Movement")]     //-----------------------
     [Tooltip("Force maximale du jump, et clamp de la v�locit� maximale")]
     public float maxSpeed;
-    bool isAnimCurveSpeed;
     Vector3 addedVector;
     [Tooltip("% de la velocit� ajout�e au saut en fonction du temps, cette valeur doit finir � 1")]
-    [SerializeField] AnimationCurve animCurveJumpSpeed;
-    float t_speed;
-    float y_speed = 1;
     Vector2 direction;
     bool isChargingJump = false;
     [SerializeField]
@@ -51,15 +48,25 @@ public class PlayerMouvement : MonoBehaviour
 
     public int maxNumberOfJumps;
     private int currentNumberOfJumps;
+    Vector3 scal; 
 
     [Header("CollisionVariables")]
+    private SkinnedMeshRenderer mesh;
+    public Transform firstBone;
     public GameObject collisionEffect;
+    [SerializeField] float strengthRequiredToImpact;
+    [SerializeField] float strengthRequiredToBigImpact;
+    public ParticleSystem ChocParticles;
 
+    [Header("DEBUG")]
+    public int connexions;
 
-    // Start is called before the first frame update
     void Start()
     {
+        scal = transform.localScale;
         rb = GetComponent<Rigidbody>();
+        mesh = GetComponentInChildren<SkinnedMeshRenderer>();
+        firstBone = transform.GetChild(1);
         dots = new Transform[numberOfDots];
         for (int i = 0; i < dots.Length; i++)
         {
@@ -71,7 +78,6 @@ public class PlayerMouvement : MonoBehaviour
         currentNumberOfJumps = maxNumberOfJumps;
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -94,10 +100,9 @@ public class PlayerMouvement : MonoBehaviour
             AnimCurveJumpGravity();
 
         }
-        if (isAnimCurveSpeed)
-        {
-            AnimCurveJumpSpeed();
-        }
+
+        connexions = connectedPoints.Count;
+
     }
 
     private void FixedUpdate()
@@ -127,29 +132,27 @@ public class PlayerMouvement : MonoBehaviour
 
     }
 
-    //private void OnGUI()
-    //{
-    //    GUILayout.BeginVertical();
-    //    GUIStyle style = new GUIStyle();
-    //    style.fontSize = 24;
-    //    style.normal.textColor = Color.white;
+    private void OnGUI()
+    {
+        GUILayout.BeginVertical();
+        GUIStyle style = new GUIStyle();
+        style.fontSize = 24;
+        style.normal.textColor = Color.white;
 
-    //    if (myPlayer.id == 0)
-    //    {
-    //        GUILayout.Label(" Velocity  = " + rb.velocity, style);
-    //        GUILayout.Label("Magnitude = " + rb.velocity.magnitude, style);
-    //        if(connectedPoints.Count>0)
-    //        GUILayout.Label("Attraction = " + connectedPoints[0].attractionStrength, style);
-    //    }
-    //    GUILayout.EndVertical();
+        if (myPlayer.myDatas.id == 0)
+        {
+            GUILayout.Label(" Velocity  = " + rb.velocity, style);
+            GUILayout.Label("Magnitude = " + rb.velocity.magnitude, style);
+        }
+        GUILayout.EndVertical();
 
-        
-    //}
 
-    // ----- INPUTS -----
-    #region Inputs
+    }
 
-    public void InputDirection(InputAction.CallbackContext context)
+        // ----- INPUTS -----
+        #region Inputs
+
+        public void InputDirection(InputAction.CallbackContext context)
     {
         if (context.performed) direction = context.ReadValue<Vector2>();
         else if (context.canceled) direction = Vector2.zero;
@@ -167,7 +170,7 @@ public class PlayerMouvement : MonoBehaviour
     #region JUMP
     void Jump()
     {
-        if (currentNumberOfJumps > 0 && state == STATE.STICK)
+        if (currentNumberOfJumps > 0 && connectedPoints.Count >0)
         {
             // Debug.Break();
             float forceJump = maxSpeed * forceJumpMultiplicator;
@@ -177,12 +180,10 @@ public class PlayerMouvement : MonoBehaviour
             forceJumpMultiplicator = minForceJumpMultiplicator;
             isChargingJump = false;
             EnableDots(false);
-            isAnimCurveSpeed = true;
             hasJumped = true;
             t_jump = 0;
             y_jump = 0;
-            t_speed = 0;
-            y_speed = 0;
+
             addedVector = Vector3.zero;
 
             foreach(ContactPointSurface contact in connectedPoints)
@@ -192,14 +193,22 @@ public class PlayerMouvement : MonoBehaviour
         }
 
 
+
     }
     void IncreaseForceJump()
     {
         forceJumpMultiplicator += Time.deltaTime * speedIncreaseForceJump;
         forceJumpMultiplicator = Mathf.Clamp(forceJumpMultiplicator, minForceJumpMultiplicator, 1);
-
+        //print(speedIncreaseForceJump);
     }
 
+    void GetPossibleAngle()
+    {
+        foreach(ContactPointSurface point in connectedPoints)
+        {
+
+        }
+    }
 
     #endregion
 
@@ -207,22 +216,30 @@ public class PlayerMouvement : MonoBehaviour
     #region Collisions
     private void OnCollisionEnter(Collision collision)
     {
-
+        currentNumberOfJumps = maxNumberOfJumps;
         switch (collision.transform.tag)
         {
-            case "Player":
-                Player playerCollided = collision.transform.GetComponent<Player>();
-                if (myPlayer.myDatas.id < playerCollided.myDatas.id)
+            case "Player":             
+                Vector3 localContactPos = collision.transform.position - collision.contacts[0].point;
+                ContactPointSurface contact = new ContactPointSurface(collision.transform, localContactPos, 0);
+                contact.localPosition.z = transform.position.z;
+
+                connectedPoints.Add(contact);
+
+
+                PlayerMouvement playerCollided = collision.transform.GetComponent<PlayerMouvement>();
+                if (velocityLastFrame.magnitude > playerCollided.velocityLastFrame.magnitude)
                 {
-                    if(collision.contactCount > 0)
-                    CollisionBetweenPlayers(playerCollided.myMouvementScript, collision.contacts[0]);
+                    float strength = (velocityLastFrame - playerCollided.velocityLastFrame).magnitude;
+                    if (strength >= strengthRequiredToImpact) 
+                    ImpactBetweenPlayers(playerCollided, collision.contacts[0], strength);
                 }
                     break;
 
             default:
                 if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
                 #region Collision Untagged
-                currentNumberOfJumps = maxNumberOfJumps;
+
 
                 if (isChargingJump)
                 {
@@ -231,23 +248,21 @@ public class PlayerMouvement : MonoBehaviour
 
                 Vector3 contactNormal = collision.contacts[0].normal;
                 float dot = Vector2.Dot(contactNormal, velocityLastFrame);
-                Vector3 localContactPos = collision.transform.position - collision.contacts[0].point;
-                ContactPointSurface contact = new ContactPointSurface(collision.transform, localContactPos, -dot * attractionMultiplier);
+                localContactPos = collision.transform.position - collision.contacts[0].point;
+                contact = new ContactPointSurface(collision.transform, localContactPos, -dot * attractionMultiplier);
                 contact.localPosition.z = transform.position.z;
 
                 connectedPoints.Add(contact);
 
                 state = STATE.STICK;
-                isAnimCurveSpeed = false;
                 addedVector = Vector2.zero;
-                y_speed = 0;
-                t_speed = 0;
                 hasJumped = false;
                 #endregion
                 break;
         }
 
     }
+
 
 
     private void OnCollisionStay(Collision collision)
@@ -260,7 +275,7 @@ public class PlayerMouvement : MonoBehaviour
     }
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
+        //if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
         for (int i = 0; i < connectedPoints.Count; i++)
         {
             if (connectedPoints[i].transform == collision.transform)
@@ -273,73 +288,61 @@ public class PlayerMouvement : MonoBehaviour
             state = STATE.AIR;
             if (!hasJumped)
             {
-                currentNumberOfJumps--;
+                currentNumberOfJumps = 0;
                 EnableDots(false);
             }
         }
     }
 
 
-    public void CollisionBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact)
+    private void ImpactBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact, float strength)
     {
 
-        int id = GetComponent<Player>().myDatas.id;
+        Vector3 dir = (playerCollided.transform.position - transform.position).normalized;
+        rb.velocity = -velocityLastFrame;
+        playerCollided.GetBigImpacted(dir, strength);
+        foreach(ContactPointSurface point in connectedPoints)
+        {
+            if(point.transform == playerCollided.transform)
+            {
+                connectedPoints.Remove(point);
+                break;
+            }
+        }
+        foreach (ContactPointSurface point in playerCollided.connectedPoints)
+        {
+            if (point.transform == transform)
+            {
+                connectedPoints.Remove(point);
+                break;
+            }
+        }
+        bool isPowerfull = strength >= strengthRequiredToBigImpact;
+        StartCoroutine(StrongImpact(isPowerfull));
+        if (isPowerfull) {
+            
+            float angleNormal = Mathf.Atan(contact.normal.y / contact.normal.x) * Mathf.Rad2Deg;
 
-        int ido = playerCollided.GetComponent<Player>().myDatas.id;
-
-        //float newVelMagnitudeP1 = playerCollided.velocityLastFrame.magnitude;
-
-        //float newVelMagnitudeP2 = velocityLastFrame.magnitude;
-
-
-
-        //Vector3 newDirP1 = Vector3.Reflect(velocityLastFrame.normalized, contact.normal);
-
-        //Vector3 newDirP2 = Vector3.Reflect(playerCollided.velocityLastFrame.normalized, contact.normal);
-
-
-
-        //rb.velocity = newDirP1 * newVelMagnitudeP1;
-
-        //playerCollided.rb.velocity = newDirP2 * newVelMagnitudeP2;
-
-
-
-        Vector3 v = Quaternion.Euler(0, 0, 90) * contact.normal;
-        Debug.DrawRay(contact.point, v, Color.green);
-        GameObject g = Instantiate(collisionEffect, contact.point, Quaternion.Euler(0,0, Vector3.Angle(contact.normal, v)));
-        g.GetComponent<ParticleSystemRenderer>().material.color = new Color((MultiplayerManager.instance.materials[id].color.r + MultiplayerManager.instance.materials[ido].color.r) /2, (MultiplayerManager.instance.materials[id].color.g + MultiplayerManager.instance.materials[ido].color.g)/2, (MultiplayerManager.instance.materials[id].color.b + MultiplayerManager.instance.materials[ido].color.b)/2);
-        //Debug.Break();
-        rb.velocity = playerCollided.velocityLastFrame;
-        playerCollided.rb.velocity = velocityLastFrame;
-
-       /* #region debug
-        print(playerCollided.velocityLastFrame);
-        //Last velocities
-        Debug.DrawRay(transform.position,  -velocityLastFrame, Color.blue, 3f);
-        Debug.DrawRay(playerCollided.transform.position, -playerCollided.velocityLastFrame, Color.gray, 3f);
-
-        //New velocities
-        //Debug.DrawRay(playerCollided.transform.position, newDirP2 * velocityLastFrame.magnitude, Color.yellow, 3f);
-        //Debug.DrawRay(transform.position, newDirP1 * playerCollided.velocityLastFrame.magnitude, Color.green, 3f);
-
-        // Normal
-        Debug.DrawRay(contact.point,contact.point + contact.normal * 100f, Color.red, 3f);
-       // Debug.Break();
-        #endregion*/
+            Instantiate(ChocParticles, contact.point, Quaternion.Euler(-angleNormal, 80, 0));
+                }
 
     }
 
+    public void GetBigImpacted(Vector3 dir, float strength)
+    {
+        
+        rb.velocity = dir * strength * 2;
+
+    }
 
 
     #endregion
 
     private void Attraction()
     {
-
-
         for (int i = connectedPoints.Count - 1; i >= 0; i--)
         {
+            if (connectedPoints[i].transform.tag != "Untagged") return; // RETURN CONDITION
             Vector3 localPlayerPosition = connectedPoints[i].transform.position - transform.position;
             Vector3 direction = (connectedPoints[i].localPosition - localPlayerPosition).normalized;
 
@@ -366,7 +369,6 @@ public class PlayerMouvement : MonoBehaviour
                         }
                     }
                 }
-
             }
 
 
@@ -377,10 +379,39 @@ public class PlayerMouvement : MonoBehaviour
         }
     }
 
-    public void PrepareToChangeLevel()
+    public void Death()
+    {
+        mesh.enabled = false;
+        foreach(Collider col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = false;
+        }
+        foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
+        {
+            rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+            rb.isKinematic = true;
+        }
+    }
+
+    public void Respawn()
     {
         connectedPoints.Clear();
+        transform.localScale = scal;
         state = STATE.AIR;
+        mesh.enabled = true;
+        GetComponent<Collider>().enabled = true;
+        rb.isKinematic = false;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+
+        foreach (Collider col in GetComponentsInChildren<Collider>())
+        {
+            col.enabled = true;
+        }
+        foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
+        {
+            rb.isKinematic = false;
+            rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        }
     }
 
     // ----- PREVIEW DOTS -----
@@ -435,23 +466,67 @@ public class PlayerMouvement : MonoBehaviour
 
         }
     }
-    void AnimCurveJumpSpeed()
-    {
-        if (t_speed < animCurveJumpSpeed.keys[animCurveJumpSpeed.length - 1].time)
-        {
-
-            t_speed += Time.deltaTime;
-            y_speed = t_speed;
-            y_speed = animCurveJumpSpeed.Evaluate(y_speed);
-        }
-        else
-        {
-
-            isAnimCurveSpeed = false;
-        }
-    }
     #endregion
 
+
+    public IEnumerator StrongImpact(bool isPowerful)
+    {
+        if (isPowerful)
+        {
+            float slowmo = 0.1f;
+            Time.timeScale = slowmo;
+            Time.fixedDeltaTime *= slowmo;
+            yield return new WaitForSeconds(0.05f);
+            Time.fixedDeltaTime /= slowmo;
+            Time.timeScale = 1;
+        }
+
+        state = STATE.AIR;
+        //GetComponent<Collider>().enabled = true;
+        //foreach (Collider col in GetComponentsInChildren<Collider>())
+        //{
+        //    col.enabled = true;
+        //}
+
+
+        rb.isKinematic = false;
+        rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+
+        //foreach (Collider col in GetComponentsInChildren<Collider>())
+        //{
+        //    col.enabled = true;
+        //}
+        //foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
+        //{
+        //    rb.isKinematic = false;
+        //    rb.collisionDetectionMode = CollisionDetectionMode.Continuous;
+        //}
+    }
+
+    public IEnumerator DelayStrongImpacted()
+    {
+
+        yield return new WaitForSeconds(0.1f);
+
+        rb.detectCollisions = true;
+    }
+
+}
+
+public class ContactPointSurface
+{
+    public Transform transform;
+    public Vector3 localPosition;
+    public float attractionStrength;
+
+    public ContactPointSurface(Transform transform, Vector3 position, float attractionStrength)
+    {
+        this.transform = transform;
+        this.localPosition = position;
+        this.attractionStrength = attractionStrength;
+    }
+
+    public ContactPointSurface() { }
 
 }
 

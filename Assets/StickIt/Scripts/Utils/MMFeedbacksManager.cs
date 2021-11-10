@@ -12,7 +12,7 @@ public class MMFeedbacksManager : MonoBehaviour
     }
 
     // | Calls
-	public void CameraShake_CCall()
+	public void CameraShake_CCall(float time)
 	{
 		if (!feedbacksList[0].IsPlaying){
 			feedbacksList[0].PlayFeedbacks();

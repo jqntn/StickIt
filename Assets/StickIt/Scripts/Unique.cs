@@ -1,5 +1,5 @@
 using UnityEngine;
-abstract class Unique<T> : MonoBehaviour where T : class
+public abstract class Unique<T> : MonoBehaviour where T : class
 {
     public static T instance;
     protected virtual void Awake()

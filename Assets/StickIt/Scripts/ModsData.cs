@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "ModsData", menuName = "ScriptableObjects/ModsData")]
-class ModsData : ScriptableObject
+public class ModsData : ScriptableObject
 {
     [Serializable]
     public class Mod
