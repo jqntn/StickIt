@@ -230,8 +230,9 @@ public class PlayerMouvement : MonoBehaviour
                 PlayerMouvement playerCollided = collision.transform.GetComponent<PlayerMouvement>();
                 if (velocityLastFrame.magnitude > playerCollided.velocityLastFrame.magnitude)
                 {
-                    if(velocityLastFrame.magnitude >= strengthRequiredToImpact) 
-                    BigImpactBetweenPlayers(playerCollided, collision.contacts[0]);
+                    float strength = (velocityLastFrame - playerCollided.velocityLastFrame).magnitude;
+                    if (strength >= strengthRequiredToImpact) 
+                    ImpactBetweenPlayers(playerCollided, collision.contacts[0], strength);
                 }
                     break;
 
@@ -294,17 +295,11 @@ public class PlayerMouvement : MonoBehaviour
     }
 
 
-    private void BigImpactBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact)
+    private void ImpactBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact, float strength)
     {
-        rb.velocity = Vector3.zero;
-        //GetComponent<Collider>().enabled = false;
-        //foreach (Collider col in GetComponentsInChildren<Collider>())
-        //{
-        //    col.enabled = false;
-        //}
+
         Vector3 dir = (playerCollided.transform.position - transform.position).normalized;
-        rb.velocity = -dir*60;
-        float strength = velocityLastFrame.magnitude;
+        rb.velocity = -velocityLastFrame;
         playerCollided.GetBigImpacted(dir, strength);
         foreach(ContactPointSurface point in connectedPoints)
         {
@@ -325,6 +320,7 @@ public class PlayerMouvement : MonoBehaviour
         bool isPowerfull = strength >= strengthRequiredToBigImpact;
         StartCoroutine(StrongImpact(isPowerfull));
         if (isPowerfull) {
+            
             float angleNormal = Mathf.Atan(contact.normal.y / contact.normal.x) * Mathf.Rad2Deg;
 
             Instantiate(ChocParticles, contact.point, Quaternion.Euler(-angleNormal, 80, 0));
@@ -336,9 +332,7 @@ public class PlayerMouvement : MonoBehaviour
     {
         
         rb.velocity = dir * strength * 2;
-        rb.detectCollisions = false;
-       
-        StartCoroutine(DelayStrongImpacted());
+
     }
 
 
