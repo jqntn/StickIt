@@ -75,7 +75,6 @@ public class Chair : MonoBehaviour
         {
             if (playersInChair.Count > 1)
             {
-                chosenOne = playersInChair[0];
                 for (int i = 0; i < playersInChair.Count; i++)
                 {
                     if (Vector3.Distance(chosenOne.transform.position, transform.position) > Vector3.Distance(playersInChair[i].transform.position, transform.position))
@@ -104,7 +103,7 @@ public class Chair : MonoBehaviour
     }
     IEnumerator SpawnChairCor(Color c)
     {
-        GameEvents.CameraShake_CEvent?.Invoke(duration);
+        GameEvents.CameraShake_CEvent?.Invoke(duration / 0.4f);
         float elapsed = 0;
         float ratio = 0;
         while(elapsed < duration)
@@ -119,7 +118,7 @@ public class Chair : MonoBehaviour
     }
     IEnumerator DespawnChairCor()
     {
-        GameEvents.CameraShake_CEvent?.Invoke(duration);
+        GameEvents.CameraShake_CEvent?.Invoke(duration / 0.4f);
         float elapsed = 0;
         float ratio = 0;
         while (elapsed < duration)
