@@ -54,8 +54,7 @@ public class PlayerMouvement : MonoBehaviour
     [Header("CollisionVariables")]
     public Transform firstBone;
     public GameObject collisionEffect;
-    [SerializeField] float strengthRequiredToImpact;
-    [SerializeField] float strengthRequiredToBigImpact;
+    [SerializeField] float strengthRequiredToImpact, strengthRequiredToBigImpact, strengthMultiplicator;
     public ParticleSystem ChocParticles;
 
 
@@ -249,7 +248,7 @@ public class PlayerMouvement : MonoBehaviour
                 PlayerMouvement playerCollided = collision.transform.GetComponent<PlayerMouvement>();
                 if (velocityLastFrame.magnitude > playerCollided.velocityLastFrame.magnitude)
                 {
-                    float strength = (velocityLastFrame - playerCollided.velocityLastFrame).magnitude * ratioMass;
+                    float strength = (velocityLastFrame - playerCollided.velocityLastFrame).magnitude * ratioMass * strengthMultiplicator;
                     if (strength >= strengthRequiredToImpact) 
                     ImpactBetweenPlayers(playerCollided, collision.contacts[0], strength);
                 }
@@ -343,7 +342,7 @@ public class PlayerMouvement : MonoBehaviour
             float angleNormal = Mathf.Atan(contact.normal.y / contact.normal.x) * Mathf.Rad2Deg;
 
             Instantiate(ChocParticles, contact.point, Quaternion.Euler(-angleNormal, 80, 0));
-                }
+        }
 
     }
 

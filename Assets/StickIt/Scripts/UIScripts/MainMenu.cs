@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MainMenu : MonoBehaviour
 {
@@ -23,11 +24,13 @@ public class MainMenu : MonoBehaviour
             precedingMenu.SetActive(false);
         go.SetActive(true);
         precedingMenu = go;
+        GameObject.Find("ReturnButton").GetComponent<Button>().Select();
     }
-    public void Return()
+    public void Return(Button selected)
     {
         alterMenu.SetActive(false);
         mainMenu.SetActive(true);
+        selected.Select();
     }
     public void Quit()
     {
