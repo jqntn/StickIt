@@ -913,7 +913,7 @@ MonoBehaviour:
   numberOfDots: 8
   maxSpeed: 40
   minForceJumpMultiplicator: 0.2
-  speedIncreaseForceJump: 2
+  speedIncreaseForceJump: 10
   coefSpeedIncreaseForceJumpByMass: 0
   animCurveJumpGravity:
     serializedVersion: 2
@@ -949,6 +949,7 @@ MonoBehaviour:
   collisionEffect: {fileID: 5841708613005531541, guid: 1b01c863f9f117c4bb49a34c08394ff4, type: 3}
   strengthRequiredToImpact: 10
   strengthRequiredToBigImpact: 30
+  strengthMultiplicator: 1
   ChocParticles: {fileID: 8597058350541634597, guid: 97e8fd232753b2f458d475cb5677f886, type: 3}
   connexions: 0
 --- !u!114 &4145983037377531704
