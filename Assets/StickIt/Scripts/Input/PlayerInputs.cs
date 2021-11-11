@@ -155,6 +155,22 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Submit"",
+                    ""type"": ""Button"",
+                    ""id"": ""3ff5497e-0b95-4bcd-9cc8-79627a38bb74"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Click"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""827cc017-87a6-4b7b-b4ba-f6028add973a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -443,6 +459,61 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""action"": ""Navigate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0ec79631-19d3-46a0-a095-01a7e09a06f6"",
+                    ""path"": ""*/{Submit}"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Submit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f8586efb-706d-43fe-a61a-945bcbc68348"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8119228a-6b8e-439d-970c-0edc7647512f"",
+                    ""path"": ""<Pen>/tip"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""490ca266-8651-40b0-b4e7-4f36dc20bce4"",
+                    ""path"": ""<Touchscreen>/touch*/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touch"",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""32174bc0-c200-4054-9169-9a6cd4699454"",
+                    ""path"": ""<XRController>/trigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""XR"",
+                    ""action"": ""Click"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -484,6 +555,8 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         m_UIInputs_Validate = m_UIInputs.FindAction("Validate", throwIfNotFound: true);
         m_UIInputs_Return = m_UIInputs.FindAction("Return", throwIfNotFound: true);
         m_UIInputs_Navigate = m_UIInputs.FindAction("Navigate", throwIfNotFound: true);
+        m_UIInputs_Submit = m_UIInputs.FindAction("Submit", throwIfNotFound: true);
+        m_UIInputs_Click = m_UIInputs.FindAction("Click", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -601,6 +674,8 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
     private readonly InputAction m_UIInputs_Validate;
     private readonly InputAction m_UIInputs_Return;
     private readonly InputAction m_UIInputs_Navigate;
+    private readonly InputAction m_UIInputs_Submit;
+    private readonly InputAction m_UIInputs_Click;
     public struct UIInputsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -608,6 +683,8 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         public InputAction @Validate => m_Wrapper.m_UIInputs_Validate;
         public InputAction @Return => m_Wrapper.m_UIInputs_Return;
         public InputAction @Navigate => m_Wrapper.m_UIInputs_Navigate;
+        public InputAction @Submit => m_Wrapper.m_UIInputs_Submit;
+        public InputAction @Click => m_Wrapper.m_UIInputs_Click;
         public InputActionMap Get() { return m_Wrapper.m_UIInputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -626,6 +703,12 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Navigate.started -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnNavigate;
                 @Navigate.performed -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnNavigate;
                 @Navigate.canceled -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnNavigate;
+                @Submit.started -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnSubmit;
+                @Submit.performed -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnSubmit;
+                @Submit.canceled -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnSubmit;
+                @Click.started -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnClick;
+                @Click.performed -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnClick;
+                @Click.canceled -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnClick;
             }
             m_Wrapper.m_UIInputsActionsCallbackInterface = instance;
             if (instance != null)
@@ -639,6 +722,12 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Navigate.started += instance.OnNavigate;
                 @Navigate.performed += instance.OnNavigate;
                 @Navigate.canceled += instance.OnNavigate;
+                @Submit.started += instance.OnSubmit;
+                @Submit.performed += instance.OnSubmit;
+                @Submit.canceled += instance.OnSubmit;
+                @Click.started += instance.OnClick;
+                @Click.performed += instance.OnClick;
+                @Click.canceled += instance.OnClick;
             }
         }
     }
@@ -674,5 +763,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         void OnValidate(InputAction.CallbackContext context);
         void OnReturn(InputAction.CallbackContext context);
         void OnNavigate(InputAction.CallbackContext context);
+        void OnSubmit(InputAction.CallbackContext context);
+        void OnClick(InputAction.CallbackContext context);
     }
 }
