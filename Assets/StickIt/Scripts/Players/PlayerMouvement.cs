@@ -32,14 +32,13 @@ public class PlayerMouvement : MonoBehaviour
     private float minForceJumpMultiplicator;
     float forceJumpMultiplicator;
     [SerializeField]
-    float speedIncreaseForceJump, coefSpeedIncreaseForceJumpByMass;
+    float speedIncreaseForceJump;
     bool hasJumped = false;
     [SerializeField] AnimationCurve animCurveJumpGravity;
     float t_jump;
     float y_jump = 1;
     public float gravityStrength;
     private Rigidbody rb;
-    private float ratioMass;
     public Vector3 velocityLastFrame = Vector3.zero;
 
     private List<ContactPointSurface> connectedPoints = new List<ContactPointSurface>();
@@ -52,7 +51,9 @@ public class PlayerMouvement : MonoBehaviour
     Vector3 initScale; 
 
     [Header("CollisionVariables")]
-    public Transform firstBone;
+    private float ratioMass;
+    private float ratioMassStrength;
+    [SerializeField] private AnimationCurve ratioMassStrengthCurve;
     public GameObject collisionEffect;
     [SerializeField] float strengthRequiredToImpact, strengthRequiredToBigImpact, strengthMultiplicator;
     public ParticleSystem ChocParticles;
@@ -74,7 +75,6 @@ public class PlayerMouvement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         mesh = GetComponentInChildren<SkinnedMeshRenderer>();
         myScriptSoftBody = GetComponent<OurSphereSoft>();
-        firstBone = transform.GetChild(1);
         dots = new Transform[numberOfDots];
         for (int i = 0; i < dots.Length; i++)
         {
@@ -213,7 +213,7 @@ public class PlayerMouvement : MonoBehaviour
     {
         if (direction != Vector2.zero)
         {
-            forceJumpMultiplicator += Time.deltaTime * (speedIncreaseForceJump / ratioMass);
+            forceJumpMultiplicator += Time.deltaTime * (speedIncreaseForceJump / ratioMassStrength);
             forceJumpMultiplicator = Mathf.Clamp(forceJumpMultiplicator, minForceJumpMultiplicator, 1);
         }
         else forceJumpMultiplicator = minForceJumpMultiplicator;
@@ -246,9 +246,9 @@ public class PlayerMouvement : MonoBehaviour
 
 
                 PlayerMouvement playerCollided = collision.transform.GetComponent<PlayerMouvement>();
-                if (velocityLastFrame.magnitude > playerCollided.velocityLastFrame.magnitude)
+                if (velocityLastFrame.magnitude * ratioMassStrength > playerCollided.velocityLastFrame.magnitude * playerCollided.ratioMassStrength)
                 {
-                    float strength = (velocityLastFrame - playerCollided.velocityLastFrame).magnitude * ratioMass * strengthMultiplicator;
+                    float strength = velocityLastFrame.magnitude * ratioMassStrength * strengthMultiplicator / playerCollided.ratioMassStrength;
                     if (strength >= strengthRequiredToImpact) 
                     ImpactBetweenPlayers(playerCollided, collision.contacts[0], strength);
                 }
@@ -318,23 +318,8 @@ public class PlayerMouvement : MonoBehaviour
 
         Vector3 dir = (playerCollided.transform.position - transform.position).normalized;
         rb.velocity = Vector3.zero;
-        playerCollided.GetBigImpacted(dir, strength);
-        //foreach(ContactPointSurface point in connectedPoints)
-        //{
-        //    if(point.transform == playerCollided.transform)
-        //    {
-        //        connectedPoints.Remove(point);
-        //        break;
-        //    }
-        //}
-        //foreach (ContactPointSurface point in playerCollided.connectedPoints)
-        //{
-        //    if (point.transform == transform)
-        //    {
-        //        connectedPoints.Remove(point);
-        //        break;
-        //    }
-        //}
+        playerCollided.GetImpacted(dir, strength);
+
         bool isPowerfull = strength >= strengthRequiredToBigImpact;
         StartCoroutine(StrongImpact(isPowerfull));
         if (isPowerfull) {
@@ -346,10 +331,10 @@ public class PlayerMouvement : MonoBehaviour
 
     }
 
-    public void GetBigImpacted(Vector3 dir, float strength)
+    public void GetImpacted(Vector3 dir, float strength)
     {
         
-        rb.velocity = dir * strength * 2;
+        rb.velocity = dir * strength;
 
     }
 
@@ -535,6 +520,7 @@ public class PlayerMouvement : MonoBehaviour
     void RescaleMeshWithMass()
     {
         ratioMass = myPlayer.myDatas.mass / 100f;
+        ratioMassStrength = ratioMassStrengthCurve.Evaluate(ratioMass);
         float newScale = initScale.x * ratioMass;
         transform.localScale = new Vector3(newScale, newScale, newScale);
         GameObject bonesParent = transform.Find("Bones").gameObject;
