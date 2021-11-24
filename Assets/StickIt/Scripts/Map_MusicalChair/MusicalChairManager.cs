@@ -132,5 +132,6 @@ public class MusicalChairManager : Level
             winTxt.transform.parent.parent.gameObject.SetActive(true);
             winTxt.GetComponent<Text>().text = "Only losers...";
         }
+        mapManagered = false;
     }
 }
