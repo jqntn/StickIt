@@ -27,10 +27,6 @@ public abstract class CameraState : MonoBehaviour
     public float zoomInMargin = 5.0f;
     public bool canClampZoom = false;
 
-    [Header("----- End Animation -----")]
-    public bool hasZoomOutAtEnd = true;
-    public bool hasCenterMapCamera = true;
-
     [Header("----- Prototype -----")]
     public List<CameraData> datas = new List<CameraData>();
 
@@ -73,10 +69,7 @@ public abstract class CameraState : MonoBehaviour
         cam = Camera.main;
         mapManager = MapManager.instance;
         multiplayerManager = MultiplayerManager.instance;
-        if(multiplayerManager != null)
-        {
-            playerList = multiplayerManager.players;
-        }
+        if(multiplayerManager != null) { playerList = multiplayerManager.players; }
 
         UpdateFrustum();
 
@@ -90,7 +83,6 @@ public abstract class CameraState : MonoBehaviour
             UpdateMoveBounds();
         }
 
-        // Search Max Zoom Out
         SearchMaxOut_Z();
     }
 

@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class CameraBarycenter : CameraState
 {
-
     protected override void Update()
     {
         base.Update();
