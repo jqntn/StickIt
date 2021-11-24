@@ -944,6 +944,7 @@ MonoBehaviour:
   repulsionMultiplier: 0.01
   isSlippery: 1
   maxNumberOfJumps: 1
+  limitAngle: 80
   ratioMassStrengthCurve:
     serializedVersion: 2
     m_Curve:
@@ -974,6 +975,7 @@ MonoBehaviour:
   strengthMultiplicator: 1
   ChocParticles: {fileID: 8597058350541634597, guid: 97e8fd232753b2f458d475cb5677f886, type: 3}
   connexions: 0
+  isDebugLimitAngles: 1
 --- !u!114 &4145983037377531704
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1079,6 +1081,26 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: b9b77ec6-9fc8-4ad8-a2f8-fcf304d35387
     m_ActionName: NormalInputs/Test[/Keyboard/t]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fc47b4be-d562-4653-89df-934de3ec05a2
+    m_ActionName: UIInputs/Validate[/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d899757b-19de-4aa5-b97e-e4e9451fda29
+    m_ActionName: UIInputs/Return[/XInputControllerWindows/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: a0e037f6-2ae6-4d18-9967-23e1225a3bb3
+    m_ActionName: UIInputs/Navigate[/XInputControllerWindows/leftStick/up,/XInputControllerWindows/rightStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows/rightStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows/rightStick/left,/XInputControllerWindows/leftStick/right,/XInputControllerWindows/rightStick/right,/XInputControllerWindows/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 3ff5497e-0b95-4bcd-9cc8-79627a38bb74
+    m_ActionName: UIInputs/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 827cc017-87a6-4b7b-b4ba-f6028add973a
+    m_ActionName: UIInputs/Click[/Mouse/leftButton]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: NormalInputs
@@ -1111,7 +1133,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.0015
+  m_Radius: 0.0013
   m_Center: {x: -4.272185e-14, y: -1.5897913e-15, z: 0.000040470564}
 --- !u!114 &1053407355108592945
 MonoBehaviour:
@@ -1146,8 +1168,8 @@ MonoBehaviour:
   Damper: 0.5
   ColliderSizeRoot: 13
   collSizeRoot: 0.0013
-  ColliderSize: 5
-  collSizeBones: 0.0005
+  ColliderSize: 2
+  collSizeBones: 0.0002
   RigidbodyMass: 0.5
 --- !u!1 &4145983037532592913
 GameObject:
