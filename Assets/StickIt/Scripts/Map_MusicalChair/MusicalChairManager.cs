@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class MusicalChairManager : Level
 {
     [Header("Countdown")]
+    [SerializeField] bool mapManagered;
     [SerializeField] float durationValue;
     float duration;
     [SerializeField] float transitionValue;
@@ -29,6 +30,11 @@ public class MusicalChairManager : Level
     private void Awake()
     {
         durationSpawn = transitionValue / 3;
+    }
+    private void Start()
+    {
+        if(mapManagered)
+            Init();
     }
     // Update is called once per frame
     void Update()

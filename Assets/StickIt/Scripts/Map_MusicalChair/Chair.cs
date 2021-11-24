@@ -44,11 +44,11 @@ public class Chair : MonoBehaviour
             if (playersInChair.Count > 0)
             {
                 isTaken = true;
-                shield.SetActive(false);
+                //shield.SetActive(true);
             }
             else
             {
-                shield.SetActive(false);
+                //shield.SetActive(false);
                 isTaken = false;
             }
             
@@ -84,7 +84,8 @@ public class Chair : MonoBehaviour
     public void DeactivateChair(Color c)
     {
         deactivatedColor = c;
-       // chosenOne = null;
+        gameObject.GetComponent<MeshRenderer>().material.color = c;
+        // chosenOne = null;
         //FAIRE TREMBLER LA CHAISE A L'INVERSE
         if (isActive)
         {
@@ -104,7 +105,6 @@ public class Chair : MonoBehaviour
                 chosenOne = playersInChair[0];
             }
             gameObject.GetComponent<MeshRenderer>().material.color = c;*/
-            gameObject.GetComponent<MeshRenderer>().material.color = c;
             if (isTaken)
                 musicalChairManager.winners.Add(chosenOne);
             isActive = false;
@@ -147,6 +147,9 @@ public class Chair : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
+
+        shield.transform.SetParent(transform);
+        shield.SetActive(false);
     }
     private void OnTriggerEnter(Collider c)
     {
@@ -165,11 +168,17 @@ public class Chair : MonoBehaviour
     }
     private void OnTriggerExit(Collider c)
     {
-        if (c.tag == "Player")
+        if (isActive)
         {
-            playersInChair.Remove(playersInChair.Find(x => c.gameObject.GetComponentInParent<Player>()));
-            if(playersInChair.Count < 1)
-                shield.SetActive(false);
+            if (c.tag == "Player")
+            {
+                playersInChair.Remove(playersInChair.Find(x => c.gameObject.GetComponentInParent<Player>()));
+                if (playersInChair.Count < 1)
+                {
+                    shield.transform.SetParent(transform);
+                    shield.SetActive(false);
+                }
+            }
         }
 
     }
