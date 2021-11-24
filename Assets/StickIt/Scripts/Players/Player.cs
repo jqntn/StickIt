@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public MMFeedbacks deathAnim;
     public GameObject deathPart;
     public bool isDead;
-    void Start()
+    void Awake()
     {
         _multiplayerManager = MultiplayerManager.instance;
         if (TryGetComponent<PlayerMouvement>(out PlayerMouvement pm))
@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
             myMouvementScript = pm;
             myMouvementScript.myPlayer = this;
         }
+
         DontDestroyOnLoad(this);
     }
     public void Death(bool intensityAnim = false)
