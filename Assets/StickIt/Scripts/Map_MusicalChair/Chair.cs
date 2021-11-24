@@ -44,11 +44,11 @@ public class Chair : MonoBehaviour
             if (playersInChair.Count > 0)
             {
                 isTaken = true;
-                shield.SetActive(false);
+                //shield.SetActive(true);
             }
             else
             {
-                shield.SetActive(false);
+                //shield.SetActive(false);
                 isTaken = false;
             }
             
@@ -83,33 +83,13 @@ public class Chair : MonoBehaviour
     }
     public void DeactivateChair(Color c)
     {
-        deactivatedColor = c;
-       // chosenOne = null;
+        gameObject.GetComponent<MeshRenderer>().material.color = c;
         //FAIRE TREMBLER LA CHAISE A L'INVERSE
-        if (isActive)
-        {
-            /*
-            if (playersInChair.Count > 1)
-            {
-                for (int i = 0; i < playersInChair.Count; i++)
-                {
-                    chosenOne = playersInChair[0];
-                    if (Vector3.Distance(chosenOne.transform.position, transform.position) > Vector3.Distance(playersInChair[i].transform.position, transform.position))
-                    {
-                        chosenOne = playersInChair[i];
-                    }
-                }
-            }else if (playersInChair.Count == 1)
-            {
-                chosenOne = playersInChair[0];
-            }
-            gameObject.GetComponent<MeshRenderer>().material.color = c;*/
-            gameObject.GetComponent<MeshRenderer>().material.color = c;
-            if (isTaken)
-                musicalChairManager.winners.Add(chosenOne);
-            isActive = false;
-            DespawnChair();
-        }
+        if (isTaken)
+            musicalChairManager.winners.Add(chosenOne);
+        isActive = false;
+        chosenOne = null;
+        DespawnChair();
     }
     void SpawnChair(Color c) 
     {
@@ -147,6 +127,9 @@ public class Chair : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
+
+        shield.transform.SetParent(transform);
+        shield.SetActive(false);
     }
     private void OnTriggerEnter(Collider c)
     {
@@ -165,11 +148,17 @@ public class Chair : MonoBehaviour
     }
     private void OnTriggerExit(Collider c)
     {
-        if (c.tag == "Player")
+        if (isActive)
         {
-            playersInChair.Remove(playersInChair.Find(x => c.gameObject.GetComponentInParent<Player>()));
-            if(playersInChair.Count < 1)
-                shield.SetActive(false);
+            if (c.tag == "Player")
+            {
+                playersInChair.Remove(playersInChair.Find(x => c.gameObject.GetComponentInParent<Player>()));
+                if (playersInChair.Count < 1)
+                {
+                    shield.transform.SetParent(transform);
+                    shield.SetActive(false);
+                }
+            }
         }
 
     }
