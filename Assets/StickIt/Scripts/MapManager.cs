@@ -17,7 +17,7 @@ public class MapManager : Unique<MapManager>
     public string prevMod;
     public string prevMap;
     public string curMod;
-    public string curMap;
+    public string curMap = "";
     Coroutine _coroutine;
     void OnGUI()
     {
@@ -61,6 +61,7 @@ public class MapManager : Unique<MapManager>
     }
     IEnumerator BeginTransition(string nextMap, bool fromMenu)
     {
+        GameEvents.OnSwitchCamera.Invoke(CameraType.STATIC);
         isBusy = true;
         if (nextMap == "") nextMap = SelectNextMap();
         Time.timeScale = .5f;
@@ -104,6 +105,8 @@ public class MapManager : Unique<MapManager>
         nextMapRoot.transform.position = Vector3.zero;
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         GameEvents.OnSceneUnloaded.Invoke();
+        Debug.Log("Cur Map = " + curMod);
+        GameEvents.OnSwitchCamera.Invoke(Utils.GetCameraType(curMod));
         yield return null;
         Time.timeScale = 1;
         timeScale = Time.timeScale;
