@@ -83,33 +83,13 @@ public class Chair : MonoBehaviour
     }
     public void DeactivateChair(Color c)
     {
-        deactivatedColor = c;
         gameObject.GetComponent<MeshRenderer>().material.color = c;
-        // chosenOne = null;
         //FAIRE TREMBLER LA CHAISE A L'INVERSE
-        if (isActive)
-        {
-            /*
-            if (playersInChair.Count > 1)
-            {
-                for (int i = 0; i < playersInChair.Count; i++)
-                {
-                    chosenOne = playersInChair[0];
-                    if (Vector3.Distance(chosenOne.transform.position, transform.position) > Vector3.Distance(playersInChair[i].transform.position, transform.position))
-                    {
-                        chosenOne = playersInChair[i];
-                    }
-                }
-            }else if (playersInChair.Count == 1)
-            {
-                chosenOne = playersInChair[0];
-            }
-            gameObject.GetComponent<MeshRenderer>().material.color = c;*/
-            if (isTaken)
-                musicalChairManager.winners.Add(chosenOne);
-            isActive = false;
-            DespawnChair();
-        }
+        if (isTaken)
+            musicalChairManager.winners.Add(chosenOne);
+        isActive = false;
+        chosenOne = null;
+        DespawnChair();
     }
     void SpawnChair(Color c) 
     {

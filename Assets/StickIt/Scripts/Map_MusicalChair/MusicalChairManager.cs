@@ -108,7 +108,8 @@ public class MusicalChairManager : Level
         //spawnFeedback.PlayFeedbacksInReverse();
         foreach (Chair c in chairs)
         {
-            c.DeactivateChair(colorChairInactive);
+            if(c.isActive)
+                c.DeactivateChair(colorChairInactive);
         }
         for (int i = MultiplayerManager.instance.alivePlayers.Count - 1; i >= 0; i--)
         {
