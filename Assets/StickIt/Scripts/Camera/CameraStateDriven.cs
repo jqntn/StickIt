@@ -6,9 +6,25 @@ public class CameraStateDriven : MonoBehaviour
 {
     public List<CameraState> statesList = new List<CameraState>();
 
-    [Header("------- DEBUG ------")]
-    public CameraState currentState;
+    [Header("----- DEBUG ------")]
+    [SerializeField] private CameraState currentState;
 
+    [Header("----- Animation -----")]
+    public bool hasZoomOutAtEnd = true;
+    public bool hasCenterMapCamera = true;
+
+    private void Awake()
+    {
+        foreach(CameraState state in statesList)
+        {
+            if (state.isActiveAndEnabled)
+            {
+                currentState = state;
+                break;
+            }
+        }
+        GameEvents.OnSwitchCamera.AddListener(SwitchStates);   
+    }
     public void DeactivateAllCameraState()
     {
         foreach (CameraState state in statesList)
@@ -18,7 +34,8 @@ public class CameraStateDriven : MonoBehaviour
     }
     public void SwitchStates(CameraType type)
     {
-        DeactivateAllCameraState();
+        currentState.gameObject.SetActive(false);
+        
         foreach(CameraState state in statesList)
         {
             if(state.GetCameraType() == type)

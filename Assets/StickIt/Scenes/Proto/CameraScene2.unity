@@ -235,6 +235,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3071383605669792054, guid: b923fe745e1b2284b93eb9e389bfcb35, type: 3}
+      propertyPath: nbrOfPlayer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3071383605669792055, guid: b923fe745e1b2284b93eb9e389bfcb35, type: 3}
       propertyPath: m_Name
       value: MultiplayerManager
@@ -610,6 +614,26 @@ PrefabInstance:
       propertyPath: bounds
       value: 
       objectReference: {fileID: 899214362}
+    - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: moveTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: zoomTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: autoMaxOut_Z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: zoomOutValue
+      value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: zoomOutMargin
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 626349961553394816, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: m_Name
       value: ShakingCameraRig
@@ -1357,13 +1381,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1004629192}
-  m_LocalRotation: {x: 0, y: 0, z: 0.09150162, w: 0.99580497}
-  m_LocalPosition: {x: -12.3, y: 5.5, z: 0}
-  m_LocalScale: {x: 57.6, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0.078459114, w: 0.99691737}
+  m_LocalPosition: {x: -12.7, y: 7.9, z: 0}
+  m_LocalScale: {x: 57.6, y: 4, z: 1}
   m_Children: []
   m_Father: {fileID: 958254459}
   m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 10.5}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 9}
 --- !u!54 &1004629194
 Rigidbody:
   m_ObjectHideFlags: 0
