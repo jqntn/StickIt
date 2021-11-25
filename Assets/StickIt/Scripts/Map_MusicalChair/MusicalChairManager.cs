@@ -33,13 +33,16 @@ public class MusicalChairManager : Level
     }
     private void Start()
     {
-        if(mapManagered)
-            Init();
     }
     // Update is called once per frame
     void Update()
-    {   
-        if(GameLaunched)
+    {
+        if (mapManagered)
+        {
+            Init();
+            mapManagered = false;
+        }
+        if (GameLaunched)
             UpdateText();
     }
     public override void Init()
