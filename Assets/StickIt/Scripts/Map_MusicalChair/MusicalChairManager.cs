@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class MusicalChairManager : Level
 {
     [Header("Countdown")]
+    [SerializeField] bool mapManagered;
     [SerializeField] float durationValue;
     float duration;
     [SerializeField] float transitionValue;
@@ -29,6 +30,11 @@ public class MusicalChairManager : Level
     private void Awake()
     {
         durationSpawn = transitionValue / 3;
+    }
+    private void Start()
+    {
+        if(mapManagered)
+            Init();
     }
     // Update is called once per frame
     void Update()
@@ -102,7 +108,8 @@ public class MusicalChairManager : Level
         //spawnFeedback.PlayFeedbacksInReverse();
         foreach (Chair c in chairs)
         {
-            c.DeactivateChair(colorChairInactive);
+            if(c.isActive)
+                c.DeactivateChair(colorChairInactive);
         }
         for (int i = MultiplayerManager.instance.alivePlayers.Count - 1; i >= 0; i--)
         {
