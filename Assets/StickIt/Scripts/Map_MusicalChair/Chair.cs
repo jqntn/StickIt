@@ -39,23 +39,8 @@ public class Chair : MonoBehaviour
     }
     void TestPlayer()
     {
-        if (isActive)
-        {
-            if (playersInChair.Count > 0)
-            {
-                isTaken = true;
-                //shield.SetActive(true);
-            }
-            else
-            {
-                //shield.SetActive(false);
-                isTaken = false;
-            }
-            
-        }
         if (isTaken)
         {
-            gameObject.GetComponent<MeshRenderer>().material.color = musicalChairManager.colorChairTaken;
             for (int i = 1; i < playersInChair.Count; i++)
             {
                 if (playersInChair.Count > 1 && Vector3.Distance(chosenOne.transform.position, transform.position) > Vector3.Distance(playersInChair[i].transform.position, transform.position))
@@ -63,16 +48,11 @@ public class Chair : MonoBehaviour
                     chosenOne = playersInChair[i];
                 }
             }
-            shield.transform.SetParent(chosenOne.transform);
-            shield.transform.localPosition = new Vector3(0, 0, 0);
-        }
-        else if (!isTaken && isActive)
-        {
-            gameObject.GetComponent<MeshRenderer>().material.color = activatedColor;
-        }
-        else if (!isTaken && !isActive)
-        {
-            gameObject.GetComponent<MeshRenderer>().material.color = deactivatedColor;
+            if (chosenOne)
+            {
+                shield.transform.SetParent(chosenOne.transform);
+                shield.transform.localPosition = new Vector3(0, 0, 0);
+            }
         }
     }
     public void ActivateChair(Color c)
@@ -140,6 +120,8 @@ public class Chair : MonoBehaviour
                 playersInChair.Add(c.gameObject.GetComponentInParent<Player>());
                 if(playersInChair.Count == 1)
                 {
+                    isTaken = true;
+                    gameObject.GetComponent<MeshRenderer>().material.color = musicalChairManager.colorChairTaken;
                     chosenOne = playersInChair[0];
                     shield.SetActive(true);
                 }
@@ -155,6 +137,8 @@ public class Chair : MonoBehaviour
                 playersInChair.Remove(playersInChair.Find(x => c.gameObject.GetComponentInParent<Player>()));
                 if (playersInChair.Count < 1)
                 {
+                    isTaken = false;
+                    gameObject.GetComponent<MeshRenderer>().material.color = activatedColor;
                     shield.transform.SetParent(transform);
                     shield.SetActive(false);
                 }
