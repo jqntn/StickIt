@@ -9,10 +9,6 @@ public class CameraStateDriven : MonoBehaviour
     [Header("----- DEBUG ------")]
     [SerializeField] private CameraState currentState;
 
-    [Header("----- Animation -----")]
-    public bool hasZoomOutAtEnd = true;
-    public bool hasCenterMapCamera = true;
-
     private void Awake()
     {
         foreach(CameraState state in statesList)
