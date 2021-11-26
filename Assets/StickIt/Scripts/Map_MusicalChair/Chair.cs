@@ -27,7 +27,7 @@ public class Chair : MonoBehaviour
     {
         musicalChairManager = FindObjectOfType<MusicalChairManager>();
         duration = musicalChairManager.durationSpawn;
-        spawnPosition = transform.position + transform.up * offsetSpawn;
+        spawnPosition = transform.position + transform.forward * offsetSpawn;
         originalPos = transform.position;
         shield.SetActive(false);
     }
@@ -149,6 +149,6 @@ public class Chair : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.DrawCube(transform.position + transform.up * offsetSpawn, new Vector3(1.8762f, 1.8762f, 1.8762f));
+        Gizmos.DrawMesh(GetComponent<MeshFilter>().sharedMesh,transform.position + transform.forward * offsetSpawn, transform.rotation, transform.localScale);
     }
 }
