@@ -7,7 +7,8 @@ public abstract class CameraState : MonoBehaviour
 {
     [Header("------- Data -------")]
     public CameraType type = CameraType.BARYCENTER;
-    public Collider bounds;
+    public bool autoBounds = true;
+    public Collider camBounds;
 
     [Header("------- Move -------")]
     public bool canMove = true;
@@ -35,12 +36,14 @@ public abstract class CameraState : MonoBehaviour
     [SerializeField] protected MapManager mapManager = null;
     [SerializeField] protected MultiplayerManager multiplayerManager = null;
     [SerializeField] protected List<Player> playerList = new List<Player>();
+    [SerializeField] protected Bounds bounds;
+    [SerializeField] protected Vector3 boundsPos = new Vector3(0.0f, 0.0f, 0.0f);
     [SerializeField] protected Vector3 positionToGoTo = new Vector3(0.0f, 0.0f, 0.0f);
     [SerializeField] protected Vector3 moveVelocity = new Vector3(0.0f, 0.0f, 0.0f);
     [SerializeField] protected Vector3 zoomVelocity = new Vector3(0.0f, 0.0f, 0.0f);
     [SerializeField] protected Vector3 barycenter = new Vector3(0.0f, 0.0f, 0.0f);
-    [SerializeField] protected float bounds_X = 0.0f;
-    [SerializeField] protected float bounds_Y = 0.0f;
+    [SerializeField] protected float bounds_width = 0.0f;
+    [SerializeField] protected float bounds_height = 0.0f;
     [SerializeField] protected float min_bounds_X = 0.0f;
     [SerializeField] protected float max_bounds_X = 0.0f;
     [SerializeField] protected float min_bounds_Y = 0.0f;
@@ -62,6 +65,12 @@ public abstract class CameraState : MonoBehaviour
 
     protected virtual void Awake()
     {
+        if (bounds == null)
+        {
+            bounds = CameraBounds.Instance.GetComponent<Collider>().bounds;
+            //Debug.Log("Please add camera bounds to Camera State");
+        }
+
         GameEvents.OnSceneUnloaded.AddListener(ResetCamera);
     }
     protected virtual void Start()
@@ -75,7 +84,8 @@ public abstract class CameraState : MonoBehaviour
 
         if (bounds == null)
         {
-            Debug.Log("Please add camera bounds to Camera State");
+            bounds = CameraBounds.Instance.GetComponent<Collider>().bounds;
+            //Debug.Log("Please add camera bounds to Camera State");
         }
         else
         {
@@ -86,17 +96,6 @@ public abstract class CameraState : MonoBehaviour
         SearchMaxOut_Z();
     }
 
-    protected virtual void UpdateBounds()
-    {
-        bounds_X = bounds.bounds.size.x;
-        bounds_Y = bounds.bounds.size.y;
-        float offsetX = bounds_X / 2.0f;
-        float offsetY = bounds_Y / 2.0f;
-        min_bounds_X = bounds.gameObject.transform.position.x - offsetX;
-        max_bounds_X = bounds.gameObject.transform.position.x + offsetX;
-        min_bounds_Y = bounds.gameObject.transform.position.y - offsetY;
-        max_bounds_Y = bounds.gameObject.transform.position.y + offsetY;
-    }
     protected virtual void Update()
     {
         // Protections
@@ -160,15 +159,33 @@ public abstract class CameraState : MonoBehaviour
         min_viewport_Y = transform.parent.position.y - offsetY;
         max_viewport_Y = transform.parent.position.y + offsetY;
     }
-    
+
+    protected virtual void UpdateBounds()
+    {
+
+        boundsPos = Camera.main.ScreenToWorldPoint(bounds.center);
+        //Debug.Log(boundsPos);
+        boundsPos.z = 0;
+
+        //bounds_width = newBounds.size.x;
+        //bounds_height = newBounds.size.y;
+
+        float offsetX = bounds_width / 2.0f;
+        float offsetY = bounds_height / 2.0f;
+        min_bounds_X = boundsPos.x - offsetX;
+        max_bounds_X = boundsPos.x + offsetX;
+        min_bounds_Y = boundsPos.y - offsetY;
+        max_bounds_Y = boundsPos.y + offsetY;
+    }
+
     protected void UpdateMoveBounds()
     {
-        float offsetX = (bounds_X - frustumWidth) / 2.0f;
-        float offsetY = (bounds_Y - frustumHeight) / 2.0f;
-        min_moveBounds_X = bounds.transform.position.x - offsetX;
-        max_moveBounds_X = bounds.transform.position.x + offsetX;
-        min_moveBounds_Y = bounds.transform.position.y - offsetY;
-        max_moveBounds_Y = bounds.transform.position.y + offsetY;
+        float offsetX = (bounds_width - frustumWidth) / 2.0f;
+        float offsetY = (bounds_height - frustumHeight) / 2.0f;
+        min_moveBounds_X = boundsPos.x - offsetX;
+        max_moveBounds_X = boundsPos.x + offsetX;
+        min_moveBounds_Y = boundsPos.y - offsetY;
+        max_moveBounds_Y = boundsPos.y + offsetY;
     }
 
     protected void UpdatePlayersBounds()
@@ -220,20 +237,21 @@ public abstract class CameraState : MonoBehaviour
         if (autoMaxOut_Z)
         {
             float maxFrustumHeight = 0.0f;
-            if (bounds_X < bounds_Y)
+            if (bounds_width < bounds_height)
             {
-                float maxFrustumWidth = bounds_X;
+                float maxFrustumWidth = bounds_width;
                 maxFrustumHeight = maxFrustumWidth / cam.aspect;
             }
             else
             {
-                maxFrustumHeight = bounds_Y;
+                maxFrustumHeight = bounds_height;
             }
 
             float distance = -maxFrustumHeight * 0.5f / Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
             maxOut_Z = distance;
         }
     }
+
     #region Public Method
     public CameraType GetCameraType()
     {
@@ -242,7 +260,6 @@ public abstract class CameraState : MonoBehaviour
 
     public void ResetCamera()
     {
-        bounds = CameraBounds.Instance.GetComponent<Collider>();
         UpdateFrustum();
         UpdateBounds();
         UpdateMoveBounds();
@@ -261,11 +278,11 @@ public abstract class CameraState : MonoBehaviour
 
         // Draw Camera Bounds
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(bounds.transform.position, new Vector3(bounds_X, bounds_Y, 1));
+        Gizmos.DrawWireCube(boundsPos, new Vector3(bounds_width, bounds_height, 1));
 
         // Draw Camera Movement Clamp
         Gizmos.color = Color.black;
-        Gizmos.DrawWireCube(bounds.transform.position, new Vector3(bounds_X - frustumWidth, bounds_Y - frustumHeight, 1));
+        Gizmos.DrawWireCube(boundsPos, new Vector3(bounds_width - frustumWidth, bounds_height - frustumHeight, 1));
 
         // Draw Players Bounds
         Gizmos.color = Color.grey;

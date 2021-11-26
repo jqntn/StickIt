@@ -41,8 +41,6 @@ public class CameraStateDriven : MonoBehaviour
                 break;
             }
         }
-
-        Debug.Log("Switch State : " + currentState.name);
     }
 
     public void SwitchToRunner()

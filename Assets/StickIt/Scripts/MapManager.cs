@@ -105,7 +105,6 @@ public class MapManager : Unique<MapManager>
         nextMapRoot.transform.position = Vector3.zero;
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         GameEvents.OnSceneUnloaded.Invoke();
-        Debug.Log("Cur Map = " + curMod);
         GameEvents.OnSwitchCamera.Invoke(Utils.GetCameraType(curMod));
         yield return null;
         Time.timeScale = 1;
