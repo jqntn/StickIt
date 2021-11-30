@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class MusicalChairManager : Level
 {
     [Header("Countdown")]
+    [SerializeField] bool mapManagered;
     [SerializeField] float durationValue;
     float duration;
     [SerializeField] float transitionValue;
@@ -30,10 +31,18 @@ public class MusicalChairManager : Level
     {
         durationSpawn = transitionValue / 3;
     }
+    private void Start()
+    {
+    }
     // Update is called once per frame
     void Update()
-    {   
-        if(GameLaunched)
+    {
+        if (mapManagered)
+        {
+            Init();
+            mapManagered = false;
+        }
+        if (GameLaunched)
             UpdateText();
     }
     public override void Init()
@@ -102,7 +111,8 @@ public class MusicalChairManager : Level
         //spawnFeedback.PlayFeedbacksInReverse();
         foreach (Chair c in chairs)
         {
-            c.DeactivateChair(colorChairInactive);
+            if(c.isActive)
+                c.DeactivateChair(colorChairInactive);
         }
         for (int i = MultiplayerManager.instance.alivePlayers.Count - 1; i >= 0; i--)
         {
@@ -125,5 +135,6 @@ public class MusicalChairManager : Level
             winTxt.transform.parent.parent.gameObject.SetActive(true);
             winTxt.GetComponent<Text>().text = "Only losers...";
         }
+        mapManagered = false;
     }
 }

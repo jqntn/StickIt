@@ -22,7 +22,6 @@ public class Player : MonoBehaviour
             myMouvementScript = pm;
             myMouvementScript.myPlayer = this;
         }
-
         DontDestroyOnLoad(this);
     }
     public void Death(bool intensityAnim = false)
@@ -37,7 +36,6 @@ public class Player : MonoBehaviour
     IEnumerator OnDeath(bool intensityAnim)
     {
         deathAnim.PlayFeedbacks();
-
         if (intensityAnim) yield return new WaitForSeconds(deathAnim.TotalDuration / deathAnim.DurationMultiplier);
         myMouvementScript.Death();
         GameObject obj = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Quaternion.identity);
