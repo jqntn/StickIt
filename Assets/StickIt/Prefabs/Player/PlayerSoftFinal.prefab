@@ -893,7 +893,9 @@ MonoBehaviour:
     nbrVictories: 0
   deathAnim: {fileID: 4145983037230705602}
   deathPart: {fileID: 5927887047650766570, guid: d2f8aa8663903e24d8046d9e962db60e, type: 3}
-  isDead: 0
+  isDead: 1
+  minMass: 100
+  maxMass: 250
 --- !u!114 &2686213359864720554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -945,27 +947,69 @@ MonoBehaviour:
   isSlippery: 1
   maxNumberOfJumps: 1
   limitAngle: 80
-  ratioMassStrengthCurve:
+  CurveSpeedChargeIncrease:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 1
-      value: 1
+      time: 0
+      value: 0
       inSlope: 0
       outSlope: 0
-      tangentMode: 136
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 2
-      value: 4
-      inSlope: 7.746877
-      outSlope: 7.746877
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.050934672
-      outWeight: 0.33333334
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1.0021483
+      value: 0.69269717
+      inSlope: 1.1282626
+      outSlope: 1.1282626
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.3614915
+    - serializedVersion: 3
+      time: 2.0165772
+      value: 3.993777
+      inSlope: 4.201645
+      outSlope: 4.201645
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.20723262
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  CurveStrengthIncrease:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1.0021483
+      value: 0.69269717
+      inSlope: 1.1282626
+      outSlope: 1.1282626
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.3614915
+    - serializedVersion: 3
+      time: 2.0165772
+      value: 3.993777
+      inSlope: 4.201645
+      outSlope: 4.201645
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.20723262
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
@@ -1067,9 +1111,9 @@ MonoBehaviour:
     m_ActionName: NormalInputs/Quit[/Keyboard/escape]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1053407355108592945}
-        m_TargetAssemblyTypeName: OurSphereSoft, Assembly-CSharp
-        m_MethodName: InputTest
+      - m_Target: {fileID: 2741119916479792969}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: InputTestMassM5
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1101,6 +1145,54 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 827cc017-87a6-4b7b-b4ba-f6028add973a
     m_ActionName: UIInputs/Click[/Mouse/leftButton]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2741119916479792969}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: InputTestMassM25
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: eb04e253-26f8-4f39-abd6-2de47bfaec10
+    m_ActionName: NormalInputs/Test1[/XInputControllerWindows/dpad/down]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2741119916479792969}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: InputTestMassP5
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: c604141d-c625-454e-8327-c75afb25a057
+    m_ActionName: NormalInputs/Test2[/XInputControllerWindows/dpad/right]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2741119916479792969}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: InputTestMassP25
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 420328b5-a567-4224-b208-a5a36f816c60
+    m_ActionName: NormalInputs/Test3[/XInputControllerWindows/dpad/up]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: NormalInputs
