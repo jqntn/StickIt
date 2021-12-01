@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{F69E1AE3-7C18-49BC-905B-CA8FDDA6EBAD}" SchemaVersion="103">
 	<States>
-		<WorkUnit Name="Default Work Unit" ID="{F69E1AE3-7C18-49BC-905B-CA8FDDA6EBAD}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{F69E1AE3-7C18-49BC-905B-CA8FDDA6EBAD}" PersistMode="Standalone">
+			<ChildrenList>
+				<StateGroup Name="Level" ID="{66735472-4ECB-42E5-B469-B316F197DD67}">
+					<ChildrenList>
+						<State Name="None" ID="{E224B471-21EB-4BFA-92A7-FEE674D7A361}"/>
+					</ChildrenList>
+				</StateGroup>
+				<StateGroup Name="MusicLevels" ID="{6889DC03-905C-4508-A049-05CF3083F9C8}">
+					<ChildrenList>
+						<State Name="None" ID="{80249DB0-2637-4100-8245-72E87BD0C7AD}"/>
+					</ChildrenList>
+				</StateGroup>
+			</ChildrenList>
+		</WorkUnit>
 	</States>
 </WwiseDocument>
