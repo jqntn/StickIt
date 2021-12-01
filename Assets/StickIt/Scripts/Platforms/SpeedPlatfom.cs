@@ -1,5 +1,5 @@
 using UnityEngine;
-public class PF_Speed : Platform
+public class SpeedPlatfom : Platform
 {
     public bool imposeDir;
     public Vector2 dir;
