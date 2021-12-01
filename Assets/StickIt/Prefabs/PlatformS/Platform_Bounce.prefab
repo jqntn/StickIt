@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7678065510541941671}
   m_Layer: 0
   m_Name: Platform_Bounce
-  m_TagString: Bouncy
+  m_TagString: Icy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 414945358072490686}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 2}
   m_Children:
   - {fileID: 3213607278541431926}
   m_Father: {fileID: 0}
@@ -43,12 +43,10 @@ GameObject:
   - component: {fileID: 2740126775467975668}
   - component: {fileID: 4000823781633964890}
   - component: {fileID: 7247853034467301190}
-  - component: {fileID: 2553378653095421958}
-  - component: {fileID: 1781635526610253321}
   - component: {fileID: 3171029730400900791}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Icy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -123,41 +121,12 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5728185335456548884}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 4a7c3de92064b9642822dedc7c2ea1f7, type: 2}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &2553378653095421958
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5728185335456548884}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &1781635526610253321
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5728185335456548884}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 3
 --- !u!114 &3171029730400900791
 MonoBehaviour:
   m_ObjectHideFlags: 0
