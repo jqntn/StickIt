@@ -1,6 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{4A2B909F-845A-4F38-B136-23294A7C4C55}" SchemaVersion="103">
 	<AudioObjects>
-		<WorkUnit Name="Default Work Unit" ID="{4A2B909F-845A-4F38-B136-23294A7C4C55}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{4A2B909F-845A-4F38-B136-23294A7C4C55}" PersistMode="Standalone">
+			<ChildrenList>
+				<RandomSequenceContainer Name="Environment" ID="{CC35EEE4-1FDA-43CE-82CA-B74D5EF701F5}" ShortID="768312584">
+					<PropertyList>
+						<Property Name="RandomOrSequence" Type="int16" Value="0"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DE92CA94-9BB1-41D2-8FDB-445E36056D37}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="EnvironmentBus" ID="{7B39AD5B-A797-41D2-9E5E-7FB1841282D2}" WorkUnitID="{93ABC6A1-51E8-4922-A887-2E110D8AB324}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<RandomSequenceContainer Name="WoodCreakRandom" ID="{1D4050A4-22C9-46E4-A88B-18DB15E26D86}" ShortID="501424788">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DE92CA94-9BB1-41D2-8FDB-445E36056D37}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{93ABC6A1-51E8-4922-A887-2E110D8AB324}"/>
+								</Reference>
+							</ReferenceList>
+							<ObjectLists/>
+						</RandomSequenceContainer>
+					</ChildrenList>
+					<ObjectLists/>
+				</RandomSequenceContainer>
+				<RandomSequenceContainer Name="SFX" ID="{F5FFF1E0-7DD5-4C33-B635-7D0F55BF808A}" ShortID="876019751">
+					<PropertyList>
+						<Property Name="RandomOrSequence" Type="int16" Value="0"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DE92CA94-9BB1-41D2-8FDB-445E36056D37}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{93ABC6A1-51E8-4922-A887-2E110D8AB324}"/>
+						</Reference>
+					</ReferenceList>
+					<ObjectLists/>
+				</RandomSequenceContainer>
+			</ChildrenList>
+		</WorkUnit>
 	</AudioObjects>
 </WwiseDocument>
