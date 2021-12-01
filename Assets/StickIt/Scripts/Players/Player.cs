@@ -10,7 +10,7 @@ public class Player : MonoBehaviour
     public MMFeedbacks deathAnim;
     public GameObject deathPart;
     public bool isDead;
-    void Start()
+    void Awake()
     {
         _multiplayerManager = MultiplayerManager.instance;
         if (TryGetComponent<PlayerMouvement>(out PlayerMouvement pm))
@@ -18,6 +18,7 @@ public class Player : MonoBehaviour
             myMouvementScript = pm;
             myMouvementScript.myPlayer = this;
         }
+
         DontDestroyOnLoad(this);
     }
     public void Death(bool intensityAnim = false)
@@ -32,11 +33,12 @@ public class Player : MonoBehaviour
     IEnumerator OnDeath(bool intensityAnim)
     {
         deathAnim.PlayFeedbacks();
-        if (intensityAnim) yield return new WaitForSeconds(deathAnim.TotalDuration);
+
+        if (intensityAnim) yield return new WaitForSeconds(deathAnim.TotalDuration / deathAnim.DurationMultiplier);
         myMouvementScript.Death();
         GameObject obj = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Quaternion.identity);
         obj.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
-        GameEvents.CameraShake_CEvent?.Invoke();
+        GameEvents.CameraShake_CEvent?.Invoke(2.0f);
         //
         // ParticleSystem ps = obj.GetComponent<ParticleSystem>();
         // ParticleSystem.Particle[] particles = new ParticleSystem.Particle[ps.particleCount];

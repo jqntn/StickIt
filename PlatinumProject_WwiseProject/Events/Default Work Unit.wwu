@@ -1,6 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{0742BF3C-F919-4DA7-B393-E7EE75D4DEE4}" SchemaVersion="103">
 	<Events>
-		<WorkUnit Name="Default Work Unit" ID="{0742BF3C-F919-4DA7-B393-E7EE75D4DEE4}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{0742BF3C-F919-4DA7-B393-E7EE75D4DEE4}" PersistMode="Standalone">
+			<ChildrenList>
+				<Folder Name="Music" ID="{5BDC3F9F-9FC5-4DF3-8769-A6267335126B}" ShortID="290966774">
+					<ChildrenList>
+						<Event Name="Event_M_Play_Chairs" ID="{2EC100FB-CC38-44DA-8316-47FBC2EB9A27}">
+							<ChildrenList>
+								<Action Name="" ID="{01659EAA-8262-4AF8-8D61-60622DFB1B70}" ShortID="467677730">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="M_Chairs" ID="{0F191C2D-E225-47F7-8C71-54A6DE13E7B8}" WorkUnitID="{649997C0-FAA9-436A-9EDC-004F7BA1BEA3}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Event_M_Play_Deathmatch" ID="{A6EB2851-83EB-4B5E-8E5D-BE694B2518D6}"/>
+						<Event Name="Event_M_Play_Menu" ID="{C096B2A2-68C8-4B9E-8BA5-928B801A35C7}"/>
+					</ChildrenList>
+				</Folder>
+			</ChildrenList>
+		</WorkUnit>
 	</Events>
 </WwiseDocument>

@@ -6,10 +6,6 @@ using UnityEditor;
 [CanEditMultipleObjects]
 public class RunnerManagerEditor : Editor
 {
-    private void OnEnable()
-    {
-        
-    }
     public override void OnInspectorGUI()
     {
         base.OnInspectorGUI();
