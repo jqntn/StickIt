@@ -57,6 +57,30 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Test1"",
+                    ""type"": ""Button"",
+                    ""id"": ""eb04e253-26f8-4f39-abd6-2de47bfaec10"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Test2"",
+                    ""type"": ""Button"",
+                    ""id"": ""c604141d-c625-454e-8327-c75afb25a057"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Test3"",
+                    ""type"": ""Button"",
+                    ""id"": ""420328b5-a567-4224-b208-a5a36f816c60"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -118,11 +142,44 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f1c24fb3-58ad-419d-8e3a-cad8c4b9f8de"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""path"": ""<Gamepad>/dpad/left"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Test"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fabbeff4-dbd9-410d-a731-55bc1d204b37"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Test1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8f1cb0ab-63ed-48e9-8857-8fd44b9fd0d1"",
+                    ""path"": ""<Gamepad>/dpad/right"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Test2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cc7a9d13-cf3b-4537-876f-3e99864c8783"",
+                    ""path"": ""<Gamepad>/dpad/up"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Test3"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -550,6 +607,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         m_NormalInputs_MousePosition = m_NormalInputs.FindAction("MousePosition", throwIfNotFound: true);
         m_NormalInputs_Quit = m_NormalInputs.FindAction("Quit", throwIfNotFound: true);
         m_NormalInputs_Test = m_NormalInputs.FindAction("Test", throwIfNotFound: true);
+        m_NormalInputs_Test1 = m_NormalInputs.FindAction("Test1", throwIfNotFound: true);
+        m_NormalInputs_Test2 = m_NormalInputs.FindAction("Test2", throwIfNotFound: true);
+        m_NormalInputs_Test3 = m_NormalInputs.FindAction("Test3", throwIfNotFound: true);
         // UIInputs
         m_UIInputs = asset.FindActionMap("UIInputs", throwIfNotFound: true);
         m_UIInputs_Validate = m_UIInputs.FindAction("Validate", throwIfNotFound: true);
@@ -611,6 +671,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
     private readonly InputAction m_NormalInputs_MousePosition;
     private readonly InputAction m_NormalInputs_Quit;
     private readonly InputAction m_NormalInputs_Test;
+    private readonly InputAction m_NormalInputs_Test1;
+    private readonly InputAction m_NormalInputs_Test2;
+    private readonly InputAction m_NormalInputs_Test3;
     public struct NormalInputsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -620,6 +683,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         public InputAction @MousePosition => m_Wrapper.m_NormalInputs_MousePosition;
         public InputAction @Quit => m_Wrapper.m_NormalInputs_Quit;
         public InputAction @Test => m_Wrapper.m_NormalInputs_Test;
+        public InputAction @Test1 => m_Wrapper.m_NormalInputs_Test1;
+        public InputAction @Test2 => m_Wrapper.m_NormalInputs_Test2;
+        public InputAction @Test3 => m_Wrapper.m_NormalInputs_Test3;
         public InputActionMap Get() { return m_Wrapper.m_NormalInputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -644,6 +710,15 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Test.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest;
                 @Test.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest;
                 @Test.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest;
+                @Test1.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest1;
+                @Test1.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest1;
+                @Test1.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest1;
+                @Test2.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest2;
+                @Test2.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest2;
+                @Test2.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest2;
+                @Test3.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest3;
+                @Test3.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest3;
+                @Test3.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest3;
             }
             m_Wrapper.m_NormalInputsActionsCallbackInterface = instance;
             if (instance != null)
@@ -663,6 +738,15 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Test.started += instance.OnTest;
                 @Test.performed += instance.OnTest;
                 @Test.canceled += instance.OnTest;
+                @Test1.started += instance.OnTest1;
+                @Test1.performed += instance.OnTest1;
+                @Test1.canceled += instance.OnTest1;
+                @Test2.started += instance.OnTest2;
+                @Test2.performed += instance.OnTest2;
+                @Test2.canceled += instance.OnTest2;
+                @Test3.started += instance.OnTest3;
+                @Test3.performed += instance.OnTest3;
+                @Test3.canceled += instance.OnTest3;
             }
         }
     }
@@ -757,6 +841,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         void OnMousePosition(InputAction.CallbackContext context);
         void OnQuit(InputAction.CallbackContext context);
         void OnTest(InputAction.CallbackContext context);
+        void OnTest1(InputAction.CallbackContext context);
+        void OnTest2(InputAction.CallbackContext context);
+        void OnTest3(InputAction.CallbackContext context);
     }
     public interface IUIInputsActions
     {

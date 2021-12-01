@@ -44,6 +44,30 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Test1",
+                    "type": "Button",
+                    "id": "eb04e253-26f8-4f39-abd6-2de47bfaec10",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Test2",
+                    "type": "Button",
+                    "id": "c604141d-c625-454e-8327-c75afb25a057",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Test3",
+                    "type": "Button",
+                    "id": "420328b5-a567-4224-b208-a5a36f816c60",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -105,11 +129,44 @@
                 {
                     "name": "",
                     "id": "f1c24fb3-58ad-419d-8e3a-cad8c4b9f8de",
-                    "path": "<Gamepad>/leftShoulder",
+                    "path": "<Gamepad>/dpad/left",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Test",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fabbeff4-dbd9-410d-a731-55bc1d204b37",
+                    "path": "<Gamepad>/dpad/down",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Test1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8f1cb0ab-63ed-48e9-8857-8fd44b9fd0d1",
+                    "path": "<Gamepad>/dpad/right",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Test2",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cc7a9d13-cf3b-4537-876f-3e99864c8783",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Test3",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
