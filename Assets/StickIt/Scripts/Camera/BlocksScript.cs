@@ -4,7 +4,7 @@ public class BlocksScript : MonoBehaviour
 {
     public Vector2 extend = new Vector2(0.0f, 0.0f);
 
-    #region Property Field
+    #region Grayed out
     public Bounds bounds = new Bounds();
     public Vector2 boundsPos  = new Vector2(0.0f, 0.0f);
     public Vector2 max = new Vector2(0.0f, 0.0f);
@@ -39,9 +39,9 @@ public class BlocksScript : MonoBehaviour
         }
 
         Collider childCollider = temp_width.GetComponent<Collider>();
-        dimension.x = childCollider.bounds.size.x;
+        dimension.x = childCollider.bounds.size.x + extend.x;
         childCollider = temp_height.GetComponent<Collider>();
-        dimension.y = childCollider.bounds.size.y;
+        dimension.y = childCollider.bounds.size.y + extend.y;
 
         boundsPos = bounds.center;
     }
@@ -51,7 +51,7 @@ public class BlocksScript : MonoBehaviour
     {
         // Draw Camera Bounds
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(boundsPos, new Vector3(bounds.size.x + dimension.x + extend.x, bounds.size.y + dimension.y + extend.y, 1));
+        Gizmos.DrawWireCube(boundsPos, new Vector3(bounds.size.x + dimension.x, bounds.size.y + dimension.y, 1));
     }
     #endregion
 }
