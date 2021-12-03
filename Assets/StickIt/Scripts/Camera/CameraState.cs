@@ -9,6 +9,7 @@ public abstract class CameraState : MonoBehaviour
     public CameraType type = CameraType.BARYCENTER;
     public bool autoBounds = true;
     public Collider camBounds;
+    public Vector3 offset = new Vector3(0.0f, 0.0f, 0.0f);
 
     [Header("------- Move -------")]
     public bool canMove = true;
@@ -58,7 +59,7 @@ public abstract class CameraState : MonoBehaviour
     protected virtual void Awake()
     {
         GameEvents.OnSceneUnloaded.AddListener(ResetCamera);
-
+        if (SceneManager.GetActiveScene().name == "1_MenuSelection" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
         TakeNewBounds();
     }
     protected virtual void Start()
@@ -71,8 +72,10 @@ public abstract class CameraState : MonoBehaviour
         UpdateFrustum();
 
         blocksScript = BlocksScript.Instance;
+   
         if(blocksScript != null)
         {
+            Debug.Log("Block script ");
             TakeNewBounds();
             UpdateMoveBounds();
         }
@@ -83,7 +86,7 @@ public abstract class CameraState : MonoBehaviour
     protected virtual void Update()
     {
         // Protections
-        if (SceneManager.GetActiveScene().name == "0_MenuSelection" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
+        if (SceneManager.GetActiveScene().name == "1_MenuSelection" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
         if (multiplayerManager == null) { return; }
         if (mapManager == null) { return; }
         if (cam == null) { return; }
@@ -98,7 +101,7 @@ public abstract class CameraState : MonoBehaviour
     protected virtual void LateUpdate()
     {
         // Protections
-        if (SceneManager.GetActiveScene().name == "0_MenuSelection" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
+        if (SceneManager.GetActiveScene().name == "1_MenuSelection" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
         if (multiplayerManager == null) { return; }
         if (mapManager == null) { return; }
         if (cam == null) { return; }
@@ -110,13 +113,14 @@ public abstract class CameraState : MonoBehaviour
 
     protected virtual void UpdateCamera()
     {
+        /*
         // Move Camera
         Vector3 newPos = new Vector3(
             positionToGoTo.x,
             positionToGoTo.y,
             transform.parent.position.z);
         transform.parent.position = Vector3.SmoothDamp(transform.parent.position, newPos, ref moveVelocity, moveTime);
-
+        */
         // if zooming out and is touching border > return and wait to move first
         bool isTouchingBorder = 
             min_viewport.x <= min_bounds.x || max_viewport.x >= max_bounds.x;
@@ -146,6 +150,7 @@ public abstract class CameraState : MonoBehaviour
 
     protected virtual void TakeNewBounds()
     {
+        if (blocksScript == null) return;
         boundsPos = blocksScript.boundsPos;
         bounds_dimension = blocksScript.dimension;
         float offsetX = bounds_dimension.x/ 2.0f;
@@ -238,6 +243,7 @@ public abstract class CameraState : MonoBehaviour
 
     public void ResetCamera()
     {
+        blocksScript = BlocksScript.Instance;
         UpdateFrustum();
         TakeNewBounds();
         UpdateMoveBounds();

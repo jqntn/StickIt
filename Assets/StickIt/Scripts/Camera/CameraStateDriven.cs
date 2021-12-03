@@ -43,6 +43,7 @@ public class CameraStateDriven : MonoBehaviour
         }
     }
 
+    // DEBUG FUNCTION
     public void SwitchToRunner()
     {
         SwitchStates(CameraType.RUNNER);

@@ -44,8 +44,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 1
-  centerMap: {fileID: 0}
-  bounds: {fileID: 0}
+  autoBounds: 1
+  camBounds: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
   canMove: 1
   moveTime: 0.5
   freezeX: 0
@@ -55,14 +56,14 @@ MonoBehaviour:
   autoMaxOut_Z: 0
   maxOut_Z: -110
   maxIn_Z: -70
-  zoomOutMargin: 2
-  zoomInMargin: 5
   zoomOutValue: -10
   zoomInValue: 10
-  hasZoomOutAtEnd: 1
-  hasCenterMapCamera: 1
+  zoomOutMargin: 2
+  zoomInMargin: 5
+  canClampZoom: 0
   datas: []
   cam: {fileID: 0}
+  blocksScript: {fileID: 0}
   mapManager: {fileID: 0}
   multiplayerManager: {fileID: 0}
   playerList: []
@@ -70,27 +71,19 @@ MonoBehaviour:
   moveVelocity: {x: 0, y: 0, z: 0}
   zoomVelocity: {x: 0, y: 0, z: 0}
   barycenter: {x: 0, y: 0, z: 0}
-  bounds_X: 0
-  bounds_Y: 0
-  min_bounds_X: 0
-  max_bounds_X: 0
-  min_bounds_Y: 0
-  max_bounds_Y: 0
-  min_moveBounds_X: 0
-  max_moveBounds_X: 0
-  min_moveBounds_Y: 0
-  max_moveBounds_Y: 0
-  frustumHeight: 0
-  frustumWidth: 0
-  min_viewport_X: 0
-  max_viewport_X: 0
-  min_viewport_Y: 0
-  max_viewport_Y: 0
+  boundsPos: {x: 0, y: 0}
+  bounds_dimension: {x: 0, y: 0}
+  min_bounds: {x: 0, y: 0}
+  max_bounds: {x: 0, y: 0}
+  min_moveBounds: {x: 0, y: 0}
+  max_moveBounds: {x: 0, y: 0}
+  frustum_dimension: {x: 0, y: 0}
+  min_viewport: {x: 0, y: 0}
+  max_viewport: {x: 0, y: 0}
   playersBounds_X: 0
   playersBounds_Y: 0
-  min_playersBounds_X: 0
-  max_playersBounds_X: 0
-  hasZoom: 0
+  min_playerBounds: {x: 0, y: 0}
+  max_playerBounds: {x: 0, y: 0}
 --- !u!1 &763934882
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,8 +128,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3
-  centerMap: {fileID: 0}
-  bounds: {fileID: 0}
+  autoBounds: 1
+  camBounds: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
   canMove: 1
   moveTime: 0.5
   freezeX: 0
@@ -146,14 +140,14 @@ MonoBehaviour:
   autoMaxOut_Z: 0
   maxOut_Z: -110
   maxIn_Z: -70
-  zoomOutMargin: 2
-  zoomInMargin: 5
   zoomOutValue: -10
   zoomInValue: 10
-  hasZoomOutAtEnd: 1
-  hasCenterMapCamera: 1
+  zoomOutMargin: 2
+  zoomInMargin: 5
+  canClampZoom: 0
   datas: []
   cam: {fileID: 0}
+  blocksScript: {fileID: 0}
   mapManager: {fileID: 0}
   multiplayerManager: {fileID: 0}
   playerList: []
@@ -161,27 +155,20 @@ MonoBehaviour:
   moveVelocity: {x: 0, y: 0, z: 0}
   zoomVelocity: {x: 0, y: 0, z: 0}
   barycenter: {x: 0, y: 0, z: 0}
-  bounds_X: 0
-  bounds_Y: 0
-  min_bounds_X: 0
-  max_bounds_X: 0
-  min_bounds_Y: 0
-  max_bounds_Y: 0
-  min_moveBounds_X: 0
-  max_moveBounds_X: 0
-  min_moveBounds_Y: 0
-  max_moveBounds_Y: 0
-  frustumHeight: 0
-  frustumWidth: 0
-  min_viewport_X: 0
-  max_viewport_X: 0
-  min_viewport_Y: 0
-  max_viewport_Y: 0
+  boundsPos: {x: 0, y: 0}
+  bounds_dimension: {x: 0, y: 0}
+  min_bounds: {x: 0, y: 0}
+  max_bounds: {x: 0, y: 0}
+  min_moveBounds: {x: 0, y: 0}
+  max_moveBounds: {x: 0, y: 0}
+  frustum_dimension: {x: 0, y: 0}
+  min_viewport: {x: 0, y: 0}
+  max_viewport: {x: 0, y: 0}
   playersBounds_X: 0
   playersBounds_Y: 0
-  min_playersBounds_X: 0
-  max_playersBounds_X: 0
-  hasZoom: 0
+  min_playerBounds: {x: 0, y: 0}
+  max_playerBounds: {x: 0, y: 0}
+  timer: 0
 --- !u!1 &956793739
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,8 +213,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 2
-  centerMap: {fileID: 0}
-  bounds: {fileID: 0}
+  autoBounds: 1
+  camBounds: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
   canMove: 1
   moveTime: 0.5
   freezeX: 0
@@ -237,14 +225,14 @@ MonoBehaviour:
   autoMaxOut_Z: 1
   maxOut_Z: -110
   maxIn_Z: -70
-  zoomOutMargin: 2
-  zoomInMargin: 5
   zoomOutValue: -10
   zoomInValue: 10
-  hasZoomOutAtEnd: 1
-  hasCenterMapCamera: 1
+  zoomOutMargin: 2
+  zoomInMargin: 5
+  canClampZoom: 0
   datas: []
   cam: {fileID: 0}
+  blocksScript: {fileID: 0}
   mapManager: {fileID: 0}
   multiplayerManager: {fileID: 0}
   playerList: []
@@ -252,27 +240,19 @@ MonoBehaviour:
   moveVelocity: {x: 0, y: 0, z: 0}
   zoomVelocity: {x: 0, y: 0, z: 0}
   barycenter: {x: 0, y: 0, z: 0}
-  bounds_X: 0
-  bounds_Y: 0
-  min_bounds_X: 0
-  max_bounds_X: 0
-  min_bounds_Y: 0
-  max_bounds_Y: 0
-  min_moveBounds_X: 0
-  max_moveBounds_X: 0
-  min_moveBounds_Y: 0
-  max_moveBounds_Y: 0
-  frustumHeight: 0
-  frustumWidth: 0
-  min_viewport_X: 0
-  max_viewport_X: 0
-  min_viewport_Y: 0
-  max_viewport_Y: 0
+  boundsPos: {x: 0, y: 0}
+  bounds_dimension: {x: 0, y: 0}
+  min_bounds: {x: 0, y: 0}
+  max_bounds: {x: 0, y: 0}
+  min_moveBounds: {x: 0, y: 0}
+  max_moveBounds: {x: 0, y: 0}
+  frustum_dimension: {x: 0, y: 0}
+  min_viewport: {x: 0, y: 0}
+  max_viewport: {x: 0, y: 0}
   playersBounds_X: 0
   playersBounds_Y: 0
-  min_playersBounds_X: 0
-  max_playersBounds_X: 0
-  hasZoom: 0
+  min_playerBounds: {x: 0, y: 0}
+  max_playerBounds: {x: 0, y: 0}
   distanceBeforeBorder: 0
   deathMargin: 10
   timeBeforeDeath: 0.2
@@ -332,8 +312,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   type: 0
-  centerMap: {fileID: 0}
-  bounds: {fileID: 0}
+  autoBounds: 0
+  camBounds: {fileID: 0}
+  offset: {x: 0, y: 0, z: 0}
   canMove: 1
   moveTime: 0.5
   freezeX: 0
@@ -343,14 +324,14 @@ MonoBehaviour:
   autoMaxOut_Z: 1
   maxOut_Z: -300
   maxIn_Z: -70
-  zoomOutMargin: 1
-  zoomInMargin: 5
   zoomOutValue: -10
   zoomInValue: 10
-  hasZoomOutAtEnd: 1
-  hasCenterMapCamera: 1
+  zoomOutMargin: 1
+  zoomInMargin: 5
+  canClampZoom: 0
   datas: []
   cam: {fileID: 0}
+  blocksScript: {fileID: 0}
   mapManager: {fileID: 0}
   multiplayerManager: {fileID: 0}
   playerList: []
@@ -358,27 +339,19 @@ MonoBehaviour:
   moveVelocity: {x: 0, y: 0, z: 0}
   zoomVelocity: {x: 0, y: 0, z: 0}
   barycenter: {x: 0, y: 0, z: 0}
-  bounds_X: 0
-  bounds_Y: 0
-  min_bounds_X: 0
-  max_bounds_X: 0
-  min_bounds_Y: 0
-  max_bounds_Y: 0
-  min_moveBounds_X: 0
-  max_moveBounds_X: 0
-  min_moveBounds_Y: 0
-  max_moveBounds_Y: 0
-  frustumHeight: 0
-  frustumWidth: 0
-  min_viewport_X: 0
-  max_viewport_X: 0
-  min_viewport_Y: 0
-  max_viewport_Y: 0
+  boundsPos: {x: 0, y: 0}
+  bounds_dimension: {x: 0, y: 0}
+  min_bounds: {x: 0, y: 0}
+  max_bounds: {x: 0, y: 0}
+  min_moveBounds: {x: 0, y: 0}
+  max_moveBounds: {x: 0, y: 0}
+  frustum_dimension: {x: 0, y: 0}
+  min_viewport: {x: 0, y: 0}
+  max_viewport: {x: 0, y: 0}
   playersBounds_X: 0
   playersBounds_Y: 0
-  min_playersBounds_X: 0
-  max_playersBounds_X: 0
-  hasZoom: 0
+  min_playerBounds: {x: 0, y: 0}
+  max_playerBounds: {x: 0, y: 0}
 --- !u!1 &175067061385021682
 GameObject:
   m_ObjectHideFlags: 0
