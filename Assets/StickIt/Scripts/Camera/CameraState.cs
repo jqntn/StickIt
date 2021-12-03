@@ -7,7 +7,9 @@ public abstract class CameraState : MonoBehaviour
 {
     [Header("------- Data -------")]
     public CameraType type = CameraType.BARYCENTER;
-    public Collider bounds;
+    public bool autoBounds = true;
+    public Collider camBounds;
+    public Vector3 offset = new Vector3(0.0f, 0.0f, 0.0f);
 
     [Header("------- Move -------")]
     public bool canMove = true;
@@ -32,6 +34,7 @@ public abstract class CameraState : MonoBehaviour
 
     [Header("----- Debug -----")]
     [SerializeField] protected Camera cam = null;
+    [SerializeField] protected BlocksScript blocksScript = null;
     [SerializeField] protected MapManager mapManager = null;
     [SerializeField] protected MultiplayerManager multiplayerManager = null;
     [SerializeField] protected List<Player> playerList = new List<Player>();
@@ -39,30 +42,25 @@ public abstract class CameraState : MonoBehaviour
     [SerializeField] protected Vector3 moveVelocity = new Vector3(0.0f, 0.0f, 0.0f);
     [SerializeField] protected Vector3 zoomVelocity = new Vector3(0.0f, 0.0f, 0.0f);
     [SerializeField] protected Vector3 barycenter = new Vector3(0.0f, 0.0f, 0.0f);
-    [SerializeField] protected float bounds_X = 0.0f;
-    [SerializeField] protected float bounds_Y = 0.0f;
-    [SerializeField] protected float min_bounds_X = 0.0f;
-    [SerializeField] protected float max_bounds_X = 0.0f;
-    [SerializeField] protected float min_bounds_Y = 0.0f;
-    [SerializeField] protected float max_bounds_Y = 0.0f;
-    [SerializeField] protected float min_moveBounds_X = 0.0f;
-    [SerializeField] protected float max_moveBounds_X = 0.0f;
-    [SerializeField] protected float min_moveBounds_Y = 0.0f;
-    [SerializeField] protected float max_moveBounds_Y = 0.0f;
-    [SerializeField] protected float frustumHeight = 0.0f;
-    [SerializeField] protected float frustumWidth = 0.0f;
-    [SerializeField] protected float min_viewport_X = 0.0f;
-    [SerializeField] protected float max_viewport_X = 0.0f;
-    [SerializeField] protected float min_viewport_Y = 0.0f;
-    [SerializeField] protected float max_viewport_Y = 0.0f;
+    [SerializeField] protected Vector2 boundsPos = new Vector3(0.0f, 0.0f);
+    [SerializeField] protected Vector2 bounds_dimension = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 min_bounds = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 max_bounds = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 min_moveBounds = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 max_moveBounds = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 frustum_dimension = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 min_viewport = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 max_viewport = new Vector2(0.0f, 0.0f);
     [SerializeField] protected float playersBounds_X = 0.0f;
     [SerializeField] protected float playersBounds_Y = 0.0f;
-    [SerializeField] protected float min_playersBounds_X = 0.0f;
-    [SerializeField] protected float max_playersBounds_X = 0.0f;
+    [SerializeField] protected Vector2 min_playerBounds = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 max_playerBounds = new Vector2(0.0f, 0.0f);
 
     protected virtual void Awake()
     {
         GameEvents.OnSceneUnloaded.AddListener(ResetCamera);
+        if (SceneManager.GetActiveScene().name == "1_MenuSelection" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
+        TakeNewBounds();
     }
     protected virtual void Start()
     {
@@ -73,34 +71,22 @@ public abstract class CameraState : MonoBehaviour
 
         UpdateFrustum();
 
-        if (bounds == null)
+        blocksScript = BlocksScript.Instance;
+   
+        if(blocksScript != null)
         {
-            Debug.Log("Please add camera bounds to Camera State");
-        }
-        else
-        {
-            UpdateBounds();
+            Debug.Log("Block script ");
+            TakeNewBounds();
             UpdateMoveBounds();
         }
 
         SearchMaxOut_Z();
     }
 
-    protected virtual void UpdateBounds()
-    {
-        bounds_X = bounds.bounds.size.x;
-        bounds_Y = bounds.bounds.size.y;
-        float offsetX = bounds_X / 2.0f;
-        float offsetY = bounds_Y / 2.0f;
-        min_bounds_X = bounds.gameObject.transform.position.x - offsetX;
-        max_bounds_X = bounds.gameObject.transform.position.x + offsetX;
-        min_bounds_Y = bounds.gameObject.transform.position.y - offsetY;
-        max_bounds_Y = bounds.gameObject.transform.position.y + offsetY;
-    }
     protected virtual void Update()
     {
         // Protections
-        if (SceneManager.GetActiveScene().name == "0_MenuSelection" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
+        if (SceneManager.GetActiveScene().name == "1_MenuSelection" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
         if (multiplayerManager == null) { return; }
         if (mapManager == null) { return; }
         if (cam == null) { return; }
@@ -115,7 +101,7 @@ public abstract class CameraState : MonoBehaviour
     protected virtual void LateUpdate()
     {
         // Protections
-        if (SceneManager.GetActiveScene().name == "0_MenuSelection" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
+        if (SceneManager.GetActiveScene().name == "1_MenuSelection" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
         if (multiplayerManager == null) { return; }
         if (mapManager == null) { return; }
         if (cam == null) { return; }
@@ -127,16 +113,17 @@ public abstract class CameraState : MonoBehaviour
 
     protected virtual void UpdateCamera()
     {
+        /*
         // Move Camera
         Vector3 newPos = new Vector3(
             positionToGoTo.x,
             positionToGoTo.y,
             transform.parent.position.z);
         transform.parent.position = Vector3.SmoothDamp(transform.parent.position, newPos, ref moveVelocity, moveTime);
-
+        */
         // if zooming out and is touching border > return and wait to move first
         bool isTouchingBorder = 
-            min_viewport_X <= min_bounds_X || max_viewport_X >= max_bounds_X;
+            min_viewport.x <= min_bounds.x || max_viewport.x >= max_bounds.x;
         if (canClampZoom && positionToGoTo.z < transform.parent.position.z && isTouchingBorder) { return; }
         
         // Zoom Camera
@@ -150,25 +137,38 @@ public abstract class CameraState : MonoBehaviour
     protected void UpdateFrustum()
     {
         float distance = -transform.parent.position.z;
-        frustumHeight = 2.0f * distance * Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
-        frustumWidth = frustumHeight * cam.aspect;
+        frustum_dimension.y = 2.0f * distance * Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
+        frustum_dimension.x = frustum_dimension.y * cam.aspect;
 
-        float offsetX = frustumWidth / 2.0f;
-        float offsetY = frustumHeight / 2.0f;
-        min_viewport_X = transform.parent.position.x - offsetX;
-        max_viewport_X = transform.parent.position.x + offsetX;
-        min_viewport_Y = transform.parent.position.y - offsetY;
-        max_viewport_Y = transform.parent.position.y + offsetY;
+        float offsetX = frustum_dimension.x / 2.0f;
+        float offsetY = frustum_dimension.y / 2.0f;
+        min_viewport.x = transform.parent.position.x - offsetX;
+        max_viewport.x = transform.parent.position.x + offsetX;
+        min_viewport.y = transform.parent.position.y - offsetY;
+        max_viewport.y = transform.parent.position.y + offsetY;
     }
-    
+
+    protected virtual void TakeNewBounds()
+    {
+        if (blocksScript == null) return;
+        boundsPos = blocksScript.boundsPos;
+        bounds_dimension = blocksScript.dimension;
+        float offsetX = bounds_dimension.x/ 2.0f;
+        float offsetY = bounds_dimension.y / 2.0f;
+        min_bounds.x = boundsPos.x - offsetX;
+        max_bounds.x = boundsPos.x + offsetX;
+        min_bounds.y = boundsPos.y - offsetY;
+        max_bounds.y = boundsPos.y + offsetY;
+    }
+
     protected void UpdateMoveBounds()
     {
-        float offsetX = (bounds_X - frustumWidth) / 2.0f;
-        float offsetY = (bounds_Y - frustumHeight) / 2.0f;
-        min_moveBounds_X = bounds.transform.position.x - offsetX;
-        max_moveBounds_X = bounds.transform.position.x + offsetX;
-        min_moveBounds_Y = bounds.transform.position.y - offsetY;
-        max_moveBounds_Y = bounds.transform.position.y + offsetY;
+        float offsetX = (bounds_dimension.x - frustum_dimension.x) / 2.0f;
+        float offsetY = (bounds_dimension.y - frustum_dimension.y) / 2.0f;
+        max_moveBounds.x = boundsPos.x + offsetX;
+        min_moveBounds.x = boundsPos.x - offsetX;
+        min_moveBounds.y = boundsPos.y - offsetY;
+        max_moveBounds.y = boundsPos.y + offsetY;
     }
 
     protected void UpdatePlayersBounds()
@@ -184,15 +184,15 @@ public abstract class CameraState : MonoBehaviour
         playersBounds_Y = playersBounds.size.y;
 
         float offsetX = playersBounds_X;
-        min_playersBounds_X = barycenter.x - offsetX;
-        max_playersBounds_X = barycenter.x + offsetX;
+        min_playerBounds.x = barycenter.x - offsetX;
+        max_playerBounds.x = barycenter.x + offsetX;
     }
 
     protected virtual void UpdateZoom() {
         // Zoom Out
-        float min_zoomOut_X = min_playersBounds_X - zoomOutMargin;
-        float max_zoomOut_X = max_playersBounds_X + zoomOutMargin;
-        bool canZoomOut = (min_viewport_X >= min_zoomOut_X && max_viewport_X <= max_zoomOut_X)
+        float min_zoomOut_X = min_playerBounds.x - zoomOutMargin;
+        float max_zoomOut_X = max_playerBounds.x + zoomOutMargin;
+        bool canZoomOut = (min_viewport.x >= min_zoomOut_X && max_viewport.x <= max_zoomOut_X)
                           && -Mathf.Floor(-transform.parent.position.z) > maxOut_Z;
         // If Viewport is too small compare to bounds players
         if (canZoomOut)
@@ -202,11 +202,11 @@ public abstract class CameraState : MonoBehaviour
         }
 
         // Zoom In
-        float min_zoomIn_X = min_playersBounds_X - zoomInMargin;
-        float max_zoomIn_X = max_playersBounds_X + zoomInMargin;
+        float min_zoomIn_X = min_playerBounds.x - zoomInMargin;
+        float max_zoomIn_X = max_playerBounds.x + zoomInMargin;
 
         // If Viewport is too big compare to bounds players
-        bool canZoomIn = (min_viewport_X <= min_zoomIn_X || max_viewport_X >= max_zoomIn_X)
+        bool canZoomIn = (min_viewport.x <= min_zoomIn_X || max_viewport.x >= max_zoomIn_X)
                          && -Mathf.Floor(-transform.parent.position.z) < maxIn_Z;
         if (canZoomIn)
         {
@@ -220,20 +220,21 @@ public abstract class CameraState : MonoBehaviour
         if (autoMaxOut_Z)
         {
             float maxFrustumHeight = 0.0f;
-            if (bounds_X < bounds_Y)
+            if (bounds_dimension.x < bounds_dimension.y)
             {
-                float maxFrustumWidth = bounds_X;
+                float maxFrustumWidth = bounds_dimension.x;
                 maxFrustumHeight = maxFrustumWidth / cam.aspect;
             }
             else
             {
-                maxFrustumHeight = bounds_Y;
+                maxFrustumHeight = bounds_dimension.y;
             }
 
             float distance = -maxFrustumHeight * 0.5f / Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
             maxOut_Z = distance;
         }
     }
+
     #region Public Method
     public CameraType GetCameraType()
     {
@@ -242,9 +243,9 @@ public abstract class CameraState : MonoBehaviour
 
     public void ResetCamera()
     {
-        bounds = CameraBounds.Instance.GetComponent<Collider>();
+        blocksScript = BlocksScript.Instance;
         UpdateFrustum();
-        UpdateBounds();
+        TakeNewBounds();
         UpdateMoveBounds();
         UpdatePlayersBounds();
         SearchMaxOut_Z();
@@ -254,18 +255,17 @@ public abstract class CameraState : MonoBehaviour
     #region Debug
     protected virtual void OnDrawGizmosSelected()
     {
-        if(bounds == null) { return; }
         // Draw Camera Viewport
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.parent.position, new Vector3(frustumWidth, frustumHeight, 1));
+        Gizmos.DrawWireCube(transform.parent.position, new Vector3(frustum_dimension.x, frustum_dimension.y, 1));
 
         // Draw Camera Bounds
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(bounds.transform.position, new Vector3(bounds_X, bounds_Y, 1));
+        Gizmos.DrawWireCube(boundsPos, new Vector3(bounds_dimension.x, bounds_dimension.y, 1));
 
         // Draw Camera Movement Clamp
         Gizmos.color = Color.black;
-        Gizmos.DrawWireCube(bounds.transform.position, new Vector3(bounds_X - frustumWidth, bounds_Y - frustumHeight, 1));
+        Gizmos.DrawWireCube(boundsPos, new Vector3(bounds_dimension.x - frustum_dimension.x, bounds_dimension.y - frustum_dimension.y, 1));
 
         // Draw Players Bounds
         Gizmos.color = Color.grey;

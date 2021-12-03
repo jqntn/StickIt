@@ -67,8 +67,8 @@ public class CameraSpeedRunner : CameraState
         }
 
         // Clamp Value into bounds
-        float newPos_X = Mathf.Clamp(base.barycenter.x, min_moveBounds_X, max_moveBounds_X);
-        float newPos_Y = Mathf.Clamp(base.barycenter.y, min_moveBounds_Y, max_moveBounds_Y);
+        float newPos_X = Mathf.Clamp(base.barycenter.x, min_moveBounds.x, max_moveBounds.x);
+        float newPos_Y = Mathf.Clamp(base.barycenter.y, min_moveBounds.y, max_moveBounds.y);
 
         // Update Position to Go To
         positionToGoTo = new Vector3(
@@ -93,8 +93,8 @@ public class CameraSpeedRunner : CameraState
             float player_X = player.transform.position.x;
             float player_Y = player.transform.position.y;
             float player_Z = player.transform.position.z;
-            float deathWidth = (frustumWidth + deathMargin) / 2.0f;
-            float deathHeight = (frustumHeight + deathMargin) / 2.0f;
+            float deathWidth = (frustum_dimension.x + deathMargin) / 2.0f;
+            float deathHeight = (frustum_dimension.y + deathMargin) / 2.0f;
             float minDeahtZone_X = transform.position.x - deathWidth;
             float maxDeathZone_X = transform.position.x + deathWidth;
             float minDeathZone_Y = transform.position.y - deathHeight;
@@ -143,8 +143,8 @@ public class CameraSpeedRunner : CameraState
         {
             float first_X = frontPlayer.transform.position.x;
             float first_Y = frontPlayer.transform.position.y;
-            float width = frustumWidth / 2.0f;
-            float height = frustumHeight / 2.0f;
+            float width = frustum_dimension.x / 2.0f;
+            float height = frustum_dimension.y / 2.0f;
             float maxWidth = transform.position.x + width;
             float minWidth = transform.position.x - width;
             float maxHeight = transform.position.y + height;
@@ -335,7 +335,7 @@ public class CameraSpeedRunner : CameraState
 
         // Draw Death Margin
         Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(transform.position, new Vector3(frustumWidth + deathMargin, frustumHeight + deathMargin, 1));
+        Gizmos.DrawWireCube(transform.position, new Vector3(frustum_dimension.x + deathMargin, frustum_dimension.y + deathMargin, 1));
     }
     #endregion
 }

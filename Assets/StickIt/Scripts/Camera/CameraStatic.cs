@@ -15,7 +15,7 @@ public class CameraStatic : CameraState
 
     private void SaveBounds(CameraType type)
     {
-        Vector2 boundsSavePos = bounds.transform.position;
+        Vector2 boundsSavePos = boundsPos;
         if (canMove) { positionToGoTo = boundsSavePos; }
         if (canZoom) { positionToGoTo.z = maxOut_Z; }
     }
