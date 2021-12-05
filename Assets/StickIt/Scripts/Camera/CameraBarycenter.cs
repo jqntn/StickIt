@@ -11,15 +11,6 @@ public class CameraBarycenter : CameraState
         if (canZoom) { UpdateZoom(); }
     }
 
-    protected override void UpdateCamera()
-    {
-        base.UpdateCamera();
-        Vector3 newPos = new Vector3(
-    barycenter.x,
-    barycenter.y,
-    transform.parent.position.z);
-        transform.parent.position = Vector3.SmoothDamp(transform.parent.position, newPos, ref moveVelocity, moveTime);
-    }
     private void UpdateBarycenter()
     {
         base.barycenter = new Vector2(0.0f, 0.0f);
