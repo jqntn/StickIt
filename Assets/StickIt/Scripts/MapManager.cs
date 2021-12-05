@@ -19,10 +19,18 @@ public class MapManager : Unique<MapManager>
     public string curMod;
     public string curMap = "";
     Coroutine _coroutine;
+    private CameraStateDriven camManager;
     void OnGUI()
     {
         if (GUI.Button(new Rect(0, 0, 200, 100), "NextMap")) NextMap(nextMapManual, true);
     }
+
+    private void Awake()
+    {
+        base.Awake();
+        camManager = Camera.main.GetComponent<CameraStateDriven>();
+    }
+
     public bool EndLevel()
     {
         if (MultiplayerManager.instance.alivePlayers.Count <= 1)
@@ -39,6 +47,7 @@ public class MapManager : Unique<MapManager>
         else return false;
         return true;
     }
+
     string SelectNextMap()
     {
         ModsData.Mod mod;
@@ -61,7 +70,6 @@ public class MapManager : Unique<MapManager>
     }
     IEnumerator BeginTransition(string nextMap, bool fromMenu)
     {
-        GameEvents.OnSwitchCamera.Invoke(CameraType.STATIC);
         isBusy = true;
         if (nextMap == "") nextMap = SelectNextMap();
         Time.timeScale = .5f;
@@ -85,6 +93,9 @@ public class MapManager : Unique<MapManager>
         var objs = GameObject.FindGameObjectsWithTag("MapRoot");
         nextMapRoot = objs[objs.Length - 1];
         nextMapRoot.transform.position = new Vector3(mapOffset, 0);
+        // CAMERA EVENT
+        GameEvents.OnSceneUnloaded.Invoke();
+        // ----------
         var nextStartPos = GameObject.FindGameObjectsWithTag("StartPos");
         MultiplayerManager.instance.speedChangeMap = 1 / slowTime;
         MultiplayerManager.instance.StartChangeMap(nextStartPos[nextStartPos.Length - 1].transform);
@@ -104,8 +115,8 @@ public class MapManager : Unique<MapManager>
         }
         nextMapRoot.transform.position = Vector3.zero;
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        GameEvents.OnSceneUnloaded.Invoke();
-        GameEvents.OnSwitchCamera.Invoke(Utils.GetCameraType(curMod));
+        // Switch camera state depending of map mode
+        camManager.SwitchStates(Utils.GetCameraType(curMod));
         yield return null;
         Time.timeScale = 1;
         timeScale = Time.timeScale;
