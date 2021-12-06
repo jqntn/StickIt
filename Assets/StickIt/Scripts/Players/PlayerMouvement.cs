@@ -155,6 +155,7 @@ public class PlayerMouvement : MonoBehaviour
             t_jump = 0;
             y_jump = 0;
             addedVector = Vector3.zero;
+            AudioManager.instance.PlayJumpSounds(this.gameObject);
             foreach (ContactPointSurface contact in connectedPoints)
             {
                 contact.attractionStrength = 100f;
