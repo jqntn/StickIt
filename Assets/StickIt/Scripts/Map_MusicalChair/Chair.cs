@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
 
+
 public class Chair : MonoBehaviour
 {
     MusicalChairManager musicalChairManager;
@@ -10,6 +11,7 @@ public class Chair : MonoBehaviour
     public List<Player> playersInChair;
     public Player chosenOne;
     [Header("Settings")]
+    [SerializeField]
     public float offsetSpawn;
     float duration;
     public AnimationCurve animCurve;
@@ -21,6 +23,7 @@ public class Chair : MonoBehaviour
     Color deactivatedColor;
     Vector3 spawnPosition;
     Vector3 originalPos;
+    [SerializeField]
     public GameObject shield;
     [Header("ChosenOne")]
     LineRenderer lr;
@@ -53,6 +56,7 @@ public class Chair : MonoBehaviour
                 if (playersInChair.Count > 1 && Vector3.Distance(chosenOne.transform.position, transform.position) > Vector3.Distance(playersInChair[i].transform.position, transform.position))
                 {
                     chosenOne = playersInChair[i];
+
                 }
             }
             if (chosenOne)
@@ -78,6 +82,7 @@ public class Chair : MonoBehaviour
         isActive = false;
         lr.enabled = false;
         chosenOne = null;
+        playersInChair.Clear();
         DespawnChair();
     }
     void SpawnChair(Color c) 
