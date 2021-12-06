@@ -272,26 +272,6 @@ PrefabInstance:
       propertyPath: maxOut_Z
       value: -200
       objectReference: {fileID: 0}
-    - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
-      propertyPath: moveTime
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
-      propertyPath: zoomTime
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
-      propertyPath: autoMaxOut_Z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
-      propertyPath: canClampZoom
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
-      propertyPath: zoomOutMargin
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 626349961222977373, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.46
@@ -2095,13 +2075,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e1589a5522e474d97aae598bc0f2c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  extend: {x: 0, y: 0}
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   boundsPos: {x: 0, y: 0}
   max: {x: 0, y: 0}
   dimension: {x: 0, y: 0}
+  factor: 0
 --- !u!1 &2131719485
 GameObject:
   m_ObjectHideFlags: 0
