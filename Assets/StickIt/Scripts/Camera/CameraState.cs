@@ -11,7 +11,7 @@ public abstract class CameraState : MonoBehaviour
     [Min(0.1f)]
     public float factorOffset = 1.0f;
     public Collider camBounds;
-    //public bool autoOffset = true;
+    public bool autoOffset = true;
     public Vector2 posOffset = new Vector2(0.0f, 0.0f);
 
     [Header("------- Move -------")]
@@ -250,10 +250,15 @@ public abstract class CameraState : MonoBehaviour
         maxOut_Z = distance;
     }
 
-    private void SearchOffset()
+  
+    private void SearchPosOffset()
     {
-        posOffset.x = transform.parent.rotation.x;
-        posOffset.y = transform.parent.rotation.y;
+        // Tan(alpha) * adjacent  = opposite
+        Vector3 angles = transform.parent.rotation.eulerAngles;
+        Debug.Log("Angle : " + angles);
+        float rad = angles.x * Mathf.Deg2Rad;
+        Debug.Log(rad);
+        posOffset.y = Mathf.Tan(rad) * -transform.parent.position.z;
     }
 
     #region Public Method
@@ -283,14 +288,14 @@ public abstract class CameraState : MonoBehaviour
         UpdateMoveBounds();
         UpdatePlayersBounds();
         if (autoMaxOut_Z) SearchMaxOut_Z();
-        //if (autoOffset) SearchOffset();
+        if (autoOffset) SearchPosOffset();
     }
     #endregion
 
     #region Debug
     protected virtual void OnDrawGizmosSelected()
     {
-        if(!hasBounds) { return;  }
+        if(!hasBounds) { return; }
         // Draw Camera Viewport
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireCube(transform.parent.position - (Vector3)posOffset, new Vector3(frustum_dimension.x, frustum_dimension.y, 1));
@@ -316,7 +321,7 @@ public abstract class CameraState : MonoBehaviour
 
         // Draw Zoom Out Margin
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireCube(transform.parent.position - (Vector3) posOffset, new Vector3(frustum_dimension.x - zoomOutMargin, frustum_dimension.y - zoomOutMargin, 1));
+        Gizmos.DrawWireCube(transform.parent.position - (Vector3)posOffset, new Vector3(frustum_dimension.x - zoomOutMargin, frustum_dimension.y - zoomOutMargin, 1));
     }
     #endregion
 
