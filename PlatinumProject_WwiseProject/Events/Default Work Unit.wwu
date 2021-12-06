@@ -16,8 +16,28 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-						<Event Name="Event_M_Play_Deathmatch" ID="{A6EB2851-83EB-4B5E-8E5D-BE694B2518D6}"/>
-						<Event Name="Event_M_Play_Menu" ID="{C096B2A2-68C8-4B9E-8BA5-928B801A35C7}"/>
+						<Event Name="Event_M_Play_Deathmatch" ID="{A6EB2851-83EB-4B5E-8E5D-BE694B2518D6}">
+							<ChildrenList>
+								<Action Name="" ID="{B374CD9A-A48F-468A-9CC1-C59C55A70CEA}" ShortID="1003897039">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="M_DeathMatch" ID="{2A533DC1-B95E-4D0E-9D99-9474E3210D66}" WorkUnitID="{649997C0-FAA9-436A-9EDC-004F7BA1BEA3}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Event_M_Play_Menu" ID="{C096B2A2-68C8-4B9E-8BA5-928B801A35C7}">
+							<ChildrenList>
+								<Action Name="" ID="{ADB655B8-057D-4CB4-9BF6-7F65CA2EB6AE}" ShortID="835078779">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="M_Menu" ID="{E1F423D4-F481-4EBC-A079-2BDA73D0A11A}" WorkUnitID="{649997C0-FAA9-436A-9EDC-004F7BA1BEA3}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
 			</ChildrenList>

@@ -1,25 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SettingsAudio : MonoBehaviour
 {
-    [SerializeField] AK.Wwise.Event wwiseEvent;
-    [SerializeField] AK.Wwise.RTPC wwiseVolumeMusic;
-    [SerializeField] AK.Wwise.RTPC wwiseVolumeEnvironment;
-    [SerializeField] AK.Wwise.RTPC wwiseVolumeSFX;
+    int volFactor = 100;
+    public Slider masterVol, musicVol, sfxVol, envirVol;
 
-    // Start is called before the first frame update
-    void Start()
+    public void SetMasterVol()
     {
-        
+        AkSoundEngine.SetRTPCValue("RTPC_Volume_Global", masterVol.value * volFactor);
     }
-
-    // Update is called once per frame
-    void Update()
+    public void SetMusicVol()
     {
-        
+        AkSoundEngine.SetRTPCValue("RTPC_Volume_Music", musicVol.value * volFactor);
     }
-
+    public void SetSFXVol()
+    {
+        AkSoundEngine.SetRTPCValue("RTPC_Volume_SFX", sfxVol.value * volFactor);
+    }
+    public void SetEnvironmentVol()
+    {
+        AkSoundEngine.SetRTPCValue("RTPC_Volume_Environment", envirVol.value * volFactor);
+    }
 
 }
