@@ -11,15 +11,17 @@ public class PlayerMouvement : MonoBehaviour
     public STATE state = STATE.AIR;
     bool isGrounded = false;
     [Header("Dots Preview")] //-----------------------
+    [SerializeField] bool isPreviewDots;
     [SerializeField] Transform dotPreview;
     public float spaceBetweenDots;
     public int numberOfDots;
     private Transform[] dots;
     private bool isDotsEnabled = false;
     [Header("Movement")] //-----------------------
+
     [Tooltip("Force maximale du jump, et clamp de la velocite maximale")]
     public float maxSpeed;
-    Vector3 addedVector;
+    [SerializeField] bool isReversedDirection, isLimitedMovement;
     [Tooltip("% de la velocite ajoutee au saut en fonction du temps, cette valeur doit finir a 1")]
     Vector2 direction;
     bool isChargingJump = false;
@@ -130,7 +132,17 @@ public class PlayerMouvement : MonoBehaviour
     #region Inputs
     public void InputDirection(InputAction.CallbackContext context)
     {
-        if (context.performed) direction = context.ReadValue<Vector2>();
+        if (context.performed)
+        {
+            direction = context.ReadValue<Vector2>();
+            if (isReversedDirection)
+            {
+                float angleDir = Vector2.Angle(Vector2.right, direction);
+                if (direction.y < 0) angleDir = 360 - angleDir;
+                angleDir += 180;
+                direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angleDir), Mathf.Sin(Mathf.Deg2Rad * angleDir));
+            }
+        }
         else if (context.canceled) direction = Vector2.zero;
     }
     public void InputJump(InputAction.CallbackContext context)
@@ -157,7 +169,6 @@ public class PlayerMouvement : MonoBehaviour
             hasJumped = true;
             t_jump = 0;
             y_jump = 0;
-            addedVector = Vector3.zero;
             foreach (ContactPointSurface contact in connectedPoints)
             {
                 contact.attractionStrength = 100f;
@@ -228,7 +239,6 @@ public class PlayerMouvement : MonoBehaviour
                         state = STATE.STICK;
                         break;
                 }
-                addedVector = Vector2.zero;
                 hasJumped = false;
                 #endregion
                 break;
@@ -275,7 +285,7 @@ public class PlayerMouvement : MonoBehaviour
     {
         Vector3 dir = (playerCollided.transform.position - transform.position).normalized;
         RaycastHit hit;
-        dir = playerCollided.GetPinchDirection();
+        //dir = playerCollided.GetPinchDirection(); // --------------------------------------------------------------------------------------------------  LINE FOR PINCH
         // Debug.DrawRay(playerCollided.transform.position, dir * 3, Color.yellow, 10);
         // Debug.Break();
         //if (Physics.SphereCast(playerCollided.transform.position, playerCollided.initScale.x * playerCollided.ratioMass * 0.9f, dir, out hit, 50))
@@ -374,22 +384,29 @@ public class PlayerMouvement : MonoBehaviour
     #region PreviewDots
     private void EnableDots(bool isTrue)
     {
-        for (int i = 0; i < dots.Length; i++)
+        if (isPreviewDots)
         {
-            dots[i].gameObject.SetActive(isTrue);
+            for (int i = 0; i < dots.Length; i++)
+            {
+                dots[i].gameObject.SetActive(isTrue);
+            }
+            isDotsEnabled = isTrue;
         }
-        isDotsEnabled = isTrue;
     }
     private void PreviewDirection()
     {
         if (isChargingJump)
         {
             float forceJump = maxSpeed * forceJumpMultiplicator;
-            //SetDirectionAndPreviewAngle();
-            Vector2 potentialVelocity = direction * forceJump;
-            for (int i = 0; i < dots.Length; i++)
+            if(isLimitedMovement)
+            SetLimitedDirectionAndPreviewAngle();
+            if (isPreviewDots)
             {
-                dots[i].transform.position = GetDotPosition(i * (spaceBetweenDots * ratioMass), potentialVelocity);
+                Vector2 potentialVelocity = direction * forceJump;
+                for (int i = 0; i < dots.Length; i++)
+                {
+                    dots[i].transform.position = GetDotPosition(i * (spaceBetweenDots * ratioMass), potentialVelocity);
+                }
             }
         }
     }
@@ -524,7 +541,7 @@ public class PlayerMouvement : MonoBehaviour
   
         return dir.normalized;
     }
-    void SetDirectionAndPreviewAngle()
+    void SetLimitedDirectionAndPreviewAngle()
     {
         ReorderConnectedPoints();
         Vector3[] angles = GetPossibleAnglesDirectionJump();
