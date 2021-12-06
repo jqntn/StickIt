@@ -4,18 +4,15 @@ using UnityEngine;
 
 public class CameraStatic : CameraState
 {
-    private bool isPlaying = false;
-    
-    [SerializeField] private float timer = 0.0f;
     private void OnEnable()
     {
         base.Awake();
         GameEvents.OnSwitchCamera.AddListener(SaveBounds);
     }
 
-    private void SaveBounds(CameraType type)
+    private void SaveBounds()
     {
-        Vector2 boundsSavePos = bounds.transform.position;
+        Vector2 boundsSavePos = bounds_pos;
         if (canMove) { positionToGoTo = boundsSavePos; }
         if (canZoom) { positionToGoTo.z = maxOut_Z; }
     }

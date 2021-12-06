@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{9893536A-E50D-43BF-A401-C7F5F2E46557}" SchemaVersion="103">
 	<Switches>
-		<WorkUnit Name="Default Work Unit" ID="{9893536A-E50D-43BF-A401-C7F5F2E46557}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{9893536A-E50D-43BF-A401-C7F5F2E46557}" PersistMode="Standalone">
+			<ChildrenList>
+				<SwitchGroup Name="MusicSwitch" ID="{EF87B158-545E-40D6-8870-880DD66E2F0B}">
+					<ChildrenList>
+						<Switch Name="Chairs" ID="{7F796544-175B-459A-9B29-8ECC1C06E73C}"/>
+						<Switch Name="DeathMatch" ID="{F88A8FAA-531D-4FD5-B877-BB70B8C236CB}"/>
+						<Switch Name="Menu" ID="{453F0CF2-77FF-490A-8CF6-F5F9065B8551}"/>
+					</ChildrenList>
+				</SwitchGroup>
+			</ChildrenList>
+		</WorkUnit>
 	</Switches>
 </WwiseDocument>

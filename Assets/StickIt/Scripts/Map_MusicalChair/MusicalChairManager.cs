@@ -23,7 +23,8 @@ public class MusicalChairManager : Level
     bool spawning = true;
     [HideInInspector]
     public float durationSpawn;
-    public Color colorChairTaken;
+
+    [SerializeField] public Color colorChairTaken;
     public GameObject winTxt;
     public MMFeedbacks spawnFeedback;
     bool GameLaunched = false;
