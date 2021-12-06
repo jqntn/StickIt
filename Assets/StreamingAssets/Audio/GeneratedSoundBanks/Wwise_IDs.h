@@ -16,6 +16,11 @@ namespace AK
         static const AkUniqueID EVENT_M_PLAY_CHAIRS = 2557300141U;
         static const AkUniqueID EVENT_M_PLAY_DEATHMATCH = 400946182U;
         static const AkUniqueID EVENT_M_PLAY_MENU = 2474506946U;
+        static const AkUniqueID PLAY_SFX_S_COLLISION = 2655917940U;
+        static const AkUniqueID PLAY_SFX_S_DEATH = 239606594U;
+        static const AkUniqueID PLAY_SFX_S_JUMP = 3510434704U;
+        static const AkUniqueID PLAY_SFX_S_LAND = 1721975435U;
+        static const AkUniqueID PLAY_SFX_S_SLINGSHOTCHARGE = 799208851U;
     } // namespace EVENTS
 
     namespace STATES
