@@ -74,6 +74,7 @@ public abstract class CameraState : MonoBehaviour
         multiplayerManager = MultiplayerManager.instance;
         if(multiplayerManager != null) { playerList = multiplayerManager.players; }
 
+        if (SceneManager.GetActiveScene().name == "1_MenuSelection" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
         ResetCamera();
     }
 
@@ -118,18 +119,19 @@ public abstract class CameraState : MonoBehaviour
             positionToGoTo.y + posOffset.y,
             transform.parent.position.z);
         transform.parent.position = Vector3.SmoothDamp(transform.parent.position, newPos, ref moveVelocity, moveTime);
-        
+
         // if zooming out and is touching border > return and wait to move first
-        bool isTouchingBorder = 
+        bool isTouchingBorder =
             min_viewport.x <= min_bounds.x || max_viewport.x >= max_bounds.x;
         if (canClampZoom && positionToGoTo.z < transform.parent.position.z && isTouchingBorder) { return; }
-        
+
         // Zoom Camera
         Vector3 newZoom = new Vector3(
             transform.parent.position.x,
             transform.parent.position.y,
             positionToGoTo.z);
         transform.parent.position = Vector3.SmoothDamp(transform.parent.position, newZoom, ref zoomVelocity, zoomTime);
+      
     }
 
     //<summary>
@@ -150,10 +152,12 @@ public abstract class CameraState : MonoBehaviour
         max_viewport.y = transform.parent.position.y + offsetY;
 
         // camera zoom out margin update
-        min_zoomOutBounds.x = min_viewport.x + zoomOutMargin;
-        min_zoomOutBounds.y = min_viewport.y + zoomOutMargin;
-        max_zoomOutBounds.x = max_viewport.x - zoomOutMargin;
-        max_zoomOutBounds.y = max_viewport.y - zoomOutMargin;
+        offsetX -= zoomOutMargin;
+        offsetY -= zoomOutMargin;
+        min_zoomOutBounds.x = transform.parent.position.x - offsetX;
+        min_zoomOutBounds.y = transform.parent.position.y - offsetY;
+        max_zoomOutBounds.x = transform.parent.position.x + offsetX;
+        max_zoomOutBounds.y = transform.parent.position.y + offsetY;
     }
 
     //<summary>
@@ -198,22 +202,22 @@ public abstract class CameraState : MonoBehaviour
                           && -Mathf.Floor(-transform.parent.position.z) > maxOut_Z;
 
         // If Player is touching zoom out margin > Zoom Out
-        foreach(Player player in playerList)
-        {
-            float player_x = player.transform.position.x;
-            float player_y = player.transform.position.y;
-            if(player_x <= min_zoomOutBounds.x || player_x >= max_zoomOutBounds.x
-            || player_y <= min_zoomOutBounds.y || player_y >= max_zoomOutBounds.y)
-            {
-                canZoomOut = true;
-                break;
-            }
-        }
-        
+        //foreach (Player player in playerList)
+        //{
+        //    float player_x = player.transform.position.x;
+        //    float player_y = player.transform.position.y;
+        //    if (player_x <= min_zoomOutBounds.x || player_x >= max_zoomOutBounds.x
+        //    || player_y <= min_zoomOutBounds.y || player_y >= max_zoomOutBounds.y)
+        //    {
+        //        canZoomOut = true;
+        //        break;
+        //    }
+        //}
+
         // Zoom Out
         if (canZoomOut)
         {
-            positionToGoTo.z = Mathf.Clamp(transform.position.z + zoomOutValue, maxOut_Z, maxIn_Z);
+            positionToGoTo.z = Mathf.Clamp(transform.parent.position.z + zoomOutValue, maxOut_Z, maxIn_Z);
             return;
         }
 
@@ -226,7 +230,7 @@ public abstract class CameraState : MonoBehaviour
                          && -Mathf.Floor(-transform.parent.position.z) < maxIn_Z;
         if (canZoomIn)
         {
-            positionToGoTo.z = Mathf.Clamp(transform.position.z + zoomInValue, maxOut_Z, maxIn_Z);
+            positionToGoTo.z = Mathf.Clamp(transform.parent.position.z + zoomInValue, maxOut_Z, maxIn_Z);
         }
     }
 

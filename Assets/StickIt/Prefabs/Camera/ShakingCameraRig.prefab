@@ -83,8 +83,9 @@ MonoBehaviour:
   frustum_dimension: {x: 0, y: 0}
   min_viewport: {x: 0, y: 0}
   max_viewport: {x: 0, y: 0}
-  playersBounds_X: 0
-  playersBounds_Y: 0
+  min_zoomOutBounds: {x: 0, y: 0}
+  max_zoomOutBounds: {x: 0, y: 0}
+  playerBounds: {x: 0, y: 0}
   min_playerBounds: {x: 0, y: 0}
   max_playerBounds: {x: 0, y: 0}
 --- !u!1 &956793739
@@ -170,8 +171,9 @@ MonoBehaviour:
   frustum_dimension: {x: 0, y: 0}
   min_viewport: {x: 0, y: 0}
   max_viewport: {x: 0, y: 0}
-  playersBounds_X: 0
-  playersBounds_Y: 0
+  min_zoomOutBounds: {x: 0, y: 0}
+  max_zoomOutBounds: {x: 0, y: 0}
+  playerBounds: {x: 0, y: 0}
   min_playerBounds: {x: 0, y: 0}
   max_playerBounds: {x: 0, y: 0}
   distanceBeforeBorder: 0
@@ -239,17 +241,17 @@ MonoBehaviour:
   autoOffset: 1
   posOffset: {x: 0, y: 0, z: 0}
   canMove: 1
-  moveTime: 0.5
+  moveTime: 0.2
   freezeX: 0
   freezeY: 0
   canZoom: 1
   zoomTime: 0.2
   autoMaxOut_Z: 1
   maxOut_Z: -300
-  maxIn_Z: -70
+  maxIn_Z: -100
   zoomOutValue: -10
   zoomInValue: 10
-  zoomOutMargin: 1
+  zoomOutMargin: 5
   zoomInMargin: 5
   canClampZoom: 1
   datas: []
@@ -272,8 +274,9 @@ MonoBehaviour:
   frustum_dimension: {x: 0, y: 0}
   min_viewport: {x: 0, y: 0}
   max_viewport: {x: 0, y: 0}
-  playersBounds_X: 0
-  playersBounds_Y: 0
+  min_zoomOutBounds: {x: 0, y: 0}
+  max_zoomOutBounds: {x: 0, y: 0}
+  playerBounds: {x: 0, y: 0}
   min_playerBounds: {x: 0, y: 0}
   max_playerBounds: {x: 0, y: 0}
 --- !u!1 &175067061385021682
