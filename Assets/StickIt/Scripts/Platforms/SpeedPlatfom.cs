@@ -10,7 +10,7 @@ public class SpeedPlatfom : Platform
         else
         {
             Vector2 vel = c.gameObject.GetComponent<Rigidbody>().velocity;
-            Vector2 proj = Vector3.Project(vel, transform.right);
+            Vector2 proj = Vector3.Project(vel, -transform.up);
             c.transform.GetComponent<Rigidbody>().velocity = proj.normalized * impulseForce;
         }
     }
