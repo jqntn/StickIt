@@ -7,12 +7,12 @@ FBXHeaderExtension:  {
 	CreationTimeStamp:  {
 		Version: 1000
 		Year: 2021
-		Month: 11
-		Day: 25
-		Hour: 20
-		Minute: 30
-		Second: 11
-		Millisecond: 644
+		Month: 12
+		Day: 1
+		Hour: 17
+		Minute: 27
+		Second: 3
+		Millisecond: 925
 	}
 	Creator: "FBX SDK/FBX Plugins version 2020.0"
 	SceneInfo: "SceneInfo::GlobalInfo", "UserData" {
@@ -28,31 +28,31 @@ FBXHeaderExtension:  {
 			Comment: ""
 		}
 		Properties70:  {
-			P: "DocumentUrl", "KString", "Url", "", "C:\Users\tammy\Documents\3ds Max 2020\export\long_platform.fbx"
-			P: "SrcDocumentUrl", "KString", "Url", "", "C:\Users\tammy\Documents\3ds Max 2020\export\long_platform.fbx"
+			P: "DocumentUrl", "KString", "Url", "", "C:\Users\tammy\Documents\3ds Max 2020\export\test_long_platform.fbx"
+			P: "SrcDocumentUrl", "KString", "Url", "", "C:\Users\tammy\Documents\3ds Max 2020\export\test_long_platform.fbx"
 			P: "Original", "Compound", "", ""
 			P: "Original|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "Original|ApplicationName", "KString", "", "", "3ds Max"
 			P: "Original|ApplicationVersion", "KString", "", "", "2020"
-			P: "Original|DateTime_GMT", "DateTime", "", "", "25/11/2021 19:30:11.643"
-			P: "Original|FileName", "KString", "", "", "C:\Users\tammy\Documents\3ds Max 2020\export\long_platform.fbx"
+			P: "Original|DateTime_GMT", "DateTime", "", "", "01/12/2021 16:27:03.924"
+			P: "Original|FileName", "KString", "", "", "C:\Users\tammy\Documents\3ds Max 2020\export\test_long_platform.fbx"
 			P: "LastSaved", "Compound", "", ""
 			P: "LastSaved|ApplicationVendor", "KString", "", "", "Autodesk"
 			P: "LastSaved|ApplicationName", "KString", "", "", "3ds Max"
 			P: "LastSaved|ApplicationVersion", "KString", "", "", "2020"
-			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "25/11/2021 19:30:11.643"
+			P: "LastSaved|DateTime_GMT", "DateTime", "", "", "01/12/2021 16:27:03.924"
 			P: "Original|ApplicationActiveProject", "KString", "", "", "C:\Users\tammy\Documents\3ds Max 2020"
-			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\tammy\Documents\3ds Max 2020\scenes\A3\platinum\long_platform10.max"
+			P: "Original|ApplicationNativeFile", "KString", "", "", "C:\Users\tammy\Documents\3ds Max 2020\scenes\A3\platinum\long_platform11.max"
 		}
 	}
 }
 GlobalSettings:  {
 	Version: 1000
 	Properties70:  {
-		P: "UpAxis", "int", "Integer", "",2
+		P: "UpAxis", "int", "Integer", "",1
 		P: "UpAxisSign", "int", "Integer", "",1
-		P: "FrontAxis", "int", "Integer", "",1
-		P: "FrontAxisSign", "int", "Integer", "",-1
+		P: "FrontAxis", "int", "Integer", "",2
+		P: "FrontAxisSign", "int", "Integer", "",1
 		P: "CoordAxis", "int", "Integer", "",0
 		P: "CoordAxisSign", "int", "Integer", "",1
 		P: "OriginalUpAxis", "int", "Integer", "",2
@@ -77,7 +77,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 1510507611136, "", "Scene" {
+	Document: 1919494942608, "", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", ""
@@ -226,7 +226,7 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 1511415419168, "Geometry::", "Mesh" {
+	Geometry: 1918958797760, "Geometry::", "Mesh" {
 		Properties70:  {
 			P: "Color", "ColorRGB", "Color", "",0.450980392156863,0.450980392156863,0.450980392156863
 		}
@@ -365,26 +365,28 @@ Objects:  {
 			}
 		}
 	}
-	Model: 1511411932256, "Model::Box002", "Mesh" {
+	Model: 1918226077824, "Model::Box002", "Mesh" {
 		Version: 232
 		Properties70:  {
+			P: "PreRotation", "Vector3D", "Vector", "",-90,-0,0
+			P: "RotationActive", "bool", "", "",1
 			P: "InheritType", "enum", "", "",1
 			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
+			P: "GeometricTranslation", "Vector3D", "Vector", "",-0.617983818054199,-1.17511379718781,1.65007543563843
 			P: "DefaultAttributeIndex", "int", "Integer", "",0
-			P: "Lcl Translation", "Lcl Translation", "", "A",3.9271203604585e-06,-5.30257415771484,24.3183250427246
-			P: "Lcl Rotation", "Lcl Rotation", "", "A",-1.05033968614963,-0,0
+			P: "Lcl Rotation", "Lcl Rotation", "", "A",1.06721705781449e-07,-0,-90.0000025044781
 			P: "MaxHandle", "int", "Integer", "UH",50
 		}
 		Shading: T
 		Culling: "CullingOff"
 	}
-	AnimationStack: 1510636710928, "AnimStack::Take 001", "" {
+	AnimationStack: 1918157740384, "AnimStack::Take 001", "" {
 		Properties70:  {
 			P: "LocalStop", "KTime", "Time", "",153953860000
 			P: "ReferenceStop", "KTime", "Time", "",153953860000
 		}
 	}
-	AnimationLayer: 1511362184560, "AnimLayer::BaseLayer", "" {
+	AnimationLayer: 1919767176976, "AnimLayer::BaseLayer", "" {
 	}
 }
 
@@ -394,13 +396,13 @@ Objects:  {
 Connections:  {
 	
 	;Model::Box002, Model::RootNode
-	C: "OO",1511411932256,0
+	C: "OO",1918226077824,0
 	
 	;AnimLayer::BaseLayer, AnimStack::Take 001
-	C: "OO",1511362184560,1510636710928
+	C: "OO",1919767176976,1918157740384
 	
 	;Geometry::, Model::Box002
-	C: "OO",1511415419168,1511411932256
+	C: "OO",1918958797760,1918226077824
 }
 ;Takes section
 ;----------------------------------------------------
