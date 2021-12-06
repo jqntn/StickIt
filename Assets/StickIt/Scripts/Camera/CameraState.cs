@@ -11,8 +11,8 @@ public abstract class CameraState : MonoBehaviour
     [Min(0.1f)]
     public float factorOffset = 1.0f;
     public Collider camBounds;
-    public bool autoOffset = true;
-    public Vector3 posOffset = new Vector3(0.0f, 0.0f, 0.0f);
+    //public bool autoOffset = true;
+    public Vector2 posOffset = new Vector2(0.0f, 0.0f);
 
     [Header("------- Move -------")]
     public bool canMove = true;
@@ -250,6 +250,12 @@ public abstract class CameraState : MonoBehaviour
         maxOut_Z = distance;
     }
 
+    private void SearchOffset()
+    {
+        posOffset.x = transform.parent.rotation.x;
+        posOffset.y = transform.parent.rotation.y;
+    }
+
     #region Public Method
     public CameraType GetCameraType()
     {
@@ -276,7 +282,8 @@ public abstract class CameraState : MonoBehaviour
         UpdateFrustum();
         UpdateMoveBounds();
         UpdatePlayersBounds();
-        if(autoMaxOut_Z) SearchMaxOut_Z();
+        if (autoMaxOut_Z) SearchMaxOut_Z();
+        //if (autoOffset) SearchOffset();
     }
     #endregion
 
@@ -286,7 +293,7 @@ public abstract class CameraState : MonoBehaviour
         if(!hasBounds) { return;  }
         // Draw Camera Viewport
         Gizmos.color = Color.yellow;
-        Gizmos.DrawWireCube(transform.parent.position, new Vector3(frustum_dimension.x, frustum_dimension.y, 1));
+        Gizmos.DrawWireCube(transform.parent.position - (Vector3)posOffset, new Vector3(frustum_dimension.x, frustum_dimension.y, 1));
 
         // Draw Camera Bounds
         Gizmos.color = Color.green;
@@ -294,7 +301,7 @@ public abstract class CameraState : MonoBehaviour
 
         // Draw Camera Movement Clamp
         Gizmos.color = Color.black;
-        Gizmos.DrawWireCube(bounds_pos, new Vector3(bounds_dimension.x - frustum_dimension.x, bounds_dimension.y - frustum_dimension.y, 1));
+        Gizmos.DrawWireCube(bounds_pos + posOffset, new Vector3(bounds_dimension.x - frustum_dimension.x, bounds_dimension.y - frustum_dimension.y, 1));
 
         // Draw Players Bounds
         Gizmos.color = Color.grey;
@@ -309,7 +316,7 @@ public abstract class CameraState : MonoBehaviour
 
         // Draw Zoom Out Margin
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireCube(transform.parent.position, new Vector3(frustum_dimension.x - zoomOutMargin, frustum_dimension.y - zoomOutMargin, 1));
+        Gizmos.DrawWireCube(transform.parent.position - (Vector3) posOffset, new Vector3(frustum_dimension.x - zoomOutMargin, frustum_dimension.y - zoomOutMargin, 1));
     }
     #endregion
 
