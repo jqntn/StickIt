@@ -24,7 +24,7 @@ MonoBehaviour:
     ParentPath: Virtual Acoustics\Default Work Unit
     guid: 6a1b4b95fb138c40a653a66da00c8ad4
     GuidInternal: 
-    m_lastTime: -8585669375090232177
+    m_lastTime: -8585669714385132931
     List: []
   AuxBusWwu:
   - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
@@ -38,8 +38,25 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: a1c6ab93e8512249a8872e110d8ab324
     GuidInternal: 
-    m_lastTime: -8585669375091149758
+    m_lastTime: -8585628149824749304
     List:
+    - name: EnvironmentBus
+      guid: 5bad397b97a7d2419e5e7fb1841282d2
+      id: 221867874
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: a1c6ab93e8512249a8872e110d8ab324
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: EnvironmentBus
+        ObjectType: 2
+        guid: 5bad397b97a7d2419e5e7fb1841282d2
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\EnvironmentBus
     - name: Master Audio Bus
       guid: d8a41415a61d2a41a17e75ca0c2149f3
       id: 3803692087
@@ -54,6 +71,40 @@ MonoBehaviour:
         ObjectType: 2
         guid: d8a41415a61d2a41a17e75ca0c2149f3
       Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus
+    - name: MusicBus
+      guid: d7ea4a97549cf14b8373f9093a07a4da
+      id: 2886307548
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: a1c6ab93e8512249a8872e110d8ab324
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: MusicBus
+        ObjectType: 2
+        guid: d7ea4a97549cf14b8373f9093a07a4da
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\MusicBus
+    - name: SFXBus
+      guid: 53ed681a69e68642907d2d32721c6f83
+      id: 3803850708
+      PathAndIcons:
+      - ElementName: Master-Mixer Hierarchy
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: a1c6ab93e8512249a8872e110d8ab324
+      - ElementName: Master Audio Bus
+        ObjectType: 2
+        guid: d8a41415a61d2a41a17e75ca0c2149f3
+      - ElementName: SFXBus
+        ObjectType: 2
+        guid: 53ed681a69e68642907d2d32721c6f83
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus\SFXBus
   BankWwu:
   - PhysicalPath: SoundBanks\Default Work Unit.wwu
     PathAndIcons:
@@ -66,8 +117,22 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 9d5e1a158700fd4db0fe5d5a184b83f7
     GuidInternal: 
-    m_lastTime: -8585669375090301986
-    List: []
+    m_lastTime: -8585628149824729354
+    List:
+    - name: MainBank
+      guid: e369394fd7aba7409681805170c0d85f
+      id: 2880737896
+      PathAndIcons:
+      - ElementName: SoundBanks
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 9d5e1a158700fd4db0fe5d5a184b83f7
+      - ElementName: MainBank
+        ObjectType: 7
+        guid: e369394fd7aba7409681805170c0d85f
+      Path: SoundBanks\Default Work Unit\MainBank
   EventWwu:
   - PhysicalPath: Events\Default Work Unit.wwu
     PathAndIcons:
@@ -80,8 +145,202 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 3cbf420719f9a74db393e7ee75d4dee4
     GuidInternal: 
-    m_lastTime: -8585669375091199612
-    List: []
+    m_lastTime: -8585627953259465970
+    List:
+    - name: Event_M_Play_Chairs
+      guid: fb00c12e38ccda44831647fbc2eb9a27
+      id: 2557300141
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: Music
+        ObjectType: 4
+        guid: 9f3fdc5bc59ff34d8769a6267335126b
+      - ElementName: Event_M_Play_Chairs
+        ObjectType: 3
+        guid: fb00c12e38ccda44831647fbc2eb9a27
+      Path: Events\Default Work Unit\Music\Event_M_Play_Chairs
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Event_M_Play_Deathmatch
+      guid: 5128eba6eb835e4b8e5dbe694b2518d6
+      id: 400946182
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: Music
+        ObjectType: 4
+        guid: 9f3fdc5bc59ff34d8769a6267335126b
+      - ElementName: Event_M_Play_Deathmatch
+        ObjectType: 3
+        guid: 5128eba6eb835e4b8e5dbe694b2518d6
+      Path: Events\Default Work Unit\Music\Event_M_Play_Deathmatch
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Event_M_Play_Menu
+      guid: a2b296c0c8689e4b8ba5928b801a35c7
+      id: 2474506946
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: Music
+        ObjectType: 4
+        guid: 9f3fdc5bc59ff34d8769a6267335126b
+      - ElementName: Event_M_Play_Menu
+        ObjectType: 3
+        guid: a2b296c0c8689e4b8ba5928b801a35c7
+      Path: Events\Default Work Unit\Music\Event_M_Play_Menu
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Music
+      guid: 9f3fdc5bc59ff34d8769a6267335126b
+      id: 3991942870
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: Music
+        ObjectType: 4
+        guid: 9f3fdc5bc59ff34d8769a6267335126b
+      Path: Events\Default Work Unit\Music
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_S_Collision
+      guid: 7916fa28c6c7ba46aedc993a67143baa
+      id: 2655917940
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: SFX
+        ObjectType: 4
+        guid: ccf0d579c9b75042af69edb99b1643bf
+      - ElementName: Play_SFX_S_Collision
+        ObjectType: 3
+        guid: 7916fa28c6c7ba46aedc993a67143baa
+      Path: Events\Default Work Unit\SFX\Play_SFX_S_Collision
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_S_Death
+      guid: 3d59becb82521941b083d32ec95634ac
+      id: 239606594
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: SFX
+        ObjectType: 4
+        guid: ccf0d579c9b75042af69edb99b1643bf
+      - ElementName: Play_SFX_S_Death
+        ObjectType: 3
+        guid: 3d59becb82521941b083d32ec95634ac
+      Path: Events\Default Work Unit\SFX\Play_SFX_S_Death
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_S_Jump
+      guid: 020928c83d8b73468f7ddf0313b44cec
+      id: 3510434704
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: SFX
+        ObjectType: 4
+        guid: ccf0d579c9b75042af69edb99b1643bf
+      - ElementName: Play_SFX_S_Jump
+        ObjectType: 3
+        guid: 020928c83d8b73468f7ddf0313b44cec
+      Path: Events\Default Work Unit\SFX\Play_SFX_S_Jump
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_S_Land
+      guid: c7818425419e0c4e8d64343e20c25907
+      id: 1721975435
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: SFX
+        ObjectType: 4
+        guid: ccf0d579c9b75042af69edb99b1643bf
+      - ElementName: Play_SFX_S_Land
+        ObjectType: 3
+        guid: c7818425419e0c4e8d64343e20c25907
+      Path: Events\Default Work Unit\SFX\Play_SFX_S_Land
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_S_SlingshotCharge
+      guid: 5f3014bcf3bcf24697dadd338586bdf9
+      id: 799208851
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: SFX
+        ObjectType: 4
+        guid: ccf0d579c9b75042af69edb99b1643bf
+      - ElementName: Play_SFX_S_SlingshotCharge
+        ObjectType: 3
+        guid: 5f3014bcf3bcf24697dadd338586bdf9
+      Path: Events\Default Work Unit\SFX\Play_SFX_S_SlingshotCharge
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: SFX
+      guid: ccf0d579c9b75042af69edb99b1643bf
+      id: 393239870
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: SFX
+        ObjectType: 4
+        guid: ccf0d579c9b75042af69edb99b1643bf
+      Path: Events\Default Work Unit\SFX
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
   RtpcWwu:
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
     PathAndIcons:
@@ -94,8 +353,64 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: a3f9be233ac24d42bb0016649bd97284
     GuidInternal: 
-    m_lastTime: -8585669375091199612
-    List: []
+    m_lastTime: -8585628149824908861
+    List:
+    - name: RTPC_Volume_Environment
+      guid: 0fc32fa44dbac647be56e8e8cb97ecb2
+      id: 2269029051
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: a3f9be233ac24d42bb0016649bd97284
+      - ElementName: RTPC_Volume_Environment
+        ObjectType: 13
+        guid: 0fc32fa44dbac647be56e8e8cb97ecb2
+      Path: Game Parameters\Default Work Unit\RTPC_Volume_Environment
+    - name: RTPC_Volume_Global
+      guid: b53a53322acf284cad0731e15f5b96d4
+      id: 2662246381
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: a3f9be233ac24d42bb0016649bd97284
+      - ElementName: RTPC_Volume_Global
+        ObjectType: 13
+        guid: b53a53322acf284cad0731e15f5b96d4
+      Path: Game Parameters\Default Work Unit\RTPC_Volume_Global
+    - name: RTPC_Volume_Music
+      guid: ea388344803fc647a0bd0f4cbb75c998
+      id: 2451151905
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: a3f9be233ac24d42bb0016649bd97284
+      - ElementName: RTPC_Volume_Music
+        ObjectType: 13
+        guid: ea388344803fc647a0bd0f4cbb75c998
+      Path: Game Parameters\Default Work Unit\RTPC_Volume_Music
+    - name: RTPC_Volume_SFX
+      guid: c6d016ef4cb22b4588691ded1a63cc93
+      id: 4276639445
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: a3f9be233ac24d42bb0016649bd97284
+      - ElementName: RTPC_Volume_SFX
+        ObjectType: 13
+        guid: c6d016ef4cb22b4588691ded1a63cc93
+      Path: Game Parameters\Default Work Unit\RTPC_Volume_SFX
   StateWwu:
   - PhysicalPath: States\Default Work Unit.wwu
     PathAndIcons:
@@ -108,8 +423,76 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit
     guid: e31a9ef6187cbc49905bca8fdda6ebad
     GuidInternal: 
-    m_lastTime: -8585669375090960271
-    List: []
+    m_lastTime: -8585628149824729354
+    List:
+    - name: Level
+      guid: 72547366cb4ee542b469b316f197dd67
+      id: 2782712965
+      PathAndIcons:
+      - ElementName: States
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: e31a9ef6187cbc49905bca8fdda6ebad
+      - ElementName: Level
+        ObjectType: 9
+        guid: 72547366cb4ee542b469b316f197dd67
+      Path: States\Default Work Unit\Level
+      values:
+      - name: None
+        guid: 71b424e2eb21fa4b92a7fee674d7a361
+        id: 748895195
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: e31a9ef6187cbc49905bca8fdda6ebad
+        - ElementName: Level
+          ObjectType: 9
+          guid: 72547366cb4ee542b469b316f197dd67
+        - ElementName: None
+          ObjectType: 8
+          guid: 71b424e2eb21fa4b92a7fee674d7a361
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
+    - name: MusicLevels
+      guid: 03dc89685c900845a04905cf3083f9c8
+      id: 4206939811
+      PathAndIcons:
+      - ElementName: States
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: e31a9ef6187cbc49905bca8fdda6ebad
+      - ElementName: MusicLevels
+        ObjectType: 9
+        guid: 03dc89685c900845a04905cf3083f9c8
+      Path: States\Default Work Unit\MusicLevels
+      values:
+      - name: None
+        guid: b09d248037260041824572e87bd0c7ad
+        id: 748895195
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: e31a9ef6187cbc49905bca8fdda6ebad
+        - ElementName: MusicLevels
+          ObjectType: 9
+          guid: 03dc89685c900845a04905cf3083f9c8
+        - ElementName: None
+          ObjectType: 8
+          guid: b09d248037260041824572e87bd0c7ad
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
   SwitchWwu:
   - PhysicalPath: Switches\Default Work Unit.wwu
     PathAndIcons:
@@ -122,8 +505,74 @@ MonoBehaviour:
     ParentPath: Switches\Default Work Unit
     guid: 6a5393980de5bf43a401c7f5f2e46557
     GuidInternal: 
-    m_lastTime: -8585669375090920339
-    List: []
+    m_lastTime: -8585628149824729354
+    List:
+    - name: MusicSwitch
+      guid: 58b187ef5e54d6408870880dd66e2f0b
+      id: 1445037870
+      PathAndIcons:
+      - ElementName: Switches
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 6a5393980de5bf43a401c7f5f2e46557
+      - ElementName: MusicSwitch
+        ObjectType: 11
+        guid: 58b187ef5e54d6408870880dd66e2f0b
+      Path: Switches\Default Work Unit\MusicSwitch
+      values:
+      - name: Chairs
+        guid: 4465797f5b179a459b298ecc1c06e73c
+        id: 171038195
+        PathAndIcons:
+        - ElementName: Switches
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 6a5393980de5bf43a401c7f5f2e46557
+        - ElementName: MusicSwitch
+          ObjectType: 11
+          guid: 58b187ef5e54d6408870880dd66e2f0b
+        - ElementName: Chairs
+          ObjectType: 10
+          guid: 4465797f5b179a459b298ecc1c06e73c
+      - name: DeathMatch
+        guid: aa8f8af81d53d54fb877bb70b8c236cb
+        id: 3710690396
+        PathAndIcons:
+        - ElementName: Switches
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 6a5393980de5bf43a401c7f5f2e46557
+        - ElementName: MusicSwitch
+          ObjectType: 11
+          guid: 58b187ef5e54d6408870880dd66e2f0b
+        - ElementName: DeathMatch
+          ObjectType: 10
+          guid: aa8f8af81d53d54fb877bb70b8c236cb
+      - name: Menu
+        guid: f20c3f45ff770a498cf6f5f9065b8551
+        id: 2607556080
+        PathAndIcons:
+        - ElementName: Switches
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: 6a5393980de5bf43a401c7f5f2e46557
+        - ElementName: MusicSwitch
+          ObjectType: 11
+          guid: 58b187ef5e54d6408870880dd66e2f0b
+        - ElementName: Menu
+          ObjectType: 10
+          guid: f20c3f45ff770a498cf6f5f9065b8551
+      ValueGuids: []
+      ValueIcons: []
+      valuesInternal: []
   TriggerWwu:
   - PhysicalPath: Triggers\Default Work Unit.wwu
     PathAndIcons:
@@ -136,10 +585,10 @@ MonoBehaviour:
     ParentPath: Triggers\Default Work Unit
     guid: 8497bab1772ad342aad981e5ac6cc815
     GuidInternal: 
-    m_lastTime: -8585669375090222214
+    m_lastTime: -8585669714385980265
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 
+  ExpandedWaapiItemIds: 0e0000000f000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0
