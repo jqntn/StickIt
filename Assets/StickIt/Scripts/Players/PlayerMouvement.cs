@@ -7,11 +7,13 @@ public class PlayerMouvement : MonoBehaviour
 {
     [HideInInspector]
     public Player myPlayer;
-    public enum STATE { STICK, AIR, ICED, STUCK }
+    public enum STATE
+    { STICK, AIR, ICED, STUCK }
     public STATE state = STATE.AIR;
-    bool isGrounded = false;
+    private bool isGrounded = false;
     [Header("Dots Preview")] //-----------------------
-    [SerializeField] Transform dotPreview;
+    [SerializeField] private bool isPreviewDots;
+    [SerializeField] private Transform dotPreview;
     public float spaceBetweenDots;
     public int numberOfDots;
     private Transform[] dots;
@@ -19,29 +21,30 @@ public class PlayerMouvement : MonoBehaviour
     [Header("Movement")] //-----------------------
     [Tooltip("Force maximale du jump, et clamp de la velocite maximale")]
     public float maxSpeed;
-    Vector3 addedVector;
+    [SerializeField] private bool isReversedDirection, isLimitedMovement;
     [Tooltip("% de la velocite ajoutee au saut en fonction du temps, cette valeur doit finir a 1")]
-    Vector2 direction;
-    bool isChargingJump = false;
+    private Vector2 direction;
+    private bool isChargingJump = false;
     [SerializeField]
     private float minForceJumpMultiplicator;
-    float forceJumpMultiplicator;
+    private float forceJumpMultiplicator;
     [SerializeField]
-    float speedIncreaseForceJump;
-    bool hasJumped = false;
-    [SerializeField] AnimationCurve animCurveJumpGravity;
-    float t_jump;
-    float y_jump = 1;
+    private float speedIncreaseForceJump;
+    private bool hasJumped = false;
+    [SerializeField] private AnimationCurve animCurveJumpGravity;
+    private float t_jump;
+    private float y_jump = 1;
     public float gravityStrength;
     private Rigidbody rb;
     public Vector3 velocityLastFrame = Vector3.zero;
+    [SerializeField]
     private List<ContactPointSurface> connectedPoints = new List<ContactPointSurface>();
     public float attractionMultiplier;
     [Range(0, 1)] public float repulsionMultiplier;
-    [SerializeField] bool isSlippery;
+    [SerializeField] private bool isSlippery;
     public int maxNumberOfJumps;
     private int currentNumberOfJumps;
-    Vector3 initScale;
+    private Vector3 initScale;
     public float limitAngle;
     [Header("CollisionVariables")]
     private float ratioMass;
@@ -50,7 +53,7 @@ public class PlayerMouvement : MonoBehaviour
     private float valueStrengthCurve;
     [SerializeField] private AnimationCurve CurveStrengthIncrease;
     public GameObject collisionEffect;
-    [SerializeField] float strengthRequiredToImpact, strengthRequiredToBigImpact, strengthMultiplicator;
+    [SerializeField] private float strengthRequiredToImpact, strengthRequiredToBigImpact, strengthMultiplicator;
     public ParticleSystem ChocParticles;
     [Header("Mesh")]
     private SkinnedMeshRenderer mesh;
@@ -58,7 +61,7 @@ public class PlayerMouvement : MonoBehaviour
     [Header("DEBUG")]
     public int connexions;
     public bool isDebugLimitAngles = false;
-    void Start()
+    private void Start()
     {
         initScale = transform.localScale;
         rb = GetComponent<Rigidbody>();
@@ -74,7 +77,7 @@ public class PlayerMouvement : MonoBehaviour
         RescaleMeshWithMass();
         currentNumberOfJumps = maxNumberOfJumps;
     }
-    void Update()
+    private void Update()
     {
         PreviewDirection();
         if (isChargingJump && connectedPoints.Count > 0)
@@ -127,7 +130,17 @@ public class PlayerMouvement : MonoBehaviour
     #region Inputs
     public void InputDirection(InputAction.CallbackContext context)
     {
-        if (context.performed) direction = context.ReadValue<Vector2>();
+        if (context.performed)
+        {
+            direction = context.ReadValue<Vector2>();
+            if (isReversedDirection)
+            {
+                float angleDir = Vector2.Angle(Vector2.right, direction);
+                if (direction.y < 0) angleDir = 360 - angleDir;
+                angleDir += 180;
+                direction = new Vector2(Mathf.Cos(Mathf.Deg2Rad * angleDir), Mathf.Sin(Mathf.Deg2Rad * angleDir));
+            }
+        }
         else if (context.canceled) direction = Vector2.zero;
     }
     public void InputJump(InputAction.CallbackContext context)
@@ -139,10 +152,10 @@ public class PlayerMouvement : MonoBehaviour
             forceJumpMultiplicator = minForceJumpMultiplicator;
         }
     }
-    #endregion
+    #endregion Inputs
     // ----- JUMP -----
     #region JUMP
-    void Jump()
+    private void Jump()
     {
         if (currentNumberOfJumps > 0 && connectedPoints.Count > 0)
         {
@@ -154,14 +167,15 @@ public class PlayerMouvement : MonoBehaviour
             hasJumped = true;
             t_jump = 0;
             y_jump = 0;
-            addedVector = Vector3.zero;
+            // addedVector = Vector3.zero;
+            AudioManager.instance.PlayJumpSounds(this.gameObject);
             foreach (ContactPointSurface contact in connectedPoints)
             {
                 contact.attractionStrength = 100f;
             }
         }
     }
-    void IncreaseForceJump()
+    private void IncreaseForceJump()
     {
         if (direction != Vector2.zero)
         {
@@ -170,7 +184,7 @@ public class PlayerMouvement : MonoBehaviour
         }
         else forceJumpMultiplicator = minForceJumpMultiplicator;
     }
-    #endregion
+    #endregion JUMP
     // ----- COLLISIONS -----
     #region Collisions
     private void OnCollisionEnter(Collision collision)
@@ -184,7 +198,7 @@ public class PlayerMouvement : MonoBehaviour
                 ContactPointSurface contact = new ContactPointSurface(collision.transform, localPosFromPlayer, localPosFromCol, 0);
                 contact.localPositionFromCollision.z = transform.position.z;
                 contact.vNormal = collision.contacts[0].normal;
-                contact.limitsAngle = contact.GetLimiteAngle(limitAngle);
+                contact.limitsAngle = contact.CalculateLimiteAngle(limitAngle);
                 connectedPoints.Add(contact);
                 PlayerMouvement playerCollided = collision.transform.GetComponent<PlayerMouvement>();
                 if (velocityLastFrame.magnitude * valueStrengthCurve > playerCollided.velocityLastFrame.magnitude * playerCollided.valueStrengthCurve)
@@ -208,7 +222,7 @@ public class PlayerMouvement : MonoBehaviour
                 contact = new ContactPointSurface(collision.transform, localPosFromPlayer, localPosFromCol, -dot * attractionMultiplier);
                 contact.localPositionFromCollision.z = transform.position.z;
                 contact.vNormal = collision.contacts[0].normal;
-                contact.limitsAngle = contact.GetLimiteAngle(limitAngle);
+                contact.limitsAngle = contact.CalculateLimiteAngle(limitAngle);
                 connectedPoints.Add(contact);
                 switch (collision.transform.tag)
                 {
@@ -222,9 +236,8 @@ public class PlayerMouvement : MonoBehaviour
                         state = STATE.STICK;
                         break;
                 }
-                addedVector = Vector2.zero;
                 hasJumped = false;
-                #endregion
+                #endregion Collision Untagged
                 break;
         }
     }
@@ -236,7 +249,7 @@ public class PlayerMouvement : MonoBehaviour
             contact.localPositionFromPlayer = collision.contacts[0].point - transform.position;
             contact.localPositionFromCollision = collision.transform.position - collision.contacts[0].point;
             contact.vNormal = collision.contacts[0].normal;
-            contact.limitsAngle = contact.GetLimiteAngle(limitAngle);
+            contact.limitsAngle = contact.CalculateLimiteAngle(limitAngle);
             if (isDebugLimitAngles)
             {
                 Debug.DrawLine(collision.contacts[0].point, collision.contacts[0].point + contact.limitsAngle[0], Color.blue);
@@ -268,7 +281,7 @@ public class PlayerMouvement : MonoBehaviour
     {
         Vector3 dir = (playerCollided.transform.position - transform.position).normalized;
         RaycastHit hit;
-        //dir = playerCollided.GetPinchDirection();
+        //dir = playerCollided.GetPinchDirection(); // --------------------------------------------------------------------------------------------------  LINE FOR PINCH
         // Debug.DrawRay(playerCollided.transform.position, dir * 3, Color.yellow, 10);
         // Debug.Break();
         //if (Physics.SphereCast(playerCollided.transform.position, playerCollided.initScale.x * playerCollided.ratioMass * 0.9f, dir, out hit, 50))
@@ -283,14 +296,15 @@ public class PlayerMouvement : MonoBehaviour
         if (isPowerfull)
         {
             float angleNormal = Mathf.Atan(contact.normal.y / contact.normal.x) * Mathf.Rad2Deg;
-            Instantiate(ChocParticles, contact.point, Quaternion.Euler(-angleNormal, 80, 0));
+            ParticleSystem particles = Instantiate(ChocParticles, contact.point, Quaternion.Euler(-angleNormal, 80, 0));
+            Destroy(particles.gameObject, 1);
         }
     }
     public void GetImpacted(Vector3 dir, float strength)
     {
         rb.velocity = dir * strength;
     }
-    #endregion
+    #endregion Collisions
     private void Attraction()
     {
         for (int i = connectedPoints.Count - 1; i >= 0; i--)
@@ -366,35 +380,42 @@ public class PlayerMouvement : MonoBehaviour
     #region PreviewDots
     private void EnableDots(bool isTrue)
     {
-        for (int i = 0; i < dots.Length; i++)
+        if (isPreviewDots)
         {
-            dots[i].gameObject.SetActive(isTrue);
+            for (int i = 0; i < dots.Length; i++)
+            {
+                dots[i].gameObject.SetActive(isTrue);
+            }
+            isDotsEnabled = isTrue;
         }
-        isDotsEnabled = isTrue;
     }
     private void PreviewDirection()
     {
         if (isChargingJump)
         {
             float forceJump = maxSpeed * forceJumpMultiplicator;
-            //SetDirectionAndPreviewAngle();
-            Vector2 potentialVelocity = direction * forceJump;
-            for (int i = 0; i < dots.Length; i++)
+            if (isLimitedMovement)
+                SetLimitedDirectionAndPreviewAngle();
+            if (isPreviewDots)
             {
-                dots[i].transform.position = GetDotPosition(i * (spaceBetweenDots * ratioMass), potentialVelocity);
+                Vector2 potentialVelocity = direction * forceJump;
+                for (int i = 0; i < dots.Length; i++)
+                {
+                    dots[i].transform.position = GetDotPosition(i * (spaceBetweenDots * ratioMass), potentialVelocity);
+                }
             }
         }
     }
-    Vector2 GetDotPosition(float t, Vector2 potentialVelocity)
+    private Vector2 GetDotPosition(float t, Vector2 potentialVelocity)
     {
         Vector2 gravity = new Vector2(0, -animCurveJumpGravity.Evaluate(t) * gravityStrength);
-        Vector2 pos = (Vector2) transform.position + (potentialVelocity * t) + 0.5f * gravity * (t * t);
+        Vector2 pos = (Vector2)transform.position + (potentialVelocity * t) + 0.5f * gravity * (t * t);
         return pos;
     }
-    #endregion
+    #endregion PreviewDots
     // ----- ANIMATIONS CURVE -----
     #region Animations curve
-    void AnimCurveJumpGravity()
+    private void AnimCurveJumpGravity()
     {
         if (t_jump < animCurveJumpGravity.keys[animCurveJumpGravity.length - 1].time)
         {
@@ -407,7 +428,7 @@ public class PlayerMouvement : MonoBehaviour
             hasJumped = false;
         }
     }
-    #endregion
+    #endregion Animations curve
     public IEnumerator StrongImpact(bool isPowerful)
     {
         if (isPowerful)
@@ -441,7 +462,7 @@ public class PlayerMouvement : MonoBehaviour
         bonesParent.SetActive(true);
         rb.mass = myPlayer.myDatas.mass;
     }
-    Vector3[] GetPossibleAnglesDirectionJump()
+    private Vector3[] GetPossibleAnglesDirectionJump()
     {
         Vector3[] angles = new Vector3[2];
         List<Vector3> intersections = new List<Vector3>();
@@ -454,7 +475,7 @@ public class PlayerMouvement : MonoBehaviour
             Vector3 posB = connectedPoints[i2].localPositionFromPlayer;
             Vector3 vAngleA = connectedPoints[i2].limitsAngle[0];
             Vector3 intersection = GetIntersectionBetween2Vectors(posA, vAngleA, posB, vAngleB);
-            // If intersection = V0 -> les directions regard�es ne collideront pas : l'angle represente l'angle possible de saut 
+            // If intersection = V0 -> les directions regard�es ne collideront pas : l'angle represente l'angle possible de saut
             //(dans le cas d'un pinch : le milieu de l'angle repr�sente la direction de l'ejection)
             if (intersection == Vector3.zero)
             {
@@ -464,45 +485,15 @@ public class PlayerMouvement : MonoBehaviour
                 break;
             }
         }
-        // Dans le cas d'une collision entre joueurs, cette fonction est appel�e uniquement si le joueur collid� est bloqu� par quelque chose.
-        // On renvoie alors soit le milieu de son angle de saut, soit le vecteur du joueur � son point d'intersection le plus �loign�.
-        //if (isCollisionBetweenPlayer)
-        //{
-        //    if (isColliding)
-        //    {
-        //        Debug.Break();
-        //    }
-        //    else
-        //    {
-        //        print("intersections");
-        //        Vector2 farestVector = intersections[0];
-        //        for (int i = 1; i < intersections.Count; i++)
-        //        {
-        //            float farestDist = (intersections[0] - transform.position).magnitude;
-        //            float distTocheck = (intersections[i] - transform.position).magnitude;
-        //            if (distTocheck > farestDist)
-        //            {
-        //                farestDist = distTocheck;
-        //                farestVector = intersections[i];
-        //            }
-        //        }
-        //        print("intersections");
-        //        angles[0] = farestVector.normalized;
-        //    }
-        //}
         return angles;
     }
-    Vector3 GetPinchDirection()
+    private Vector3 GetPinchDirection()
     {
         // Dans le cas d'une collision entre joueurs, cette fonction est appel�e uniquement si le joueur collid� est bloqu� par quelque chose.
         // On renvoie alors soit le milieu de son angle de saut, soit le vecteur du joueur � son point d'intersection le plus �loign�.
         Vector3 dir = Vector3.zero;
         List<Vector3> intersections = new List<Vector3>();
         ContactPointSurface[] contacts = ReorderConnectedPoints();
-        foreach (ContactPointSurface contact in contacts)
-        {
-            print(contact.transform.name);
-        }
         for (int i = 0; i < contacts.Length; i++)
         {
             int i2 = i + 1;
@@ -514,7 +505,7 @@ public class PlayerMouvement : MonoBehaviour
             Vector3 intersection = GetIntersectionBetween2Vectors(posA, vAngleG, posB, vAngleD);
             Debug.DrawRay(contacts[i].localPositionFromPlayer + transform.position, vAngleG * 3, Color.black, 1);
             Debug.DrawRay(contacts[i2].localPositionFromPlayer + transform.position, vAngleD * 3, Color.red, 1);
-            // If intersection = V0 -> les directions regard�es ne collideront pas : l'angle represente l'angle possible de saut 
+            // If intersection = V0 -> les directions regard�es ne collideront pas : l'angle represente l'angle possible de saut
             //(dans le cas d'un pinch : le milieu de l'angle repr�sente la direction de l'ejection)
             if (intersection == Vector3.zero)
             {
@@ -538,7 +529,7 @@ public class PlayerMouvement : MonoBehaviour
         }
         return dir.normalized;
     }
-    void SetDirectionAndPreviewAngle()
+    private void SetLimitedDirectionAndPreviewAngle()
     {
         ReorderConnectedPoints();
         Vector3[] angles = GetPossibleAnglesDirectionJump();
@@ -552,7 +543,7 @@ public class PlayerMouvement : MonoBehaviour
             forceJumpMultiplicator = Mathf.Lerp(forceJumpMultiplicator, 0, result);
         }
     }
-    Vector3 GetIntersectionBetween2Vectors(Vector3 posA, Vector3 vA, Vector3 posB, Vector3 vB)
+    private Vector3 GetIntersectionBetween2Vectors(Vector3 posA, Vector3 vA, Vector3 posB, Vector3 vB)
     {
         Vector3 intersection = Vector3.zero;
         if (((vA.y * vB.x) - (vA.x * vB.y)) != 0)
@@ -565,31 +556,14 @@ public class PlayerMouvement : MonoBehaviour
         }
         return intersection;
     }
-    ContactPointSurface[] ReorderConnectedPoints()
+    private ContactPointSurface[] ReorderConnectedPoints()
     {
-        ContactPointSurface[] newList = new ContactPointSurface[connectedPoints.Count];
-        float minAngle = -1f;
-        for (int i = 0; i < connectedPoints.Count; i++)
-        {
-            ContactPointSurface contactToOrder = new ContactPointSurface();
-            float AngleMaxToCheck = 360f;
-            float angle = 0f;
-            for (int j = 0; j < connectedPoints.Count; j++)
-            {
-                angle = Vector2.Angle(Vector2.right, connectedPoints[j].localPositionFromPlayer);
-                if (connectedPoints[j].localPositionFromPlayer.y < 0) angle = 360f - angle;
-                if (angle < AngleMaxToCheck && angle > minAngle)
-                {
-                    AngleMaxToCheck = angle;
-                    contactToOrder = connectedPoints[j];
-                }
-            }
-            newList[i] = contactToOrder;
-            minAngle = angle;
-        }
-        return newList;
+        ContactPointSurface[] array;
+        array = connectedPoints.OrderBy(x => x.myAnglefromPlayer).ToArray();
+        return array;
     }
 }
+[System.Serializable]
 public class ContactPointSurface
 {
     public Transform transform;
@@ -600,15 +574,24 @@ public class ContactPointSurface
     public Vector3[] limitsAngle = new Vector3[2];
     public float angleLeft;
     public float angleRight;
+    public float myAnglefromPlayer;
     public ContactPointSurface(Transform transform, Vector3 localPositionFromPlayer, Vector3 localPositionFromCollision, float attractionStrength)
     {
         this.transform = transform;
         this.localPositionFromPlayer = localPositionFromPlayer;
         this.localPositionFromCollision = localPositionFromCollision;
         this.attractionStrength = attractionStrength;
+        myAnglefromPlayer = CalculateMyAngleFromPlayer();
     }
-    public ContactPointSurface() { }
-    public Vector3[] GetLimiteAngle(float limit)
+    public ContactPointSurface()
+    { }
+    private float CalculateMyAngleFromPlayer()
+    {
+        float angle = Vector2.Angle(Vector2.right, localPositionFromPlayer);
+        if (localPositionFromPlayer.y < 0) angle = 360f - angle;
+        return angle;
+    }
+    public Vector3[] CalculateLimiteAngle(float limit)
     {
         float baseAngle = Vector3.Angle(Vector3.right, vNormal);
         if (vNormal.y < 0) baseAngle = 360 - baseAngle;
