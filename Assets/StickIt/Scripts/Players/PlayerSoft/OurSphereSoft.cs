@@ -11,17 +11,17 @@ public class OurSphereSoft : MonoBehaviour
     [Header("Spring Joint Settings")]
     public bool ConfigurableJoint;
     [Tooltip("Strength of spring")]
-    public float Spring = 100f;
+    [SerializeField] public float Spring = 100f;
     [Tooltip("Higher the value the faster the spring oscillation stops")]
-    public float Damper = 0.2f;
+    [SerializeField] public float Damper = 0.2f;
     [Header("Other Settings")]
-    public int ColliderSizeRoot;
+    [SerializeField] public int ColliderSizeRoot;
     [HideInInspector]
     public float collSizeRoot;
-    public int ColliderSize;
+    [SerializeField] public int ColliderSize;
     [HideInInspector]
     public float collSizeBones;
-    public float RigidbodyMass = 1f;
+    [SerializeField] public float RigidbodyMass = 1f;
 
     //[Header("Configurable joints settings")]
     private List<Vector3> initBonesPos = new List<Vector3>();
