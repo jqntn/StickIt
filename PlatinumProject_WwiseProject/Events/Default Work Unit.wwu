@@ -40,6 +40,65 @@
 						</Event>
 					</ChildrenList>
 				</Folder>
+				<Folder Name="SFX" ID="{79D5F0CC-B7C9-4250-AF69-EDB99B1643BF}" ShortID="1041850501">
+					<ChildrenList>
+						<Event Name="Play_SFX_S_Jump" ID="{C8280902-8B3D-4673-8F7D-DF0313B44CEC}">
+							<ChildrenList>
+								<Action Name="" ID="{8F53304F-7975-4D22-9C75-2C7A1A3A68AF}" ShortID="426369203">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SFX_S_Jump" ID="{41E60EFC-F8F5-4061-A704-C45E61775E5F}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_SFX_S_Death" ID="{CBBE593D-5282-4119-B083-D32EC95634AC}">
+							<ChildrenList>
+								<Action Name="" ID="{1F1C91FF-152D-456B-ACB6-A9CA95943588}" ShortID="599192898">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SFX_S_Death" ID="{418D2BFA-FED6-49A0-9DAB-5295BF2F210F}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_SFX_S_Collision" ID="{28FA1679-C7C6-46BA-AEDC-993A67143BAA}">
+							<ChildrenList>
+								<Action Name="" ID="{800DC759-6FDE-4F68-BAC1-54111FF1E8C5}" ShortID="266169595">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SFX_S_Collision" ID="{EAA03670-26E9-440A-B8E5-2C605CF083BC}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_SFX_S_SlingshotCharge" ID="{BC14305F-BCF3-46F2-97DA-DD338586BDF9}">
+							<ChildrenList>
+								<Action Name="" ID="{41249FCA-58F8-4A42-B194-5A31338A4BF8}" ShortID="137567133">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SFX_S_SlingshotCharge" ID="{830527A7-963C-49F5-AEC9-A9A7F59EEFBF}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_SFX_S_Land" ID="{258481C7-9E41-4E0C-8D64-343E20C25907}">
+							<ChildrenList>
+								<Action Name="" ID="{78290585-EA59-4D4D-A9D7-2144EEED8DFD}" ShortID="1062521392">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SFX_S_Land" ID="{C41D82B7-9E08-4D8E-9E31-380A27A657DE}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
