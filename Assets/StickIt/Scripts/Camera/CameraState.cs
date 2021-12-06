@@ -55,8 +55,9 @@ public abstract class CameraState : MonoBehaviour
     [SerializeField] protected Vector2 frustum_dimension = new Vector2(0.0f, 0.0f);
     [SerializeField] protected Vector2 min_viewport = new Vector2(0.0f, 0.0f);
     [SerializeField] protected Vector2 max_viewport = new Vector2(0.0f, 0.0f);
-    [SerializeField] protected float playersBounds_X = 0.0f;
-    [SerializeField] protected float playersBounds_Y = 0.0f;
+    [SerializeField] protected Vector2 min_zoomOutBounds = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 max_zoomOutBounds = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 playerBounds = new Vector2(0.0f, 0.0f);
     [SerializeField] protected Vector2 min_playerBounds = new Vector2(0.0f, 0.0f);
     [SerializeField] protected Vector2 max_playerBounds = new Vector2(0.0f, 0.0f);
 
@@ -72,6 +73,8 @@ public abstract class CameraState : MonoBehaviour
         mapManager = MapManager.instance;
         multiplayerManager = MultiplayerManager.instance;
         if(multiplayerManager != null) { playerList = multiplayerManager.players; }
+
+        ResetCamera();
     }
 
     protected virtual void Update()
@@ -104,6 +107,9 @@ public abstract class CameraState : MonoBehaviour
         UpdateCamera();
     }
 
+    //<summary>
+    // Make The camera Move and Zoom
+    //<summary>
     protected virtual void UpdateCamera()
     {
         // Move Camera
@@ -126,18 +132,28 @@ public abstract class CameraState : MonoBehaviour
         transform.parent.position = Vector3.SmoothDamp(transform.parent.position, newZoom, ref zoomVelocity, zoomTime);
     }
 
+    //<summary>
+    // Viewport dimension changing depending of the Zoom Value
+    //<summary>
     protected void UpdateFrustum()
     {
         float distance = -transform.parent.position.z;
         frustum_dimension.y = 2.0f * distance * Mathf.Tan(cam.fieldOfView * 0.5f * Mathf.Deg2Rad);
         frustum_dimension.x = frustum_dimension.y * cam.aspect;
 
+        // frustum update
         float offsetX = frustum_dimension.x / 2.0f;
         float offsetY = frustum_dimension.y / 2.0f;
         min_viewport.x = transform.parent.position.x - offsetX;
         max_viewport.x = transform.parent.position.x + offsetX;
         min_viewport.y = transform.parent.position.y - offsetY;
         max_viewport.y = transform.parent.position.y + offsetY;
+
+        // camera zoom out margin update
+        min_zoomOutBounds.x = min_viewport.x + zoomOutMargin;
+        min_zoomOutBounds.y = min_viewport.y + zoomOutMargin;
+        max_zoomOutBounds.x = max_viewport.x - zoomOutMargin;
+        max_zoomOutBounds.y = max_viewport.y - zoomOutMargin;
     }
 
     //<summary>
@@ -153,6 +169,9 @@ public abstract class CameraState : MonoBehaviour
         max_moveBounds.y = bounds_pos.y + offsetY;
     }
 
+    //<summary>
+    // Player bounds are the encapsulation of all the player to calculate how to zoom in
+    //<summary>
     protected void UpdatePlayersBounds()
     {
         Bounds playersBounds = new Bounds(playerList[0].transform.position, Vector3.zero);
@@ -162,10 +181,10 @@ public abstract class CameraState : MonoBehaviour
             playersBounds.Encapsulate(player.transform.position);
         }
 
-        playersBounds_X = playersBounds.size.x;
-        playersBounds_Y = playersBounds.size.y;
+        playerBounds.x = playersBounds.size.x;
+        playerBounds.y = playersBounds.size.y;
 
-        float offsetX = playersBounds_X;
+        float offsetX = playerBounds.x;
         min_playerBounds.x = barycenter.x - offsetX;
         max_playerBounds.x = barycenter.x + offsetX;
     }
@@ -174,9 +193,24 @@ public abstract class CameraState : MonoBehaviour
         // Zoom Out
         float min_zoomOut_X = min_playerBounds.x - zoomOutMargin;
         float max_zoomOut_X = max_playerBounds.x + zoomOutMargin;
+        // If Viewport is too small compare to Bounds players > Zoom out 
         bool canZoomOut = (min_viewport.x >= min_zoomOut_X && max_viewport.x <= max_zoomOut_X)
                           && -Mathf.Floor(-transform.parent.position.z) > maxOut_Z;
-        // If Viewport is too small compare to bounds players
+
+        // If Player is touching zoom out margin > Zoom Out
+        foreach(Player player in playerList)
+        {
+            float player_x = player.transform.position.x;
+            float player_y = player.transform.position.y;
+            if(player_x <= min_zoomOutBounds.x || player_x >= max_zoomOutBounds.x
+            || player_y <= min_zoomOutBounds.y || player_y >= max_zoomOutBounds.y)
+            {
+                canZoomOut = true;
+                break;
+            }
+        }
+        
+        // Zoom Out
         if (canZoomOut)
         {
             positionToGoTo.z = Mathf.Clamp(transform.position.z + zoomOutValue, maxOut_Z, maxIn_Z);
@@ -187,7 +221,7 @@ public abstract class CameraState : MonoBehaviour
         float min_zoomIn_X = min_playerBounds.x - zoomInMargin;
         float max_zoomIn_X = max_playerBounds.x + zoomInMargin;
 
-        // If Viewport is too big compare to bounds players
+        // If Viewport is too big compare to bounds players > Zoom In
         bool canZoomIn = (min_viewport.x <= min_zoomIn_X || max_viewport.x >= max_zoomIn_X)
                          && -Mathf.Floor(-transform.parent.position.z) < maxIn_Z;
         if (canZoomIn)
@@ -260,14 +294,18 @@ public abstract class CameraState : MonoBehaviour
 
         // Draw Players Bounds
         Gizmos.color = Color.grey;
-        Gizmos.DrawWireCube(barycenter, new Vector3(playersBounds_X, playersBounds_Y, 1));
+        Gizmos.DrawWireCube(barycenter, new Vector3(playerBounds.x, playerBounds.y, 1));
 
         // Draw Zoom Out Margin from PlayerBounds
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(barycenter, new Vector3(playersBounds_X + zoomOutMargin, playersBounds_Y + zoomOutMargin, 1));
+        Gizmos.DrawWireCube(barycenter, new Vector3(playerBounds.x + zoomOutMargin, playerBounds.y + zoomOutMargin, 1));
 
         // Draw Zoom In Margin from PlayerBounds
-        Gizmos.DrawWireCube(barycenter, new Vector3(playersBounds_X + zoomInMargin, playersBounds_Y + zoomInMargin, 1));
+        Gizmos.DrawWireCube(barycenter, new Vector3(playerBounds.x + zoomInMargin, playerBounds.y + zoomInMargin, 1));
+
+        // Draw Zoom Out Margin
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireCube(transform.parent.position, new Vector3(frustum_dimension.x - zoomOutMargin, frustum_dimension.y - zoomOutMargin, 1));
     }
     #endregion
 

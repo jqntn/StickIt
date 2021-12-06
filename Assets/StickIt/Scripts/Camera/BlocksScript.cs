@@ -48,7 +48,11 @@ public class BlocksScript : MonoBehaviour
 
         GameEvents.OnSceneUnloaded.AddListener(GiveNewBounds);
     }
-
+    void Start()
+    {
+        //Debug
+        GiveNewBounds();
+    }
     private void GiveNewBounds()
     {
         StartCoroutine(OnGiveNewBounds());
