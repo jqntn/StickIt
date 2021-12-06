@@ -40,15 +40,15 @@ public class MusicalChairManager : Level
     {
         if (mapManagered)
         {
-            Init();
+            StartCoroutine(Init());
             mapManagered = false;
         }
         if (GameLaunched)
             UpdateText();
     }
-    public override void Init()
+    public override void StartMap()
     {
-        base.Init();
+        base.StartMap();
         chairs = FindObjectsOfType<Chair>();
         inTransition = true;
         transition = transitionValue;

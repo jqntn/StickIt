@@ -486,6 +486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   winners: []
+  canvasStartMap: {fileID: 0}
 --- !u!4 &474221124
 Transform:
   m_ObjectHideFlags: 0
@@ -1634,13 +1635,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e1589a5522e474d97aae598bc0f2c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  extend: {x: 0, y: 0}
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   boundsPos: {x: 0, y: 0}
   max: {x: 0, y: 0}
   dimension: {x: 0, y: 0}
+  factor: 0
 --- !u!1001 &1451984714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2240,6 +2241,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4196a7c61d2486e4e981c785341bdbb0, type: 3}
+--- !u!1 &1681687699 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7690183934384174197, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+  m_PrefabInstance: {fileID: 477383130782104585}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1734032530
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2828,6 +2834,10 @@ PrefabInstance:
       propertyPath: mapManagered
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 477383130934292853, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: canvasStartMap
+      value: 
+      objectReference: {fileID: 1681687699}
     - target: {fileID: 1084716483323205555, guid: a3bb0b8557534e147a397858207651a9, type: 3}
       propertyPath: m_IsActive
       value: 1
