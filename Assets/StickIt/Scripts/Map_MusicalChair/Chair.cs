@@ -82,6 +82,7 @@ public class Chair : MonoBehaviour
         isActive = false;
         lr.enabled = false;
         chosenOne = null;
+        playersInChair.Clear();
         DespawnChair();
     }
     void SpawnChair(Color c) 
