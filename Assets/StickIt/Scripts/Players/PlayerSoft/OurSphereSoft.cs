@@ -1,27 +1,27 @@
 using UnityEngine;
 using System.Collections.Generic;
-
+using System.Linq;
 public class OurSphereSoft : MonoBehaviour
 {
 
     [Header("Bones")]
     GameObject root = null;
-    public GameObject[] bones;
+    GameObject[] bones;
     public PhysicMaterial matBones;
     [Header("Spring Joint Settings")]
     public bool ConfigurableJoint;
     [Tooltip("Strength of spring")]
-    public float Spring = 100f;
+    [SerializeField] public float Spring = 100f;
     [Tooltip("Higher the value the faster the spring oscillation stops")]
-    public float Damper = 0.2f;
+    [SerializeField] public float Damper = 0.2f;
     [Header("Other Settings")]
-    public int ColliderSizeRoot;
+    [SerializeField] public int ColliderSizeRoot;
     [HideInInspector]
     public float collSizeRoot;
-    public int ColliderSize;
+    [SerializeField] public int ColliderSize;
     [HideInInspector]
     public float collSizeBones;
-    public float RigidbodyMass = 1f;
+    [SerializeField] public float RigidbodyMass = 1f;
 
     //[Header("Configurable joints settings")]
     private List<Vector3> initBonesPos = new List<Vector3>();
@@ -33,6 +33,7 @@ public class OurSphereSoft : MonoBehaviour
         root = this.gameObject;
         root.GetComponent<SphereCollider>().radius = collSizeRoot;
         Softbody.Init(collSizeBones, RigidbodyMass, Spring, Damper, RigidbodyConstraints.FreezeRotation |RigidbodyConstraints.FreezePositionZ, matBones);
+        bones = this.GetComponentsInChildren<Transform>().Where(x => x.CompareTag("Bone")).Select(x => x.gameObject).ToArray();
 
         for (int i = 0; i < bones.Length; i++)
         {
