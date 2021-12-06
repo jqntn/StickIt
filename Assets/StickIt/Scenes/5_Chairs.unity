@@ -1584,6 +1584,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1407892701}
+  - component: {fileID: 1407892702}
   m_Layer: 0
   m_Name: MapLD
   m_TagString: Untagged
@@ -1621,6 +1622,25 @@ Transform:
   m_Father: {fileID: 722459208}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1407892702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1407892700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5e1589a5522e474d97aae598bc0f2c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  boundsPos: {x: 0, y: 0}
+  max: {x: 0, y: 0}
+  dimension: {x: 0, y: 0}
+  factor: 0
 --- !u!1001 &1451984714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3102,7 +3122,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148648948990}
-  m_Mesh: {fileID: -951608786083511892, guid: 702d89dfcf165f144b623aba594110cc, type: 3}
+  m_Mesh: {fileID: -951608786083511892, guid: 733bfacb7b1fa264f9326a709b9886d0, type: 3}
 --- !u!1001 &6214654031522899695
 PrefabInstance:
   m_ObjectHideFlags: 0
