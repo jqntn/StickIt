@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,15 +5,12 @@ public class CameraStateDriven : MonoBehaviour
 {
     public List<CameraState> statesList = new List<CameraState>();
 
-    [Header("----- DEBUG ------")]
-    [SerializeField] private CameraState currentState;
-
-    [Header("----- Animation -----")]
-    public bool hasZoomOutAtEnd = true;
-    public bool hasCenterMapCamera = true;
+    [Header("---- DEBUG ----- ")]
+    public CameraState currentState;
 
     private void Awake()
     {
+        // Debug
         foreach(CameraState state in statesList)
         {
             if (state.isActiveAndEnabled)
@@ -23,7 +19,7 @@ public class CameraStateDriven : MonoBehaviour
                 break;
             }
         }
-        GameEvents.OnSwitchCamera.AddListener(SwitchStates);   
+        // -------
     }
     public void DeactivateAllCameraState()
     {
@@ -35,7 +31,7 @@ public class CameraStateDriven : MonoBehaviour
     public void SwitchStates(CameraType type)
     {
         currentState.gameObject.SetActive(false);
-        
+        currentState = null;
         foreach(CameraState state in statesList)
         {
             if(state.GetCameraType() == type)
@@ -46,19 +42,6 @@ public class CameraStateDriven : MonoBehaviour
             }
         }
 
-        Debug.Log("Switch State : " + currentState.name);
-    }
-
-    public void SwitchToRunner()
-    {
-        SwitchStates(CameraType.RUNNER);
-    }
-    public void SwitchToFollow()
-    {
-        SwitchStates(CameraType.FOLLOW);
-    }
-    public void SwitchToBarycenter()
-    {
-        SwitchStates(CameraType.BARYCENTER);
+        GameEvents.OnSwitchCamera.Invoke();
     }
 }

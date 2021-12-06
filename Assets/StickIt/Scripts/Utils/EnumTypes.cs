@@ -13,6 +13,7 @@ public enum RaceDirection
 
 public enum CameraType
 {
+    NONE,
     BARYCENTER,
     FOLLOW,
     RUNNER,

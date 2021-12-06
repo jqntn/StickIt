@@ -10,6 +10,10 @@ public class Player : MonoBehaviour
     public MMFeedbacks deathAnim;
     public GameObject deathPart;
     public bool isDead;
+
+    [SerializeField] int minMass = 100;
+    [SerializeField] int maxMass = 250;
+
     void Awake()
     {
         _multiplayerManager = MultiplayerManager.instance;
@@ -18,7 +22,6 @@ public class Player : MonoBehaviour
             myMouvementScript = pm;
             myMouvementScript.myPlayer = this;
         }
-
         DontDestroyOnLoad(this);
     }
     public void Death(bool intensityAnim = false)
@@ -33,7 +36,6 @@ public class Player : MonoBehaviour
     IEnumerator OnDeath(bool intensityAnim)
     {
         deathAnim.PlayFeedbacks();
-
         if (intensityAnim) yield return new WaitForSeconds(deathAnim.TotalDuration / deathAnim.DurationMultiplier);
         myMouvementScript.Death();
         GameObject obj = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Quaternion.identity);
@@ -72,9 +74,63 @@ public class Player : MonoBehaviour
         myMouvementScript.Respawn();
         isDead = false;
     }
-    public void QuitGame()
+
+
+    public void SetScoreAndMass(bool isWin, uint score, int mass)
     {
-        Debug.Log("Quit Application");
-        Application.Quit();
+        myDatas.score += score;
+        if (isWin)
+        {
+            myDatas.mass += mass;
+        }
+        else
+        {
+            myDatas.mass -= mass;          
+        }
+        myDatas.mass = Mathf.Clamp(myDatas.mass, minMass, maxMass);
     }
+
+    // INPUT TOOLS TO REMOVE LATER
+
+
+    public void InputTestMassP25(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            SetScoreAndMass(true, 0, 25);
+            myMouvementScript.RescaleMeshWithMass();
+        }
+
+    }
+
+    public void InputTestMassP5(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            SetScoreAndMass(true, 0, 5);
+            myMouvementScript.RescaleMeshWithMass();
+        }
+
+    }
+
+    public void InputTestMassM25(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            SetScoreAndMass(false, 0, 25);
+            myMouvementScript.RescaleMeshWithMass();
+        }
+
+    }
+
+    public void InputTestMassM5(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            SetScoreAndMass(false, 0, 5);
+            myMouvementScript.RescaleMeshWithMass();
+        }
+
+    }
+
 }

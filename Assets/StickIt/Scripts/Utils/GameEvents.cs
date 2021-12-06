@@ -10,7 +10,7 @@ public static class GameEvents
 	// | End Events
 
 	public static UnityEvent OnSceneUnloaded = new UnityEvent();
-	public static CameraEvent OnSwitchCamera = new CameraEvent();
+	public static UnityEvent OnSwitchCamera = new UnityEvent();
 }
 
 public class CameraShakeEvent : UnityEvent<float> { }
