@@ -24,7 +24,7 @@ MonoBehaviour:
     ParentPath: Virtual Acoustics\Default Work Unit
     guid: 6a1b4b95fb138c40a653a66da00c8ad4
     GuidInternal: 
-    m_lastTime: -8585669375090232177
+    m_lastTime: -8585669714385132931
     List: []
   AuxBusWwu:
   - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
@@ -145,7 +145,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 3cbf420719f9a74db393e7ee75d4dee4
     GuidInternal: 
-    m_lastTime: -8585628149824918860
+    m_lastTime: -8585627953259465970
     List:
     - name: Event_M_Play_Chairs
       guid: fb00c12e38ccda44831647fbc2eb9a27
@@ -165,8 +165,8 @@ MonoBehaviour:
         guid: fb00c12e38ccda44831647fbc2eb9a27
       Path: Events\Default Work Unit\Music\Event_M_Play_Chairs
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Event_M_Play_Deathmatch
       guid: 5128eba6eb835e4b8e5dbe694b2518d6
       id: 400946182
@@ -185,8 +185,8 @@ MonoBehaviour:
         guid: 5128eba6eb835e4b8e5dbe694b2518d6
       Path: Events\Default Work Unit\Music\Event_M_Play_Deathmatch
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Event_M_Play_Menu
       guid: a2b296c0c8689e4b8ba5928b801a35c7
       id: 2474506946
@@ -205,8 +205,8 @@ MonoBehaviour:
         guid: a2b296c0c8689e4b8ba5928b801a35c7
       Path: Events\Default Work Unit\Music\Event_M_Play_Menu
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Music
       guid: 9f3fdc5bc59ff34d8769a6267335126b
       id: 3991942870
@@ -221,6 +221,123 @@ MonoBehaviour:
         ObjectType: 4
         guid: 9f3fdc5bc59ff34d8769a6267335126b
       Path: Events\Default Work Unit\Music
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_S_Collision
+      guid: 7916fa28c6c7ba46aedc993a67143baa
+      id: 2655917940
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: SFX
+        ObjectType: 4
+        guid: ccf0d579c9b75042af69edb99b1643bf
+      - ElementName: Play_SFX_S_Collision
+        ObjectType: 3
+        guid: 7916fa28c6c7ba46aedc993a67143baa
+      Path: Events\Default Work Unit\SFX\Play_SFX_S_Collision
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_S_Death
+      guid: 3d59becb82521941b083d32ec95634ac
+      id: 239606594
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: SFX
+        ObjectType: 4
+        guid: ccf0d579c9b75042af69edb99b1643bf
+      - ElementName: Play_SFX_S_Death
+        ObjectType: 3
+        guid: 3d59becb82521941b083d32ec95634ac
+      Path: Events\Default Work Unit\SFX\Play_SFX_S_Death
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_S_Jump
+      guid: 020928c83d8b73468f7ddf0313b44cec
+      id: 3510434704
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: SFX
+        ObjectType: 4
+        guid: ccf0d579c9b75042af69edb99b1643bf
+      - ElementName: Play_SFX_S_Jump
+        ObjectType: 3
+        guid: 020928c83d8b73468f7ddf0313b44cec
+      Path: Events\Default Work Unit\SFX\Play_SFX_S_Jump
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_S_Land
+      guid: c7818425419e0c4e8d64343e20c25907
+      id: 1721975435
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: SFX
+        ObjectType: 4
+        guid: ccf0d579c9b75042af69edb99b1643bf
+      - ElementName: Play_SFX_S_Land
+        ObjectType: 3
+        guid: c7818425419e0c4e8d64343e20c25907
+      Path: Events\Default Work Unit\SFX\Play_SFX_S_Land
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_SFX_S_SlingshotCharge
+      guid: 5f3014bcf3bcf24697dadd338586bdf9
+      id: 799208851
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: SFX
+        ObjectType: 4
+        guid: ccf0d579c9b75042af69edb99b1643bf
+      - ElementName: Play_SFX_S_SlingshotCharge
+        ObjectType: 3
+        guid: 5f3014bcf3bcf24697dadd338586bdf9
+      Path: Events\Default Work Unit\SFX\Play_SFX_S_SlingshotCharge
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: SFX
+      guid: ccf0d579c9b75042af69edb99b1643bf
+      id: 393239870
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: SFX
+        ObjectType: 4
+        guid: ccf0d579c9b75042af69edb99b1643bf
+      Path: Events\Default Work Unit\SFX
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -468,10 +585,10 @@ MonoBehaviour:
     ParentPath: Triggers\Default Work Unit
     guid: 8497bab1772ad342aad981e5ac6cc815
     GuidInternal: 
-    m_lastTime: -8585669375090222214
+    m_lastTime: -8585669714385980265
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 
+  ExpandedWaapiItemIds: 0e0000000f000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

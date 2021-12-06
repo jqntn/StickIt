@@ -910,10 +910,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myPlayer: {fileID: 0}
   state: 1
+  isPreviewDots: 1
   dotPreview: {fileID: 1563193181262515494, guid: d0c611942a4ded548aac09b0447276da, type: 3}
   spaceBetweenDots: 0.01
   numberOfDots: 8
   maxSpeed: 40
+  isReversedDirection: 0
+  isLimitedMovement: 1
   minForceJumpMultiplicator: 0.2
   speedIncreaseForceJump: 5
   animCurveJumpGravity:
@@ -942,6 +945,7 @@ MonoBehaviour:
     m_RotationOrder: 4
   gravityStrength: 100
   velocityLastFrame: {x: 0, y: 0, z: 0}
+  connectedPoints: []
   attractionMultiplier: 50
   repulsionMultiplier: 0.01
   isSlippery: 1
@@ -1239,21 +1243,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 26b225e695aca674fab9fa33177fefda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bones:
-  - {fileID: 4145983038473312007}
-  - {fileID: 4145983037547532679}
-  - {fileID: 4145983038069602176}
-  - {fileID: 4145983038707915068}
-  - {fileID: 4145983038087806479}
-  - {fileID: 4145983037261024450}
-  - {fileID: 4145983036741891051}
-  - {fileID: 4145983037083228619}
-  - {fileID: 4145983037532592913}
-  - {fileID: 4145983037234366052}
-  - {fileID: 4145983038365968977}
-  - {fileID: 4145983037725713502}
-  - {fileID: 4145983036860649577}
-  - {fileID: 4145983036750175256}
   matBones: {fileID: 13400000, guid: b4a9cef7130b7ec4eb4a2a937d5ad794, type: 2}
   ConfigurableJoint: 1
   Spring: 500
