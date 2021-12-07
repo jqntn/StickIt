@@ -38,7 +38,7 @@ public class Player : MonoBehaviour
         deathAnim.PlayFeedbacks();
         if (intensityAnim)
         {
-            AudioManager.instance.PlayDeathSounds(this.gameObject);
+            //AudioManager.instance.PlayDeathSounds(this.gameObject);
             yield return new WaitForSeconds(deathAnim.TotalDuration / deathAnim.DurationMultiplier);
         }
         myMouvementScript.Death();

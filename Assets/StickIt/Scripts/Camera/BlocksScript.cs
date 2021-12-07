@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class BlocksScript : MonoBehaviour
 {
+    public float extendsFactor = 1.0f;
     #region Grayed out
     [SerializeField] private Bounds bounds = new Bounds();
     [SerializeField] private Vector2 boundsPos  = new Vector2(0.0f, 0.0f);
@@ -42,8 +43,8 @@ public class BlocksScript : MonoBehaviour
 
         // Change dimension to respect aspect ratio
         factor = dimension.x / Utils.AspectRatio.x;
-        dimension.x = Utils.AspectRatio.x * factor;
-        dimension.y = Utils.AspectRatio.y * factor;
+        dimension.x = Utils.AspectRatio.x * factor * extendsFactor;
+        dimension.y = Utils.AspectRatio.y * factor * extendsFactor;
         boundsPos = bounds.center;
 
         GameEvents.OnSceneUnloaded.AddListener(GiveNewBounds);
