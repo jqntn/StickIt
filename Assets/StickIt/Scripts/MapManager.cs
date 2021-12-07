@@ -24,7 +24,7 @@ public class MapManager : Unique<MapManager>
     //{
     //    if (GUI.Button(new Rect(0, 0, 200, 100), "NextMap")) NextMap(nextMapManual, true);
     //}
-    private void Awake()
+    protected override void Awake()
     {
         base.Awake();
         camManager = Camera.main.GetComponent<CameraStateDriven>();
