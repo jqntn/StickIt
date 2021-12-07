@@ -13,6 +13,8 @@ public class MusicalChairManager : Level
     [SerializeField] Color colorTextRound;
     float transition;
     public Text countdown;
+    private Animator textAnim;
+    float countDownSave;
     float textValue;
     bool inTransition;
     [Header("Chairs")]
@@ -34,6 +36,8 @@ public class MusicalChairManager : Level
     }
     private void Start()
     {
+        countDownSave = int.MaxValue;
+        textAnim = countdown.GetComponent<Animator>();
     }
     // Update is called once per frame
     void Update()
@@ -51,7 +55,7 @@ public class MusicalChairManager : Level
         base.StartMap();
         chairs = FindObjectsOfType<Chair>();
         inTransition = true;
-        transition = transitionValue;
+        transition = transitionValue + 1;
         maxChairsActive = MultiplayerManager.instance.alivePlayers.Count - 1;
         GameLaunched = true;
     }
@@ -59,16 +63,17 @@ public class MusicalChairManager : Level
     {
         if (inTransition)
         {
-            duration = durationValue;
-            countdown.color = colorTextTransition;
+            duration = durationValue + 1;         
             transition -= Time.deltaTime;
-            textValue = Mathf.Round(transition);
+            textValue = (int)transition;
+            countdown.color = colorTextTransition;
 
             if (transition <= 0)
             {
                 inTransition = false;
+                GameEvents.CameraShake_CEvent?.Invoke(duration / 0.4f);
             }
-            else if(spawning && transition <= durationSpawn && transition > 0)
+            else if(spawning && transition <= durationSpawn)
             {
                 ChangeChairPool();
                 spawning = false;
@@ -76,18 +81,26 @@ public class MusicalChairManager : Level
         }
         else
         {
-            transition = transitionValue;
-            countdown.color = colorTextRound;
+            transition = transitionValue + 1;
             duration -= Time.deltaTime;
-            textValue = Mathf.Round(duration);
+            textValue = (int)duration;
+            countdown.color = colorTextRound;
             if (duration <= 0)
             {
                 inTransition = true;
                 spawning = true;
                 ResetChairPool();
+                GameEvents.CameraShake_CEvent?.Invoke(duration / 0.4f);
             }
+       
         }
         countdown.text = textValue.ToString();
+        if(textValue < countDownSave)
+        {
+            textAnim.SetTrigger("Update");
+        }
+        countDownSave = textValue;
+        print(duration);
     }
     private void ChangeChairPool()
     {
