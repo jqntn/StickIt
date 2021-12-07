@@ -170,7 +170,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e196628fc4535474eb8162c24d3a9e47, type: 2}
+  - {fileID: 2100000, guid: a8a95ed47c80ace44ac20124ba5fabaa, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -910,13 +911,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myPlayer: {fileID: 0}
   state: 1
-  isPreviewDots: 1
+  isPreviewDots: 0
   dotPreview: {fileID: 1563193181262515494, guid: d0c611942a4ded548aac09b0447276da, type: 3}
   spaceBetweenDots: 0.01
   numberOfDots: 8
   maxSpeed: 40
   isReversedDirection: 0
-  isLimitedMovement: 1
+  isLimitedMovement: 0
   minForceJumpMultiplicator: 0.2
   speedIncreaseForceJump: 5
   animCurveJumpGravity:
@@ -1023,7 +1024,7 @@ MonoBehaviour:
   strengthMultiplicator: 1
   ChocParticles: {fileID: 8597058350541634597, guid: 97e8fd232753b2f458d475cb5677f886, type: 3}
   connexions: 0
-  isDebugLimitAngles: 1
+  isDebugLimitAngles: 0
 --- !u!114 &4145983037377531704
 MonoBehaviour:
   m_ObjectHideFlags: 0
