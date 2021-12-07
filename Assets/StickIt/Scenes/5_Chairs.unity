@@ -1634,13 +1634,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e1589a5522e474d97aae598bc0f2c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  extend: {x: 0, y: 0}
   bounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   boundsPos: {x: 0, y: 0}
   max: {x: 0, y: 0}
   dimension: {x: 0, y: 0}
+  factor: 0
 --- !u!1001 &1451984714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2044,7 +2044,7 @@ Transform:
   m_GameObject: {fileID: 1578239082}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.47, y: 6.27, z: 20.81}
-  m_LocalScale: {x: 2.135755, y: 2.135755, z: 2.135755}
+  m_LocalScale: {x: 10, y: 10, z: 2.135755}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 14
@@ -2253,7 +2253,7 @@ PrefabInstance:
       objectReference: {fileID: 111568502}
     - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: maxIn_Z
-      value: -150
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 626349961222977372, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: m_BackGroundColor.b
@@ -2268,8 +2268,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 626349961222977373, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
+      propertyPath: m_LocalRotation.w
+      value: 0.9961947
+      objectReference: {fileID: 0}
+    - target: {fileID: 626349961222977373, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.08715578
+      objectReference: {fileID: 0}
+    - target: {fileID: 626349961222977373, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: m_LocalRotation.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 626349961222977373, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 626349961222977373, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 626349961222977441, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: m_RenderPostProcessing
