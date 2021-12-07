@@ -55,20 +55,21 @@ public abstract class CameraState : MonoBehaviour
 
     protected virtual void Awake()
     {
-        GameEvents.OnSwitchCamera.AddListener(ResetCamera);
+        GameEvents.OnSwitchCamera.AddListener(UpdateCameraDatas);
+        cam = Camera.main;
     }
 
     protected virtual void Start()
     {
-        cam = Camera.main;
         mapManager = MapManager.instance;
         multiplayerManager = MultiplayerManager.instance;
-        if(multiplayerManager != null) { playerList = multiplayerManager.players; }
+        if (multiplayerManager != null) { playerList = multiplayerManager.players; }
 
         if (SceneManager.GetActiveScene().name == "0_MainMenu" 
             || SceneManager.GetActiveScene().name == "1_MenuSelection" 
             || SceneManager.GetActiveScene().buildIndex == 0 
-            || SceneManager.GetActiveScene().buildIndex == 1) { 
+            || SceneManager.GetActiveScene().buildIndex == 1) 
+        { 
             return; 
         }
         if (multiplayerManager == null) { return; }
@@ -77,7 +78,7 @@ public abstract class CameraState : MonoBehaviour
         if (mapManager.isBusy) { return; }
         if (playerList.Count == 0) { return; }
 
-        ResetCamera();
+        UpdateCameraDatas();
     }
 
     protected virtual void Update()
@@ -96,7 +97,7 @@ public abstract class CameraState : MonoBehaviour
         if (mapManager.isBusy) { return; }
         if (playerList.Count == 0) { return; }
 
-        ResetCamera();
+        UpdateCameraDatas();
     }
 
     protected virtual void LateUpdate()
@@ -115,13 +116,13 @@ public abstract class CameraState : MonoBehaviour
         if (mapManager.isBusy) { return; }
         if (playerList.Count == 0) { return; }
 
-        UpdateCamera();
+        MoveAndZoom();
     }
 
     //<summary>
     //      Make The camera Move and Zoom
     //<summary>
-    protected virtual void UpdateCamera()
+    protected virtual void MoveAndZoom()
     {
         // Move Camera
         Vector3 newPos = new Vector3(
@@ -179,6 +180,7 @@ public abstract class CameraState : MonoBehaviour
     //<summary>
     protected void UpdatePlayersBounds()
     {
+        if (playerList.Count == 0) return;
         Bounds playersBounds = new Bounds(playerList[0].transform.position, Vector3.zero);
 
         foreach (Player player in playerList)
@@ -206,6 +208,9 @@ public abstract class CameraState : MonoBehaviour
         positionToGoTo.z = Mathf.Lerp(maxIn_Z, maxOut_Z, Mathf.Max(ratio.x, ratio.y));
     }
 
+    //<summary>
+    //      Search the maximum zoom out value the camera can take
+    //<summary>
     private void SearchMaxOut_Z()
     {
         float maxFrustumHeight = 0.0f;
@@ -222,7 +227,9 @@ public abstract class CameraState : MonoBehaviour
         maxOut_Z = distance;
     }
 
-  
+    //<summary>
+    //      If rotation of camera > search the posOffset to take viewport angle in account
+    //<summary>
     private void SearchPosOffset()
     {
         // Tan(alpha) * adjacent  = opposite
@@ -252,11 +259,20 @@ public abstract class CameraState : MonoBehaviour
         max_bounds.y = bounds_pos.y + offsetY;
 
         // Dezoom to new map
-        ResetCamera();
+        UpdateCameraDatas();
         StartCoroutine(OnSubscribeCamera());    
     }
 
-    public void ResetCamera()
+    public void SusbscribeMapManager(MapManager _mapManager)
+    {
+        mapManager = _mapManager;
+    }
+
+    public void SubscribeMultiplayerManager(MultiplayerManager _multiplayerManager)
+    {
+        multiplayerManager = _multiplayerManager;
+    }
+    public void UpdateCameraDatas()
     {
         if (autoMaxOut_Z) SearchMaxOut_Z();
         if (autoOffset) SearchPosOffset();
@@ -273,7 +289,7 @@ public abstract class CameraState : MonoBehaviour
             positionToGoTo.x = bounds_pos.x;
             positionToGoTo.y = bounds_pos.y;
             positionToGoTo.z = maxOut_Z;
-            UpdateCamera();
+            MoveAndZoom();
             yield return null;
         }
     }
