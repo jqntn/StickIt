@@ -16,23 +16,21 @@ public class Spores : MonoBehaviour
 
     int[] savePlayerId;
 
-    public float durationParticleToPlayer;
+    public float diffSpeed = 0.3f;
+    public float speedParticles;
+    [SerializeField] Material redMat;
     
     // Start is called before the first frame update
     void Start()
     {
         Initialize();      
         emission = ps.emission;
-        StartCoroutine(TestStart());
+
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 
-    void StartEmitting()
+
+    public void StartEmitting()
     {
         emission.enabled = true;
     }
@@ -53,8 +51,7 @@ public class Spores : MonoBehaviour
                 Vector3 playerPos = MultiplayerManager.instance.players[savePlayerId[i]].transform.position;
                 float dist = (playerPos - particlePos).magnitude;
 
-                a = (Time.time - particlesDatas[i].time) * particlesDatas[i].initDist/2;
-                print(a);
+                a = (Time.time - particlesDatas[i].time) * particlesDatas[i].initDist * particlesDatas[i].speed;
                 Vector3 newPos = Vector3.Lerp(particlesDatas[i].initPos, losers[particlesDatas[i].IdPlayerTarget].transform.position, a );
 
                 particles[i].position = transform.InverseTransformPoint(newPos);
@@ -81,12 +78,13 @@ public class Spores : MonoBehaviour
         losers = players.ToArray();
         particles = new ParticleSystem.Particle[ps.particleCount];
         int numParticlesAlive = ps.GetParticles(particles);
-        
+        GetComponent<ParticleSystemRenderer>().material = redMat;
         for (int i = 0; i < numParticlesAlive; i++)
         {
 
-            particles[i].startColor = Color.red;
+           
             particles[i].velocity = Vector3.zero;
+            
 
         }
 
@@ -109,15 +107,15 @@ public class Spores : MonoBehaviour
             int rand = Random.Range(0, losers.Length);
             savePlayerId[i] = rand;
 
-            //Vector3 posPlayer = players[rand].transform.position;
-            //Vector3 dir = (posPlayer - transform.TransformPoint(particles[i].position)).normalized;
-            //dir.y = -dir.y;
-            //dir = transform.TransformDirection(dir);
+            float diff = speedParticles * diffSpeed;
+            float speedMin = speedParticles - diff;
+            float maxSpeed = speedParticles + diff;
 
-            //particles[i].velocity =  dir *  50;
+            float currentSpeed = Random.Range(speedMin, maxSpeed);
+            
             Vector3 initPos = transform.TransformPoint(particles[i].position);
             Vector3 posPlayer = losers[rand].transform.position;
-            ParticleDatas pDatas = new ParticleDatas(ref initPos, rand, (initPos - posPlayer).magnitude, Time.time);
+            ParticleDatas pDatas = new ParticleDatas(ref initPos, rand, (initPos - posPlayer).magnitude, Time.time, currentSpeed);
             particlesDatas[i] = pDatas;
             
             isKillerState = true;
@@ -130,12 +128,6 @@ public class Spores : MonoBehaviour
     void Initialize()
     {
             ps = GetComponent<ParticleSystem>();
-    }
-
-    IEnumerator TestStart()
-    {
-        yield return new WaitForSeconds(3);
-        KillLosers(MultiplayerManager.instance.players);
     }
 
     IEnumerator CallLaunchParticlesKiller()
@@ -151,12 +143,15 @@ public struct ParticleDatas
     public int IdPlayerTarget;
     public float initDist;
     public float time;
+    public float speed;
 
-    public ParticleDatas(ref Vector3 _initPos, int _idTarget, float _initDist, float _time)
+    public ParticleDatas(ref Vector3 _initPos, int _idTarget, float _initDist, float _time, float _currentSpeed)
     {
         initPos = _initPos;
         IdPlayerTarget = _idTarget;
         initDist = _initDist;
         time = _time;
+        speed = _currentSpeed;
+       
     }
 }
