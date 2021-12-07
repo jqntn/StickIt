@@ -29,28 +29,28 @@ public abstract class CameraState : MonoBehaviour
     public bool canClampZoom = false;
 
     #region Protected 
-    protected Camera cam = null;
-    protected MapManager mapManager = null;
-    protected MultiplayerManager multiplayerManager = null;
-    protected List<Player> playerList = new List<Player>();
-    protected Vector3 positionToGoTo = new Vector3(0.0f, 0.0f, 0.0f);
-    protected Vector3 moveVelocity = new Vector3(0.0f, 0.0f, 0.0f);
-    protected Vector3 zoomVelocity = new Vector3(0.0f, 0.0f, 0.0f);
-    protected Vector3 barycenter = new Vector3(0.0f, 0.0f, 0.0f);
-    protected Vector2 bounds_pos = new Vector3(0.0f, 0.0f);
-    protected Vector2 bounds_dimension = new Vector2(0.0f, 0.0f);
-    protected Vector2 min_bounds = new Vector2(0.0f, 0.0f);
-    protected Vector2 max_bounds = new Vector2(0.0f, 0.0f);
-    protected Vector2 min_moveBounds = new Vector2(0.0f, 0.0f);
-    protected Vector2 max_moveBounds = new Vector2(0.0f, 0.0f);
-    protected Vector2 frustum_dimension = new Vector2(0.0f, 0.0f);
-    protected Vector2 min_viewport = new Vector2(0.0f, 0.0f);
-    protected Vector2 max_viewport = new Vector2(0.0f, 0.0f);
-    protected Vector2 min_zoomOutBounds = new Vector2(0.0f, 0.0f);
-    protected Vector2 max_zoomOutBounds = new Vector2(0.0f, 0.0f);
-    protected Vector2 playerBounds = new Vector2(0.0f, 0.0f);
-    protected Vector2 min_playerBounds = new Vector2(0.0f, 0.0f);
-    protected Vector2 max_playerBounds = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Camera cam = null;
+    [SerializeField] protected MapManager mapManager = null;
+    [SerializeField] protected MultiplayerManager multiplayerManager = null;
+    [SerializeField] protected List<Player> playerList = new List<Player>();
+    [SerializeField] protected Vector3 positionToGoTo = new Vector3(0.0f, 0.0f, 0.0f);
+    [SerializeField] protected Vector3 moveVelocity = new Vector3(0.0f, 0.0f, 0.0f);
+    [SerializeField] protected Vector3 zoomVelocity = new Vector3(0.0f, 0.0f, 0.0f);
+    [SerializeField] protected Vector3 barycenter = new Vector3(0.0f, 0.0f, 0.0f);
+    [SerializeField] protected Vector2 bounds_pos = new Vector3(0.0f, 0.0f);
+    [SerializeField] protected Vector2 bounds_dimension = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 min_bounds = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 max_bounds = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 min_moveBounds = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 max_moveBounds = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 frustum_dimension = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 min_viewport = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 max_viewport = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 min_zoomOutBounds = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 max_zoomOutBounds = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 playerBounds = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 min_playerBounds = new Vector2(0.0f, 0.0f);
+    [SerializeField] protected Vector2 max_playerBounds = new Vector2(0.0f, 0.0f);
     #endregion
 
     protected virtual void Awake()
@@ -76,6 +76,7 @@ public abstract class CameraState : MonoBehaviour
         if (cam == null) { return; }
         if (mapManager.isBusy) { return; }
         if (playerList.Count == 0) { return; }
+
         ResetCamera();
     }
 
@@ -127,7 +128,7 @@ public abstract class CameraState : MonoBehaviour
             positionToGoTo.x + posOffset.x,
             positionToGoTo.y + posOffset.y,
             transform.parent.position.z);
-        transform.parent.position = Vector3.SmoothDamp(transform.parent.position, newPos, ref moveVelocity, moveTime);
+        transform.parent.position = Vector3.SmoothDamp(transform.parent.position, newPos, ref moveVelocity, moveTime, Mathf.Infinity, Time.unscaledDeltaTime);
 
         // if zooming out and is touching border > return and wait to move first
         bool isTouchingBorder =
@@ -139,7 +140,7 @@ public abstract class CameraState : MonoBehaviour
             transform.parent.position.x,
             transform.parent.position.y,
             positionToGoTo.z);
-        transform.parent.position = Vector3.SmoothDamp(transform.parent.position, newZoom, ref zoomVelocity, zoomTime);
+        transform.parent.position = Vector3.SmoothDamp(transform.parent.position, newZoom, ref zoomVelocity, zoomTime, Mathf.Infinity, Time.unscaledDeltaTime);
     }
 
     //<summary>
@@ -236,6 +237,9 @@ public abstract class CameraState : MonoBehaviour
         return type;
     }
 
+    //<summary>
+    //      Get all data from camera bounds
+    //<summary>
     public void SubscribeToCamera(Vector2 _bounds_pos, Vector2 _dimension)
     {
         bounds_pos = _bounds_pos;
@@ -247,7 +251,9 @@ public abstract class CameraState : MonoBehaviour
         min_bounds.y = bounds_pos.y - offsetY;
         max_bounds.y = bounds_pos.y + offsetY;
 
-        UpdateMoveBounds();
+        // Dezoom to new map
+        ResetCamera();
+        StartCoroutine(OnSubscribeCamera());    
     }
 
     public void ResetCamera()
@@ -260,6 +266,17 @@ public abstract class CameraState : MonoBehaviour
     }
     #endregion
 
+    private IEnumerator OnSubscribeCamera()
+    {
+        while(transform.parent.position != positionToGoTo)
+        {
+            positionToGoTo.x = bounds_pos.x;
+            positionToGoTo.y = bounds_pos.y;
+            positionToGoTo.z = maxOut_Z;
+            UpdateCamera();
+            yield return null;
+        }
+    }
     #region Debug
     protected virtual void OnDrawGizmosSelected()
     {
