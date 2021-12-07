@@ -95,7 +95,7 @@ public class Chair : MonoBehaviour
     }
     IEnumerator SpawnChairCor(Color c)
     {
-        GameEvents.CameraShake_CEvent?.Invoke(duration / 0.4f);
+        //GameEvents.CameraShake_CEvent?.Invoke(duration / 0.4f);
         float elapsed = 0;
         float ratio = 0;
         while(elapsed < duration)
@@ -110,7 +110,7 @@ public class Chair : MonoBehaviour
     }
     IEnumerator DespawnChairCor()
     {
-        GameEvents.CameraShake_CEvent?.Invoke(duration / 0.4f);
+        //GameEvents.CameraShake_CEvent?.Invoke(duration / 0.4f);
         float elapsed = 0;
         float ratio = 0;
         while (elapsed < duration)
