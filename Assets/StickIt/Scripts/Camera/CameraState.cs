@@ -26,11 +26,11 @@ public abstract class CameraState : MonoBehaviour
     public bool autoMaxOut_Z = false;
     public float maxOut_Z = -110.0f;
     public float maxIn_Z = -70.0f;
-    public float zoomOutSpeed = 10.0f;
-    public float zoomInSpeed = 10.0f;
-    public float zoomOutMargin = 2.0f;
-    public float zoomOutMargin2 = 5.0f;
-    public float zoomInMargin = 5.0f;
+    //public float zoomOutSpeed = 10.0f;
+    //public float zoomInSpeed = 10.0f;
+    //public float zoomOutMargin = 2.0f;
+    //public float zoomOutMargin2 = 5.0f;
+    //public float zoomInMargin = 5.0f;
     public bool canClampZoom = false;
 
     [Header("----- Debug -----")]
@@ -71,14 +71,14 @@ public abstract class CameraState : MonoBehaviour
         multiplayerManager = MultiplayerManager.instance;
         if(multiplayerManager != null) { playerList = multiplayerManager.players; }
 
-        if (SceneManager.GetActiveScene().name == "1_MenuSelection" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
+        if (SceneManager.GetActiveScene().name == "1_MenuSelection" || SceneManager.GetActiveScene().name == "0_MainMenu" || SceneManager.GetActiveScene().buildIndex == 0 ) { return; }
         ResetCamera();
     }
 
     protected virtual void Update()
     {
         // Protections
-        if (SceneManager.GetActiveScene().name == "1_MenuSelection" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
+        if (SceneManager.GetActiveScene().name == "1_MenuSelection" || SceneManager.GetActiveScene().name == "0_MainMenu" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
         if (multiplayerManager == null) { return; }
         if (mapManager == null) { return; }
         if (cam == null) { return; }
@@ -96,7 +96,7 @@ public abstract class CameraState : MonoBehaviour
     protected virtual void LateUpdate()
     {
         // Protections
-        if (SceneManager.GetActiveScene().name == "1_MenuSelection" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
+        if (SceneManager.GetActiveScene().name == "1_MenuSelection" || SceneManager.GetActiveScene().name == "0_MainMenu" || SceneManager.GetActiveScene().buildIndex == 0) { return; }
         if (multiplayerManager == null) { return; }
         if (mapManager == null) { return; }
         if (cam == null) { return; }
@@ -149,11 +149,11 @@ public abstract class CameraState : MonoBehaviour
         min_viewport.y = transform.parent.position.y - posOffset.y - offsetY;
         max_viewport.y = transform.parent.position.y - posOffset.y + offsetY;
 
-        // camera zoom out margin update
-        min_zoomOutBounds.x = min_viewport.x + zoomOutMargin2;
-        min_zoomOutBounds.y = min_viewport.y + zoomOutMargin2;
-        max_zoomOutBounds.x = max_viewport.x - zoomOutMargin2;
-        max_zoomOutBounds.y = max_viewport.y - zoomOutMargin2;
+        //// camera zoom out margin update
+        //min_zoomOutBounds.x = min_viewport.x + zoomOutMargin2;
+        //min_zoomOutBounds.y = min_viewport.y + zoomOutMargin2;
+        //max_zoomOutBounds.x = max_viewport.x - zoomOutMargin2;
+        //max_zoomOutBounds.y = max_viewport.y - zoomOutMargin2;
     }
 
     //<summary>
@@ -192,10 +192,11 @@ public abstract class CameraState : MonoBehaviour
 
     protected virtual void UpdateZoom() {
         // Zoom Out
-        Vector2 maxDistance = new Vector2(bounds_dimension.x / 2, bounds_dimension.y / 2);
+        Vector2 maxDistance = new Vector2(bounds_dimension.x, bounds_dimension.y);
         Vector2 ratio = new Vector2(0.0f, 0.0f);
         ratio.x = Mathf.Clamp(playerBounds.x, 0, maxDistance.x) / maxDistance.x;
         ratio.y = Mathf.Clamp(playerBounds.y, 0, maxDistance.y) / maxDistance.y;
+        Debug.Log("Ratio " + ratio);
         positionToGoTo.z = Mathf.Lerp(maxIn_Z, maxOut_Z, Mathf.Max(ratio.x, ratio.y));
 
         // Zoom In
@@ -324,17 +325,17 @@ public abstract class CameraState : MonoBehaviour
         Gizmos.color = Color.grey;
         Gizmos.DrawWireCube(barycenter, new Vector3(playerBounds.x, playerBounds.y, 1));
 
-        // Draw Zoom Out Margin from PlayerBounds
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(barycenter, new Vector3(playerBounds.x + zoomOutMargin, playerBounds.y + zoomOutMargin, 1));
+        //// Draw Zoom Out Margin from PlayerBounds
+        //Gizmos.color = Color.blue;
+        //Gizmos.DrawWireCube(barycenter, new Vector3(playerBounds.x + zoomOutMargin, playerBounds.y + zoomOutMargin, 1));
 
-        // Draw Zoom In Margin from PlayerBounds
-        Gizmos.color = Color.cyan;
-        Gizmos.DrawWireCube(barycenter, new Vector3(playerBounds.x + zoomInMargin, playerBounds.y + zoomInMargin, 1));
+        //// Draw Zoom In Margin from PlayerBounds
+        //Gizmos.color = Color.cyan;
+        //Gizmos.DrawWireCube(barycenter, new Vector3(playerBounds.x + zoomInMargin, playerBounds.y + zoomInMargin, 1));
 
-        // Draw Zoom Out Margin
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawWireCube(transform.parent.position - (Vector3)posOffset, new Vector3(frustum_dimension.x - zoomOutMargin2, frustum_dimension.y - zoomOutMargin2, 1));
+        //// Draw Zoom Out Margin
+        //Gizmos.color = Color.magenta;
+        //Gizmos.DrawWireCube(transform.parent.position - (Vector3)posOffset, new Vector3(frustum_dimension.x - zoomOutMargin2, frustum_dimension.y - zoomOutMargin2, 1));
     }
     #endregion
 }
