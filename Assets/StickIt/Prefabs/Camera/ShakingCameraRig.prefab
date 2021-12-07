@@ -48,7 +48,7 @@ MonoBehaviour:
   factorOffset: 1
   camBounds: {fileID: 0}
   autoOffset: 1
-  posOffset: {x: 0, y: 0, z: 0}
+  posOffset: {x: 0, y: 0}
   canMove: 1
   moveTime: 0.5
   freezeX: 0
@@ -58,14 +58,13 @@ MonoBehaviour:
   autoMaxOut_Z: 0
   maxOut_Z: -110
   maxIn_Z: -70
-  zoomOutValue: -10
-  zoomInValue: 10
+  zoomOutSpeed: 10
+  zoomInSpeed: 10
   zoomOutMargin: 2
+  zoomOutMargin2: 5
   zoomInMargin: 5
   canClampZoom: 0
-  datas: []
   cam: {fileID: 0}
-  blocksScript: {fileID: 0}
   mapManager: {fileID: 0}
   multiplayerManager: {fileID: 0}
   playerList: []
@@ -136,7 +135,7 @@ MonoBehaviour:
   factorOffset: 1
   camBounds: {fileID: 0}
   autoOffset: 1
-  posOffset: {x: 0, y: 0, z: 0}
+  posOffset: {x: 0, y: 0}
   canMove: 1
   moveTime: 0.5
   freezeX: 0
@@ -146,14 +145,13 @@ MonoBehaviour:
   autoMaxOut_Z: 1
   maxOut_Z: -110
   maxIn_Z: -70
-  zoomOutValue: -10
-  zoomInValue: 10
+  zoomOutSpeed: 10
+  zoomInSpeed: 10
   zoomOutMargin: 2
+  zoomOutMargin2: 5
   zoomInMargin: 5
   canClampZoom: 0
-  datas: []
   cam: {fileID: 0}
-  blocksScript: {fileID: 0}
   mapManager: {fileID: 0}
   multiplayerManager: {fileID: 0}
   playerList: []
@@ -239,7 +237,7 @@ MonoBehaviour:
   factorOffset: 1
   camBounds: {fileID: 0}
   autoOffset: 1
-  posOffset: {x: 0, y: 0, z: 0}
+  posOffset: {x: 0, y: 20}
   canMove: 1
   moveTime: 0.2
   freezeX: 0
@@ -249,14 +247,13 @@ MonoBehaviour:
   autoMaxOut_Z: 1
   maxOut_Z: -300
   maxIn_Z: -100
-  zoomOutValue: -10
-  zoomInValue: 10
+  zoomOutSpeed: 10
+  zoomInSpeed: 10
   zoomOutMargin: 5
+  zoomOutMargin2: 2.5
   zoomInMargin: 5
-  canClampZoom: 1
-  datas: []
+  canClampZoom: 0
   cam: {fileID: 0}
-  blocksScript: {fileID: 0}
   mapManager: {fileID: 0}
   multiplayerManager: {fileID: 0}
   playerList: []

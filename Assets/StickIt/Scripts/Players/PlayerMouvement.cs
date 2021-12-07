@@ -168,7 +168,7 @@ public class PlayerMouvement : MonoBehaviour
             t_jump = 0;
             y_jump = 0;
             // addedVector = Vector3.zero;
-            AudioManager.instance.PlayJumpSounds(this.gameObject);
+            //AudioManager.instance.PlayJumpSounds(this.gameObject);
             foreach (ContactPointSurface contact in connectedPoints)
             {
                 contact.attractionStrength = 100f;
@@ -201,6 +201,7 @@ public class PlayerMouvement : MonoBehaviour
                 contact.limitsAngle = contact.CalculateLimiteAngle(limitAngle);
                 connectedPoints.Add(contact);
                 PlayerMouvement playerCollided = collision.transform.GetComponent<PlayerMouvement>();
+                //AudioManager.instance.PlayCollisionSounds(gameObject);
                 if (velocityLastFrame.magnitude * valueStrengthCurve > playerCollided.velocityLastFrame.magnitude * playerCollided.valueStrengthCurve)
                 {
                     float strength = velocityLastFrame.magnitude * valueStrengthCurve * strengthMultiplicator / playerCollided.valueStrengthCurve;
@@ -236,6 +237,7 @@ public class PlayerMouvement : MonoBehaviour
                         state = STATE.STICK;
                         break;
                 }
+                AudioManager.instance.PlayLandSounds(gameObject);
                 hasJumped = false;
                 #endregion Collision Untagged
                 break;
