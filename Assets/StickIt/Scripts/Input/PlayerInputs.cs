@@ -186,17 +186,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
             ]
         },
         {
-            ""name"": ""UI"",
+            ""name"": ""UIInputs"",
             ""id"": ""1ab45db5-87ed-4028-b279-bb8fef77cc1c"",
             ""actions"": [
-                {
-                    ""name"": ""Return"",
-                    ""type"": ""Button"",
-                    ""id"": ""d899757b-19de-4aa5-b97e-e4e9451fda29"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
                 {
                     ""name"": ""Move"",
                     ""type"": ""Value"",
@@ -214,37 +206,31 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Return"",
+                    ""type"": ""Button"",
+                    ""id"": ""d899757b-19de-4aa5-b97e-e4e9451fda29"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""Click"",
                     ""type"": ""PassThrough"",
                     ""id"": ""827cc017-87a6-4b7b-b4ba-f6028add973a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Validate"",
+                    ""type"": ""Button"",
+                    ""id"": ""18d17c69-d01a-4edb-b4f8-e94ecb57429e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
-                {
-                    ""name"": """",
-                    ""id"": ""9ec0de42-398a-46b1-8f2f-35e5f68acab3"",
-                    ""path"": ""<Gamepad>/buttonEast"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Return"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""a81b5830-73e4-4a8e-b0e8-dac74f836969"",
-                    ""path"": ""<Mouse>/rightButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard"",
-                    ""action"": ""Return"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
                 {
                     ""name"": """",
                     ""id"": ""b0f45a43-9135-4174-9744-5059b8d384c3"",
@@ -486,6 +472,39 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""action"": ""Click"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9ec0de42-398a-46b1-8f2f-35e5f68acab3"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Return"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a81b5830-73e4-4a8e-b0e8-dac74f836969"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Return"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b5bf70c9-78e6-4bde-b763-bd13a4ca1ed1"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Validate"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -525,12 +544,13 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         m_NormalInputs_Test1 = m_NormalInputs.FindAction("Test1", throwIfNotFound: true);
         m_NormalInputs_Test2 = m_NormalInputs.FindAction("Test2", throwIfNotFound: true);
         m_NormalInputs_Test3 = m_NormalInputs.FindAction("Test3", throwIfNotFound: true);
-        // UI
-        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-        m_UI_Return = m_UI.FindAction("Return", throwIfNotFound: true);
-        m_UI_Move = m_UI.FindAction("Move", throwIfNotFound: true);
-        m_UI_Submit = m_UI.FindAction("Submit", throwIfNotFound: true);
-        m_UI_Click = m_UI.FindAction("Click", throwIfNotFound: true);
+        // UIInputs
+        m_UIInputs = asset.FindActionMap("UIInputs", throwIfNotFound: true);
+        m_UIInputs_Move = m_UIInputs.FindAction("Move", throwIfNotFound: true);
+        m_UIInputs_Submit = m_UIInputs.FindAction("Submit", throwIfNotFound: true);
+        m_UIInputs_Return = m_UIInputs.FindAction("Return", throwIfNotFound: true);
+        m_UIInputs_Click = m_UIInputs.FindAction("Click", throwIfNotFound: true);
+        m_UIInputs_Validate = m_UIInputs.FindAction("Validate", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -666,62 +686,70 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
     }
     public NormalInputsActions @NormalInputs => new NormalInputsActions(this);
 
-    // UI
-    private readonly InputActionMap m_UI;
-    private IUIActions m_UIActionsCallbackInterface;
-    private readonly InputAction m_UI_Return;
-    private readonly InputAction m_UI_Move;
-    private readonly InputAction m_UI_Submit;
-    private readonly InputAction m_UI_Click;
-    public struct UIActions
+    // UIInputs
+    private readonly InputActionMap m_UIInputs;
+    private IUIInputsActions m_UIInputsActionsCallbackInterface;
+    private readonly InputAction m_UIInputs_Move;
+    private readonly InputAction m_UIInputs_Submit;
+    private readonly InputAction m_UIInputs_Return;
+    private readonly InputAction m_UIInputs_Click;
+    private readonly InputAction m_UIInputs_Validate;
+    public struct UIInputsActions
     {
         private @PlayerInputs m_Wrapper;
-        public UIActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Return => m_Wrapper.m_UI_Return;
-        public InputAction @Move => m_Wrapper.m_UI_Move;
-        public InputAction @Submit => m_Wrapper.m_UI_Submit;
-        public InputAction @Click => m_Wrapper.m_UI_Click;
-        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public UIInputsActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Move => m_Wrapper.m_UIInputs_Move;
+        public InputAction @Submit => m_Wrapper.m_UIInputs_Submit;
+        public InputAction @Return => m_Wrapper.m_UIInputs_Return;
+        public InputAction @Click => m_Wrapper.m_UIInputs_Click;
+        public InputAction @Validate => m_Wrapper.m_UIInputs_Validate;
+        public InputActionMap Get() { return m_Wrapper.m_UIInputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
         public bool enabled => Get().enabled;
-        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
-        public void SetCallbacks(IUIActions instance)
+        public static implicit operator InputActionMap(UIInputsActions set) { return set.Get(); }
+        public void SetCallbacks(IUIInputsActions instance)
         {
-            if (m_Wrapper.m_UIActionsCallbackInterface != null)
+            if (m_Wrapper.m_UIInputsActionsCallbackInterface != null)
             {
-                @Return.started -= m_Wrapper.m_UIActionsCallbackInterface.OnReturn;
-                @Return.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnReturn;
-                @Return.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnReturn;
-                @Move.started -= m_Wrapper.m_UIActionsCallbackInterface.OnMove;
-                @Move.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnMove;
-                @Move.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnMove;
-                @Submit.started -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
-                @Submit.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
-                @Submit.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnSubmit;
-                @Click.started -= m_Wrapper.m_UIActionsCallbackInterface.OnClick;
-                @Click.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnClick;
-                @Click.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnClick;
+                @Move.started -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnMove;
+                @Move.performed -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnMove;
+                @Move.canceled -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnMove;
+                @Submit.started -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnSubmit;
+                @Submit.performed -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnSubmit;
+                @Submit.canceled -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnSubmit;
+                @Return.started -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnReturn;
+                @Return.performed -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnReturn;
+                @Return.canceled -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnReturn;
+                @Click.started -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnClick;
+                @Click.performed -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnClick;
+                @Click.canceled -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnClick;
+                @Validate.started -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnValidate;
+                @Validate.performed -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnValidate;
+                @Validate.canceled -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnValidate;
             }
-            m_Wrapper.m_UIActionsCallbackInterface = instance;
+            m_Wrapper.m_UIInputsActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @Return.started += instance.OnReturn;
-                @Return.performed += instance.OnReturn;
-                @Return.canceled += instance.OnReturn;
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
                 @Submit.started += instance.OnSubmit;
                 @Submit.performed += instance.OnSubmit;
                 @Submit.canceled += instance.OnSubmit;
+                @Return.started += instance.OnReturn;
+                @Return.performed += instance.OnReturn;
+                @Return.canceled += instance.OnReturn;
                 @Click.started += instance.OnClick;
                 @Click.performed += instance.OnClick;
                 @Click.canceled += instance.OnClick;
+                @Validate.started += instance.OnValidate;
+                @Validate.performed += instance.OnValidate;
+                @Validate.canceled += instance.OnValidate;
             }
         }
     }
-    public UIActions @UI => new UIActions(this);
+    public UIInputsActions @UIInputs => new UIInputsActions(this);
     private int m_GamepadSchemeIndex = -1;
     public InputControlScheme GamepadScheme
     {
@@ -751,11 +779,12 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         void OnTest2(InputAction.CallbackContext context);
         void OnTest3(InputAction.CallbackContext context);
     }
-    public interface IUIActions
+    public interface IUIInputsActions
     {
-        void OnReturn(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
         void OnSubmit(InputAction.CallbackContext context);
+        void OnReturn(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
+        void OnValidate(InputAction.CallbackContext context);
     }
 }
