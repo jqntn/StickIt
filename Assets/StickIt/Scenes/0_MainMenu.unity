@@ -1851,7 +1851,6 @@ GameObject:
   - component: {fileID: 902213848}
   - component: {fileID: 902213849}
   - component: {fileID: 902213850}
-  - component: {fileID: 902213851}
   m_Layer: 5
   m_Name: Button_Play
   m_TagString: Untagged
@@ -1983,7 +1982,7 @@ Animator:
   m_GameObject: {fileID: 902213843}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 95f9d04947964e5498c005483e9012c5, type: 2}
+  m_Controller: {fileID: 9100000, guid: 8ef9c189fd76813459de55734310b97b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 2
   m_ApplyRootMotion: 0
@@ -2018,22 +2017,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toSwitch: {fileID: 1233336899}
---- !u!111 &902213851
-Animation:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 902213843}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 30fa39b3bb52d7d4694d506c70d6b662, type: 2}
-  m_Animations:
-  - {fileID: 7400000, guid: 30fa39b3bb52d7d4694d506c70d6b662, type: 2}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!1 &908582600
 GameObject:
   m_ObjectHideFlags: 0
@@ -3251,6 +3234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ddbea5ad6380f478c7d31fb0802115, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  secondsToPress: 0.2
 --- !u!114 &1234334019
 MonoBehaviour:
   m_ObjectHideFlags: 0
