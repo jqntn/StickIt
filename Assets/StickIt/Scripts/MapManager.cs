@@ -18,19 +18,17 @@ public class MapManager : Unique<MapManager>
     public string prevMap;
     public string curMod;
     public string curMap = "";
-    Coroutine _coroutine;
+    private Coroutine _coroutine;
     private CameraStateDriven camManager;
-    void OnGUI()
-    {
-        if (GUI.Button(new Rect(0, 0, 200, 100), "NextMap")) NextMap(nextMapManual, true);
-    }
-
+    //void OnGUI()
+    //{
+    //    if (GUI.Button(new Rect(0, 0, 200, 100), "NextMap")) NextMap(nextMapManual, true);
+    //}
     private void Awake()
     {
         base.Awake();
         camManager = Camera.main.GetComponent<CameraStateDriven>();
     }
-
     public bool EndLevel()
     {
         if (MultiplayerManager.instance.alivePlayers.Count <= 1)
@@ -47,8 +45,7 @@ public class MapManager : Unique<MapManager>
         else return false;
         return true;
     }
-
-    string SelectNextMap()
+    private string SelectNextMap()
     {
         ModsData.Mod mod;
         string map = SceneManager.GetActiveScene().name;
@@ -68,7 +65,7 @@ public class MapManager : Unique<MapManager>
         curMap = map;
         return map;
     }
-    IEnumerator BeginTransition(string nextMap, bool fromMenu)
+    private IEnumerator BeginTransition(string nextMap, bool fromMenu)
     {
         isBusy = true;
         if (nextMap == "") nextMap = SelectNextMap();
