@@ -6,6 +6,9 @@
 				<Bus Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}">
 					<PropertyList>
 						<Property Name="BusVolume" Type="Real64">
+							<ValueList>
+								<Value>10</Value>
+							</ValueList>
 							<RTPCList>
 								<RTPC Name="" ID="{08E17096-B3EA-4265-B955-B05E90198B40}" ShortID="339605375">
 									<ReferenceList>
@@ -70,6 +73,11 @@
 										</RTPC>
 									</RTPCList>
 								</Property>
+								<Property Name="OutputBusVolume" Type="Real64">
+									<ValueList>
+										<Value>10</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
 							<ObjectLists/>
 						</Bus>
@@ -103,6 +111,11 @@
 										</RTPC>
 									</RTPCList>
 								</Property>
+								<Property Name="OutputBusVolume" Type="Real64">
+									<ValueList>
+										<Value>10</Value>
+									</ValueList>
+								</Property>
 							</PropertyList>
 							<ObjectLists/>
 						</Bus>
@@ -135,6 +148,11 @@
 											</Curve>
 										</RTPC>
 									</RTPCList>
+								</Property>
+								<Property Name="OutputBusVolume" Type="Real64">
+									<ValueList>
+										<Value>10</Value>
+									</ValueList>
 								</Property>
 							</PropertyList>
 							<ObjectLists/>

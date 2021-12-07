@@ -36,7 +36,11 @@ public class Player : MonoBehaviour
     IEnumerator OnDeath(bool intensityAnim)
     {
         deathAnim.PlayFeedbacks();
-        if (intensityAnim) yield return new WaitForSeconds(deathAnim.TotalDuration / deathAnim.DurationMultiplier);
+        if (intensityAnim)
+        {
+            AudioManager.instance.PlayDeathSounds(this.gameObject);
+            yield return new WaitForSeconds(deathAnim.TotalDuration / deathAnim.DurationMultiplier);
+        }
         myMouvementScript.Death();
         GameObject obj = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Quaternion.identity);
         obj.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
