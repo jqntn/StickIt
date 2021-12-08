@@ -18,9 +18,9 @@ public class EndScore : MonoBehaviour
     private void OnEnable()
     {
         List<Player> players = MultiplayerManager.instance.players;
-        foreach(Player player in players)
+        foreach (Player player in players)
         {
-            player.myDatas.score
+
         }
     }
 }
