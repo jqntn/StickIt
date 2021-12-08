@@ -48,7 +48,7 @@ public abstract class CameraState : MonoBehaviour
      protected Vector2 max_viewport = new Vector2(0.0f, 0.0f);
      protected Vector2 min_zoomOutBounds = new Vector2(0.0f, 0.0f);
      protected Vector2 max_zoomOutBounds = new Vector2(0.0f, 0.0f);
-     protected Vector2 playerBounds = new Vector2(0.0f, 0.0f);
+     protected Bounds playerBounds = new Bounds();
      protected Vector2 min_playerBounds = new Vector2(0.0f, 0.0f);
      protected Vector2 max_playerBounds = new Vector2(0.0f, 0.0f);
     #endregion
@@ -181,22 +181,19 @@ public abstract class CameraState : MonoBehaviour
     protected void UpdatePlayersBounds()
     {
         if (playerList.Count == 0) return;
-        Bounds playersBounds = new Bounds(playerList[0].transform.position, Vector3.zero);
 
-        for (int i = 1; i < playerList.Count; i++)
+        playerBounds = new Bounds();
+        foreach (Player player in playerList)
         {
-            playersBounds.Encapsulate(playerList[i].transform.position);
+            playerBounds.Encapsulate(player.transform.position);
         }
 
-        playerBounds.x = playersBounds.size.x;
-        playerBounds.y = playersBounds.size.y;
-
-        float offsetX = playerBounds.x;
-        float offsetY = playerBounds.y;
-        min_playerBounds.x = barycenter.x - offsetX;
-        min_playerBounds.y = barycenter.y - offsetY;
-        max_playerBounds.x = barycenter.x + offsetX;
-        max_playerBounds.y = barycenter.y + offsetY;
+        float offsetX = playerBounds.size.x;
+        float offsetY = playerBounds.size.y;
+        min_playerBounds.x = playerBounds.center.x - offsetX;
+        min_playerBounds.y = playerBounds.center.y - offsetY;
+        max_playerBounds.x = playerBounds.center.x + offsetX;
+        max_playerBounds.y = playerBounds.center.y + offsetY;
     }
 
     //<summary>
@@ -205,8 +202,8 @@ public abstract class CameraState : MonoBehaviour
     protected virtual void UpdateZoom() {
         Vector2 maxDistance = new Vector2(bounds_dimension.x, bounds_dimension.y);
         Vector2 ratio = new Vector2(0.0f, 0.0f);
-        ratio.x = Mathf.Clamp(playerBounds.x, 0, maxDistance.x) / maxDistance.x;
-        ratio.y = Mathf.Clamp(playerBounds.y, 0, maxDistance.y) / maxDistance.y;
+        ratio.x = Mathf.Clamp(playerBounds.size.x, 0, maxDistance.x) / maxDistance.x;
+        ratio.y = Mathf.Clamp(playerBounds.size.y, 0, maxDistance.y) / maxDistance.y;
 
         positionToGoTo.z = Mathf.Lerp(maxIn_Z, maxOut_Z, Mathf.Max(ratio.x, ratio.y));
     }
@@ -305,7 +302,7 @@ public abstract class CameraState : MonoBehaviour
 
         // Draw Players Bounds
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(barycenter, new Vector3(playerBounds.x, playerBounds.y, 1));
+        Gizmos.DrawWireCube(playerBounds.center, new Vector3(playerBounds.size.x, playerBounds.size.y, 1));
     }
     #endregion
 }
