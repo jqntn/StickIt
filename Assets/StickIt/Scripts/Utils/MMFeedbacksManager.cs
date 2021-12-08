@@ -9,13 +9,15 @@ public class MMFeedbacksManager : MonoBehaviour
         // | Listeners
 		GameEvents.CameraShake_CEvent.AddListener(CameraShake_CCall);
 		// | End Listeners
-    }
+	}
 
 	// | Calls
-	public void CameraShake_CCall(float duration = 1.0f, float intensity = 1.0f)
+	public void CameraShake_CCall(float duration, float intensity)
 	{
 		if (!feedbacksList[0].IsPlaying){
-			float durationMultiplier = feedbacksList[0].TotalDuration / duration;
+			Debug.Log(duration);
+			float durationMultiplier = duration / (float)feedbacksList[0].TotalDuration;
+			Debug.Log(durationMultiplier);
 			feedbacksList[0].FeedbacksIntensity = intensity;
 			feedbacksList[0].DurationMultiplier = durationMultiplier;
 			feedbacksList[0].PlayFeedbacks();
