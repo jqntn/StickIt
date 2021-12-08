@@ -111,6 +111,7 @@ public class MultiplayerManager : MonoBehaviour
             scriptPlayer.transform.gameObject.name = scriptPlayer.myDatas.name;
             scriptPlayer.transform.GetComponentInChildren<SkinnedMeshRenderer>().material = scriptPlayer.myDatas.material;
             scriptPlayer.transform.GetComponentInChildren<Camera>().targetTexture = scriptPlayer.myDatas.renderTexture;
+          
             players.Add(scriptPlayer);
             alivePlayers.Add(scriptPlayer);
             newPlayer.transform.position = playersStartingPos.GetChild(i).position;
