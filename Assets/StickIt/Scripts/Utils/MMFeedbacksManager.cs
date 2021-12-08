@@ -11,7 +11,7 @@ public class MMFeedbacksManager : MonoBehaviour
 		// | End Listeners
     }
 
-    // | Calls
+	// | Calls
 	public void CameraShake_CCall(float durationMultiplier = 1.0f, float intensity = 1.0f)
 	{
 		if (!feedbacksList[0].IsPlaying){

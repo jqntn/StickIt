@@ -1,18 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.UI;
 
 public class EndScore : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public TMP_Text[] textP;
+    public TMP_Text[] scores;
+    
+    public void SubscribePanelPlayers()
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    }    
 }
