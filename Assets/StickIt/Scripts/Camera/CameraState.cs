@@ -136,7 +136,6 @@ public abstract class CameraState : MonoBehaviour
             min_viewport.x <= min_bounds.x || max_viewport.x >= max_bounds.x;
         if (canClampZoom && positionToGoTo.z < transform.parent.position.z && isTouchingBorder) { return; }
 
-        Debug.Log("2 : " + positionToGoTo.z);
         // Zoom Camera
         Vector3 newZoom = new Vector3(
             transform.parent.position.x,
