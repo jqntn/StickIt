@@ -51,7 +51,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Test"",
+                    ""name"": ""ArrowLeft"",
                     ""type"": ""Button"",
                     ""id"": ""b9b77ec6-9fc8-4ad8-a2f8-fcf304d35387"",
                     ""expectedControlType"": ""Button"",
@@ -59,7 +59,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Test1"",
+                    ""name"": ""ArrowDown"",
                     ""type"": ""Button"",
                     ""id"": ""eb04e253-26f8-4f39-abd6-2de47bfaec10"",
                     ""expectedControlType"": ""Button"",
@@ -67,7 +67,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Test2"",
+                    ""name"": ""ArrowRight"",
                     ""type"": ""Button"",
                     ""id"": ""c604141d-c625-454e-8327-c75afb25a057"",
                     ""expectedControlType"": ""Button"",
@@ -75,7 +75,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
-                    ""name"": ""Test3"",
+                    ""name"": ""ArrowUp"",
                     ""type"": ""Button"",
                     ""id"": ""420328b5-a567-4224-b208-a5a36f816c60"",
                     ""expectedControlType"": ""Button"",
@@ -146,7 +146,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Test"",
+                    ""action"": ""ArrowLeft"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -157,7 +157,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Test1"",
+                    ""action"": ""ArrowDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -168,7 +168,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Test2"",
+                    ""action"": ""ArrowRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -179,7 +179,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""Test3"",
+                    ""action"": ""ArrowUp"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -540,10 +540,10 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         m_NormalInputs_Direction = m_NormalInputs.FindAction("Direction", throwIfNotFound: true);
         m_NormalInputs_MousePosition = m_NormalInputs.FindAction("MousePosition", throwIfNotFound: true);
         m_NormalInputs_Quit = m_NormalInputs.FindAction("Quit", throwIfNotFound: true);
-        m_NormalInputs_Test = m_NormalInputs.FindAction("Test", throwIfNotFound: true);
-        m_NormalInputs_Test1 = m_NormalInputs.FindAction("Test1", throwIfNotFound: true);
-        m_NormalInputs_Test2 = m_NormalInputs.FindAction("Test2", throwIfNotFound: true);
-        m_NormalInputs_Test3 = m_NormalInputs.FindAction("Test3", throwIfNotFound: true);
+        m_NormalInputs_ArrowLeft = m_NormalInputs.FindAction("ArrowLeft", throwIfNotFound: true);
+        m_NormalInputs_ArrowDown = m_NormalInputs.FindAction("ArrowDown", throwIfNotFound: true);
+        m_NormalInputs_ArrowRight = m_NormalInputs.FindAction("ArrowRight", throwIfNotFound: true);
+        m_NormalInputs_ArrowUp = m_NormalInputs.FindAction("ArrowUp", throwIfNotFound: true);
         // UIInputs
         m_UIInputs = asset.FindActionMap("UIInputs", throwIfNotFound: true);
         m_UIInputs_Move = m_UIInputs.FindAction("Move", throwIfNotFound: true);
@@ -604,10 +604,10 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
     private readonly InputAction m_NormalInputs_Direction;
     private readonly InputAction m_NormalInputs_MousePosition;
     private readonly InputAction m_NormalInputs_Quit;
-    private readonly InputAction m_NormalInputs_Test;
-    private readonly InputAction m_NormalInputs_Test1;
-    private readonly InputAction m_NormalInputs_Test2;
-    private readonly InputAction m_NormalInputs_Test3;
+    private readonly InputAction m_NormalInputs_ArrowLeft;
+    private readonly InputAction m_NormalInputs_ArrowDown;
+    private readonly InputAction m_NormalInputs_ArrowRight;
+    private readonly InputAction m_NormalInputs_ArrowUp;
     public struct NormalInputsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -616,10 +616,10 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         public InputAction @Direction => m_Wrapper.m_NormalInputs_Direction;
         public InputAction @MousePosition => m_Wrapper.m_NormalInputs_MousePosition;
         public InputAction @Quit => m_Wrapper.m_NormalInputs_Quit;
-        public InputAction @Test => m_Wrapper.m_NormalInputs_Test;
-        public InputAction @Test1 => m_Wrapper.m_NormalInputs_Test1;
-        public InputAction @Test2 => m_Wrapper.m_NormalInputs_Test2;
-        public InputAction @Test3 => m_Wrapper.m_NormalInputs_Test3;
+        public InputAction @ArrowLeft => m_Wrapper.m_NormalInputs_ArrowLeft;
+        public InputAction @ArrowDown => m_Wrapper.m_NormalInputs_ArrowDown;
+        public InputAction @ArrowRight => m_Wrapper.m_NormalInputs_ArrowRight;
+        public InputAction @ArrowUp => m_Wrapper.m_NormalInputs_ArrowUp;
         public InputActionMap Get() { return m_Wrapper.m_NormalInputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -641,18 +641,18 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Quit.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnQuit;
                 @Quit.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnQuit;
                 @Quit.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnQuit;
-                @Test.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest;
-                @Test.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest;
-                @Test.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest;
-                @Test1.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest1;
-                @Test1.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest1;
-                @Test1.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest1;
-                @Test2.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest2;
-                @Test2.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest2;
-                @Test2.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest2;
-                @Test3.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest3;
-                @Test3.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest3;
-                @Test3.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnTest3;
+                @ArrowLeft.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowLeft;
+                @ArrowLeft.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowLeft;
+                @ArrowLeft.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowLeft;
+                @ArrowDown.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowDown;
+                @ArrowDown.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowDown;
+                @ArrowDown.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowDown;
+                @ArrowRight.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowRight;
+                @ArrowRight.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowRight;
+                @ArrowRight.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowRight;
+                @ArrowUp.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowUp;
+                @ArrowUp.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowUp;
+                @ArrowUp.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowUp;
             }
             m_Wrapper.m_NormalInputsActionsCallbackInterface = instance;
             if (instance != null)
@@ -669,18 +669,18 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Quit.started += instance.OnQuit;
                 @Quit.performed += instance.OnQuit;
                 @Quit.canceled += instance.OnQuit;
-                @Test.started += instance.OnTest;
-                @Test.performed += instance.OnTest;
-                @Test.canceled += instance.OnTest;
-                @Test1.started += instance.OnTest1;
-                @Test1.performed += instance.OnTest1;
-                @Test1.canceled += instance.OnTest1;
-                @Test2.started += instance.OnTest2;
-                @Test2.performed += instance.OnTest2;
-                @Test2.canceled += instance.OnTest2;
-                @Test3.started += instance.OnTest3;
-                @Test3.performed += instance.OnTest3;
-                @Test3.canceled += instance.OnTest3;
+                @ArrowLeft.started += instance.OnArrowLeft;
+                @ArrowLeft.performed += instance.OnArrowLeft;
+                @ArrowLeft.canceled += instance.OnArrowLeft;
+                @ArrowDown.started += instance.OnArrowDown;
+                @ArrowDown.performed += instance.OnArrowDown;
+                @ArrowDown.canceled += instance.OnArrowDown;
+                @ArrowRight.started += instance.OnArrowRight;
+                @ArrowRight.performed += instance.OnArrowRight;
+                @ArrowRight.canceled += instance.OnArrowRight;
+                @ArrowUp.started += instance.OnArrowUp;
+                @ArrowUp.performed += instance.OnArrowUp;
+                @ArrowUp.canceled += instance.OnArrowUp;
             }
         }
     }
@@ -774,10 +774,10 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         void OnDirection(InputAction.CallbackContext context);
         void OnMousePosition(InputAction.CallbackContext context);
         void OnQuit(InputAction.CallbackContext context);
-        void OnTest(InputAction.CallbackContext context);
-        void OnTest1(InputAction.CallbackContext context);
-        void OnTest2(InputAction.CallbackContext context);
-        void OnTest3(InputAction.CallbackContext context);
+        void OnArrowLeft(InputAction.CallbackContext context);
+        void OnArrowDown(InputAction.CallbackContext context);
+        void OnArrowRight(InputAction.CallbackContext context);
+        void OnArrowUp(InputAction.CallbackContext context);
     }
     public interface IUIInputsActions
     {
