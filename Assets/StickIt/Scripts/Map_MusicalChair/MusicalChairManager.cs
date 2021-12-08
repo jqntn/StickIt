@@ -44,6 +44,10 @@ public class MusicalChairManager : Level
     {
         countDownSave = int.MaxValue;
         textAnim = countdown.GetComponent<Animator>();
+        if(textAnim == null)
+        {
+            Debug.LogWarning("You need to add the Animator 'CountdownChair' to the countDown ! Project > Animations > Timer > CountdownChair");
+        }
         countdown.text = "";
 
       
@@ -90,6 +94,8 @@ public class MusicalChairManager : Level
                 for (int i = 0; i < UnityEngine.InputSystem.Gamepad.all.Count; i++)
                        UnityEngine.InputSystem.Gamepad.all[i].SetMotorSpeeds(0.1f, 0.1f);
                 ChangeChairPool();
+                print("pour Virginie");
+                GameEvents.ShakeAppearChairEvent.Invoke(transition, 1.0f);
                 spawning = false;
             }
         }
@@ -105,7 +111,8 @@ public class MusicalChairManager : Level
                 inTransition = true;
                 spawning = true;
                 ResetChairPool();
-                GameEvents.ShakeAppearChairEvent.Invoke();
+                GameEvents.CameraShake_CEvent.Invoke(0.4f, 1.0f);
+
             }
        
         }

@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public static class GameEvents
 {
     // | Events
+	public static FeelEvent ShakeAppearChairEvent = new FeelEvent();
 	public static FeelEvent ShakeManetteEvent = new FeelEvent();
 	public static FeelEvent CameraShake_CEvent = new FeelEvent();
 	// | End Events
