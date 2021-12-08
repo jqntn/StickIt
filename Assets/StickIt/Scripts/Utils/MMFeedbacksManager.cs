@@ -12,9 +12,11 @@ public class MMFeedbacksManager : MonoBehaviour
     }
 
     // | Calls
-	public void CameraShake_CCall(float time)
+	public void CameraShake_CCall(float durationMultiplier = 1.0f, float intensity = 1.0f)
 	{
 		if (!feedbacksList[0].IsPlaying){
+			feedbacksList[0].FeedbacksIntensity = intensity;
+			feedbacksList[0].DurationMultiplier = durationMultiplier;
 			feedbacksList[0].PlayFeedbacks();
 		}
 	}
