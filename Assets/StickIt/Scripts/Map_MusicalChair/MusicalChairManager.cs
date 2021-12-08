@@ -77,7 +77,7 @@ public class MusicalChairManager : Level
             if (transition <= 0)
             {
                 inTransition = false;
-                GameEvents.CameraShake_CEvent?.Invoke(duration / 0.4f);
+                GameEvents.CameraShake_CEvent?.Invoke(duration / 0.4f, 1.0f);
             }
             else if(spawning && transition <= durationSpawn)
             {
@@ -96,7 +96,7 @@ public class MusicalChairManager : Level
                 inTransition = true;
                 spawning = true;
                 ResetChairPool();
-                GameEvents.CameraShake_CEvent?.Invoke(duration / 0.4f);
+                GameEvents.CameraShake_CEvent?.Invoke(duration / 0.4f, 1.0f);
             }
        
         }

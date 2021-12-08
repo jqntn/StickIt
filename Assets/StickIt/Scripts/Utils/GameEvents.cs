@@ -13,6 +13,6 @@ public static class GameEvents
 	public static UnityEvent OnSwitchCamera = new UnityEvent();
 }
 
-public class CameraShakeEvent : UnityEvent<float> { }
+public class CameraShakeEvent : UnityEvent<float, float> { }
 public class CameraEvent : UnityEvent<CameraType> { }
 // SHIFT + F12 : Search all occurence of an event
