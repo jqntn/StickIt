@@ -119,11 +119,11 @@ public class PlayerMouvement : MonoBehaviour
         GUIStyle style = new GUIStyle();
         style.fontSize = 24;
         style.normal.textColor = Color.white;
-        if (myPlayer.myDatas.id == 0)
-        {
-            GUILayout.Label(" Velocity  = " + rb.velocity, style);
-            GUILayout.Label("Magnitude = " + rb.velocity.magnitude, style);
-        }
+        //if (myPlayer.myDatas.id == 0)
+        //{
+        //    GUILayout.Label(" Velocity  = " + rb.velocity, style);
+        //    GUILayout.Label("Magnitude = " + rb.velocity.magnitude, style);
+        //}
         GUILayout.EndVertical();
     }
     // ----- INPUTS -----
@@ -201,6 +201,7 @@ public class PlayerMouvement : MonoBehaviour
                 contact.limitsAngle = contact.CalculateLimiteAngle(limitAngle);
                 connectedPoints.Add(contact);
                 PlayerMouvement playerCollided = collision.transform.GetComponent<PlayerMouvement>();
+                //AudioManager.instance.PlayCollisionSounds(gameObject);
                 if (velocityLastFrame.magnitude * valueStrengthCurve > playerCollided.velocityLastFrame.magnitude * playerCollided.valueStrengthCurve)
                 {
                     float strength = velocityLastFrame.magnitude * valueStrengthCurve * strengthMultiplicator / playerCollided.valueStrengthCurve;
@@ -236,6 +237,7 @@ public class PlayerMouvement : MonoBehaviour
                         state = STATE.STICK;
                         break;
                 }
+                //AudioManager.instance.PlayLandSounds(gameObject);
                 hasJumped = false;
                 #endregion Collision Untagged
                 break;

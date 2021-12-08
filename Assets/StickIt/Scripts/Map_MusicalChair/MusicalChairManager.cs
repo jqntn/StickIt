@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using MoreMountains.Feedbacks;
 using UnityEngine.UI;
@@ -13,6 +14,8 @@ public class MusicalChairManager : Level
     [SerializeField] Color colorTextRound;
     float transition;
     public Text countdown;
+    private Animator textAnim;
+    float countDownSave;
     float textValue;
     bool inTransition;
     [Header("Chairs")]
@@ -28,12 +31,18 @@ public class MusicalChairManager : Level
     public GameObject winTxt;
     public MMFeedbacks spawnFeedback;
     bool GameLaunched = false;
+
+    Spores sporeScript;
+
     private void Awake()
     {
         durationSpawn = transitionValue / 3;
     }
     private void Start()
     {
+        countDownSave = int.MaxValue;
+        textAnim = countdown.GetComponent<Animator>();
+      
     }
     // Update is called once per frame
     void Update()
@@ -51,24 +60,26 @@ public class MusicalChairManager : Level
         base.StartMap();
         chairs = FindObjectsOfType<Chair>();
         inTransition = true;
-        transition = transitionValue;
+        transition = transitionValue + 1;
         maxChairsActive = MultiplayerManager.instance.alivePlayers.Count - 1;
         GameLaunched = true;
+        
     }
     private void UpdateText()
     {
         if (inTransition)
         {
-            duration = durationValue;
-            countdown.color = colorTextTransition;
+            duration = durationValue + 1;         
             transition -= Time.deltaTime;
-            textValue = Mathf.Round(transition);
+            textValue = (int)transition;
+            countdown.color = colorTextTransition;
 
             if (transition <= 0)
             {
                 inTransition = false;
+                //GameEvents.CameraShake_CEvent?.Invoke(durationValue / 0.4f, 1.0f);
             }
-            else if(spawning && transition <= durationSpawn && transition > 0)
+            else if(spawning && transition <= durationSpawn)
             {
                 ChangeChairPool();
                 spawning = false;
@@ -76,22 +87,37 @@ public class MusicalChairManager : Level
         }
         else
         {
-            transition = transitionValue;
-            countdown.color = colorTextRound;
+            transition = transitionValue + 1;
             duration -= Time.deltaTime;
-            textValue = Mathf.Round(duration);
+            textValue = (int)duration;
+            countdown.color = colorTextRound;
             if (duration <= 0)
             {
                 inTransition = true;
                 spawning = true;
                 ResetChairPool();
+                //GameEvents.CameraShake_CEvent?.Invoke(durationValue / 0.4f, 1.0f);
             }
+       
         }
         countdown.text = textValue.ToString();
+        if(textValue < countDownSave)
+        {
+            textAnim.SetTrigger("Update");
+        }
+        countDownSave = textValue;
     }
     private void ChangeChairPool()
     {
         //spawnFeedback.PlayFeedbacks();
+        if (sporeScript == null)
+        {
+            if (!(sporeScript = FindObjectOfType<Spores>()))
+            {
+                Debug.LogWarning("You need to put the prefab Spores in the map ! Prefabs > Particles > Spores");
+            }
+        }
+        sporeScript.Initialize();
         int rand = Random.Range(0, chairs.Length);
         int chairsChanged = 0;
         while (chairsChanged < maxChairsActive)
@@ -110,18 +136,33 @@ public class MusicalChairManager : Level
     private void ResetChairPool()
     {
         //spawnFeedback.PlayFeedbacksInReverse();
+
         foreach (Chair c in chairs)
         {
             if(c.isActive)
                 c.DeactivateChair(colorChairInactive);
         }
+        List<Player> losers = new List<Player>();
         for (int i = MultiplayerManager.instance.alivePlayers.Count - 1; i >= 0; i--)
         {
             if (!winners.Find(x => MultiplayerManager.instance.alivePlayers[i] == x))
             {
                 //MAKE THE LOSERS EXPLODE
-                MultiplayerManager.instance.alivePlayers[i].GetComponent<Player>().Death(true);
+                losers.Add(MultiplayerManager.instance.alivePlayers[i]);
+                
             }
+        }
+        sporeScript.KillLosers(losers);
+
+        StartCoroutine(EndResetChairPool(losers.ToArray()));
+    }
+
+    IEnumerator EndResetChairPool(Player[] losers)
+    {
+        yield return new WaitForSeconds(2);
+        for (int i = 0; i < losers.Length; i++)
+        {
+            losers[i].Death();
         }
         maxChairsActive = MultiplayerManager.instance.alivePlayers.Count - 1;
         winners.Clear();
