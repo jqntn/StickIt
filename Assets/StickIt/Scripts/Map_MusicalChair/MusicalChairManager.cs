@@ -8,7 +8,7 @@ public class MusicalChairManager : Level
     [Header("Countdown")]
     [SerializeField] bool mapManagered;
     [SerializeField] float durationValue;
-    public float duration;
+    float duration;
     [SerializeField] float transitionValue;
     [SerializeField] Color colorTextTransition;
     [SerializeField] Color colorTextRound;
@@ -77,7 +77,7 @@ public class MusicalChairManager : Level
             if (transition <= 0)
             {
                 inTransition = false;
-                GameEvents.CameraShake_CEvent?.Invoke(duration, 1.0f);
+                GameEvents.CameraShake_CEvent?.Invoke(durationValue / 0.4f, 1.0f);
             }
             else if(spawning && transition <= durationSpawn)
             {
@@ -96,7 +96,7 @@ public class MusicalChairManager : Level
                 inTransition = true;
                 spawning = true;
                 ResetChairPool();
-                GameEvents.CameraShake_CEvent?.Invoke(duration, 1.0f);
+                GameEvents.CameraShake_CEvent?.Invoke(durationValue / 0.4f, 1.0f);
             }
        
         }
