@@ -1,8 +1,7 @@
 using UnityEngine;
 public class SwitchOnSelected : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject toSwitch;
+    [SerializeField] private GameObject toSwitch;
     private Animator ar;
     private void Start() => ar = GetComponent<Animator>();
     private void Update()

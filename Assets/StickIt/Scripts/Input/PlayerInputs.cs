@@ -228,6 +228,46 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Page_Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""1e9a4ed8-65be-47f1-b444-39d31d6f1a65"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Page_Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""7e5b72cc-2de5-42bd-82c9-1bb2cd77574d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""175c628e-ba61-4e72-93d3-d7f15679c268"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""X"",
+                    ""type"": ""Button"",
+                    ""id"": ""19939d2a-4d87-48e4-84c4-c1c4b6c42dce"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Y"",
+                    ""type"": ""Button"",
+                    ""id"": ""5f9a0bda-985b-410e-81aa-cc399f27a179"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -505,6 +545,61 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""action"": ""Validate"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""522135cc-834a-4a03-bde1-bb0b3bebe74a"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Page_Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bca766c5-682b-4e20-9071-7b3bf4b800ca"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Page_Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2ad1c212-e516-4c29-9ffe-3d60f56f476c"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""64d2d3e8-ac45-47ac-b421-580f4652c701"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Y"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""30e9aab3-befa-4a77-a651-5569a912b919"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""X"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -551,6 +646,11 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         m_UIInputs_Return = m_UIInputs.FindAction("Return", throwIfNotFound: true);
         m_UIInputs_Click = m_UIInputs.FindAction("Click", throwIfNotFound: true);
         m_UIInputs_Validate = m_UIInputs.FindAction("Validate", throwIfNotFound: true);
+        m_UIInputs_Page_Left = m_UIInputs.FindAction("Page_Left", throwIfNotFound: true);
+        m_UIInputs_Page_Right = m_UIInputs.FindAction("Page_Right", throwIfNotFound: true);
+        m_UIInputs_Pause = m_UIInputs.FindAction("Pause", throwIfNotFound: true);
+        m_UIInputs_X = m_UIInputs.FindAction("X", throwIfNotFound: true);
+        m_UIInputs_Y = m_UIInputs.FindAction("Y", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -694,6 +794,11 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
     private readonly InputAction m_UIInputs_Return;
     private readonly InputAction m_UIInputs_Click;
     private readonly InputAction m_UIInputs_Validate;
+    private readonly InputAction m_UIInputs_Page_Left;
+    private readonly InputAction m_UIInputs_Page_Right;
+    private readonly InputAction m_UIInputs_Pause;
+    private readonly InputAction m_UIInputs_X;
+    private readonly InputAction m_UIInputs_Y;
     public struct UIInputsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -703,6 +808,11 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         public InputAction @Return => m_Wrapper.m_UIInputs_Return;
         public InputAction @Click => m_Wrapper.m_UIInputs_Click;
         public InputAction @Validate => m_Wrapper.m_UIInputs_Validate;
+        public InputAction @Page_Left => m_Wrapper.m_UIInputs_Page_Left;
+        public InputAction @Page_Right => m_Wrapper.m_UIInputs_Page_Right;
+        public InputAction @Pause => m_Wrapper.m_UIInputs_Pause;
+        public InputAction @X => m_Wrapper.m_UIInputs_X;
+        public InputAction @Y => m_Wrapper.m_UIInputs_Y;
         public InputActionMap Get() { return m_Wrapper.m_UIInputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -727,6 +837,21 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Validate.started -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnValidate;
                 @Validate.performed -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnValidate;
                 @Validate.canceled -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnValidate;
+                @Page_Left.started -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnPage_Left;
+                @Page_Left.performed -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnPage_Left;
+                @Page_Left.canceled -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnPage_Left;
+                @Page_Right.started -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnPage_Right;
+                @Page_Right.performed -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnPage_Right;
+                @Page_Right.canceled -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnPage_Right;
+                @Pause.started -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnPause;
+                @X.started -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnX;
+                @X.performed -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnX;
+                @X.canceled -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnX;
+                @Y.started -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnY;
+                @Y.performed -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnY;
+                @Y.canceled -= m_Wrapper.m_UIInputsActionsCallbackInterface.OnY;
             }
             m_Wrapper.m_UIInputsActionsCallbackInterface = instance;
             if (instance != null)
@@ -746,6 +871,21 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @Validate.started += instance.OnValidate;
                 @Validate.performed += instance.OnValidate;
                 @Validate.canceled += instance.OnValidate;
+                @Page_Left.started += instance.OnPage_Left;
+                @Page_Left.performed += instance.OnPage_Left;
+                @Page_Left.canceled += instance.OnPage_Left;
+                @Page_Right.started += instance.OnPage_Right;
+                @Page_Right.performed += instance.OnPage_Right;
+                @Page_Right.canceled += instance.OnPage_Right;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
+                @X.started += instance.OnX;
+                @X.performed += instance.OnX;
+                @X.canceled += instance.OnX;
+                @Y.started += instance.OnY;
+                @Y.performed += instance.OnY;
+                @Y.canceled += instance.OnY;
             }
         }
     }
@@ -786,5 +926,10 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         void OnReturn(InputAction.CallbackContext context);
         void OnClick(InputAction.CallbackContext context);
         void OnValidate(InputAction.CallbackContext context);
+        void OnPage_Left(InputAction.CallbackContext context);
+        void OnPage_Right(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+        void OnX(InputAction.CallbackContext context);
+        void OnY(InputAction.CallbackContext context);
     }
 }
