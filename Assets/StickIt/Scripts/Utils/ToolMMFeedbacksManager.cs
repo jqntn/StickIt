@@ -41,9 +41,9 @@ public class ToolMMFeedbacksManager : MonoBehaviour
             if(indexSearch == -1)
             {
                  text = text.Insert(index,
-                    "\n\tpublic static UnityEvent " +
+                    "\n\tpublic static FeelEvent " +
                      feedbacks.name +
-                    "Event = new UnityEvent();"
+                    "Event = new FeelEvent();"
                     );
                 File.WriteAllText(path, text);
             }
@@ -72,8 +72,11 @@ public class ToolMMFeedbacksManager : MonoBehaviour
 
                 int indexCalls = text.IndexOf(startCalls) + startCalls.Length;
                 text = text.Insert(indexCalls,
-                    "\n\tpublic void " + feedbacksList[i].name + "Call()\n\t{" +
+                    "\n\tpublic void " + feedbacksList[i].name + "Call(float duration, float intensity)\n\t{" +
                     "\n\t\tif (!feedbacksList[" + i + "].IsPlaying){" +
+                    "\n\t\t\tfloat durationMultiplier = duration / feedbacksList[" + i + "].TotalDuration;" +
+                    "\n\t\t\tfeedbacksList[" + i + "].FeedbacksIntensity = intensity;" +
+                    "\n\t\t\tfeedbacksList[" + i + "].DurationMultiplier = durationMultiplier;" +
                     "\n\t\t\tfeedbacksList[" + i + "].PlayFeedbacks();" +
                     "\n\t\t}" +
                     "\n\t}"
