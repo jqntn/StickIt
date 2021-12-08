@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public static class GameEvents
 {
     // | Events
+	public static UnityEvent ShakeAppearChairEvent = new UnityEvent();
 	public static CameraShakeEvent CameraShake_CEvent = new CameraShakeEvent();
 	// | End Events
 

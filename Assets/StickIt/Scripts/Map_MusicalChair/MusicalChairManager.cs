@@ -105,7 +105,7 @@ public class MusicalChairManager : Level
                 inTransition = true;
                 spawning = true;
                 ResetChairPool();
-                GameEvents.CameraShake_CEvent?.Invoke(transition, 1f);
+                GameEvents.ShakeAppearChairEvent.Invoke();
             }
        
         }
