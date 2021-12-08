@@ -5,16 +5,13 @@ using UnityEngine;
 public class ParallaxSettings : MonoBehaviour
 {
     public GameObject[] ParallaxElements;
-    [SerializeField] float parallaxMultiplier;
-    // Start is called before the first frame update
-    void Start()
+    public int parallaxMultiplier;
+    public int posZBegin;
+    public void ChangePosZ()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        for (int i = 0; i < ParallaxElements.Length; i++)
+        {
+            ParallaxElements[i].transform.position = new Vector3(ParallaxElements[i].transform.position.x, ParallaxElements[i].transform.position.y, posZBegin * (Mathf.Pow(parallaxMultiplier, i)));
+        }
     }
 }
