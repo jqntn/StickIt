@@ -42,11 +42,7 @@ public class MusicalChairManager : Level
     {
         countDownSave = int.MaxValue;
         textAnim = countdown.GetComponent<Animator>();
-        sporeScript = FindObjectOfType<Spores>();
-        if(sporeScript == null)
-        {
-            Debug.LogWarning("You need to put the prefab Spores in the map ! Prefabs > Particles > Spores");
-        }
+      
     }
     // Update is called once per frame
     void Update()
@@ -114,7 +110,14 @@ public class MusicalChairManager : Level
     private void ChangeChairPool()
     {
         //spawnFeedback.PlayFeedbacks();
-        sporeScript.StartEmitting();
+        if (sporeScript == null)
+        {
+            if (!(sporeScript = FindObjectOfType<Spores>()))
+            {
+                Debug.LogWarning("You need to put the prefab Spores in the map ! Prefabs > Particles > Spores");
+            }
+        }
+        sporeScript.Initialize();
         int rand = Random.Range(0, chairs.Length);
         int chairsChanged = 0;
         while (chairsChanged < maxChairsActive)

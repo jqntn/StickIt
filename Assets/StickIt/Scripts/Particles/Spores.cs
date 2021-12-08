@@ -21,14 +21,14 @@ public class Spores : MonoBehaviour
     [SerializeField] Material redMat;
     
     // Start is called before the first frame update
-    void Start()
+
+    public void Initialize()
     {
-        Initialize();      
+        ps = GetComponent<ParticleSystem>();
         emission = ps.emission;
 
+        StartEmitting();
     }
-
-
 
     public void StartEmitting()
     {
@@ -125,10 +125,7 @@ public class Spores : MonoBehaviour
         ps.SetParticles(particles, particles.Length);
     }
 
-    void Initialize()
-    {
-            ps = GetComponent<ParticleSystem>();
-    }
+
 
     IEnumerator CallLaunchParticlesKiller()
     {
