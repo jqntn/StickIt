@@ -15,16 +15,18 @@ public class MultiplayerManager : MonoBehaviour
         public int id;
         public int deviceID;
         public Material material;
+        public RenderTexture renderTexture;
         public int mass;
         public uint score;
         public uint nbrDeath;
         public uint nbrVictories;
-        public PlayerData(string _name, int _id, int _deviceID, Material _material)
+        public PlayerData(string _name, int _id, int _deviceID, Material _material, RenderTexture _renderTexture)
         {
             name = _name;
             id = _id;
             deviceID = _deviceID;
             material = _material;
+            renderTexture = _renderTexture;
             mass = 100;
             score = 0;
             nbrDeath = 0;
@@ -42,6 +44,7 @@ public class MultiplayerManager : MonoBehaviour
     public List<Player> alivePlayers = new List<Player>();
     public List<Player> deadPlayers = new List<Player>();
     public List<Material> materials = new List<Material>();
+    public RenderTexture[] renderTextures;
     private List<PlayerData> datas = new List<PlayerData>();
     private Transform playersStartingPos;
     //  private int nbrDevicesLastFrame = 0;
@@ -95,9 +98,10 @@ public class MultiplayerManager : MonoBehaviour
     {
         for (int i = 0; i < numberOfPlayer; i++)
         {
-            PlayerData newData = new PlayerData("Player" + i.ToString(), i, -1, materials[i]);
+            PlayerData newData = new PlayerData("Player" + i.ToString(), i, -1, materials[i], renderTextures[i]);
             datas.Add(newData);
         }
+
         for (int i = 0; i < datas.Count; i++)
         {
             Gamepad pad = null;
@@ -106,6 +110,7 @@ public class MultiplayerManager : MonoBehaviour
             scriptPlayer.myDatas = datas[i];
             scriptPlayer.transform.gameObject.name = scriptPlayer.myDatas.name;
             scriptPlayer.transform.GetComponentInChildren<SkinnedMeshRenderer>().material = scriptPlayer.myDatas.material;
+            scriptPlayer.transform.GetComponentInChildren<Camera>().targetTexture = scriptPlayer.myDatas.renderTexture;
             players.Add(scriptPlayer);
             alivePlayers.Add(scriptPlayer);
             newPlayer.transform.position = playersStartingPos.GetChild(i).position;
