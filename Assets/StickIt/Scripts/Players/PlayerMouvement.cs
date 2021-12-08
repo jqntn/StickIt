@@ -21,7 +21,7 @@ public class PlayerMouvement : MonoBehaviour
     [Header("Movement")] //-----------------------
     [Tooltip("Force maximale du jump, et clamp de la velocite maximale")]
     public float maxSpeed;
-    [SerializeField] private bool isReversedDirection, isLimitedMovement;
+    [SerializeField] public bool isReversedDirection, isLimitedMovement;
     [Tooltip("% de la velocite ajoutee au saut en fonction du temps, cette valeur doit finir a 1")]
     private Vector2 direction;
     private bool isChargingJump = false;
