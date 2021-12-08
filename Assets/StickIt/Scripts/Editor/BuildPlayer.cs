@@ -2,9 +2,9 @@ using System;
 using System.IO;
 using System.IO.Compression;
 using UnityEditor;
-class BuildPlayer
+internal class BuildPlayer
 {
-    static void StandaloneWindows64(BuildOptions bo = BuildOptions.None)
+    private static void StandaloneWindows64(BuildOptions bo = BuildOptions.None)
     {
         string path = "Build_" + DateTime.Now.ToString("dd.MM.yy_HH.mm") + "/";
         Directory.CreateDirectory(path);
@@ -16,7 +16,7 @@ class BuildPlayer
         if (zips != null)
             foreach (var i in zips) File.Delete(i);
         BuildPipeline.BuildPlayer(
-            Directory.GetFiles("Assets/StickIt/Scenes", "*.unity"), path + "Plat.exe",
+            Directory.GetFiles("Assets/StickIt/Scenes", "*.unity"), path + "StickIt.exe",
             BuildTarget.StandaloneWindows64,
             BuildOptions.CompressWithLz4HC | bo
         );
@@ -24,9 +24,12 @@ class BuildPlayer
         ZipFile.CreateFromDirectory(path, path.Remove(path.Length - 1) + ".zip");
     }
     [MenuItem("BuildPlayer/Build")]
-    static void Build() { StandaloneWindows64(); }
+    private static void Build()
+    { StandaloneWindows64(); }
     [MenuItem("BuildPlayer/BuildRun")]
-    static void BuildRun() { StandaloneWindows64(BuildOptions.AutoRunPlayer); }
+    private static void BuildRun()
+    { StandaloneWindows64(BuildOptions.AutoRunPlayer); }
     [MenuItem("BuildPlayer/BuildShow")]
-    static void BuildShow() { StandaloneWindows64(BuildOptions.ShowBuiltPlayer); }
+    private static void BuildShow()
+    { StandaloneWindows64(BuildOptions.ShowBuiltPlayer); }
 }
