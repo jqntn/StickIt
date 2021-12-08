@@ -2163,30 +2163,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &1480058849 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 477383131831954858, guid: a3bb0b8557534e147a397858207651a9, type: 3}
-  m_PrefabInstance: {fileID: 477383130782104585}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1480058853
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1480058849}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6592841baebaf9a4e9465a04f1a3405d, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &1484640233
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3012,6 +2988,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9eb730b0588a2b24f8476f7a876a2272, type: 3}
+--- !u!23 &1891562247 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 163266580274725328, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+  m_PrefabInstance: {fileID: 477383130782104585}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1937843845
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3725,13 +3706,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 156446580}
     - target: {fileID: 477383130934292853, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: chairTaken
+      value: 
+      objectReference: {fileID: 2100000, guid: da36bc7be115a5a4aaa8cda6167c533a, type: 2}
+    - target: {fileID: 477383130934292853, guid: a3bb0b8557534e147a397858207651a9, type: 3}
       propertyPath: mapManagered
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 477383130934292853, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: chairNotTaken
+      value: 
+      objectReference: {fileID: 2100000, guid: 5f3b4178bf278924ca2c269f4e47cbda, type: 2}
+    - target: {fileID: 477383130934292853, guid: a3bb0b8557534e147a397858207651a9, type: 3}
       propertyPath: durationValue
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 477383130934292853, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: bigMushroomMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 1dee3b5fcc39b0543a5e8dd6bbb2d533, type: 2}
     - target: {fileID: 477383130934292853, guid: a3bb0b8557534e147a397858207651a9, type: 3}
       propertyPath: colorChairTaken.b
       value: 0
@@ -3757,6 +3750,14 @@ PrefabInstance:
       value: 0.05724919
       objectReference: {fileID: 0}
     - target: {fileID: 477383130934292853, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: bigMushroomAngryMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 1cc24375790ef6f44a323597dba21d37, type: 2}
+    - target: {fileID: 477383130934292853, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: bigMushroomRenderer
+      value: 
+      objectReference: {fileID: 1891562247}
+    - target: {fileID: 477383130934292853, guid: a3bb0b8557534e147a397858207651a9, type: 3}
       propertyPath: colorChairInactive.b
       value: 0
       objectReference: {fileID: 0}
@@ -3767,6 +3768,18 @@ PrefabInstance:
     - target: {fileID: 477383130934292853, guid: a3bb0b8557534e147a397858207651a9, type: 3}
       propertyPath: colorChairInactive.r
       value: 0.030668736
+      objectReference: {fileID: 0}
+    - target: {fileID: 477383131831954860, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 477383131831954860, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 477383131831954860, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 477383131831954861, guid: a3bb0b8557534e147a397858207651a9, type: 3}
       propertyPath: m_LocalScale.x
@@ -3847,6 +3860,14 @@ PrefabInstance:
     - target: {fileID: 2155952199931224746, guid: a3bb0b8557534e147a397858207651a9, type: 3}
       propertyPath: m_LocalPosition.z
       value: 1.21
+      objectReference: {fileID: 0}
+    - target: {fileID: 2164551507791392740, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: animCurve.m_Curve.Array.data[0].inSlope
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2164551507791392740, guid: a3bb0b8557534e147a397858207651a9, type: 3}
+      propertyPath: animCurve.m_Curve.Array.data[0].outSlope
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2470667513206057392, guid: a3bb0b8557534e147a397858207651a9, type: 3}
       propertyPath: m_LocalPosition.x
