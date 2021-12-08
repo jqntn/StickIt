@@ -119,11 +119,11 @@ public class PlayerMouvement : MonoBehaviour
         GUIStyle style = new GUIStyle();
         style.fontSize = 24;
         style.normal.textColor = Color.white;
-        if (myPlayer.myDatas.id == 0)
-        {
-            GUILayout.Label(" Velocity  = " + rb.velocity, style);
-            GUILayout.Label("Magnitude = " + rb.velocity.magnitude, style);
-        }
+        //if (myPlayer.myDatas.id == 0)
+        //{
+        //    GUILayout.Label(" Velocity  = " + rb.velocity, style);
+        //    GUILayout.Label("Magnitude = " + rb.velocity.magnitude, style);
+        //}
         GUILayout.EndVertical();
     }
     // ----- INPUTS -----
