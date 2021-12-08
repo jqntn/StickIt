@@ -210,7 +210,6 @@ public abstract class CameraState : MonoBehaviour
         ratio.y = Mathf.Clamp(playerBounds.y, 0, maxDistance.y) / maxDistance.y;
 
         positionToGoTo.z = Mathf.Lerp(maxIn_Z, maxOut_Z, Mathf.Max(ratio.x, ratio.y));
-        Debug.Log(positionToGoTo.z);
     }
 
     //<summary>
@@ -286,7 +285,6 @@ public abstract class CameraState : MonoBehaviour
             positionToGoTo.x = bounds_pos.x;
             positionToGoTo.y = bounds_pos.y;
             positionToGoTo.z = maxOut_Z;
-            Debug.Log("OnSubscribeCamear");
             MoveAndZoom();
             yield return null;
         }
