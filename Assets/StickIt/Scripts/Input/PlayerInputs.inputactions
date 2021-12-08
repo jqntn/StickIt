@@ -215,6 +215,46 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Page_Left",
+                    "type": "Button",
+                    "id": "1e9a4ed8-65be-47f1-b444-39d31d6f1a65",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Page_Right",
+                    "type": "Button",
+                    "id": "7e5b72cc-2de5-42bd-82c9-1bb2cd77574d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Pause",
+                    "type": "Button",
+                    "id": "175c628e-ba61-4e72-93d3-d7f15679c268",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "X",
+                    "type": "Button",
+                    "id": "19939d2a-4d87-48e4-84c4-c1c4b6c42dce",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Y",
+                    "type": "Button",
+                    "id": "5f9a0bda-985b-410e-81aa-cc399f27a179",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -490,6 +530,61 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Validate",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "522135cc-834a-4a03-bde1-bb0b3bebe74a",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Page_Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bca766c5-682b-4e20-9071-7b3bf4b800ca",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Page_Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2ad1c212-e516-4c29-9ffe-3d60f56f476c",
+                    "path": "<Gamepad>/start",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64d2d3e8-ac45-47ac-b421-580f4652c701",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Y",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "30e9aab3-befa-4a77-a651-5569a912b919",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "X",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

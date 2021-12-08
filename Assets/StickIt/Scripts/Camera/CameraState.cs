@@ -29,28 +29,28 @@ public abstract class CameraState : MonoBehaviour
     public bool canClampZoom = false;
 
     #region Protected 
-     [SerializeField] protected Camera cam = null;
-     [SerializeField] protected MapManager mapManager = null;
-     [SerializeField] protected MultiplayerManager multiplayerManager = null;
-     [SerializeField] protected List<Player> playerList = new List<Player>();
-     [SerializeField] protected Vector3 positionToGoTo = new Vector3(0.0f, 0.0f, 0.0f);
-     [SerializeField] protected Vector3 moveVelocity = new Vector3(0.0f, 0.0f, 0.0f);
-     [SerializeField] protected Vector3 zoomVelocity = new Vector3(0.0f, 0.0f, 0.0f);
-     [SerializeField] protected Vector3 barycenter = new Vector3(0.0f, 0.0f, 0.0f);
-     [SerializeField] protected Vector2 bounds_pos = new Vector3(0.0f, 0.0f);
-     [SerializeField] protected Vector2 bounds_dimension = new Vector2(0.0f, 0.0f);
-     [SerializeField] protected Vector2 min_bounds = new Vector2(0.0f, 0.0f);
-     [SerializeField] protected Vector2 max_bounds = new Vector2(0.0f, 0.0f);
-     [SerializeField] protected Vector2 min_moveBounds = new Vector2(0.0f, 0.0f);
-     [SerializeField] protected Vector2 max_moveBounds = new Vector2(0.0f, 0.0f);
-     [SerializeField] protected Vector2 frustum_dimension = new Vector2(0.0f, 0.0f);
-     [SerializeField] protected Vector2 min_viewport = new Vector2(0.0f, 0.0f);
-     [SerializeField] protected Vector2 max_viewport = new Vector2(0.0f, 0.0f);
-     [SerializeField] protected Vector2 min_zoomOutBounds = new Vector2(0.0f, 0.0f);
-     [SerializeField] protected Vector2 max_zoomOutBounds = new Vector2(0.0f, 0.0f);
-     [SerializeField] protected Vector2 playerBounds = new Vector2(0.0f, 0.0f);
-     [SerializeField] protected Vector2 min_playerBounds = new Vector2(0.0f, 0.0f);
-     [SerializeField] protected Vector2 max_playerBounds = new Vector2(0.0f, 0.0f);
+     protected Camera cam = null;
+     protected MapManager mapManager = null;
+     protected MultiplayerManager multiplayerManager = null;
+     protected List<Player> playerList = new List<Player>();
+     protected Vector3 positionToGoTo = new Vector3(0.0f, 0.0f, 0.0f);
+     protected Vector3 moveVelocity = new Vector3(0.0f, 0.0f, 0.0f);
+     protected Vector3 zoomVelocity = new Vector3(0.0f, 0.0f, 0.0f);
+     protected Vector3 barycenter = new Vector3(0.0f, 0.0f, 0.0f);
+     protected Vector2 bounds_pos = new Vector3(0.0f, 0.0f);
+     protected Vector2 bounds_dimension = new Vector2(0.0f, 0.0f);
+     protected Vector2 min_bounds = new Vector2(0.0f, 0.0f);
+     protected Vector2 max_bounds = new Vector2(0.0f, 0.0f);
+     protected Vector2 min_moveBounds = new Vector2(0.0f, 0.0f);
+     protected Vector2 max_moveBounds = new Vector2(0.0f, 0.0f);
+     protected Vector2 frustum_dimension = new Vector2(0.0f, 0.0f);
+     protected Vector2 min_viewport = new Vector2(0.0f, 0.0f);
+     protected Vector2 max_viewport = new Vector2(0.0f, 0.0f);
+     protected Vector2 min_zoomOutBounds = new Vector2(0.0f, 0.0f);
+     protected Vector2 max_zoomOutBounds = new Vector2(0.0f, 0.0f);
+     protected Vector2 playerBounds = new Vector2(0.0f, 0.0f);
+     protected Vector2 min_playerBounds = new Vector2(0.0f, 0.0f);
+     protected Vector2 max_playerBounds = new Vector2(0.0f, 0.0f);
     #endregion
 
     protected virtual void Awake()
@@ -136,7 +136,6 @@ public abstract class CameraState : MonoBehaviour
             min_viewport.x <= min_bounds.x || max_viewport.x >= max_bounds.x;
         if (canClampZoom && positionToGoTo.z < transform.parent.position.z && isTouchingBorder) { return; }
 
-        Debug.Log("2 : " + positionToGoTo.z);
         // Zoom Camera
         Vector3 newZoom = new Vector3(
             transform.parent.position.x,
