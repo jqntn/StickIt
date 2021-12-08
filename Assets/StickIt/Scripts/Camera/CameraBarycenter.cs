@@ -33,8 +33,8 @@ public class CameraBarycenter : CameraState
         }
 
         // Clamp Value into bounds
-        float newPos_X = Mathf.Clamp(base.barycenter.x, min_moveBounds.x, max_moveBounds.x);
-        float newPos_Y = Mathf.Clamp(base.barycenter.y, min_moveBounds.y, max_moveBounds.y);
+        float newPos_X = Mathf.Clamp(base.playerBounds.center.x, min_moveBounds.x, max_moveBounds.x);
+        float newPos_Y = Mathf.Clamp(base.playerBounds.center.y, min_moveBounds.y, max_moveBounds.y);
 
         // Update Position to Go To
         positionToGoTo = new Vector3(
