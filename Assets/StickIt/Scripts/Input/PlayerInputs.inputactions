@@ -173,17 +173,9 @@
             ]
         },
         {
-            "name": "UI",
+            "name": "UIInputs",
             "id": "1ab45db5-87ed-4028-b279-bb8fef77cc1c",
             "actions": [
-                {
-                    "name": "Return",
-                    "type": "Button",
-                    "id": "d899757b-19de-4aa5-b97e-e4e9451fda29",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
-                },
                 {
                     "name": "Move",
                     "type": "Value",
@@ -201,37 +193,31 @@
                     "interactions": ""
                 },
                 {
+                    "name": "Return",
+                    "type": "Button",
+                    "id": "d899757b-19de-4aa5-b97e-e4e9451fda29",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
                     "name": "Click",
                     "type": "PassThrough",
                     "id": "827cc017-87a6-4b7b-b4ba-f6028add973a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Validate",
+                    "type": "Button",
+                    "id": "18d17c69-d01a-4edb-b4f8-e94ecb57429e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
-                {
-                    "name": "",
-                    "id": "9ec0de42-398a-46b1-8f2f-35e5f68acab3",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Return",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "a81b5830-73e4-4a8e-b0e8-dac74f836969",
-                    "path": "<Mouse>/rightButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Return",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
                 {
                     "name": "",
                     "id": "b0f45a43-9135-4174-9744-5059b8d384c3",
@@ -471,6 +457,39 @@
                     "processors": "",
                     "groups": "Keyboard&Mouse;Keyboard",
                     "action": "Click",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9ec0de42-398a-46b1-8f2f-35e5f68acab3",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Return",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a81b5830-73e4-4a8e-b0e8-dac74f836969",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Return",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b5bf70c9-78e6-4bde-b763-bd13a4ca1ed1",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Validate",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
