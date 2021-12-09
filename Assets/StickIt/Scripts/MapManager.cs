@@ -87,15 +87,24 @@ public class MapManager : Unique<MapManager>
         }
         Time.timeScale = 0;
         timeScale = Time.timeScale;
-        var objs = GameObject.FindGameObjectsWithTag("MapRoot");
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("MapRoot");
         nextMapRoot = objs[objs.Length - 1];
         nextMapRoot.transform.position = new Vector3(mapOffset, 0);
         // CAMERA EVENT
         GameEvents.OnSceneUnloaded.Invoke();
         // ----------
-        var nextStartPos = GameObject.FindGameObjectsWithTag("StartPos");
+        GameObject[] nextStartPos = GameObject.FindGameObjectsWithTag("StartPos");
         MultiplayerManager.instance.speedChangeMap = 1 / slowTime;
-        MultiplayerManager.instance.StartChangeMap(nextStartPos[nextStartPos.Length - 1].transform);
+        if(SceneManager.GetActiveScene().name == "EndScene 2")
+        {
+            // Position the player depending of their rank on the map
+            
+        }
+        else
+        {
+            MultiplayerManager.instance.StartChangeMap(nextStartPos[nextStartPos.Length - 1].transform);
+        }
+
         while (MultiplayerManager.instance.isChangingMap) yield return null;
         StartCoroutine(EndTransition());
     }

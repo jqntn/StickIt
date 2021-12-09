@@ -1,28 +1,31 @@
 using System.Collections;
-using System.Linq;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
 public class EndScore2 : MonoBehaviour
 {
+    [Header("ANIMATION__________________________")]
+    public float timeBetweenRankAppear = 1.0f;
+    public float vfxTime = 2.0f;
+    [Header("CANVAS ELEMENTS____________________")]
     public GameObject[] panelPlayers;
     public TMP_Text[] textP;
     public TMP_Text[] textScores;
     
 
-    [Header("Debug____________________")]
+    [Header("DEBUG___________________________")]
     [SerializeField] private Player[] ranking;
 
     IEnumerator Start()
     {
         while(MultiplayerManager.instance.players.Count <= 0) { yield return null; }
+
         ranking = new Player[MultiplayerManager.instance.players.Count];
         MultiplayerManager.instance.players.CopyTo(ranking);
 
         // Debug
-        ranking[1].myDatas.score = 10;
+        ranking[2].myDatas.score = 10;
+        ranking[1].myDatas.score = 5;
 
         bool hasPermute = false;
         do
@@ -42,11 +45,13 @@ public class EndScore2 : MonoBehaviour
         {
             panel.SetActive(false);
         }
+
         for (int i = 0; i < ranking.Length; i++)
         {
             panelPlayers[i].SetActive(true);
             textP[i].text = "P" + ranking[i].myDatas.id.ToString();
             textScores[i].text = ranking[i].myDatas.score.ToString();
+            yield return new WaitForSeconds(timeBetweenRankAppear);
         }
     }
 
@@ -55,5 +60,10 @@ public class EndScore2 : MonoBehaviour
         Player temp = ranking[i];
         ranking[i] = ranking[j];
         ranking[j] = temp;
+    }
+
+    IEnumerator OnEndScreen()
+    {
+        yield return null;
     }
 }
