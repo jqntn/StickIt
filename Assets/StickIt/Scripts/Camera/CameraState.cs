@@ -13,6 +13,7 @@ public abstract class CameraState : MonoBehaviour
     public float factorOffset = 1.0f;                           
     public bool autoOffset = true;
     public Vector2 posOffset = new Vector2(0.0f, 0.0f);
+    public bool canDezoomOnTransition = true;
 
     [Header("------- Move -------")]
     public bool canMove = true;
@@ -259,7 +260,7 @@ public abstract class CameraState : MonoBehaviour
         max_bounds.y = bounds_pos.y + offsetY;
 
         // Dezoom to new map
-        UpdateCameraDatas();
+ 
         StartCoroutine(OnSubscribeCamera());    
     }
 
@@ -275,14 +276,16 @@ public abstract class CameraState : MonoBehaviour
 
     private IEnumerator OnSubscribeCamera()
     {
-
-        while (Mathf.Abs(positionToGoTo.z - maxOut_Z) < 0.1f)
-        {
-            positionToGoTo.x = bounds_pos.x;
-            positionToGoTo.y = bounds_pos.y;
-            positionToGoTo.z = maxOut_Z;
-            MoveAndZoom();
-            yield return null;
+        if (canDezoomOnTransition) {
+            while (Mathf.Abs(positionToGoTo.z - maxOut_Z) > 0.1f)
+            {
+                UpdateCameraDatas();
+                positionToGoTo.x = bounds_pos.x;
+                positionToGoTo.y = bounds_pos.y;
+                positionToGoTo.z = maxOut_Z;
+                MoveAndZoom();
+                yield return null;
+            }
         }
     }
     #region Debug
