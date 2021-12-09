@@ -4,27 +4,58 @@ using TMPro;
 
 public class EndScore2 : MonoBehaviour
 {
+
     [Header("ANIMATION__________________________")]
     public float timeBetweenRankAppear = 1.0f;
     public float vfxTime = 2.0f;
+    public float timeToUnlockController = 1.0f;
     [Header("CANVAS ELEMENTS____________________")]
     public GameObject[] panelPlayers;
     public TMP_Text[] textP;
     public TMP_Text[] textScores;
+    [Header("HIERARCHY ELEMENTS_________________")]
+    public Transform[] startPos;
+    public GameObject[] canvasRank;
     
-
     [Header("DEBUG___________________________")]
     [SerializeField] private Player[] ranking;
 
-    IEnumerator Start()
+    private void OnEnable()
     {
-        while(MultiplayerManager.instance.players.Count <= 0) { yield return null; }
+        foreach (GameObject panel in panelPlayers)
+        {
+            panel.SetActive(false);
+        }
+
+        foreach(GameObject canvas in canvasRank)
+        {
+            canvas.SetActive(false);
+        }
+
+        GameEvents.OnSwitchCamera.AddListener(EndGame);
+    }
+
+    private void Start()
+    {
+        // Debug To Remove if not starting directly from scene
+        //EndGame();
+    }
+    public void EndGame()
+    {
+        StartCoroutine(OnEndGame());
+    }
+
+    IEnumerator OnEndGame()
+    {
+        while(MultiplayerManager.instance.players.Count <= 0) { yield return null;}
 
         ranking = new Player[MultiplayerManager.instance.players.Count];
         MultiplayerManager.instance.players.CopyTo(ranking);
-
+        foreach(Player player in ranking)
+        {
+            player.myMouvementScript.enabled = false;
+        }
         // Debug
-        ranking[2].myDatas.score = 10;
         ranking[1].myDatas.score = 5;
 
         bool hasPermute = false;
@@ -41,17 +72,29 @@ public class EndScore2 : MonoBehaviour
             }
         } while (hasPermute);
 
-        foreach (GameObject panel in panelPlayers)
+
+        int posIndex = 0;
+        foreach(Player player in ranking)
         {
-            panel.SetActive(false);
+            player.transform.position = startPos[posIndex].position;
+            posIndex++;
         }
 
+        
         for (int i = 0; i < ranking.Length; i++)
         {
+            yield return new WaitForSeconds(timeBetweenRankAppear);
             panelPlayers[i].SetActive(true);
             textP[i].text = "P" + ranking[i].myDatas.id.ToString();
             textScores[i].text = ranking[i].myDatas.score.ToString();
-            yield return new WaitForSeconds(timeBetweenRankAppear);
+            canvasRank[i].SetActive(true);
+        }
+
+        yield return new WaitForSeconds(timeToUnlockController);
+        // unlock player controllers
+        foreach (Player player in ranking)
+        {
+            player.myMouvementScript.enabled = true;
         }
     }
 

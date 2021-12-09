@@ -14,7 +14,7 @@ public static class Utils
 
     public static CameraType GetCameraType(string curMap)
     {
-        CameraType type = CameraType.STATIC;
+        CameraType type = CameraType.BARYCENTER;
         switch (curMap)
         {
             case "MusicalChairs":   type = CameraType.BARYCENTER;   break;
