@@ -3,19 +3,22 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-public class Pause : MonoBehaviour
+public class Pause : Unique<Pause>
 {
+    public LayerSwitch mainLayerSwitch;
     [SerializeField] private float secondsToPress;
-    [SerializeField] private LayerSwitch mainLayerSwitch;
     [SerializeField] private LayerSwitch subLayerSwitch;
     [SerializeField] private GameObject mainLayer;
     [SerializeField] private bool isPaused;
     private void Start() => mainLayer.SetActive(false);
     public void PauseGame()
     {
-        isPaused ^= true;
-        Time.timeScale = isPaused ? 0 : 1;
-        mainLayer.SetActive(isPaused);
+        if (!MapManager.instance.isBusy)
+        {
+            isPaused ^= true;
+            Time.timeScale = isPaused ? 0 : 1;
+            mainLayer.SetActive(isPaused);
+        }
     }
     public void Help() => StartCoroutine(PressCoroutine(() => mainLayerSwitch.ChangeLayer("Layer_Help")));
     public void Options() => StartCoroutine(PressCoroutine(() => mainLayerSwitch.ChangeLayer("Layer_Options")));
@@ -38,7 +41,12 @@ public class Pause : MonoBehaviour
     {
         if (context.performed && isPaused)
         {
-            if (mainLayer.activeSelf) PauseGame();
+            if (mainLayer.activeSelf)
+            {
+                foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
+                foreach (var item in GameObject.FindGameObjectsWithTag("Player")) item.GetComponent<PlayerInput>().enabled = true;
+                PauseGame();
+            }
             else
             {
                 mainLayerSwitch.ChangeLayer("Layer_Main");
@@ -50,6 +58,11 @@ public class Pause : MonoBehaviour
     {
         if (context.performed)
         {
+            if (MapManager.instance.curMod == "MusicalChairs" && FindObjectOfType<MusicalChairManager>().inTransition)
+                for (int i = 0; i < Gamepad.all.Count; i++)
+                    Gamepad.all[i].SetMotorSpeeds(.1f, .1f);
+            foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
+            foreach (var item in GameObject.FindGameObjectsWithTag("Player")) item.GetComponent<PlayerInput>().enabled = true;
             mainLayerSwitch.ChangeLayer("Layer_Main");
             PauseGame();
         }
