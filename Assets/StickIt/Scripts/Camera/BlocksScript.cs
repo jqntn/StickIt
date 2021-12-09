@@ -11,6 +11,7 @@ public class BlocksScript : MonoBehaviour
     public Vector2 max = new Vector2(0.0f, 0.0f);
     public Vector2 dimension = new Vector2(0.0f, 0.0f);
     public Vector2 factors = new Vector2(0.0f, 0.0f);
+    private Vector2 dimensionBase = new Vector2(0.0f, 0.0f);
     #endregion
 
     private void OnEnable()
@@ -60,8 +61,13 @@ public class BlocksScript : MonoBehaviour
         {
             factor = factors.y;
         }
+
         dimension.x = Utils.AspectRatio.x * factor * extendsFactor;
         dimension.y = Utils.AspectRatio.y * factor * extendsFactor;
+
+        // For debug
+        dimensionBase.x = Utils.AspectRatio.x * factor;
+        dimensionBase.y = Utils.AspectRatio.y * factor;
 
         GameEvents.OnSceneUnloaded.AddListener(GiveNewBounds);
     }
@@ -89,7 +95,7 @@ public class BlocksScript : MonoBehaviour
     {
         // Draw Camera Bounds
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(boundsPos, new Vector3(dimension.x, dimension.y, 1));
+        Gizmos.DrawWireCube(boundsPos + (Vector2)offsets, new Vector3(dimensionBase.x * extendsFactor, dimensionBase.y * extendsFactor, 1));
     }
     #endregion
 }

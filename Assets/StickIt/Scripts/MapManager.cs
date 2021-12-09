@@ -97,7 +97,8 @@ public class MapManager : Unique<MapManager>
         MultiplayerManager.instance.speedChangeMap = 1 / slowTime;
         if(SceneManager.GetActiveScene().name == "EndScene 2")
         {
-
+            // Position the player depending of their rank on the map
+            
         }
         else
         {
