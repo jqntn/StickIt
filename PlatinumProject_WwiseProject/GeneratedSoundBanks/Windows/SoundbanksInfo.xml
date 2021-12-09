@@ -22,7 +22,7 @@
 				<GameParameter Id="4276639445" Name="RTPC_Volume_SFX" ObjectPath="\Game Parameters\Default Work Unit\RTPC_Volume_SFX"/>
 			</GameParameters>
 		</SoundBank>
-		<SoundBank Id="2880737896" Language="SFX" Hash="3172826136">
+		<SoundBank Id="2880737896" Language="SFX" Hash="1195402451">
 			<ObjectPath>\SoundBanks\Default Work Unit\MainBank</ObjectPath>
 			<ShortName>MainBank</ShortName>
 			<Path>MainBank.bnk</Path>
@@ -239,6 +239,30 @@
 						<File Id="1015612881" Language="SFX">
 							<ShortName>SFX_Slime_Slingshot_Charge_01.wav</ShortName>
 							<Path>SFX\SFX_Slime_Slingshot_Charge_01_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="445139456" Name="Play_SFX_UI_Move" ObjectPath="\Events\Default Work Unit\SFX\Play_SFX_UI_Move" DurationType="OneShot" DurationMin="0.179715" DurationMax="0.233062">
+					<IncludedMemoryFiles>
+						<File Id="880268067" Language="SFX">
+							<ShortName>drop_002.wav</ShortName>
+							<Path>SFX\drop_002_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="811711225" Name="Play_SFX_UI_Return" ObjectPath="\Events\Default Work Unit\SFX\Play_SFX_UI_Return" DurationType="OneShot" DurationMin="0.382053" DurationMax="0.804880">
+					<IncludedMemoryFiles>
+						<File Id="662569354" Language="SFX">
+							<ShortName>drop_004.wav</ShortName>
+							<Path>SFX\drop_004_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="3895889347" Name="Play_SFX_UI_Submit" ObjectPath="\Events\Default Work Unit\SFX\Play_SFX_UI_Submit" DurationType="OneShot" DurationMin="0.182320" DurationMax="0.250499">
+					<IncludedMemoryFiles>
+						<File Id="657021719" Language="SFX">
+							<ShortName>drop_003.wav</ShortName>
+							<Path>SFX\drop_003_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>

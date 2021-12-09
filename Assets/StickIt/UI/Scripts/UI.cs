@@ -30,4 +30,10 @@ public class UI : MonoBehaviour
     { if (context.performed) Website(); }
     public void OnPause(InputAction.CallbackContext context)
     { }
+    public void SoundMove(InputAction.CallbackContext context)
+    { if (context.performed) AkSoundEngine.PostEvent("Play_SFX_UI_Move", gameObject); }
+    public void SoundSubmit(InputAction.CallbackContext context)
+    { if (context.performed) AkSoundEngine.PostEvent("Play_SFX_UI_Submit", gameObject); }
+    public void SoundReturn(InputAction.CallbackContext context)
+    { if (context.performed) AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject); }
 }
