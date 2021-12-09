@@ -95,7 +95,7 @@ public class BlocksScript : MonoBehaviour
     {
         // Draw Camera Bounds
         Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(boundsPos + (Vector2)offsets, new Vector3(dimensionBase.x * extendsFactor, dimensionBase.y * extendsFactor, 1));
+        Gizmos.DrawWireCube(bounds.center + offsets, new Vector3(dimensionBase.x * extendsFactor, dimensionBase.y * extendsFactor, 1));
     }
     #endregion
 }
