@@ -36,6 +36,8 @@ public class LayerSwitch : MonoBehaviour
             if (j < 0) j = layers.Count - 1;
             else if (j > layers.Count - 1) j = 0;
             layers[j].SetActive(true);
+            var c0 = firstSelected[j]?.GetComponents<AnimateOnSelect>();
+            if (c0 != null) foreach (var item in c0) item.OnSelect(null);
             firstSelected[j]?.Select();
         }
     }

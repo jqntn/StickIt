@@ -94,7 +94,6 @@ public class MusicalChairManager : Level
                 for (int i = 0; i < UnityEngine.InputSystem.Gamepad.all.Count; i++)
                        UnityEngine.InputSystem.Gamepad.all[i].SetMotorSpeeds(0.1f, 0.1f);
                 ChangeChairPool();
-                print("pour Virginie");
                 GameEvents.ShakeAppearChairEvent.Invoke(transition, 1.0f);
                 spawning = false;
             }
