@@ -43,7 +43,6 @@ public class BlocksScript : MonoBehaviour
 
         // Change dimension to respect aspect ratio
         factor = dimension.x / Utils.AspectRatio.x;
-        dimension.x = Utils.AspectRatio.x * factor * extendsFactor;
         dimension.y = Utils.AspectRatio.y * factor * extendsFactor;
         boundsPos = bounds.center;
 
