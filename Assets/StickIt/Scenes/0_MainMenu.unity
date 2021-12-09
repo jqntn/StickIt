@@ -6852,6 +6852,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 895747494}
+  - component: {fileID: 895747495}
   m_Layer: 5
   m_Name: Credits
   m_TagString: Untagged
@@ -6883,6 +6884,38 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &895747495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 895747493}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8613f67d7ecc4514eb0f47e9a89c0c2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layer: {fileID: 895747493}
+  slimes:
+  - {fileID: 767586023}
+  - {fileID: 1949798028}
+  - {fileID: 1252316390}
+  - {fileID: 1769594195}
+  - {fileID: 17651306}
+  - {fileID: 1443710481}
+  - {fileID: 2008906726}
+  - {fileID: 193707752}
+  - {fileID: 1380941973}
+  - {fileID: 453338650}
+  - {fileID: 1428108885}
+  - {fileID: 1744236846}
+  - {fileID: 1177770013}
+  - {fileID: 83362040}
+  - {fileID: 1108854098}
+  waitDelay: 0.15
+  jumpTime: 0.2
+  jumpHeight: 15
 --- !u!1 &896202521
 GameObject:
   m_ObjectHideFlags: 0
@@ -11489,7 +11522,19 @@ MonoBehaviour:
     m_ActionId: 827cc017-87a6-4b7b-b4ba-f6028add973a
     m_ActionName: UIInputs/Click[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 895747495}
+        m_TargetAssemblyTypeName: EasterEgg, Assembly-CSharp
+        m_MethodName: Jump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 18d17c69-d01a-4edb-b4f8-e94ecb57429e
     m_ActionName: UIInputs/Validate[/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
