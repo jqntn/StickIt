@@ -121,9 +121,15 @@ public class Chair : MonoBehaviour
             yield return null;
         }
         isSpawnAnimation = false;
+        DeactivateShield();
+    }
+
+    public void DeactivateShield()
+    {
         shield.transform.SetParent(transform);
         shield.SetActive(false);
     }
+
     private void OnTriggerEnter(Collider c)
     {
         if (isActive)

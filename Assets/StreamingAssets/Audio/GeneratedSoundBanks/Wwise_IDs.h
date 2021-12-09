@@ -21,6 +21,9 @@ namespace AK
         static const AkUniqueID PLAY_SFX_S_JUMP = 3510434704U;
         static const AkUniqueID PLAY_SFX_S_LAND = 1721975435U;
         static const AkUniqueID PLAY_SFX_S_SLINGSHOTCHARGE = 799208851U;
+        static const AkUniqueID PLAY_SFX_UI_MOVE = 445139456U;
+        static const AkUniqueID PLAY_SFX_UI_RETURN = 811711225U;
+        static const AkUniqueID PLAY_SFX_UI_SUBMIT = 3895889347U;
     } // namespace EVENTS
 
     namespace STATES
