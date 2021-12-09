@@ -91,7 +91,7 @@ public class SelectionOptions : MonoBehaviour
         {
             doubleList[indexY][indexX].selected = false;
             indexX--;
-            if (indexX <= 0)
+            if (indexX < 0)
             {
                 indexX = doubleList[indexY].Count - 1;
             }
@@ -116,7 +116,7 @@ public class SelectionOptions : MonoBehaviour
         else if (m_ArrowUp.triggered)
         {
             indexY--;
-            if (indexY <= 0)
+            if (indexY < 0)
             {
                 indexY = doubleList.Count - 1;
             }
