@@ -94,7 +94,6 @@ public class MusicalChairManager : Level
                 for (int i = 0; i < UnityEngine.InputSystem.Gamepad.all.Count; i++)
                        UnityEngine.InputSystem.Gamepad.all[i].SetMotorSpeeds(0.1f, 0.1f);
                 ChangeChairPool();
-                print("pour Virginie");
                 GameEvents.ShakeAppearChairEvent.Invoke(transition, 1.0f);
                 spawning = false;
             }
@@ -194,12 +193,12 @@ public class MusicalChairManager : Level
         // FIN LEVEL
         if (MultiplayerManager.instance.alivePlayers.Count == 1)
         {
-            winTxt.transform.parent.parent.gameObject.SetActive(true);
+            EndLvl();
             winTxt.GetComponent<Text>().text = MultiplayerManager.instance.alivePlayers[0].myDatas.name + " win!";
         }
         else if (MultiplayerManager.instance.alivePlayers.Count <= 0)
         {
-            winTxt.transform.parent.parent.gameObject.SetActive(true);
+            EndLvl();
             winTxt.GetComponent<Text>().text = "Only losers...";
         } else
         {
@@ -213,5 +212,14 @@ public class MusicalChairManager : Level
     {
         yield return new WaitForSeconds(1);
         countdown.text = "";
+    }
+
+    void EndLvl()
+    {
+        winTxt.transform.parent.parent.gameObject.SetActive(true);
+        for(int i = 0; i < chairs.Length; i++)
+        {
+            chairs[i].DeactivateShield();
+        }
     }
 }

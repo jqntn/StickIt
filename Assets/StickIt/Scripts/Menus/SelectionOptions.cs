@@ -14,6 +14,13 @@ public class SelectionOptions : MonoBehaviour
     public int indexPlayer;
     int indexX = 0, indexY = 0;
     bool playerAdded = false;
+
+    bool inputInstantiated;
+    PlayerInput pi;
+    private InputAction m_ArrowDown;
+    private InputAction m_ArrowUp;
+    private InputAction m_ArrowLeft;
+    private InputAction m_ArrowRight;
     private void Start()
     {
         doubleList = new List<List<OptionsSlime>>();
@@ -33,8 +40,13 @@ public class SelectionOptions : MonoBehaviour
 
         if (MultiplayerManager.instance.players.Count - 1 >= indexPlayer && MultiplayerManager.instance.players[indexPlayer])
         {
-           /* ChangeOption();
-            ChangeTypeOption();*/
+            if (!inputInstantiated)
+            {
+                InstantiateInputs();
+                inputInstantiated = true;
+            }
+            ChangeOption();
+            ChangeTypeOption();
             if (!playerAdded)
             {
                 selectOptions.SetActive(true);
@@ -42,7 +54,14 @@ public class SelectionOptions : MonoBehaviour
                 playerAdded = true;
             }
         }
-
+    }
+    public void InstantiateInputs()
+    {
+        pi = MultiplayerManager.instance.players[indexPlayer].GetComponent<PlayerInput>();
+        m_ArrowDown = pi.actions["ArrowDown"];
+        m_ArrowLeft = pi.actions["ArrowLeft"];
+        m_ArrowRight = pi.actions["ArrowRight"];
+        m_ArrowUp = pi.actions["ArrowUp"];
     }
     void UpdateDisplay()
     {
@@ -50,7 +69,7 @@ public class SelectionOptions : MonoBehaviour
     }
     public void ChangeOption()
     {
-        if (Gamepad.all[MultiplayerManager.instance.players[indexPlayer].myDatas.deviceID].dpad.right.isPressed)
+        if (m_ArrowRight.triggered)
         {
             doubleList[indexY][indexX].selected = false;
             indexX++;
@@ -68,11 +87,11 @@ public class SelectionOptions : MonoBehaviour
             doubleList[indexY][indexX].selected = true;
             UpdateDisplay();
         }
-        else if (Gamepad.all[MultiplayerManager.instance.players[indexPlayer].myDatas.deviceID].dpad.left.isPressed)
+        else if (m_ArrowLeft.triggered)
         {
             doubleList[indexY][indexX].selected = false;
             indexX--;
-            if (indexX <= 0)
+            if (indexX < 0)
             {
                 indexX = doubleList[indexY].Count - 1;
             }
@@ -82,7 +101,7 @@ public class SelectionOptions : MonoBehaviour
     }
     public void ChangeTypeOption()
     {
-        if (Gamepad.all[MultiplayerManager.instance.players[indexPlayer].myDatas.deviceID].dpad.down.isPressed)
+        if (m_ArrowDown.triggered)
         {
 
             indexY++;
@@ -90,17 +109,19 @@ public class SelectionOptions : MonoBehaviour
             {
                 indexY = 0;
             }
-            indexX = doubleList[indexY].Find(x => x.selected == true).Id;
+            if(doubleList[indexY].Find(x => x.selected == true))
+                indexX = doubleList[indexY].Find(x => x.selected == true).Id;
             UpdateDisplay();
         }
-        else if (Gamepad.all[MultiplayerManager.instance.players[indexPlayer].myDatas.deviceID].dpad.up.isPressed)
+        else if (m_ArrowUp.triggered)
         {
             indexY--;
-            if (indexY <= 0)
+            if (indexY < 0)
             {
                 indexY = doubleList.Count - 1;
             }
-            indexX = doubleList[indexY].Find(x => x.selected == true).Id;
+            if (doubleList[indexY].Find(x => x.selected == true))
+                indexX = doubleList[indexY].Find(x => x.selected == true).Id;
             UpdateDisplay();
         }
     }
