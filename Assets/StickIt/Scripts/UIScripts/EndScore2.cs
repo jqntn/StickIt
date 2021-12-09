@@ -18,10 +18,6 @@ public class EndScore2 : MonoBehaviour
 
     IEnumerator Start()
     {
-        Debug.Log(Utils.DisplayResolution);
-        Debug.Log(Utils.AspectRatio);
-        Debug.Log(Camera.main.aspect);
-        Debug.Log(16f / 10f);
         while(MultiplayerManager.instance.players.Count <= 0) { yield return null; }
 
         ranking = new Player[MultiplayerManager.instance.players.Count];
