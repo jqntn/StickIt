@@ -9,41 +9,52 @@ public class EasterEgg : MonoBehaviour
     [SerializeField] private float waitDelay;
     [SerializeField] private float jumpTime;
     [SerializeField] private float jumpHeight;
-    private bool canJump = true;
+    private List<Vector3> startPos;
+    private bool canJump;
     public void Jump(InputAction.CallbackContext context)
     { if (context.performed && layer.activeSelf && canJump) StartCoroutine(MainCoroutine()); }
     private IEnumerator MainCoroutine()
     {
         StartCoroutine(CanJump());
-        foreach (var i in slimes)
+        for (var i = 0; i < slimes.Count; i++)
         {
-            StartCoroutine(SubCoroutine(i));
+            StartCoroutine(SubCoroutine(slimes[i], startPos[i]));
             yield return new WaitForSeconds(waitDelay);
         }
     }
-    private IEnumerator SubCoroutine(GameObject obj)
+    private IEnumerator SubCoroutine(GameObject slime, Vector3 startPos)
     {
-        var startPos = obj.transform.position;
         float timer = jumpTime;
         while (timer >= 0)
         {
             timer -= Time.unscaledDeltaTime;
-            obj.transform.position = Vector3.Lerp(obj.transform.position, obj.transform.position + new Vector3(0, jumpHeight), Time.unscaledDeltaTime);
+            slime.transform.position = Vector3.Lerp(slime.transform.position, slime.transform.position + new Vector3(0, jumpHeight), Time.unscaledDeltaTime);
             yield return null;
         }
         timer = jumpTime;
         while (timer >= 0)
         {
             timer -= Time.unscaledDeltaTime;
-            obj.transform.position = Vector3.Lerp(obj.transform.position, obj.transform.position + new Vector3(0, -jumpHeight), Time.unscaledDeltaTime);
+            slime.transform.position = Vector3.Lerp(slime.transform.position, slime.transform.position + new Vector3(0, -jumpHeight), Time.unscaledDeltaTime);
             yield return null;
         }
-        obj.transform.position = startPos;
+        slime.transform.position = startPos;
     }
     private IEnumerator CanJump()
     {
         canJump = false;
         yield return new WaitForSeconds(jumpTime * 2);
+        canJump = true;
+    }
+    private void OnEnable()
+    {
+        startPos = new List<Vector3>(new Vector3[slimes.Count]);
+        for (var i = 0; i < slimes.Count; i++) startPos[i] = slimes[i].transform.position;
+    }
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        for (var i = 0; i < slimes.Count; i++) slimes[i].transform.position = startPos[i];
         canJump = true;
     }
 }
