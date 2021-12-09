@@ -37,4 +37,6 @@ public class UI : MonoBehaviour
     { if (context.performed) AkSoundEngine.PostEvent("Play_SFX_UI_Submit", gameObject); }
     public void SoundReturn(InputAction.CallbackContext context)
     { if (context.performed) AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject); }
+    public void SoundY(InputAction.CallbackContext context)
+    { if (context.performed && mainLayer.activeSelf) AkSoundEngine.PostEvent("Play_SFX_UI_Submit", gameObject); }
 }
