@@ -18,7 +18,7 @@ public class Spores : MonoBehaviour
 
     public float diffSpeed = 0.3f;
     public float speedParticles;
-    [SerializeField] Material redMat;
+    [SerializeField] Material redMat, blueMat;
     
     // Start is called before the first frame update
 
@@ -33,6 +33,7 @@ public class Spores : MonoBehaviour
     public void StartEmitting()
     {
         emission.enabled = true;
+        GetComponent<ParticleSystemRenderer>().material = blueMat;
     }
 
     void StopEmitting()
