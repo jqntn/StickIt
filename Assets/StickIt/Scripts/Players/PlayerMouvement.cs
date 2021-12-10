@@ -150,6 +150,8 @@ public class PlayerMouvement : MonoBehaviour
         {
             if (direction != Vector2.zero) Jump();
             forceJumpMultiplicator = minForceJumpMultiplicator;
+            isChargingJump = false;
+            EnableDots(false);
         }
     }
     #endregion Inputs
