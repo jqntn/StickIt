@@ -47,11 +47,11 @@ public class MusicalChairManager : Level
     // Update is called once per frame
     private void Update()
     {
-        if (mapManagered)
+        /*if (mapManagered)
         {
             StartCoroutine(Init());
             mapManagered = false;
-        }
+        }*/
         if (GameLaunched)
             UpdateText();
     }
