@@ -43,7 +43,6 @@ public class MusicalChairManager : Level
             Debug.LogWarning("You need to add the Animator 'CountdownChair' to the countDown ! Project > Animations > Timer > CountdownChair");
         }
         countdown.text = "";
-
     }
     // Update is called once per frame
     private void Update()
@@ -58,17 +57,12 @@ public class MusicalChairManager : Level
     }
     public override void StartMap()
     {
-        base.StartMap();
+        //base.StartMap();
         chairs = FindObjectsOfType<Chair>();
         inTransition = true;
         transition = transitionValue + 1;
         maxChairsActive = MultiplayerManager.instance.alivePlayers.Count - 1;
         GameLaunched = true;
-        if (Debug.isDebugBuild)
-        {
-            Debug.Log("StartMap MusicalChairs");
-        }
-
     }
     private void UpdateText()
     {
