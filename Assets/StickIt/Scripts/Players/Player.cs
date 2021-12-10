@@ -91,7 +91,7 @@ public class Player : MonoBehaviour
     // INPUT TOOLS TO REMOVE LATER
     public void InputTestMassP25(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (!MultiplayerManager.instance.isMenuSelection && context.started)
         {
             SetScoreAndMass(true, 0, 25);
             myMouvementScript.RescaleMeshWithMass();
@@ -99,7 +99,7 @@ public class Player : MonoBehaviour
     }
     public void InputTestMassP5(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (!MultiplayerManager.instance.isMenuSelection && context.started)
         {
             SetScoreAndMass(true, 0, 5);
             myMouvementScript.RescaleMeshWithMass();
@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
     }
     public void InputTestMassM25(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (!MultiplayerManager.instance.isMenuSelection && context.started)
         {
             SetScoreAndMass(false, 0, 25);
             myMouvementScript.RescaleMeshWithMass();
@@ -115,7 +115,7 @@ public class Player : MonoBehaviour
     }
     public void InputTestMassM5(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
-        if (context.started)
+        if (!MultiplayerManager.instance.isMenuSelection && context.started)
         {
             SetScoreAndMass(false, 0, 5);
             myMouvementScript.RescaleMeshWithMass();
