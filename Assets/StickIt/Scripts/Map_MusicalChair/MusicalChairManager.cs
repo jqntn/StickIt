@@ -64,7 +64,11 @@ public class MusicalChairManager : Level
         transition = transitionValue + 1;
         maxChairsActive = MultiplayerManager.instance.alivePlayers.Count - 1;
         GameLaunched = true;
-  
+        if (Debug.isDebugBuild)
+        {
+            Debug.Log("StartMap MusicalChairs");
+        }
+
     }
     private void UpdateText()
     {
@@ -117,6 +121,10 @@ public class MusicalChairManager : Level
     }
     private void ChangeChairPool()
     {
+        if (Debug.isDebugBuild)
+        {
+            Debug.Log("ChangeChairPool");
+        }
         //spawnFeedback.PlayFeedbacks();
         if (sporeScript == null)
         {
