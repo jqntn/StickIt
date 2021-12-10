@@ -125,6 +125,7 @@ public class Player : MonoBehaviour
     {
         if (context.performed && !isDead && !MapManager.instance.isBusy)
         {
+            AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
             if (MapManager.instance.curMod == "MusicalChairs" && FindObjectOfType<MusicalChairManager>().inTransition)
                 for (int i = 0; i < Gamepad.all.Count; i++)
                     Gamepad.all[i].PauseHaptics();

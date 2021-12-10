@@ -24,13 +24,14 @@ public class Pause : Unique<Pause>
     public void Options() => StartCoroutine(PressCoroutine(() => mainLayerSwitch.ChangeLayer("Layer_Options")));
     public void Menu()
     {
+        AkSoundEngine.PostEvent("Play_SFX_UI_Submit", gameObject);
         Destroy(FindObjectOfType<MultiplayerManager>().gameObject);
         Destroy(FindObjectOfType<MapManager>().gameObject);
         Destroy(FindObjectOfType<MainCamera>().gameObject);
         Destroy(FindObjectOfType<Sun>().gameObject);
         var players = GameObject.FindGameObjectsWithTag("Player");
         foreach (var item in players) Destroy(item);
-        StartCoroutine(PressCoroutine(() => SceneManager.LoadScene("0_MainMenu")));
+        StartCoroutine(PressCoroutine(() => { SceneManager.LoadScene("0_MainMenu"); Destroy(gameObject); }));
     }
     public IEnumerator PressCoroutine(Action func)
     {
@@ -58,6 +59,7 @@ public class Pause : Unique<Pause>
     {
         if (context.performed)
         {
+            AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
             if (MapManager.instance.curMod == "MusicalChairs" && FindObjectOfType<MusicalChairManager>().inTransition)
                 for (int i = 0; i < Gamepad.all.Count; i++)
                     Gamepad.all[i].SetMotorSpeeds(.1f, .1f);
