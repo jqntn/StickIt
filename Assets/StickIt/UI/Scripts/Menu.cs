@@ -9,7 +9,7 @@ public class Menu : MonoBehaviour
     [SerializeField] private LayerSwitch mainLayerSwitch;
     [SerializeField] private LayerSwitch subLayerSwitch;
     [SerializeField] private GameObject mainLayer;
-    public void Play() => StartCoroutine(PressCoroutine(() => SceneManager.LoadScene("1_MenuSelection")));
+    public void Play() => StartCoroutine(PressCoroutine(() => { foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false; SceneManager.LoadScene("1_MenuSelection"); }));
     public void Help() => StartCoroutine(PressCoroutine(() => mainLayerSwitch.ChangeLayer("Layer_Help")));
     public void Options() => StartCoroutine(PressCoroutine(() => mainLayerSwitch.ChangeLayer("Layer_Options")));
     public void Quit() => StartCoroutine(PressCoroutine(() => Application.Quit()));
