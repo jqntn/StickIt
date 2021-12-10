@@ -38,6 +38,7 @@ public class EndScore2 : MonoBehaviour
 
     private void Start()
     {
+        // Debug
         if (isStartingDirect)
         {
             EndGame();
@@ -58,8 +59,9 @@ public class EndScore2 : MonoBehaviour
         {
             player.myMouvementScript.enabled = false;
         }
+
         // Debug
-        ranking[1].myDatas.score = 5;
+        if (isStartingDirect) { ranking[1].myDatas.score = 5; }
 
         bool hasPermute = false;
         do
