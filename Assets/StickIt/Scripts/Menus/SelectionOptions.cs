@@ -82,7 +82,7 @@ public class SelectionOptions : MonoBehaviour
                 if(indexX == 0 ? MultiplayerManager.instance.players[indexPlayer].myMouvementScript.isReversedDirection = false : MultiplayerManager.instance.players[indexPlayer].myMouvementScript.isReversedDirection = true);
             }else if(doubleList[indexY][indexX].optionType == OptionsSlime.OptionTypes.SKIN)
             {
-                Debug.Log("Skin : " + doubleList[indexY][indexX].label);
+                //Debug.Log("Skin : " + doubleList[indexY][indexX].label);
             }
             doubleList[indexY][indexX].selected = true;
             UpdateDisplay();
