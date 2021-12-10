@@ -51,9 +51,9 @@ public class MultiplayerManager : MonoBehaviour
     private float[] initPosX;
     private float[] initPosY;
     public bool isChangingMap = false;
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
     [SerializeField] public bool isMenuSelection = false; // should be private
-#endif
+#endif*/
     private void Awake()
     {
         // Initialization();
@@ -62,22 +62,22 @@ public class MultiplayerManager : MonoBehaviour
         DontDestroyOnLoad(this);
 #if UNITY_EDITOR
         // Is Menu Selection ?
-        if (SceneManager.GetActiveScene().name == "1_MenuSelection")
+        /*if (SceneManager.GetActiveScene().name == "1_MenuSelection")
         {
             isMenuSelection = true;
         }
         else
         {
             isMenuSelection = false;
-        }
+        }*/
 #endif
     }
     private void Start()
     {
         playersStartingPos = FindObjectOfType<PlayerStartingPos>().transform;
 #if UNITY_EDITOR
-        if (!isMenuSelection)
-            InitializePlayersWithoutMenuSelector(nbrOfPlayer);
+        /*if (!isMenuSelection)
+            InitializePlayersWithoutMenuSelector(nbrOfPlayer);*/
 #endif
     }
     private void Update()
