@@ -72,6 +72,11 @@ public class MusicalChairManager : Level
     }
     private void UpdateText()
     {
+        if (Debug.isDebugBuild)
+        {
+            Debug.Log("inTransition = " + inTransition);
+            Debug.Log("isSpawning = " + spawning);
+        }
         if (inTransition)
         {
             transition -= Time.deltaTime;

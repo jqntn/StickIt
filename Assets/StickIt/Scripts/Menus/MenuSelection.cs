@@ -31,7 +31,7 @@ public class MenuSelection : MonoBehaviour
     {
         for (int i = 0; i < Gamepad.all.Count; i++)
         {
-            if (i < 4 && Gamepad.all[i].buttonSouth.wasPressedThisFrame)
+            if (Gamepad.all[i].buttonSouth.wasPressedThisFrame && MultiplayerManager.instance.players.Count < 5)
             {
                 bool isAlreadyActivated = false;
                 // --- CHECK PLAYERS DEVICE ID
