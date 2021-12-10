@@ -1,41 +1,35 @@
-using System.Collections.Generic;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
-using MoreMountains.Feedbacks;
 using UnityEngine.UI;
 public class MusicalChairManager : Level
 {
     [Header("Countdown")]
-    [SerializeField] bool mapManagered;
-    [SerializeField] float durationValue;
-    float duration;
-    [SerializeField] float transitionValue;
-    [SerializeField] Color colorTextRound;
-    float transition;
+    [SerializeField] private bool mapManagered;
+    [SerializeField] private float durationValue;
+    private float duration;
+    [SerializeField] private float transitionValue;
+    [SerializeField] private Color colorTextRound;
+    private float transition;
     public Text countdown;
     private Animator textAnim;
-    float countDownSave;
-    float textValue;
-    bool inTransition;
+    private float countDownSave;
+    private float textValue;
+    public bool inTransition;
     [Header("Chairs")]
     public Chair[] chairs;
-    int maxChairsActive;
-
-    bool spawning = true;
+    private int maxChairsActive;
+    private bool spawning = true;
     [HideInInspector]
     public float durationSpawn;
-
     public Material chairNotTaken;
     public Material chairTaken;
     public GameObject winTxt;
-    public MMFeedbacks spawnFeedback;
-    bool GameLaunched = false;
-
-    Spores sporeScript;
-    [SerializeField] MeshRenderer bigMushroomRenderer;
-    [SerializeField] Material bigMushroomMat, bigMushroomAngryMat;
-
-
+    public MoreMountains.Feedbacks.MMFeedbacks spawnFeedback;
+    public bool GameLaunched = false;
+    private Spores sporeScript;
+    [SerializeField] private MeshRenderer bigMushroomRenderer;
+    [SerializeField] private Material bigMushroomMat, bigMushroomAngryMat;
     private void Awake()
     {
         //durationSpawn = 2;
@@ -44,16 +38,14 @@ public class MusicalChairManager : Level
     {
         countDownSave = int.MaxValue;
         textAnim = countdown.GetComponent<Animator>();
-        if(textAnim == null)
+        if (textAnim == null)
         {
             Debug.LogWarning("You need to add the Animator 'CountdownChair' to the countDown ! Project > Animations > Timer > CountdownChair");
         }
         countdown.text = "";
-
-      
     }
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (mapManagered)
         {
@@ -71,30 +63,26 @@ public class MusicalChairManager : Level
         transition = transitionValue + 1;
         maxChairsActive = MultiplayerManager.instance.alivePlayers.Count - 1;
         GameLaunched = true;
-        
     }
     private void UpdateText()
     {
         if (inTransition)
         {
-                 
             transition -= Time.deltaTime;
-
             if (transition <= 0) // spawning over
             {
                 inTransition = false;
                 duration = durationValue + 1;
-                //Haptics 
+                //Haptics
                 for (int i = 0; i < UnityEngine.InputSystem.Gamepad.all.Count; i++)
-                UnityEngine.InputSystem.Gamepad.all[i].PauseHaptics();
+                    UnityEngine.InputSystem.Gamepad.all[i].PauseHaptics();
             }
-            else if(spawning) //  Start Spawn
+            else if (spawning) //  Start Spawn
             {
                 GameEvents.CameraShake_CEvent?.Invoke(transition, 1.0f);
                 for (int i = 0; i < UnityEngine.InputSystem.Gamepad.all.Count; i++)
-                       UnityEngine.InputSystem.Gamepad.all[i].SetMotorSpeeds(0.1f, 0.1f);
+                    UnityEngine.InputSystem.Gamepad.all[i].SetMotorSpeeds(0.1f, 0.1f);
                 ChangeChairPool();
-                print("pour Virginie");
                 GameEvents.ShakeAppearChairEvent.Invoke(transition, 1.0f);
                 spawning = false;
             }
@@ -112,15 +100,12 @@ public class MusicalChairManager : Level
                 spawning = true;
                 ResetChairPool();
                 GameEvents.CameraShake_CEvent.Invoke(0.4f, 1.0f);
-
             }
-       
         }
-        
-        if(textValue < countDownSave)
+        if (textValue < countDownSave)
         {
-            if(textValue > 3)
-            textAnim.SetTrigger("Update");
+            if (textValue > 3)
+                textAnim.SetTrigger("Update");
             else
             {
                 textAnim.SetTrigger("UpdateCloseEnd");
@@ -154,7 +139,6 @@ public class MusicalChairManager : Level
                 chairsChanged++;
             }
         }
-     
     }
     private void ResetChairPool()
     {
@@ -162,7 +146,7 @@ public class MusicalChairManager : Level
         StartCoroutine("ResetText");
         foreach (Chair c in chairs)
         {
-            if(c.isActive)
+            if (c.isActive)
                 c.DeactivateChair(transition);
         }
         List<Player> losers = new List<Player>();
@@ -172,16 +156,13 @@ public class MusicalChairManager : Level
             {
                 //MAKE THE LOSERS EXPLODE
                 losers.Add(MultiplayerManager.instance.alivePlayers[i]);
-                
             }
         }
         sporeScript.KillLosers(losers);
         bigMushroomRenderer.material = bigMushroomAngryMat;
-
         StartCoroutine(EndResetChairPool(losers.ToArray()));
     }
-
-    IEnumerator EndResetChairPool(Player[] losers)
+    private IEnumerator EndResetChairPool(Player[] losers)
     {
         GameLaunched = false;
         yield return new WaitForSeconds(2);
@@ -201,24 +182,22 @@ public class MusicalChairManager : Level
         {
             EndLvl();
             winTxt.GetComponent<Text>().text = "Only losers...";
-        } else
+        }
+        else
         {
             GameLaunched = true;
-   
         }
         mapManagered = false;
     }
-
-    IEnumerator ResetText()
+    private IEnumerator ResetText()
     {
         yield return new WaitForSeconds(1);
         countdown.text = "";
     }
-
-    void EndLvl()
+    private void EndLvl()
     {
         winTxt.transform.parent.parent.gameObject.SetActive(true);
-        for(int i = 0; i < chairs.Length; i++)
+        for (int i = 0; i < chairs.Length; i++)
         {
             chairs[i].DeactivateShield();
         }

@@ -30,12 +30,15 @@ public class LayerSwitch : MonoBehaviour
     {
         if (parentLayer && parentLayer.activeSelf)
         {
+            AkSoundEngine.PostEvent("Play_SFX_UI_Move", gameObject);
             var i = layers.FindIndex(x => x.activeSelf);
             layers[i].SetActive(false);
             var j = i + inc;
             if (j < 0) j = layers.Count - 1;
             else if (j > layers.Count - 1) j = 0;
             layers[j].SetActive(true);
+            var c0 = firstSelected[j]?.GetComponents<AnimateOnSelect>();
+            if (c0 != null) foreach (var item in c0) item.OnSelect(null);
             firstSelected[j]?.Select();
         }
     }

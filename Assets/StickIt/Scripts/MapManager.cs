@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MapManager : Unique<MapManager>
 {
+    [Header("DATAS____________________")]
+    public float numberOfRounds = 2.0f;
     [Range(0, 1)]
     public float smoothTime;
     public float slowTime;
@@ -10,6 +12,7 @@ public class MapManager : Unique<MapManager>
     public int mapOffset;
     public float timeScale;
     public bool isBusy;
+    [Header("DEBUG____________________")]
     public GameObject curMapRoot;
     public GameObject nextMapRoot;
     public ModsData modsData;
@@ -18,6 +21,7 @@ public class MapManager : Unique<MapManager>
     public string prevMap;
     public string curMod;
     public string curMap = "";
+    [SerializeField] private uint roundCount = 0;
     private Coroutine _coroutine;
     private CameraStateDriven camManager;
     //void OnGUI()
@@ -47,6 +51,15 @@ public class MapManager : Unique<MapManager>
     }
     private string SelectNextMap()
     {
+        // End Game
+        if(roundCount == numberOfRounds) { 
+            Debug.Log("End Game");
+            curMod = "End";
+            curMap = "EndScene 2";
+            return "EndScene 2"; 
+        }
+
+        // Next Map
         ModsData.Mod mod;
         string map = SceneManager.GetActiveScene().name;
         if (modsData.mods.Count == 0) return map;
@@ -63,6 +76,7 @@ public class MapManager : Unique<MapManager>
         prevMap = curMap;
         curMod = mod.name;
         curMap = map;
+        roundCount++;
         return map;
     }
     private IEnumerator BeginTransition(string nextMap, bool fromMenu)
@@ -87,15 +101,15 @@ public class MapManager : Unique<MapManager>
         }
         Time.timeScale = 0;
         timeScale = Time.timeScale;
-        var objs = GameObject.FindGameObjectsWithTag("MapRoot");
+        GameObject[] objs = GameObject.FindGameObjectsWithTag("MapRoot");
         nextMapRoot = objs[objs.Length - 1];
         nextMapRoot.transform.position = new Vector3(mapOffset, 0);
         // CAMERA EVENT
         GameEvents.OnSceneUnloaded.Invoke();
         // ----------
-        var nextStartPos = GameObject.FindGameObjectsWithTag("StartPos");
+        GameObject[] nextStartPos = GameObject.FindGameObjectsWithTag("StartPos");
         MultiplayerManager.instance.speedChangeMap = 1 / slowTime;
-        MultiplayerManager.instance.StartChangeMap(nextStartPos[nextStartPos.Length - 1].transform);
+        MultiplayerManager.instance.StartChangeMap(nextStartPos[nextStartPos.Length - 1].transform); 
         while (MultiplayerManager.instance.isChangingMap) yield return null;
         StartCoroutine(EndTransition());
     }
@@ -114,6 +128,7 @@ public class MapManager : Unique<MapManager>
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         // Switch camera state depending of map mode
         camManager.SwitchStates(Utils.GetCameraType(curMod));
+        //-------
         yield return null;
         Time.timeScale = 1;
         timeScale = Time.timeScale;

@@ -81,6 +81,14 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""5bd62fbb-d5f2-4c01-8b2d-189eb6b62aca"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -180,6 +188,17 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""ArrowUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e2334e99-154f-4151-90b5-f0d0c1c07c09"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -382,116 +401,6 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""LeftStick"",
-                    ""id"": ""5030ea9f-1625-4cf6-840e-5ac8c67c2ebb"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""2d54ac23-0134-4938-94c5-4aecddc7c2ec"",
-                    ""path"": ""<Gamepad>/leftStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""715b93a1-1aad-40a7-b6db-230413043abb"",
-                    ""path"": ""<Gamepad>/leftStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""c1f50a03-168c-4a30-b441-9078ea6d416b"",
-                    ""path"": ""<Gamepad>/leftStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""395e18f1-09d2-4513-b714-55fa9622bd46"",
-                    ""path"": ""<Gamepad>/leftStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""RightStick"",
-                    ""id"": ""cdd9e060-8d11-4dcf-bdbd-70353e7ac02d"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""6eebbaa4-a0bd-43a0-80ac-54240569b1a2"",
-                    ""path"": ""<Gamepad>/rightStick/up"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""652aa1e8-ac2d-47df-b8c2-15ecbd6e4083"",
-                    ""path"": ""<Gamepad>/rightStick/down"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""88038ba2-6af9-46ee-be2f-88aaed65f066"",
-                    ""path"": ""<Gamepad>/rightStick/left"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""4562f19f-0b70-422d-9399-8177a5752275"",
-                    ""path"": ""<Gamepad>/rightStick/right"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
                     ""name"": """",
                     ""id"": ""0ec79631-19d3-46a0-a095-01a7e09a06f6"",
                     ""path"": ""*/{Submit}"",
@@ -639,6 +548,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         m_NormalInputs_ArrowDown = m_NormalInputs.FindAction("ArrowDown", throwIfNotFound: true);
         m_NormalInputs_ArrowRight = m_NormalInputs.FindAction("ArrowRight", throwIfNotFound: true);
         m_NormalInputs_ArrowUp = m_NormalInputs.FindAction("ArrowUp", throwIfNotFound: true);
+        m_NormalInputs_Pause = m_NormalInputs.FindAction("Pause", throwIfNotFound: true);
         // UIInputs
         m_UIInputs = asset.FindActionMap("UIInputs", throwIfNotFound: true);
         m_UIInputs_Move = m_UIInputs.FindAction("Move", throwIfNotFound: true);
@@ -708,6 +618,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
     private readonly InputAction m_NormalInputs_ArrowDown;
     private readonly InputAction m_NormalInputs_ArrowRight;
     private readonly InputAction m_NormalInputs_ArrowUp;
+    private readonly InputAction m_NormalInputs_Pause;
     public struct NormalInputsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -720,6 +631,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         public InputAction @ArrowDown => m_Wrapper.m_NormalInputs_ArrowDown;
         public InputAction @ArrowRight => m_Wrapper.m_NormalInputs_ArrowRight;
         public InputAction @ArrowUp => m_Wrapper.m_NormalInputs_ArrowUp;
+        public InputAction @Pause => m_Wrapper.m_NormalInputs_Pause;
         public InputActionMap Get() { return m_Wrapper.m_NormalInputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -753,6 +665,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @ArrowUp.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowUp;
                 @ArrowUp.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowUp;
                 @ArrowUp.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowUp;
+                @Pause.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_NormalInputsActionsCallbackInterface = instance;
             if (instance != null)
@@ -781,6 +696,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @ArrowUp.started += instance.OnArrowUp;
                 @ArrowUp.performed += instance.OnArrowUp;
                 @ArrowUp.canceled += instance.OnArrowUp;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -918,6 +836,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         void OnArrowDown(InputAction.CallbackContext context);
         void OnArrowRight(InputAction.CallbackContext context);
         void OnArrowUp(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIInputsActions
     {

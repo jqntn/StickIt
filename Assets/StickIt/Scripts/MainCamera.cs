@@ -1,2 +1,2 @@
-using UnityEngine;
-class MainCamera : Unique<MainCamera> { }
+internal class MainCamera : Unique<MainCamera>
+{ }
