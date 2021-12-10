@@ -65,7 +65,7 @@ public class MultiplayerManager : MonoBehaviour
         DontDestroyOnLoad(this);
 #if UNITY_EDITOR
         // Is Menu Selection ?
-        if (SceneManager.GetActiveScene().name == "0_MenuSelection")
+        if (SceneManager.GetActiveScene().name == "1_MenuSelection")
         {
             isMenuSelection = true;
         }
