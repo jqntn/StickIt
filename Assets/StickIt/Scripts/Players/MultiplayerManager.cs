@@ -1,9 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 public class MultiplayerManager : MonoBehaviour
@@ -37,8 +34,8 @@ public class MultiplayerManager : MonoBehaviour
     public List<Material> materialsTemp = new List<Material>();
     public int nbrOfPlayer;
     [SerializeField] private Transform _prefabPlayer;
-    [SerializeField] AnimationCurve curve_ChangeMap_PosX;
-    [SerializeField] AnimationCurve curve_ChangeMap_PosY;
+    [SerializeField] private AnimationCurve curve_ChangeMap_PosX;
+    [SerializeField] private AnimationCurve curve_ChangeMap_PosY;
     [Header("------------DEBUG------------")]
     public List<Player> players = new List<Player>();
     public List<Player> alivePlayers = new List<Player>();
@@ -54,9 +51,9 @@ public class MultiplayerManager : MonoBehaviour
     private float[] initPosX;
     private float[] initPosY;
     public bool isChangingMap = false;
-#if UNITY_EDITOR
+/*#if UNITY_EDITOR
     [SerializeField] public bool isMenuSelection = false; // should be private
-#endif
+#endif*/
     private void Awake()
     {
         // Initialization();
@@ -65,22 +62,22 @@ public class MultiplayerManager : MonoBehaviour
         DontDestroyOnLoad(this);
 #if UNITY_EDITOR
         // Is Menu Selection ?
-        if (SceneManager.GetActiveScene().name == "1_MenuSelection")
+        /*if (SceneManager.GetActiveScene().name == "1_MenuSelection")
         {
             isMenuSelection = true;
         }
         else
         {
             isMenuSelection = false;
-        }
+        }*/
 #endif
     }
     private void Start()
     {
         playersStartingPos = FindObjectOfType<PlayerStartingPos>().transform;
 #if UNITY_EDITOR
-        if (!isMenuSelection)
-            InitializePlayersWithoutMenuSelector(nbrOfPlayer);
+        /*if (!isMenuSelection)
+            InitializePlayersWithoutMenuSelector(nbrOfPlayer);*/
 #endif
     }
     private void Update()
@@ -101,7 +98,6 @@ public class MultiplayerManager : MonoBehaviour
             PlayerData newData = new PlayerData("Player" + i.ToString(), i, -1, materials[i], renderTextures[i]);
             datas.Add(newData);
         }
-
         for (int i = 0; i < datas.Count; i++)
         {
             Gamepad pad = null;
@@ -111,7 +107,6 @@ public class MultiplayerManager : MonoBehaviour
             scriptPlayer.transform.gameObject.name = scriptPlayer.myDatas.name;
             scriptPlayer.transform.GetComponentInChildren<SkinnedMeshRenderer>().material = scriptPlayer.myDatas.material;
             scriptPlayer.transform.GetComponentInChildren<Camera>().targetTexture = scriptPlayer.myDatas.renderTexture;
-          
             players.Add(scriptPlayer);
             alivePlayers.Add(scriptPlayer);
             newPlayer.transform.position = playersStartingPos.GetChild(i).position;
