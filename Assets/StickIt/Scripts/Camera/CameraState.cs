@@ -14,6 +14,8 @@ public abstract class CameraState : MonoBehaviour
     public bool autoOffset = true;
     public Vector2 posOffset = new Vector2(0.0f, 0.0f);
     public bool canDezoomOnTransition = true;
+    [Range(0f, 100f)]
+    public float dezoomFactor = 100.0f;
 
     [Header("------- Move -------")]
     public bool canMove = true;
@@ -282,7 +284,7 @@ public abstract class CameraState : MonoBehaviour
                 UpdateCameraDatas();
                 positionToGoTo.x = bounds_pos.x;
                 positionToGoTo.y = bounds_pos.y;
-                positionToGoTo.z = maxOut_Z;
+                positionToGoTo.z = maxOut_Z * (dezoomFactor / 100.0f);
                 MoveAndZoom();
                 yield return null;
             }
