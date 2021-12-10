@@ -43,15 +43,16 @@ public class MusicalChairManager : Level
             Debug.LogWarning("You need to add the Animator 'CountdownChair' to the countDown ! Project > Animations > Timer > CountdownChair");
         }
         countdown.text = "";
+
     }
     // Update is called once per frame
     private void Update()
     {
-        /*if (mapManagered)
-        {
-            StartCoroutine(Init());
-            mapManagered = false;
-        }*/
+        //if (mapManagered)
+        //{
+        //    StartCoroutine(Init());
+        //    mapManagered = false;
+        //}
         if (GameLaunched)
             UpdateText();
     }
@@ -63,6 +64,7 @@ public class MusicalChairManager : Level
         transition = transitionValue + 1;
         maxChairsActive = MultiplayerManager.instance.alivePlayers.Count - 1;
         GameLaunched = true;
+  
     }
     private void UpdateText()
     {
@@ -181,7 +183,8 @@ public class MusicalChairManager : Level
         else if (MultiplayerManager.instance.alivePlayers.Count <= 0)
         {
             EndLvl();
-            winTxt.GetComponent<Text>().text = "Only losers...";
+            winTxt.GetComponent<Text>().text = "It's a draw";
+            winTxt.GetComponent<Text>().color = Color.red;
         }
         else
         {
