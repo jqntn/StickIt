@@ -24,14 +24,22 @@ public class Pause : Unique<Pause>
     public void Options() => StartCoroutine(PressCoroutine(() => mainLayerSwitch.ChangeLayer("Layer_Options")));
     public void Menu()
     {
-        AkSoundEngine.PostEvent("Play_SFX_UI_Submit", gameObject);
-        Destroy(FindObjectOfType<MultiplayerManager>().gameObject);
-        Destroy(FindObjectOfType<MapManager>().gameObject);
-        Destroy(FindObjectOfType<MainCamera>().gameObject);
-        Destroy(FindObjectOfType<Sun>().gameObject);
-        var players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (var item in players) Destroy(item);
-        StartCoroutine(PressCoroutine(() => { SceneManager.LoadScene("0_MainMenu"); Destroy(gameObject); }));
+        StartCoroutine(PressCoroutine(() =>
+        {
+            foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
+            AkSoundEngine.PostEvent("Play_SFX_UI_Submit", gameObject);
+            SceneManager.LoadScene("0_MainMenu");
+            Destroy(MultiplayerManager.instance.gameObject);
+            MultiplayerManager.instance = null;
+            Destroy(MainCamera.instance.gameObject);
+            MainCamera.instance = null;
+            Destroy(MapManager.instance.gameObject);
+            MapManager.instance = null;
+            Destroy(Sun.instance.gameObject);
+            Sun.instance = null;
+            foreach (var item in GameObject.FindGameObjectsWithTag("Player")) Destroy(item);
+            Destroy(gameObject);
+        }));
     }
     public IEnumerator PressCoroutine(Action func)
     {

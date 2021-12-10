@@ -135,6 +135,4 @@ public class Player : MonoBehaviour
             Pause.instance.PauseGame();
         }
     }
-    public void SoundReturn(InputAction.CallbackContext context)
-    { if (context.performed && !isDead && !MapManager.instance.isBusy) AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject); }
 }
