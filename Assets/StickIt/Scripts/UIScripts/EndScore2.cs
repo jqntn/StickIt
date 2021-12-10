@@ -4,7 +4,8 @@ using TMPro;
 
 public class EndScore2 : MonoBehaviour
 {
-
+    [Header("TEST_______________________________")]
+    public bool isStartingDirect = true;
     [Header("ANIMATION__________________________")]
     public float timeBetweenRankAppear = 1.0f;
     public float vfxTime = 2.0f;
@@ -37,8 +38,11 @@ public class EndScore2 : MonoBehaviour
 
     private void Start()
     {
-        // Debug To Remove if not starting directly from scene
-        //EndGame();
+        // Debug
+        if (isStartingDirect)
+        {
+            EndGame();
+        }
     }
     public void EndGame()
     {
@@ -55,8 +59,9 @@ public class EndScore2 : MonoBehaviour
         {
             player.myMouvementScript.enabled = false;
         }
+
         // Debug
-        ranking[1].myDatas.score = 5;
+        if (isStartingDirect) { ranking[1].myDatas.score = 5; }
 
         bool hasPermute = false;
         do
