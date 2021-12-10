@@ -26,7 +26,7 @@ public class MusicalChairManager : Level
     public Material chairTaken;
     public GameObject winTxt;
     public MoreMountains.Feedbacks.MMFeedbacks spawnFeedback;
-    private bool GameLaunched = false;
+    public bool GameLaunched = false;
     private Spores sporeScript;
     [SerializeField] private MeshRenderer bigMushroomRenderer;
     [SerializeField] private Material bigMushroomMat, bigMushroomAngryMat;

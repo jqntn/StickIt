@@ -69,7 +69,7 @@ public class Pause : Unique<Pause>
         {
             AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
             if (MapManager.instance.curMod == "MusicalChairs" && FindObjectOfType<MusicalChairManager>().inTransition)
-                for (int i = 0; i < Gamepad.all.Count; i++)
+                for (var i = 0; i < Gamepad.all.Count; i++)
                     Gamepad.all[i].SetMotorSpeeds(.1f, .1f);
             foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
             foreach (var item in GameObject.FindGameObjectsWithTag("Player")) item.GetComponent<PlayerInput>().enabled = true;

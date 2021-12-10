@@ -125,14 +125,29 @@ public class Player : MonoBehaviour
     {
         if (context.performed && !isDead && !MapManager.instance.isBusy)
         {
-            AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
-            if (MapManager.instance.curMod == "MusicalChairs" && FindObjectOfType<MusicalChairManager>().inTransition)
-                for (int i = 0; i < Gamepad.all.Count; i++)
-                    Gamepad.all[i].PauseHaptics();
-            foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
-            Pause.instance.GetComponent<PlayerInput>().enabled = true;
-            Pause.instance.mainLayerSwitch.ChangeLayer("Layer_Main");
-            Pause.instance.PauseGame();
+            if (MapManager.instance.curMod == "MusicalChairs")
+            {
+                var mcm = FindObjectOfType<MusicalChairManager>();
+                if (mcm.GameLaunched)
+                {
+                    AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
+                    if (mcm.inTransition)
+                        for (var i = 0; i < Gamepad.all.Count; i++)
+                            Gamepad.all[i].PauseHaptics();
+                    foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
+                    Pause.instance.GetComponent<PlayerInput>().enabled = true;
+                    Pause.instance.mainLayerSwitch.ChangeLayer("Layer_Main");
+                    Pause.instance.PauseGame();
+                }
+            }
+            else
+            {
+                AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
+                foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
+                Pause.instance.GetComponent<PlayerInput>().enabled = true;
+                Pause.instance.mainLayerSwitch.ChangeLayer("Layer_Main");
+                Pause.instance.PauseGame();
+            }
         }
     }
 }
