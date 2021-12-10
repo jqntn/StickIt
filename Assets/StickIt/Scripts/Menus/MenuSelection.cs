@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.SceneManagement;
 public class MenuSelection : MonoBehaviour
 {
     [SerializeField] private Transform _prefabPlayer;
     private Transform _playersStartingPos;
     public List<Material> materials = new List<Material>();
-    int counterID = 0;
-    [SerializeField] Animator animLaunchGame;
+    private int counterID = 0;
+    [SerializeField] private Animator animLaunchGame;
     [Header("----------- ANIMATIONS -----------")]
     private bool[] isSpawnDeactivated = new bool[4];
     private List<int> devicesID = new List<int>();
@@ -18,7 +17,7 @@ public class MenuSelection : MonoBehaviour
     public float yOffset = 1f;
     public AnimationCurve curve;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _playersStartingPos = FindObjectOfType<PlayerStartingPos>().transform;
         for (int i = 0; i < 4; i++)
@@ -28,7 +27,7 @@ public class MenuSelection : MonoBehaviour
         }
     }
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         for (int i = 0; i < Gamepad.all.Count; i++)
         {
@@ -55,7 +54,6 @@ public class MenuSelection : MonoBehaviour
                 devicesID.Add(Gamepad.all[i].deviceId);
                 AddPlayer(Gamepad.all[i], counterID);
                 counterID++;
-               
             }
             else if (MultiplayerManager.instance.players.Count >= 2)
             {
@@ -83,10 +81,8 @@ public class MenuSelection : MonoBehaviour
     {
         // Instantiate Player
         PlayerInput newPlayer = null;
-            
         newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1, gamepad);
         Player scriptPlayer = newPlayer.transform.GetComponentInParent<Player>();
-
         //newPlayer.transform.position = _playersStartingPos.GetChild(i).position;
         scriptPlayer.transform.position = _playersStartingPos.GetChild(i).position;
         // Set Datas
@@ -94,7 +90,6 @@ public class MenuSelection : MonoBehaviour
         scriptPlayer.myDatas.deviceID = gamepad.deviceId;
         scriptPlayer.myDatas.name = "Player" + i.ToString();
         scriptPlayer.myDatas.material = materials[i];
-
         scriptPlayer.gameObject.name = scriptPlayer.myDatas.name;
         if (scriptPlayer.transform.parent)
         {
@@ -104,7 +99,6 @@ public class MenuSelection : MonoBehaviour
         {
             scriptPlayer.transform.GetComponentInChildren<SkinnedMeshRenderer>().material = scriptPlayer.myDatas.material;
         }
-
         MultiplayerManager.instance.players.Add(scriptPlayer);
         MultiplayerManager.instance.alivePlayers.Add(scriptPlayer);
         if (MultiplayerManager.instance.players.Count == 2)
