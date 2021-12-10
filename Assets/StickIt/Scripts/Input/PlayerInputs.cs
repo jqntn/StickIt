@@ -81,6 +81,14 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""5bd62fbb-d5f2-4c01-8b2d-189eb6b62aca"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -180,6 +188,17 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""ArrowUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e2334e99-154f-4151-90b5-f0d0c1c07c09"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -529,6 +548,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         m_NormalInputs_ArrowDown = m_NormalInputs.FindAction("ArrowDown", throwIfNotFound: true);
         m_NormalInputs_ArrowRight = m_NormalInputs.FindAction("ArrowRight", throwIfNotFound: true);
         m_NormalInputs_ArrowUp = m_NormalInputs.FindAction("ArrowUp", throwIfNotFound: true);
+        m_NormalInputs_Pause = m_NormalInputs.FindAction("Pause", throwIfNotFound: true);
         // UIInputs
         m_UIInputs = asset.FindActionMap("UIInputs", throwIfNotFound: true);
         m_UIInputs_Move = m_UIInputs.FindAction("Move", throwIfNotFound: true);
@@ -598,6 +618,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
     private readonly InputAction m_NormalInputs_ArrowDown;
     private readonly InputAction m_NormalInputs_ArrowRight;
     private readonly InputAction m_NormalInputs_ArrowUp;
+    private readonly InputAction m_NormalInputs_Pause;
     public struct NormalInputsActions
     {
         private @PlayerInputs m_Wrapper;
@@ -610,6 +631,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         public InputAction @ArrowDown => m_Wrapper.m_NormalInputs_ArrowDown;
         public InputAction @ArrowRight => m_Wrapper.m_NormalInputs_ArrowRight;
         public InputAction @ArrowUp => m_Wrapper.m_NormalInputs_ArrowUp;
+        public InputAction @Pause => m_Wrapper.m_NormalInputs_Pause;
         public InputActionMap Get() { return m_Wrapper.m_NormalInputs; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -643,6 +665,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @ArrowUp.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowUp;
                 @ArrowUp.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowUp;
                 @ArrowUp.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnArrowUp;
+                @Pause.started -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_NormalInputsActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_NormalInputsActionsCallbackInterface = instance;
             if (instance != null)
@@ -671,6 +696,9 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
                 @ArrowUp.started += instance.OnArrowUp;
                 @ArrowUp.performed += instance.OnArrowUp;
                 @ArrowUp.canceled += instance.OnArrowUp;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -808,6 +836,7 @@ public class @PlayerInputs : IInputActionCollection, IDisposable
         void OnArrowDown(InputAction.CallbackContext context);
         void OnArrowRight(InputAction.CallbackContext context);
         void OnArrowUp(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     public interface IUIInputsActions
     {

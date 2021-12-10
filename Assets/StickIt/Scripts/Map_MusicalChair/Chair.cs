@@ -1,41 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MoreMountains.Feedbacks;
-
-
 public class Chair : MonoBehaviour
 {
-    MusicalChairManager musicalChairManager;
+    private MusicalChairManager musicalChairManager;
     [Header("Player")]
     public List<Player> playersInChair;
     public Player chosenOne;
     [Header("Settings")]
     [SerializeField]
     public float offsetSpawn;
-    float duration;
-    bool isSpawnAnimation;
+    private float duration;
+    private bool isSpawnAnimation;
     public AnimationCurve animCurve;
     [HideInInspector]
     public bool isActive;
     [HideInInspector]
     public bool isTaken;
-    Color activatedColor;
-    Color deactivatedColor;
-    Vector3 spawnPosition;
-    Vector3 originalPos;
+    private Color activatedColor;
+    private Color deactivatedColor;
+    private Vector3 spawnPosition;
+    private Vector3 originalPos;
     [SerializeField]
     public GameObject shield;
     [Header("ChosenOne")]
-    LineRenderer lr;
+    private LineRenderer lr;
     [SerializeField]
-    Transform lrBeginPos;
-
-    MeshRenderer myMeshRenderer;
+    private Transform lrBeginPos;
+    private MeshRenderer myMeshRenderer;
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        lr = GetComponent<LineRenderer>();  
+        lr = GetComponent<LineRenderer>();
         lr.SetPosition(0, lrBeginPos.position + transform.forward * offsetSpawn);
         lr.enabled = false;
         myMeshRenderer = GetComponent<MeshRenderer>();
@@ -45,13 +41,12 @@ public class Chair : MonoBehaviour
         originalPos = transform.position;
         shield.SetActive(false);
     }
-
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         TestPlayer();
     }
-    void TestPlayer()
+    private void TestPlayer()
     {
         if (isTaken)
         {
@@ -60,7 +55,6 @@ public class Chair : MonoBehaviour
                 if (playersInChair.Count > 1 && Vector3.Distance(chosenOne.transform.position, transform.position) > Vector3.Distance(playersInChair[i].transform.position, transform.position))
                 {
                     chosenOne = playersInChair[i];
-
                 }
             }
             if (chosenOne)
@@ -87,14 +81,12 @@ public class Chair : MonoBehaviour
         playersInChair.Clear();
         StartCoroutine(DespawnChairCor(duration));
     }
-
-    IEnumerator SpawnChairCor(float duration)
+    private IEnumerator SpawnChairCor(float duration)
     {
         isSpawnAnimation = true;
         float elapsed = 0;
         float ratio = 0;
         myMeshRenderer.material = musicalChairManager.chairTaken;
-
         while (elapsed < duration)
         {
             ratio = elapsed / duration;
@@ -105,9 +97,9 @@ public class Chair : MonoBehaviour
         }
         isSpawnAnimation = false;
         if (!isTaken)
-        myMeshRenderer.material = musicalChairManager.chairNotTaken;
+            myMeshRenderer.material = musicalChairManager.chairNotTaken;
     }
-    IEnumerator DespawnChairCor(float duration)
+    private IEnumerator DespawnChairCor(float duration)
     {
         float elapsed = 0;
         float ratio = 0;
@@ -123,13 +115,11 @@ public class Chair : MonoBehaviour
         isSpawnAnimation = false;
         DeactivateShield();
     }
-
     public void DeactivateShield()
     {
         shield.transform.SetParent(transform);
         shield.SetActive(false);
     }
-
     private void OnTriggerEnter(Collider c)
     {
         if (isActive)
@@ -137,12 +127,12 @@ public class Chair : MonoBehaviour
             if (c.tag == "Player")
             {
                 playersInChair.Add(c.gameObject.GetComponentInParent<Player>());
-                if(playersInChair.Count == 1)
+                if (playersInChair.Count == 1)
                 {
                     isTaken = true;
                     lr.enabled = true;
-                    if(!isSpawnAnimation)
-                    myMeshRenderer.material = musicalChairManager.chairTaken;
+                    if (!isSpawnAnimation)
+                        myMeshRenderer.material = musicalChairManager.chairTaken;
                     chosenOne = playersInChair[0];
                     shield.SetActive(true);
                 }
@@ -160,19 +150,17 @@ public class Chair : MonoBehaviour
                 {
                     isTaken = false;
                     lr.enabled = false;
-                    if(!isSpawnAnimation)
-                    myMeshRenderer.material = musicalChairManager.chairNotTaken;
+                    if (!isSpawnAnimation)
+                        myMeshRenderer.material = musicalChairManager.chairNotTaken;
                     shield.transform.SetParent(transform);
                     shield.SetActive(false);
                 }
             }
         }
-
     }
-
     private void OnDrawGizmos()
     {
-        Gizmos.DrawMesh(GetComponent<MeshFilter>().sharedMesh,transform.position + transform.forward * offsetSpawn, transform.rotation, transform.localScale);
+        Gizmos.DrawMesh(GetComponent<MeshFilter>().sharedMesh, transform.position + transform.forward * offsetSpawn, transform.rotation, transform.localScale);
         Gizmos.DrawCube(lrBeginPos.position, new Vector3(0.5f, 0.5f, 0.5f));
     }
 }

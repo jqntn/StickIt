@@ -1,20 +1,17 @@
 using System.Collections;
-using System.Collections.Generic;
-using MoreMountains.Feedbacks;
 using UnityEngine;
+using UnityEngine.InputSystem;
 public class Player : MonoBehaviour
 {
     private MultiplayerManager _multiplayerManager;
     public PlayerMouvement myMouvementScript;
     public MultiplayerManager.PlayerData myDatas;
-    public MMFeedbacks deathAnim;
+    public MoreMountains.Feedbacks.MMFeedbacks deathAnim;
     public GameObject deathPart;
     public bool isDead;
-
-    [SerializeField] int minMass = 100;
-    [SerializeField] int maxMass = 250;
-
-    void Awake()
+    [SerializeField] private int minMass = 100;
+    [SerializeField] private int maxMass = 250;
+    private void Awake()
     {
         _multiplayerManager = MultiplayerManager.instance;
         if (TryGetComponent<PlayerMouvement>(out PlayerMouvement pm))
@@ -33,7 +30,7 @@ public class Player : MonoBehaviour
         // Play Death Animation
         StartCoroutine(OnDeath(intensityAnim));
     }
-    IEnumerator OnDeath(bool intensityAnim)
+    private IEnumerator OnDeath(bool intensityAnim)
     {
         deathAnim.PlayFeedbacks();
         if (intensityAnim)
@@ -78,8 +75,6 @@ public class Player : MonoBehaviour
         myMouvementScript.Respawn();
         isDead = false;
     }
-
-
     public void SetScoreAndMass(bool isWin, uint score, int mass)
     {
         myDatas.score += score;
@@ -89,14 +84,11 @@ public class Player : MonoBehaviour
         }
         else
         {
-            myDatas.mass -= mass;          
+            myDatas.mass -= mass;
         }
         myDatas.mass = Mathf.Clamp(myDatas.mass, minMass, maxMass);
     }
-
     // INPUT TOOLS TO REMOVE LATER
-
-
     public void InputTestMassP25(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if (context.started)
@@ -104,9 +96,7 @@ public class Player : MonoBehaviour
             SetScoreAndMass(true, 0, 25);
             myMouvementScript.RescaleMeshWithMass();
         }
-
     }
-
     public void InputTestMassP5(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if (context.started)
@@ -114,9 +104,7 @@ public class Player : MonoBehaviour
             SetScoreAndMass(true, 0, 5);
             myMouvementScript.RescaleMeshWithMass();
         }
-
     }
-
     public void InputTestMassM25(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if (context.started)
@@ -124,9 +112,7 @@ public class Player : MonoBehaviour
             SetScoreAndMass(false, 0, 25);
             myMouvementScript.RescaleMeshWithMass();
         }
-
     }
-
     public void InputTestMassM5(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if (context.started)
@@ -134,7 +120,34 @@ public class Player : MonoBehaviour
             SetScoreAndMass(false, 0, 5);
             myMouvementScript.RescaleMeshWithMass();
         }
-
     }
-
+    public void OnPause(InputAction.CallbackContext context)
+    {
+        if (context.performed && !isDead && !MapManager.instance.isBusy)
+        {
+            if (MapManager.instance.curMod == "MusicalChairs")
+            {
+                var mcm = FindObjectOfType<MusicalChairManager>();
+                if (mcm.GameLaunched)
+                {
+                    AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
+                    if (mcm.inTransition)
+                        for (var i = 0; i < Gamepad.all.Count; i++)
+                            Gamepad.all[i].PauseHaptics();
+                    foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
+                    Pause.instance.GetComponent<PlayerInput>().enabled = true;
+                    Pause.instance.mainLayerSwitch.ChangeLayer("Layer_Main");
+                    Pause.instance.PauseGame();
+                }
+            }
+            else
+            {
+                AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
+                foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
+                Pause.instance.GetComponent<PlayerInput>().enabled = true;
+                Pause.instance.mainLayerSwitch.ChangeLayer("Layer_Main");
+                Pause.instance.PauseGame();
+            }
+        }
+    }
 }

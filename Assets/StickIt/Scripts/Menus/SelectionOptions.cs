@@ -95,6 +95,14 @@ public class SelectionOptions : MonoBehaviour
             {
                 indexX = doubleList[indexY].Count - 1;
             }
+            if (doubleList[indexY][indexX].optionType == OptionsSlime.OptionTypes.BOOL)
+            {
+                if (indexX == 0 ? MultiplayerManager.instance.players[indexPlayer].myMouvementScript.isReversedDirection = false : MultiplayerManager.instance.players[indexPlayer].myMouvementScript.isReversedDirection = true) ;
+            }
+            else if (doubleList[indexY][indexX].optionType == OptionsSlime.OptionTypes.SKIN)
+            {
+                Debug.Log("Skin : " + doubleList[indexY][indexX].label);
+            }
             doubleList[indexY][indexX].selected = true;
             UpdateDisplay();
         }
