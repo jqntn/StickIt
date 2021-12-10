@@ -106,39 +106,39 @@ public class MenuSelection : MonoBehaviour
             animLaunchGame.SetTrigger("Entry");
         }
     }
-    private IEnumerator DoAddPlayer(Gamepad gamepad, int i)
-    {
-        // Play tuyau showing
-        float timer = 0;
-        float startPosY = tuyauxList[i].transform.position.y;
-        Debug.Log("startco");
-        while (timer < animTime)
-        {
-            timer += Time.deltaTime;
-            float ratio = timer / animTime;
-            Vector3 newPos = new Vector3(
-                tuyauxList[i].transform.position.x,
-                Mathf.Lerp(startPosY, startPosY - yOffset, curve.Evaluate(ratio)),
-                tuyauxList[i].transform.position.z);
-            tuyauxList[i].transform.position = newPos;
-            yield return null;
-        }
-        // Spawn the player
-        SpawnPlayer(gamepad, i);
-        // Play tuyau unshowing
-        timer = 0;
-        while (timer < animTime)
-        {
-            timer += Time.deltaTime;
-            float ratio = timer / animTime;
-            Vector3 newPos = new Vector3(
-                tuyauxList[i].transform.position.x,
-                Mathf.Lerp(startPosY - yOffset, startPosY, curve.Evaluate(ratio)),
-                tuyauxList[i].transform.position.z);
-            tuyauxList[i].transform.position = newPos;
-            yield return null;
-        }
-    }
+    //private IEnumerator DoAddPlayer(Gamepad gamepad, int i)
+    //{
+    //    // Play tuyau showing
+    //    float timer = 0;
+    //    float startPosY = tuyauxList[i].transform.position.y;
+    //    Debug.Log("startco");
+    //    while (timer < animTime)
+    //    {
+    //        timer += Time.deltaTime;
+    //        float ratio = timer / animTime;
+    //        Vector3 newPos = new Vector3(
+    //            tuyauxList[i].transform.position.x,
+    //            Mathf.Lerp(startPosY, startPosY - yOffset, curve.Evaluate(ratio)),
+    //            tuyauxList[i].transform.position.z);
+    //        tuyauxList[i].transform.position = newPos;
+    //        yield return null;
+    //    }
+    //    // Spawn the player
+    //    SpawnPlayer(gamepad, i);
+    //    // Play tuyau unshowing
+    //    timer = 0;
+    //    while (timer < animTime)
+    //    {
+    //        timer += Time.deltaTime;
+    //        float ratio = timer / animTime;
+    //        Vector3 newPos = new Vector3(
+    //            tuyauxList[i].transform.position.x,
+    //            Mathf.Lerp(startPosY - yOffset, startPosY, curve.Evaluate(ratio)),
+    //            tuyauxList[i].transform.position.z);
+    //        tuyauxList[i].transform.position = newPos;
+    //        yield return null;
+    //    }
+    //}
     public void LaunchGame()
     {
         foreach (Player player in MultiplayerManager.instance.players)
