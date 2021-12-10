@@ -123,7 +123,7 @@ public class Player : MonoBehaviour
     }
     public void OnPause(InputAction.CallbackContext context)
     {
-        if (context.performed && !isDead && !MapManager.instance.isBusy)
+        if (context.performed && !isDead && !MapManager.instance.isBusy && !MultiplayerManager.instance.isMenuSelection)
         {
             if (MapManager.instance.curMod == "MusicalChairs")
             {
