@@ -57,7 +57,7 @@ public class MusicalChairManager : Level
     }
     public override void StartMap()
     {
-        base.StartMap();
+        //base.StartMap();
         chairs = FindObjectsOfType<Chair>();
         inTransition = true;
         transition = transitionValue + 1;
