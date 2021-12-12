@@ -21,7 +21,8 @@ public class Level : MonoBehaviour
         yield return null;
     }
     public virtual void StartMap()
-    { }
+    {
+    }
     public virtual void EndMap()
     { }
 }
