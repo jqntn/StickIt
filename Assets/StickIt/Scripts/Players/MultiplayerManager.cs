@@ -52,7 +52,7 @@ public class MultiplayerManager : MonoBehaviour
     private float[] initPosY;
     public bool isChangingMap = false;
 
-    [SerializeField] public bool isMenuSelection = false; // should be private
+    [SerializeField] public bool isMenuSelection = true; // should be private
 
     private void Awake()
     {
@@ -60,22 +60,27 @@ public class MultiplayerManager : MonoBehaviour
         if (instance == null) instance = this;
         else Destroy(gameObject);
         DontDestroyOnLoad(this);
-        // Is Menu Selection ?
-        /*if (SceneManager.GetActiveScene().name == "1_MenuSelection")
+#if UNITY_EDITOR
+        if (SceneManager.GetActiveScene().name == "1_MenuSelection")
         {
             isMenuSelection = true;
         }
         else
         {
             isMenuSelection = false;
-        }*/
+        }
+#endif
     }
     private void Start()
     {
         playersStartingPos = FindObjectOfType<PlayerStartingPos>().transform;
+#if UNITY_EDITOR
+        if (!isMenuSelection)
+            InitializePlayersWithoutMenuSelector(nbrOfPlayer);
 
-        /*if (!isMenuSelection)
-            InitializePlayersWithoutMenuSelector(nbrOfPlayer);*/
+        Level lvl = FindObjectOfType<Level>();
+        if (lvl != null) StartCoroutine(lvl.Init());
+#endif
 
     }
     private void Update()
@@ -89,6 +94,7 @@ public class MultiplayerManager : MonoBehaviour
     {
         datas.Add(playerData);
     }
+#if UNITY_EDITOR
     public void InitializePlayersWithoutMenuSelector(int numberOfPlayer)
     {
         for (int i = 0; i < numberOfPlayer; i++)
@@ -109,7 +115,9 @@ public class MultiplayerManager : MonoBehaviour
             alivePlayers.Add(scriptPlayer);
             newPlayer.transform.position = playersStartingPos.GetChild(i).position;
         }
+
     }
+#endif
     public void StartChangeMap(Transform nextStartPos)
     {
         playersStartingPos = nextStartPos;
