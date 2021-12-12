@@ -77,6 +77,9 @@ public class MultiplayerManager : MonoBehaviour
 #if UNITY_EDITOR
         if (!isMenuSelection)
             InitializePlayersWithoutMenuSelector(nbrOfPlayer);
+
+        Level lvl = FindObjectOfType<Level>();
+        if (lvl != null) StartCoroutine(lvl.Init());
 #endif
 
     }
@@ -112,6 +115,7 @@ public class MultiplayerManager : MonoBehaviour
             alivePlayers.Add(scriptPlayer);
             newPlayer.transform.position = playersStartingPos.GetChild(i).position;
         }
+
     }
 #endif
     public void StartChangeMap(Transform nextStartPos)

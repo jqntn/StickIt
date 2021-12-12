@@ -64,6 +64,7 @@ public class MusicalChairManager : Level
         transition = transitionValue + 1;
         maxChairsActive = MultiplayerManager.instance.alivePlayers.Count - 1;
         GameLaunched = true;
+      
     }
     private void UpdateText()
     {
