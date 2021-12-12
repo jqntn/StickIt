@@ -45,7 +45,7 @@ public class MusicalChairManager : Level
         countdown.text = "";
     }
     // Update is called once per frame
-    private void Update()
+    protected override void Update()
     {
         //if (mapManagered)
         //{
@@ -57,7 +57,8 @@ public class MusicalChairManager : Level
     }
     public override void StartMap()
     {
-        //base.StartMap();
+        base.StartMap();
+        Debug.Log("Child Start Map");
         chairs = FindObjectsOfType<Chair>();
         inTransition = true;
         transition = transitionValue + 1;

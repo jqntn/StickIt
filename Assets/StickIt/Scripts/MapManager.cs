@@ -136,7 +136,7 @@ public class MapManager : Unique<MapManager>
         nextMapRoot = null;
         isBusy = false;
         _coroutine = null;
-        Level lvl = FindObjectOfType<Level>();
-        if (lvl != null) StartCoroutine(lvl.Init());
+        var lvl = FindObjectOfType<Level>();
+        if (lvl != null) lvl.StartMap();
     }
 }
