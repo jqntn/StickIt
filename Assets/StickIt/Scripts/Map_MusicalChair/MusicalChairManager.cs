@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class MusicalChairManager : Level
 {
     [Header("Countdown")]
-    [SerializeField] private bool mapManagered;
     [SerializeField] private float durationValue;
     private float duration;
     [SerializeField] private float transitionValue;
@@ -194,7 +193,6 @@ public class MusicalChairManager : Level
         {
             GameLaunched = true;
         }
-        mapManagered = false;
     }
     private IEnumerator ResetText()
     {
