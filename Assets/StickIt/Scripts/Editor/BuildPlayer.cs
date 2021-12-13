@@ -20,7 +20,7 @@ internal class BuildPlayer
             BuildTarget.StandaloneWindows64,
             BuildOptions.CompressWithLz4HC | bo
         );
-        File.Delete(path + "UnityCrashHandler64.exe");
+        if (bo != BuildOptions.AutoRunPlayer) File.Delete(path + "UnityCrashHandler64.exe");
         ZipFile.CreateFromDirectory(path, path.Remove(path.Length - 1) + ".zip");
     }
     [MenuItem("BuildPlayer/Build")]
