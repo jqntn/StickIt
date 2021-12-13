@@ -191,12 +191,12 @@ public abstract class CameraState : MonoBehaviour
             playerBounds.Encapsulate(player.transform.position);
         }
 
-        float offsetX = playerBounds.size.x;
-        float offsetY = playerBounds.size.y;
-        min_playerBounds.x = playerBounds.center.x - offsetX;
-        min_playerBounds.y = playerBounds.center.y - offsetY;
-        max_playerBounds.x = playerBounds.center.x + offsetX;
-        max_playerBounds.y = playerBounds.center.y + offsetY;
+        Vector2 offset = new Vector2(playerBounds.extents.x, playerBounds.extents.y);
+
+        min_playerBounds.x = playerBounds.center.x - offset.x;
+        min_playerBounds.y = playerBounds.center.y - offset.y;
+        max_playerBounds.x = playerBounds.center.x + offset.x;
+        max_playerBounds.y = playerBounds.center.y + offset.y;
     }
 
     //<summary>
@@ -307,7 +307,7 @@ public abstract class CameraState : MonoBehaviour
 
         // Draw Players Bounds
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(playerBounds.center, new Vector3(playerBounds.size.x, playerBounds.size.y, 1));
+        Gizmos.DrawWireCube(playerBounds.center, new Vector3(playerBounds.extents.x, playerBounds.extents.y, 1));
     }
     #endregion
 }
