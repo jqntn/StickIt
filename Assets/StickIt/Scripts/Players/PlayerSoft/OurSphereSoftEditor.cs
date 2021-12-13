@@ -16,11 +16,6 @@ public class OurSphereSoftEditor : Editor
         var sphereSoft = target as OurSphereSoft;
         var serializedObject = new SerializedObject(target);
         var property = serializedObject.FindProperty("bones");
-       // GUILayout.Label("\nBones");
-       // sphereSoft.root = (GameObject)EditorGUILayout.ObjectField("Root  ", sphereSoft.root, typeof(GameObject), allowSceneObjects: true);
-        //EditorGUILayout.PropertyField(property, true);
-        //sphereSoft.matBones = (PhysicMaterial)EditorGUILayout.ObjectField("Material Bones  ", sphereSoft.matBones, typeof(PhysicMaterial), allowSceneObjects: true);
-
 
         GUILayout.Label("\nColliders settings");
         sphereSoft.ColliderSizeRoot = EditorGUILayout.IntSlider("Size collider root", sphereSoft.ColliderSizeRoot, 8 , 15);

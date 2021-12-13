@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 4000823781633964890}
   - component: {fileID: 3932449240064500074}
   - component: {fileID: 2812021764243022728}
+  - component: {fileID: 8855772190753009093}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Icy
@@ -123,10 +124,10 @@ MeshCollider:
   m_GameObject: {fileID: 5728185335456548884}
   m_Material: {fileID: 13400000, guid: 4a7c3de92064b9642822dedc7c2ea1f7, type: 2}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 0
+  m_CookingOptions: -1
   m_Mesh: {fileID: -2232952877369940510, guid: f040e2fd7f928a64b8e3ba8924edf6f8, type: 3}
 --- !u!114 &2812021764243022728
 MonoBehaviour:
@@ -143,3 +144,17 @@ MonoBehaviour:
   imposeDir: 0
   dir: {x: 1, y: 0}
   impulseForce: 40
+--- !u!136 &8855772190753009093
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5728185335456548884}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.16881812
+  m_Height: 1.7392603
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}

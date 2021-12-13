@@ -30,11 +30,11 @@ public class MusicalChairManager : Level
     private Spores sporeScript;
     [SerializeField] private MeshRenderer bigMushroomRenderer;
     [SerializeField] private Material bigMushroomMat, bigMushroomAngryMat;
-    private void Awake()
+    protected override void Awake()
     {
         //durationSpawn = 2;
     }
-    private void Start()
+    protected override void Start()
     {
         countDownSave = int.MaxValue;
         textAnim = countdown.GetComponent<Animator>();
@@ -45,27 +45,29 @@ public class MusicalChairManager : Level
         countdown.text = "";
     }
     // Update is called once per frame
-    private void Update()
+    protected override void Update()
     {
-        /*if (mapManagered)
-        {
-            StartCoroutine(Init());
-            mapManagered = false;
-        }*/
         if (GameLaunched)
             UpdateText();
     }
-    public override void StartMap()
+    protected override void StartMap()
     {
         base.StartMap();
+        Debug.Log("Child Start Map");
         chairs = FindObjectsOfType<Chair>();
         inTransition = true;
         transition = transitionValue + 1;
         maxChairsActive = MultiplayerManager.instance.alivePlayers.Count - 1;
         GameLaunched = true;
+      
     }
     private void UpdateText()
     {
+        if (Debug.isDebugBuild)
+        {
+            Debug.Log("inTransition = " + inTransition);
+            Debug.Log("isSpawning = " + spawning);
+        }
         if (inTransition)
         {
             transition -= Time.deltaTime;
@@ -115,6 +117,10 @@ public class MusicalChairManager : Level
     }
     private void ChangeChairPool()
     {
+        if (Debug.isDebugBuild)
+        {
+            Debug.Log("ChangeChairPool");
+        }
         //spawnFeedback.PlayFeedbacks();
         if (sporeScript == null)
         {
@@ -181,7 +187,8 @@ public class MusicalChairManager : Level
         else if (MultiplayerManager.instance.alivePlayers.Count <= 0)
         {
             EndLvl();
-            winTxt.GetComponent<Text>().text = "Only losers...";
+            winTxt.GetComponent<Text>().text = "It's a draw";
+            winTxt.GetComponent<Text>().color = Color.red;
         }
         else
         {
