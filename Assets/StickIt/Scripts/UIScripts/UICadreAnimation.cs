@@ -24,7 +24,7 @@ public class UICadreAnimation : MonoBehaviour
 
     private void Update()
     {
-        while(timer <= animationTime)
+        if(timer <= animationTime)
         {
             if (hasReverse)
             {
