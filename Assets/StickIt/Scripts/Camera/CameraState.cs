@@ -262,24 +262,23 @@ public abstract class CameraState : MonoBehaviour
         max_bounds.x = bounds_pos.x + offsetX;
         min_bounds.y = bounds_pos.y - offsetY;
         max_bounds.y = bounds_pos.y + offsetY;
-        data = _data;
-        // Dezoom to new map
-        StartCoroutine(OnSubscribeCamera());    
-    }
-
-    /// <summary>
-    ///     Update the max Zoom In Value depending of the current map
-    /// </summary>
-    private void UpdateZoomInValue()
-    {
-        maxIn_Z = data.maxZoomIn;
+        if (_data != null)
+        {
+            data = _data;
+            maxIn_Z = data.maxZoomIn;
+        }
+        else
+        {
+            maxIn_Z = -100.0f;
+        }
+            // Dezoom to new map
+            StartCoroutine(OnSubscribeCamera());    
     }
 
     public void UpdateCameraDatas()
     {
         if (autoMaxOut_Z) SearchMaxOut_Z();
         if (autoOffset) SearchPosOffset();
-        UpdateZoomInValue();
         UpdateFrustum();
         UpdateMoveBounds();
         UpdatePlayersBounds();
