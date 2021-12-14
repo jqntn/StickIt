@@ -9,12 +9,12 @@ public class BlocksScript : MonoBehaviour
     public float extendsFactor = 1.0f;
     public Vector3 offsets = new Vector3(0.0f, 0.0f, 0.0f);
     #region Grayed out
-    [SerializeField] private Bounds bounds = new Bounds();
-    [SerializeField] private Vector2 boundsPos  = new Vector2(0.0f, 0.0f);
-    [SerializeField] private Vector2 max = new Vector2(0.0f, 0.0f);
-    [SerializeField] private Vector2 dimension = new Vector2(0.0f, 0.0f);
-    [SerializeField] private Vector2 factors = new Vector2(0.0f, 0.0f);
-    [SerializeField] private Vector2 dimensionBase = new Vector2(0.0f, 0.0f);
+    private Bounds bounds = new Bounds();
+    private Vector2 boundsPos  = new Vector2(0.0f, 0.0f);
+    private Vector2 max = new Vector2(0.0f, 0.0f);
+    private Vector2 dimension = new Vector2(0.0f, 0.0f);
+    private Vector2 factors = new Vector2(0.0f, 0.0f);
+    private Vector2 dimensionBase = new Vector2(0.0f, 0.0f);
     #endregion
 
     private void OnEnable()
