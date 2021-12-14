@@ -26,7 +26,7 @@ public class Pause : Unique<Pause>
     {
         StartCoroutine(PressCoroutine(() =>
         {
-            foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
+            Time.timeScale = 1;
             AkSoundEngine.PostEvent("Play_SFX_UI_Submit", gameObject);
             SceneManager.LoadScene("0_MainMenu");
             Destroy(MultiplayerManager.instance.gameObject);

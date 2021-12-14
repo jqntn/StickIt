@@ -1,17 +1,16 @@
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class MeshDestroy : MonoBehaviour
 {
-    bool edgeSet = false;
-    Vector3 edgeVertex = Vector3.zero;
-    Vector2 edgeUV = Vector2.zero;
-    Plane edgePlane = new Plane();
+    private bool edgeSet = false;
+    private Vector3 edgeVertex = Vector3.zero;
+    private Vector2 edgeUV = Vector2.zero;
+    private Plane edgePlane = new Plane();
     public int CutCascades = 1;
     public float ExplodeForce = 0;
-    void Start() { DestroyMesh(); }
-    void DestroyMesh()
+    private void Start()
+    { DestroyMesh(); }
+    private void DestroyMesh()
     {
         var originalMesh = GetComponent<MeshFilter>().mesh;
         originalMesh.RecalculateBounds();
@@ -50,7 +49,7 @@ public class MeshDestroy : MonoBehaviour
         }
         Destroy(gameObject);
     }
-    PartMesh GenerateMesh(PartMesh original, Plane plane, bool left)
+    private PartMesh GenerateMesh(PartMesh original, Plane plane, bool left)
     {
         var partMesh = new PartMesh() { };
         var ray1 = new Ray();
@@ -144,7 +143,7 @@ public class MeshDestroy : MonoBehaviour
         partMesh.FillArrays();
         return partMesh;
     }
-    void AddEdge(int subMesh, PartMesh partMesh, Vector3 normal, Vector3 vertex1, Vector3 vertex2, Vector2 uv1, Vector2 uv2)
+    private void AddEdge(int subMesh, PartMesh partMesh, Vector3 normal, Vector3 vertex1, Vector3 vertex2, Vector2 uv1, Vector2 uv2)
     {
         if (!edgeSet)
         {
@@ -169,17 +168,18 @@ public class MeshDestroy : MonoBehaviour
     }
     public class PartMesh
     {
-        List<Vector3> _Verticies = new List<Vector3>();
-        List<Vector3> _Normals = new List<Vector3>();
-        List<List<int>> _Triangles = new List<List<int>>();
-        List<Vector2> _UVs = new List<Vector2>();
+        private List<Vector3> _Verticies = new List<Vector3>();
+        private List<Vector3> _Normals = new List<Vector3>();
+        private List<List<int>> _Triangles = new List<List<int>>();
+        private List<Vector2> _UVs = new List<Vector2>();
         public Vector3[] Vertices;
         public Vector3[] Normals;
         public int[][] Triangles;
         public Vector2[] UV;
         public GameObject GameObject;
         public Bounds Bounds = new Bounds();
-        public PartMesh() { }
+        public PartMesh()
+        { }
         public void AddTriangle(int submesh, Vector3 vert1, Vector3 vert2, Vector3 vert3, Vector3 normal1, Vector3 normal2, Vector3 normal3, Vector2 uv1, Vector2 uv2, Vector2 uv3)
         {
             if (_Triangles.Count - 1 < submesh)
