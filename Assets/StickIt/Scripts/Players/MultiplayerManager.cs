@@ -52,6 +52,11 @@ public class MultiplayerManager : MonoBehaviour
     private float[] initPosY;
     public bool isChangingMap = false;
 
+    public int massAddIfWin;
+    public int[] massRemoveIfLoss;
+    public uint scoreAddIfWin;
+    public uint[] scoreAddIfLoss;
+
     [SerializeField] public bool isMenuSelection = true; // should be private
 
     private void Awake()
@@ -157,6 +162,7 @@ public class MultiplayerManager : MonoBehaviour
     public void EndChangeMap()
     {
         isChangingMap = false;
+        SetMassEndLVL();
         // Reset the lists and re-enable the players
         alivePlayers = new List<Player>(players);
         deadPlayers.Clear();
@@ -167,6 +173,25 @@ public class MultiplayerManager : MonoBehaviour
         for (int i = 0; i < players.Count; i++)
         {
             players[i].Respawn();
+        }
+    }
+
+    public void SetMassEndLVL()
+    {
+        // Winners
+        bool isAWinner = false;
+        int i = 0;
+        for (; i < alivePlayers.Count; i++)
+        {
+            alivePlayers[i].SetScoreAndMass(scoreAddIfWin, massAddIfWin) ;
+            isAWinner = true;
+        }
+
+        // Losers
+        i = (isAWinner) ? 1 : 0;
+        for (; i < deadPlayers.Count; i++)
+        {
+            deadPlayers[i].SetScoreAndMass(scoreAddIfLoss[i], -massRemoveIfLoss[i]);
         }
     }
 }
