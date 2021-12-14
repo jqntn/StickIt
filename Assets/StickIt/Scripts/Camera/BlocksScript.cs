@@ -61,7 +61,6 @@ public class BlocksScript : MonoBehaviour
         }
         dimension.y = bounds.size.y + childCollider.bounds.size.y;
 
-
         // Change dimension to respect aspect ratio
         factors.x = dimension.x / Utils.AspectRatio.x;
         factors.y = dimension.y / Utils.AspectRatio.y;
