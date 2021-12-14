@@ -21,40 +21,44 @@ public class FadeShader : MonoBehaviour
     float time;
 
 
-    //private void Start()
-    //{
+    private void Start()
+    {
 
-    //    StartCoroutine(test());
-    //}
+        //StartCoroutine(test());
+    }
     // Update is called once per frame
     void Update()
     {
+        time += Time.deltaTime * speedFade;
         if (isAppearAnimation)
         {
             for (int i = 0; i < renderers.Length; i++)
             {
 
-                float t = (Time.time - time) * speedFade;
-                renderers[i].material.SetFloat("_Fade", 1 - t);
-                if (t >= 1)
-                {
-                    isAppearAnimation = false;
-                    SetBackMaterials();
-                    print("SetBackMaterials");
-                }
+                //float t = (Time.time - time) * speedFade;
+                if (!renderers[i].gameObject.CompareTag("Chair"))
+                    renderers[i].material.SetFloat("_Fade", 1 - time);
+            }
+            if (time >= 1)
+            {
+                isAppearAnimation = false;
+                SetBackMaterials();
+                print("SetBackMaterialsAppear");
             }
         }
         else if (isDisappearAnimation)
         {
             for (int i = 0; i < renderers.Length; i++)
             {
-                float t = (Time.time - time) * speedFade;
-                renderers[i].material.SetFloat("_Fade", t);
-                if (t >= 1)
-                {
-                    SetBackMaterials();
-                    isDisappearAnimation = false;
-                }
+                //float t = (Time.time - time) * speedFade;
+                if (!renderers[i].gameObject.CompareTag("Chair"))
+                    renderers[i].material.SetFloat("_Fade", time);
+            }
+            if (time >= 1)
+            {
+                SetBackMaterials();
+                print("SetBackMaterialsDisappear");
+                isDisappearAnimation = false;
             }
         }
         
@@ -66,13 +70,15 @@ public class FadeShader : MonoBehaviour
     {
         SetShaders();
         isDisappearAnimation = true;
-        time = Time.time;
+        time = 0;
+        //time = Time.time;
     }
 
     public void AllObjectsAppear()
     {
         isAppearAnimation = true;
-        time = Time.time;
+        time = 0;
+        //time = Time.time;
     }
 
  
@@ -81,8 +87,10 @@ public class FadeShader : MonoBehaviour
     {
         for (int i = 0; i < renderers.Length; i++)
         {
-            renderers[i].material = matSave[i];
+            if (!renderers[i].gameObject.CompareTag("Chair"))
+                renderers[i].material = matSave[i];
         }
+        matSave.Clear();
     }
 
     public void SetShaders()
@@ -93,15 +101,16 @@ public class FadeShader : MonoBehaviour
             if (renderers[i].material != null)
             {
                 matSave.Add(renderers[i].material);
-                renderers[i].material = CreateShaderFromMaterial(renderers[i].material);
+                if(!renderers[i].gameObject.CompareTag("Chair"))
+                    renderers[i].material = CreateShaderFromMaterial(renderers[i].material, renderers[i].gameObject.name);
             }
         }
     }
 
-    Material CreateShaderFromMaterial(Material material)
+    Material CreateShaderFromMaterial(Material material, string name)
     {
         Material mat = new Material(shader);
-        mat.name = "Shader Disappear";
+        mat.name = "Shader Disappear - " + name;
 
         Texture texture;
         if(texture = material.GetTexture("_BaseMap"))
@@ -125,13 +134,13 @@ public class FadeShader : MonoBehaviour
         return mat;
     }
 
-    //IEnumerator test()
-    //{
-    //    yield return new WaitForSeconds(1);
-    //    SetShaders();
-    //    yield return new WaitForSeconds(2);
-    //    AllObjectsAppear();
-    //    yield return new WaitForSeconds(5);
-    //    AllObjectsDisappear();
-    //}
+    IEnumerator test()
+    {
+        yield return new WaitForSeconds(1);
+        SetShaders();
+        yield return new WaitForSeconds(2);
+        AllObjectsAppear();
+        yield return new WaitForSeconds(5);
+        AllObjectsDisappear();
+    }
 }

@@ -40,8 +40,8 @@ public class MapManager : Unique<MapManager>
     {
         if (MultiplayerManager.instance.alivePlayers.Count <= 1)
         {
-            NextMap();
             shaderScript.AllObjectsDisappear();
+            NextMap();
             return true;
         }
         return false;
@@ -131,12 +131,21 @@ public class MapManager : Unique<MapManager>
             yield return null;
         }
         nextMapRoot.transform.position = Vector3.zero;
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        shaderScript.SetShaders();
+        AsyncOperation asyncOp = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        bool activateShaders = false;
+        while (!activateShaders)
+        {
+            if (asyncOp.isDone)
+            {
+                shaderScript.SetShaders();
+                activateShaders = true;
+                yield return null;
+            }
+             yield return null;
+        }
         // Switch camera state depending of map mode
         camManager.SwitchStates(Utils.GetCameraType(curMod));
         //-------
-        yield return null;
         Time.timeScale = 1;
         timeScale = Time.timeScale;
         curMapRoot = nextMapRoot;
@@ -146,5 +155,6 @@ public class MapManager : Unique<MapManager>
         shaderScript.AllObjectsAppear();
         var lvl = FindObjectOfType<Level>();
         if (lvl != null) StartCoroutine(lvl.Init());
+        yield return null;
     }
 }
