@@ -17,10 +17,26 @@ public class CameraStateDriven : MonoBehaviour
             if (state.isActiveAndEnabled)
             {
                 currentState = state;
+                Debug.Log("State");
                 break;
             }
         }
         // -------
+    }
+
+    private void Update()
+    {
+        if(currentState == null)
+        {
+            foreach (CameraState state in statesList)
+            {
+                if (state.isActiveAndEnabled)
+                {
+                    currentState = state;
+                    break;
+                }
+            }
+        }
     }
     public void DeactivateAllCameraState()
     {
@@ -31,6 +47,7 @@ public class CameraStateDriven : MonoBehaviour
     }
     public void SwitchStates(CameraType type)
     {
+        Debug.Log("Switch State");
         currentState.gameObject.SetActive(false);
         currentState = null;
         foreach(CameraState state in statesList)

@@ -3,16 +3,18 @@ using UnityEngine;
 
 public class BlocksScript : MonoBehaviour
 {
+    [Header("TEST______________________")]
+    public bool isStartingDirect = true;
     public CameraData data;
     public float extendsFactor = 1.0f;
     public Vector3 offsets = new Vector3(0.0f, 0.0f, 0.0f);
     #region Grayed out
-    private Bounds bounds = new Bounds();
-    private Vector2 boundsPos  = new Vector2(0.0f, 0.0f);
-    private Vector2 max = new Vector2(0.0f, 0.0f);
-    private Vector2 dimension = new Vector2(0.0f, 0.0f);
-    private Vector2 factors = new Vector2(0.0f, 0.0f);
-    private Vector2 dimensionBase = new Vector2(0.0f, 0.0f);
+    [SerializeField] private Bounds bounds = new Bounds();
+    [SerializeField] private Vector2 boundsPos  = new Vector2(0.0f, 0.0f);
+    [SerializeField] private Vector2 max = new Vector2(0.0f, 0.0f);
+    [SerializeField] private Vector2 dimension = new Vector2(0.0f, 0.0f);
+    [SerializeField] private Vector2 factors = new Vector2(0.0f, 0.0f);
+    [SerializeField] private Vector2 dimensionBase = new Vector2(0.0f, 0.0f);
     #endregion
 
     private void OnEnable()
@@ -82,7 +84,7 @@ public class BlocksScript : MonoBehaviour
     void Start()
     {
         //Debug
-        GiveNewBounds();
+        if(isStartingDirect) GiveNewBounds();
     }
     private void GiveNewBounds()
     {

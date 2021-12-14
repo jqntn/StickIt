@@ -117,13 +117,13 @@ public class Player : MonoBehaviour
     }
     public void OnPause(InputAction.CallbackContext context)
     {
-        if (context.performed && !isDead && !MapManager.instance.isBusy && !MultiplayerManager.instance.isMenuSelection)
-        {
-            AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
-            foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
-            Pause.instance.GetComponent<PlayerInput>().enabled = true;
-            Pause.instance.mainLayerSwitch.ChangeLayer("Layer_Main");
-            Pause.instance.PauseGame();
-        }
+        //if (context.performed && !isDead && !MapManager.instance.isBusy && !MultiplayerManager.instance.isMenuSelection)
+        //{
+        //    AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
+        //    foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
+        //    Pause.instance.GetComponent<PlayerInput>().enabled = true;
+        //    Pause.instance.mainLayerSwitch.ChangeLayer("Layer_Main");
+        //    Pause.instance.PauseGame();
+        //}
     }
 }
