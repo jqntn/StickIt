@@ -284,7 +284,7 @@ public class PlayerMouvement : MonoBehaviour
     private void ImpactBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact, float strength)
     {
         Vector3 dir = (playerCollided.transform.position - transform.position).normalized;
-        RaycastHit hit;
+        //RaycastHit hit;
         //dir = playerCollided.GetPinchDirection(); // --------------------------------------------------------------------------------------------------  LINE FOR PINCH
         // Debug.DrawRay(playerCollided.transform.position, dir * 3, Color.yellow, 10);
         // Debug.Break();
@@ -470,7 +470,7 @@ public class PlayerMouvement : MonoBehaviour
     {
         Vector3[] angles = new Vector3[2];
         List<Vector3> intersections = new List<Vector3>();
-        bool isColliding = false;
+        //bool isColliding = false;
         for (int i = 0; i < connectedPoints.Count; i++)
         {
             int i2 = (i + 1 == connectedPoints.Count) ? 0 : i + 1;
@@ -485,7 +485,7 @@ public class PlayerMouvement : MonoBehaviour
             {
                 angles[0] = vAngleA.normalized;
                 angles[1] = vAngleB.normalized;
-                isColliding = true;
+                //isColliding = true;
                 break;
             }
         }
