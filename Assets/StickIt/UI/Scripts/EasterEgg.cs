@@ -18,7 +18,7 @@ public class EasterEgg : MonoBehaviour
         StartCoroutine(CanJump());
         for (var i = 0; i < slimes.Count; i++)
         {
-            StartCoroutine(SubCoroutine(slimes[i], startPos[i]));
+            if (layer.activeSelf) StartCoroutine(SubCoroutine(slimes[i], startPos[i]));
             yield return new WaitForSecondsRealtime(waitDelay);
         }
     }
