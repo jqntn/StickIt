@@ -74,27 +74,27 @@ public class UIParticleAnimation : MonoBehaviour
         {
             case MoveDirection.RIGHT:
                 rectTransform.anchoredPosition = new Vector2(
-                    Mathf.Clamp(rectTransform.anchoredPosition.x + speed * Time.deltaTime, min.x, max.x),
+                    Mathf.Clamp(rectTransform.anchoredPosition.x + speed * Time.deltaTime, min.x - offset.x, max.x + offset.x),
                     rectTransform.anchoredPosition.y
                     );
                 break;
             case MoveDirection.LEFT:
 
                 rectTransform.anchoredPosition = new Vector2(
-                    Mathf.Clamp(rectTransform.anchoredPosition.x - speed * Time.deltaTime, min.x, max.x),
+                    Mathf.Clamp(rectTransform.anchoredPosition.x - speed * Time.deltaTime, min.x - offset.x, max.x + offset.x),
                     rectTransform.anchoredPosition.y
                     );
                 break;
             case MoveDirection.UP:
                 rectTransform.anchoredPosition = new Vector2(
                     rectTransform.anchoredPosition.x,
-                    Mathf.Clamp(rectTransform.anchoredPosition.y + speed * Time.deltaTime, min.y, max.y)
+                    Mathf.Clamp(rectTransform.anchoredPosition.y + speed * Time.deltaTime, min.y - offset.y, max.y + offset.y)
                     );
                 break;
             case MoveDirection.DOWN:
                 rectTransform.anchoredPosition = new Vector2(
                     rectTransform.anchoredPosition.x,
-                    Mathf.Clamp(rectTransform.anchoredPosition.y - speed * Time.deltaTime, min.y, max.y)
+                    Mathf.Clamp(rectTransform.anchoredPosition.y - speed * Time.deltaTime, min.y - offset.y, max.y + offset.y)
                     );
                 break;
         }
@@ -106,28 +106,28 @@ public class UIParticleAnimation : MonoBehaviour
         {
             case MoveDirection.RIGHT:
                 // if too much on the right
-                if (rectTransform.anchoredPosition.x >= max.x - offset.x)
+                if (rectTransform.anchoredPosition.x >= max.x + offset.x)
                 {
                     direction = MoveDirection.DOWN;
                 }
                 break;
             case MoveDirection.LEFT:
                 // if too much on the left
-                if (rectTransform.anchoredPosition.x <= min.x + offset.x)
+                if (rectTransform.anchoredPosition.x <= min.x - offset.x)
                 {
                     direction = MoveDirection.UP;
                 }
                 break;
             case MoveDirection.UP:
                 // if too much upward
-                if (rectTransform.anchoredPosition.y >= max.y - offset.y)
+                if (rectTransform.anchoredPosition.y >= max.y + offset.y)
                 {
                     direction = MoveDirection.RIGHT;
                 }
                 break;
             case MoveDirection.DOWN:
                 // if too much downward
-                if (rectTransform.anchoredPosition.y <= min.y + offset.y)
+                if (rectTransform.anchoredPosition.y <= min.y - offset.y)
                 {
                     direction = MoveDirection.LEFT;
                 }
@@ -139,6 +139,7 @@ public class UIParticleAnimation : MonoBehaviour
     /// </summary>
     private void SearchStartPos()
     {
+        // slight +1 and -1 is to avoid conflict and changing direction immediatly
         switch (startPosition)
         {
             case StartPosition.UP:
