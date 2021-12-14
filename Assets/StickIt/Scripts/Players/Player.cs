@@ -18,9 +18,11 @@ public class Player : MonoBehaviour
         {
             myMouvementScript = pm;
             myMouvementScript.myPlayer = this;
+           
         }
         DontDestroyOnLoad(this);
     }
+
     public void Death(bool intensityAnim = false)
     {
         isDead = true;
@@ -75,25 +77,19 @@ public class Player : MonoBehaviour
         myMouvementScript.Respawn();
         isDead = false;
     }
-    public void SetScoreAndMass(bool isWin, uint score, int mass)
+    public void SetScoreAndMass(int score, int mass)
     {
         myDatas.score += score;
-        if (isWin)
-        {
-            myDatas.mass += mass;
-        }
-        else
-        {
-            myDatas.mass -= mass;
-        }
+        myDatas.mass += mass;
         myDatas.mass = Mathf.Clamp(myDatas.mass, minMass, maxMass);
+        myMouvementScript.RescaleMeshWithMass();
     }
     // INPUT TOOLS TO REMOVE LATER
     public void InputTestMassP25(UnityEngine.InputSystem.InputAction.CallbackContext context)
     {
         if (!MultiplayerManager.instance.isMenuSelection && context.started)
         {
-            SetScoreAndMass(true, 0, 25);
+            SetScoreAndMass(0, 25);
             myMouvementScript.RescaleMeshWithMass();
         }
     }
@@ -101,7 +97,7 @@ public class Player : MonoBehaviour
     {
         if (!MultiplayerManager.instance.isMenuSelection && context.started)
         {
-            SetScoreAndMass(true, 0, 5);
+            SetScoreAndMass(0, 5);
             myMouvementScript.RescaleMeshWithMass();
         }
     }
@@ -109,7 +105,7 @@ public class Player : MonoBehaviour
     {
         if (!MultiplayerManager.instance.isMenuSelection && context.started)
         {
-            SetScoreAndMass(false, 0, 25);
+            SetScoreAndMass(0, -25);
             myMouvementScript.RescaleMeshWithMass();
         }
     }
@@ -117,7 +113,7 @@ public class Player : MonoBehaviour
     {
         if (!MultiplayerManager.instance.isMenuSelection && context.started)
         {
-            SetScoreAndMass(false, 0, 5);
+            SetScoreAndMass(0, -5);
             myMouvementScript.RescaleMeshWithMass();
         }
     }

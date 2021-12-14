@@ -18,7 +18,7 @@ public class RunnerManager : Level
     [Tooltip("Fixed Score =\n" +
         "Order get you fixed amount of score")]
     public bool hasFixedScore = true;
-    public uint[] fixedScores = new uint[4];
+    public int[] fixedScores = new int[4];
     //[Tooltip("Divide Score = \n" +
     //    "MaxScoreToDivide divide by number of player and then score gain depending of order\n" +
     //    "Ex : Players = 4, MaxScore = 100\n" +
@@ -43,7 +43,7 @@ public class RunnerManager : Level
     [Header("--------- DEBUG ----------")]
     [SerializeField] private List<float> arriveTimePlayers = new List<float>();
     [SerializeField] private List<float> deadTimePlayers = new List<float>();
-    [SerializeField] private uint bonusEnd = 0;
+    [SerializeField] private int bonusEnd = 0;
     [SerializeField] private bool hasEnclenchedEndCheckpoint = false;
     [SerializeField] private float timer = 0;
     [SerializeField] private bool hasStopTimer = false;
@@ -82,14 +82,14 @@ public class RunnerManager : Level
         }
     }
 
-    private void ChangeText(Text text, uint score, int i)
+    private void ChangeText(Text text, int score, int i)
     {
         text.text = "p" + (i + 1).ToString() + " : " + score;
     }
     private void DistributeScore()
     {
         short i = 0;
-        uint scoreToAdd = 0;
+        int scoreToAdd = 0;
 
         // Fixed Score
         if (hasFixedScore)
@@ -222,13 +222,13 @@ public class RunnerManager : Level
         //}
     }
 
-    private void AddScore(uint scoreToAdd, Player player)
+    private void AddScore(int scoreToAdd, Player player)
     {
         player.myDatas.score += scoreToAdd;
         winners.Add(player);
     }
 
-    private void AddBonus(short i, ref uint scoreToAdd)
+    private void AddBonus(short i, ref int scoreToAdd)
     {
         if (i == 0 && hasBonus && hasEnclenchedEndCheckpoint)
         {
@@ -255,7 +255,7 @@ public class RunnerManager : Level
     {
         deadTimePlayers.Add(time);
     }
-    public void AddBonus(uint bonus)
+    public void AddBonus(int bonus)
     {
         bonusEnd = bonus;
     }
