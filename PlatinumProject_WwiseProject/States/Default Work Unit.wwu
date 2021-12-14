@@ -3,15 +3,20 @@
 	<States>
 		<WorkUnit Name="Default Work Unit" ID="{F69E1AE3-7C18-49BC-905B-CA8FDDA6EBAD}" PersistMode="Standalone">
 			<ChildrenList>
-				<StateGroup Name="Level" ID="{66735472-4ECB-42E5-B469-B316F197DD67}">
+				<StateGroup Name="State_Season" ID="{CCADD801-67B7-4857-B127-17F3F4F64D04}">
 					<ChildrenList>
-						<State Name="None" ID="{E224B471-21EB-4BFA-92A7-FEE674D7A361}"/>
+						<State Name="None" ID="{A9D7449E-B892-4D76-AD49-3B5E3E0EF9DE}"/>
+						<State Name="State_Season_Fall" ID="{73B4FBC8-2834-4E24-88D4-DACE35264EBB}"/>
+						<State Name="State_Season_Summer" ID="{0E72AAD5-BB5F-46E8-BADD-E4115884D4DC}"/>
 					</ChildrenList>
-				</StateGroup>
-				<StateGroup Name="MusicLevels" ID="{6889DC03-905C-4508-A049-05CF3083F9C8}">
-					<ChildrenList>
-						<State Name="None" ID="{80249DB0-2637-4100-8245-72E87BD0C7AD}"/>
-					</ChildrenList>
+					<TransitionList>
+						<Transition>
+							<StartState Name="State_Season_Fall" ID="{73B4FBC8-2834-4E24-88D4-DACE35264EBB}"/>
+							<EndState Name="State_Season_Summer" ID="{0E72AAD5-BB5F-46E8-BADD-E4115884D4DC}"/>
+							<Time>1</Time>
+							<IsShared>true</IsShared>
+						</Transition>
+					</TransitionList>
 				</StateGroup>
 			</ChildrenList>
 		</WorkUnit>

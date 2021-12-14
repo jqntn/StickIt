@@ -14,17 +14,17 @@ public class MultiplayerManager : MonoBehaviour
         public Material material;
         public RenderTexture renderTexture;
         public int mass;
-        public uint score;
+        public int score;
         public uint nbrDeath;
         public uint nbrVictories;
-        public PlayerData(string _name, int _id, int _deviceID, Material _material, RenderTexture _renderTexture)
+        public PlayerData(string _name, int _id, int _deviceID, Material _material, RenderTexture _renderTexture, int _mass)
         {
             name = _name;
             id = _id;
             deviceID = _deviceID;
             material = _material;
             renderTexture = _renderTexture;
-            mass = 100;
+            mass = _mass;
             score = 0;
             nbrDeath = 0;
             nbrVictories = 0;
@@ -51,6 +51,13 @@ public class MultiplayerManager : MonoBehaviour
     private float[] initPosX;
     private float[] initPosY;
     public bool isChangingMap = false;
+
+    public int initialMass;
+
+    public int massAddIfWin;
+    public int[] massAddIfLoss;
+    public int scoreAddIfWin;
+    public int[] scoreAddIfLoss;
 
     [SerializeField] public bool isMenuSelection = true; // should be private
 
@@ -99,7 +106,7 @@ public class MultiplayerManager : MonoBehaviour
     {
         for (int i = 0; i < numberOfPlayer; i++)
         {
-            PlayerData newData = new PlayerData("Player" + i.ToString(), i, -1, materials[i], renderTextures[i]);
+            PlayerData newData = new PlayerData("Player" + i.ToString(), i, -1, materials[i], renderTextures[i], initialMass);
             datas.Add(newData);
         }
         for (int i = 0; i < datas.Count; i++)
@@ -120,6 +127,7 @@ public class MultiplayerManager : MonoBehaviour
 #endif
     public void StartChangeMap(Transform nextStartPos)
     {
+        SetMassEndLVL();
         playersStartingPos = nextStartPos;
         // Disable the players
         foreach (Player player in players)
@@ -167,6 +175,29 @@ public class MultiplayerManager : MonoBehaviour
         for (int i = 0; i < players.Count; i++)
         {
             players[i].Respawn();
+        }
+    }
+
+    public void SetMassEndLVL()
+    {
+        // Winners
+        bool isAWinner = false;
+        for (int i = 0; i < alivePlayers.Count; i++)
+        {
+            alivePlayers[i].SetScoreAndMass(scoreAddIfWin, massAddIfWin) ;
+            alivePlayers[i].myDatas.nbrVictories++;
+            isAWinner = true;
+            print(i);
+        }
+
+        // Losers
+        print(deadPlayers.Count);
+        for (int i = 0; i < deadPlayers.Count; i++)
+        {
+            int i2 = (isAWinner) ? i + 1 : i;
+            deadPlayers[i].SetScoreAndMass(scoreAddIfLoss[i2], -massAddIfLoss[i2]);
+            deadPlayers[i].myDatas.nbrDeath++;
+            print(-massAddIfLoss[i2]);
         }
     }
 }

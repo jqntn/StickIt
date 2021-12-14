@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   materialsTemp: []
   nbrOfPlayer: 2
-  _prefabPlayer: {fileID: 4145983037377531711, guid: 6e629c2b373ba6d489f0d03beec73a54, type: 3}
+  _prefabPlayer: {fileID: 133289557909489633, guid: 13fb29bb58259a64aa85ea682998968d, type: 3}
   curve_ChangeMap_PosX:
     serializedVersion: 2
     m_Curve:
@@ -98,7 +98,7 @@ MonoBehaviour:
   alivePlayers: []
   deadPlayers: []
   materials:
-  - {fileID: 2100000, guid: bbab336ec81de7f4284a26e22ae426df, type: 2}
+  - {fileID: 8817811986718002121, guid: 10f1060b18f7ba34f92053a256e89d10, type: 3}
   - {fileID: 2100000, guid: 4a0d86f138e169c4885a0711c62c440a, type: 2}
   - {fileID: 2100000, guid: b6dfdb6b5582dfa47bc62e8f0876bcef, type: 2}
   - {fileID: 2100000, guid: cfc9bb33a760d504783203410585c1b0, type: 2}
@@ -109,4 +109,9 @@ MonoBehaviour:
   - {fileID: 8400000, guid: 41d22a35d7b86f3468bebb06bc15f403, type: 2}
   speedChangeMap: 1
   isChangingMap: 0
+  initialMass: 100
+  massAddIfWin: 10
+  massAddIfLoss: 050000000500000000000000fbffffff
+  scoreAddIfWin: 10
+  scoreAddIfLoss: 050000000500000000000000fbffffff
   isMenuSelection: 1
