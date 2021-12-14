@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class MenuSelection : MonoBehaviour
 {
     [SerializeField] private Transform _prefabPlayer;
+    [SerializeField] private int nbOfPlayersToLaunch;
     private Transform _playersStartingPos;
     public List<Material> materials = new List<Material>();
     private int counterID = 0;
@@ -54,7 +55,7 @@ public class MenuSelection : MonoBehaviour
                 AddPlayer(Gamepad.all[i], counterID);
                 counterID++;
             }
-            else if (MultiplayerManager.instance.players.Count >= 2)
+            else if (MultiplayerManager.instance.players.Count >= nbOfPlayersToLaunch)
             {
                 if (Gamepad.all[i].startButton.isPressed)
                 {

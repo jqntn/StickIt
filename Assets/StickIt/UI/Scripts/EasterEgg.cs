@@ -4,16 +4,16 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class EasterEgg : MonoBehaviour
 {
-    [SerializeField] private GameObject layer;
+    public GameObject layer;
+    public bool canJump;
     [SerializeField] private List<GameObject> slimes;
     [SerializeField] private float waitDelay;
     [SerializeField] private float jumpTime;
     [SerializeField] private float jumpHeight;
     private List<Vector3> startPos;
-    private bool canJump;
     public void Jump(InputAction.CallbackContext context)
     { if (context.performed && layer.activeSelf && canJump) StartCoroutine(MainCoroutine()); }
-    private IEnumerator MainCoroutine()
+    public IEnumerator MainCoroutine()
     {
         StartCoroutine(CanJump());
         for (var i = 0; i < slimes.Count; i++)
