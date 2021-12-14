@@ -19,6 +19,7 @@ public class MusicalChairManager : Level
     public Chair[] chairs;
     private int maxChairsActive;
     private bool spawning = true;
+    public float sizeShieldChair;
     [HideInInspector]
     public float durationSpawn;
     public Material chairNotTaken;

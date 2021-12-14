@@ -23,8 +23,10 @@ public class Chair : MonoBehaviour
     private Vector3 originalPos;
     [SerializeField]
     public GameObject shield;
+    MeshRenderer shieldMesh;
     [Header("ChosenOne")]
     private LineRenderer lr;
+    Color colShield;
     [SerializeField]
     private Transform lrBeginPos;
     private MeshRenderer myMeshRenderer;
@@ -39,6 +41,7 @@ public class Chair : MonoBehaviour
         duration = musicalChairManager.durationSpawn;
         spawnPosition = transform.position + transform.forward * offsetSpawn;
         originalPos = transform.position;
+        shieldMesh = shield.GetComponent<MeshRenderer>();
         shield.SetActive(false);
     }
     // Update is called once per frame
@@ -60,7 +63,11 @@ public class Chair : MonoBehaviour
             if (chosenOne)
             {
                 shield.transform.SetParent(chosenOne.transform);
+                shield.transform.localScale = chosenOne.transform.localScale / (musicalChairManager.sizeShieldChair * 10000);
                 shield.transform.localPosition = new Vector3(0, 0, 0);
+                colShield = chosenOne.GetComponent<Player>().myDatas.material.GetColor("_Color");
+                colShield.a = shieldMesh.material.GetColor("_Tint").a;
+                shieldMesh.material.SetColor("_Tint", colShield);
                 lr.SetPosition(1, chosenOne.transform.position);
             }
         }
@@ -86,7 +93,6 @@ public class Chair : MonoBehaviour
         isSpawnAnimation = true;
         float elapsed = 0;
         float ratio = 0;
-        myMeshRenderer.material = musicalChairManager.chairTaken;
         while (elapsed < duration)
         {
             ratio = elapsed / duration;
@@ -96,6 +102,7 @@ public class Chair : MonoBehaviour
             yield return null;
         }
         isSpawnAnimation = false;
+        //myMeshRenderer.material = musicalChairManager.chairTaken;
         if (!isTaken)
             myMeshRenderer.material = musicalChairManager.chairNotTaken;
     }
