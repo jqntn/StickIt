@@ -1999,8 +1999,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e1589a5522e474d97aae598bc0f2c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: c567079baaa896140b34ce303e75bb23, type: 2}
   extendsFactor: 1
-  offsets: {x: 0, y: 2.5, z: 0}
+  offsets: {x: 0, y: 0, z: 0}
 --- !u!1001 &1451984714
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2683,11 +2684,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: maxIn_Z
-      value: -160
+      value: -200
       objectReference: {fileID: 0}
     - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: maxOut_Z
-      value: -170
+      value: -200
+      objectReference: {fileID: 0}
+    - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: posOffset.y
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: autoMaxOut_Z

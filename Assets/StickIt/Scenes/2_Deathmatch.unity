@@ -458,11 +458,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: maxIn_Z
-      value: -200
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: maxOut_Z
-      value: -200
+      value: -150
       objectReference: {fileID: 0}
     - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: zoomTime
@@ -1653,7 +1653,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2787514487250022352, guid: 277f3ab7cefced24cbdd08f2a909db82, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -6.175
       objectReference: {fileID: 0}
     - target: {fileID: 2787514487250022352, guid: 277f3ab7cefced24cbdd08f2a909db82, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1832,6 +1832,22 @@ PrefabInstance:
     - target: {fileID: 1543163328394243981, guid: c4f992c9c5817884db8e2a017a555362, type: 3}
       propertyPath: m_Name
       value: ParallaxBackground
+      objectReference: {fileID: 0}
+    - target: {fileID: 1543163329389275505, guid: c4f992c9c5817884db8e2a017a555362, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1543163329893161098, guid: c4f992c9c5817884db8e2a017a555362, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 27
+      objectReference: {fileID: 0}
+    - target: {fileID: 1543163330356533000, guid: c4f992c9c5817884db8e2a017a555362, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 81
+      objectReference: {fileID: 0}
+    - target: {fileID: 1543163330446691701, guid: c4f992c9c5817884db8e2a017a555362, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 243
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4f992c9c5817884db8e2a017a555362, type: 3}
@@ -2284,8 +2300,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e1589a5522e474d97aae598bc0f2c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 35b2b7044abee3f489c2fc1434a426c7, type: 2}
   extendsFactor: 1
-  offsets: {x: 0, y: 0, z: 0}
+  offsets: {x: 0, y: 2, z: 0}
 --- !u!1001 &6832763638091179402
 PrefabInstance:
   m_ObjectHideFlags: 0

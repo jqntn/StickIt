@@ -79,7 +79,7 @@ public class SelectionOptions : MonoBehaviour
             }
             if(doubleList[indexY][indexX].optionType == OptionsSlime.OptionTypes.BOOL)
             {
-                if(indexX == 0 ? MultiplayerManager.instance.players[indexPlayer].myMouvementScript.isReversedDirection = false : MultiplayerManager.instance.players[indexPlayer].myMouvementScript.isReversedDirection = true);
+                MultiplayerManager.instance.players[indexPlayer].myMouvementScript.isReversedDirection = indexX == 0 ?  false : true;
             }else if(doubleList[indexY][indexX].optionType == OptionsSlime.OptionTypes.SKIN)
             {
                 //Debug.Log("Skin : " + doubleList[indexY][indexX].label);
@@ -97,7 +97,7 @@ public class SelectionOptions : MonoBehaviour
             }
             if (doubleList[indexY][indexX].optionType == OptionsSlime.OptionTypes.BOOL)
             {
-                if (indexX == 0 ? MultiplayerManager.instance.players[indexPlayer].myMouvementScript.isReversedDirection = false : MultiplayerManager.instance.players[indexPlayer].myMouvementScript.isReversedDirection = true) ;
+                MultiplayerManager.instance.players[indexPlayer].myMouvementScript.isReversedDirection = indexX == 0 ? false : true;
             }
             else if (doubleList[indexY][indexX].optionType == OptionsSlime.OptionTypes.SKIN)
             {
