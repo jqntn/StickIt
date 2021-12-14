@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class FadeShader : MonoBehaviour
 {
-
-    List<Renderer> renderers = new List<Renderer>();
+    MeshRenderer[] renderers;
     List<Material> matSave = new List<Material>();
     public Shader shader;
 
@@ -22,33 +21,43 @@ public class FadeShader : MonoBehaviour
     float time;
 
 
-    private void Start()
-    {
+    //private void Start()
+    //{
 
-        StartCoroutine(test());
-    }
+    //    StartCoroutine(test());
+    //}
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < renderers.Count; i++)
+        if (isAppearAnimation)
         {
-            if (isAppearAnimation)
+            for (int i = 0; i < renderers.Length; i++)
             {
+
                 float t = (Time.time - time) * speedFade;
                 renderers[i].material.SetFloat("_Fade", 1 - t);
                 if (t >= 1)
                 {
                     isAppearAnimation = false;
                     SetBackMaterials();
+                    print("SetBackMaterials");
                 }
             }
-            else if (isDisappearAnimation)
+        }
+        else if (isDisappearAnimation)
+        {
+            for (int i = 0; i < renderers.Length; i++)
             {
                 float t = (Time.time - time) * speedFade;
                 renderers[i].material.SetFloat("_Fade", t);
-                if (t >= 1) isDisappearAnimation = false;
+                if (t >= 1)
+                {
+                    SetBackMaterials();
+                    isDisappearAnimation = false;
+                }
             }
         }
+        
         
     }
 
@@ -66,27 +75,11 @@ public class FadeShader : MonoBehaviour
         time = Time.time;
     }
 
-    Material CreateShaderFromMaterial(Material material)
-    {
-        Material mat = new Material(shader);
-        mat.name = "Shader Disappear";
-        mat.SetTexture("_BaseMap", material.GetTexture("_BaseMap"));
-        mat.SetTexture("_MetallicMap", material.GetTexture("_MetallicGlossMap"));
-        mat.SetTexture("_NormalMap", material.GetTexture("_BumpMap"));
-        mat.SetTexture("_OcclusionMap", material.GetTexture("_OcclusionMap"));
-        mat.SetTexture("_EmissionMap", material.GetTexture("_EmissionMap"));
-        mat.SetColor("_Color", material.GetColor("_BaseColor"));
-        mat.SetColor("_EmissionColor", material.GetColor("_EmissionColor"));
-        mat.SetFloat("_EdgeWidth", edgeWidth);
-        mat.SetFloat("_SpeedRotation", speedRotation);
-        mat.SetInt("_NoiseSize", noiseSize);
-        mat.SetFloat("_Fade", 1);
-        return mat;
-    }
+ 
 
     private void SetBackMaterials()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        for (int i = 0; i < renderers.Length; i++)
         {
             renderers[i].material = matSave[i];
         }
@@ -94,27 +87,51 @@ public class FadeShader : MonoBehaviour
 
     public void SetShaders()
     {
-        for (int i = 0; i < transform.childCount; i++)
+        renderers = FindObjectsOfType<MeshRenderer>();
+        for (int i = 0; i < renderers.Length; i++)
         {
-            Renderer rend = transform.GetChild(i).GetComponent<Renderer>();
-            if (rend == null)
+            if (renderers[i].material != null)
             {
-                rend = transform.GetChild(i).GetChild(0).GetComponent<Renderer>();
-                print(rend);
+                matSave.Add(renderers[i].material);
+                renderers[i].material = CreateShaderFromMaterial(renderers[i].material);
             }
-            renderers.Add(rend);
-            matSave.Add(renderers[i].material);
-            renderers[i].material = CreateShaderFromMaterial(renderers[i].material);
         }
     }
 
-
-    IEnumerator test()
+    Material CreateShaderFromMaterial(Material material)
     {
-        SetShaders();
-        yield return new WaitForSeconds(2);
-        AllObjectsAppear();
-        yield return new WaitForSeconds(5);
-        AllObjectsDisappear();
+        Material mat = new Material(shader);
+        mat.name = "Shader Disappear";
+
+        Texture texture;
+        if(texture = material.GetTexture("_BaseMap"))
+            mat.SetTexture("_BaseMap", texture);
+        if (texture = material.GetTexture("_MetallicGlossMap"))
+            mat.SetTexture("_MetallicMap", texture);
+        if (texture = material.GetTexture("_BumpMap"))
+            mat.SetTexture("_NormalMap", texture);
+        if (texture = material.GetTexture("_OcclusionMap"))
+            mat.SetTexture("_OcclusionMap", texture);
+        if (texture = material.GetTexture("_EmissionMap"))
+            mat.SetTexture("_EmissionMap", texture);
+
+        mat.SetColor("_Color", material.GetColor("_BaseColor"));
+        mat.SetColor("_EmissionColor", material.GetColor("_EmissionColor"));
+        if (material.IsKeywordEnabled("_EMISSION")) mat.SetFloat("_Intensity", 1);
+        mat.SetFloat("_EdgeWidth", edgeWidth);
+        mat.SetFloat("_SpeedRotation", speedRotation);
+        mat.SetInt("_NoiseSize", noiseSize);
+        mat.SetFloat("_Fade", 1);
+        return mat;
     }
+
+    //IEnumerator test()
+    //{
+    //    yield return new WaitForSeconds(1);
+    //    SetShaders();
+    //    yield return new WaitForSeconds(2);
+    //    AllObjectsAppear();
+    //    yield return new WaitForSeconds(5);
+    //    AllObjectsDisappear();
+    //}
 }

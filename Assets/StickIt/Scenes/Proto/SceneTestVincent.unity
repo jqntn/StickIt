@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 264679286983488418, guid: d2ee1942826cebe4183a8eff1e05dbaa, type: 3}
+      propertyPath: shader
+      value: 
+      objectReference: {fileID: -6465566751694194690, guid: 2179a8b2a755db4449269171df54f95a, type: 3}
     - target: {fileID: 2906344591245672142, guid: d2ee1942826cebe4183a8eff1e05dbaa, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -2388,7 +2392,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2063870806}
-  - component: {fileID: 2063870808}
   - component: {fileID: 2063870807}
   m_Layer: 0
   m_Name: MapLD
@@ -2442,23 +2445,6 @@ MonoBehaviour:
   data: {fileID: 0}
   extendsFactor: 1
   offsets: {x: 0, y: 0, z: 0}
---- !u!114 &2063870808
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2063870805}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 928923792d2cbd9458eafd03240943bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shader: {fileID: -6465566751694194690, guid: 2179a8b2a755db4449269171df54f95a, type: 3}
-  speedFade: 1
-  edgeWidth: 0.01
-  noiseSize: 30
-  speedRotation: 0
 --- !u!1001 &6832763638091179402
 PrefabInstance:
   m_ObjectHideFlags: 0

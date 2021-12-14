@@ -59,7 +59,8 @@ public class MultiplayerManager : MonoBehaviour
     public int scoreAddIfWin;
     public int[] scoreAddIfLoss;
 
-    [SerializeField] public bool isMenuSelection = true; // should be private
+    [SerializeField] public bool isMenuSelection = true;
+
 
     private void Awake()
     {
@@ -88,7 +89,6 @@ public class MultiplayerManager : MonoBehaviour
         Level lvl = FindObjectOfType<Level>();
         if (lvl != null) StartCoroutine(lvl.Init());
 #endif
-
     }
     private void Update()
     {
