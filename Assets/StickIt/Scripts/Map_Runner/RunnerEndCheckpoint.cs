@@ -6,7 +6,7 @@ using UnityEngine;
 public class RunnerEndCheckpoint : MonoBehaviour
 {
     public RunnerManager runnerManager;
-    public uint scoreBonus = 100;
+    public int scoreBonus = 100;
     [Header("-------- DEBUG ---------")]
     [SerializeField] private float timer;
     [SerializeField] private BoxCollider boxCollider;
