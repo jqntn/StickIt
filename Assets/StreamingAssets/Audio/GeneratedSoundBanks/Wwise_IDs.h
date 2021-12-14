@@ -13,9 +13,7 @@ namespace AK
 {
     namespace EVENTS
     {
-        static const AkUniqueID EVENT_M_PLAY_CHAIRS = 2557300141U;
-        static const AkUniqueID EVENT_M_PLAY_DEATHMATCH = 400946182U;
-        static const AkUniqueID EVENT_M_PLAY_MENU = 2474506946U;
+        static const AkUniqueID EVENT_PLAY_AMBIANCE = 3182511947U;
         static const AkUniqueID PLAY_SFX_S_COLLISION = 2655917940U;
         static const AkUniqueID PLAY_SFX_S_DEATH = 239606594U;
         static const AkUniqueID PLAY_SFX_S_JUMP = 3510434704U;
@@ -28,25 +26,17 @@ namespace AK
 
     namespace STATES
     {
-        namespace LEVEL
+        namespace STATE_SEASON
         {
-            static const AkUniqueID GROUP = 2782712965U;
+            static const AkUniqueID GROUP = 3774929168U;
 
             namespace STATE
             {
                 static const AkUniqueID NONE = 748895195U;
+                static const AkUniqueID STATE_SEASON_FALL = 2028143368U;
+                static const AkUniqueID STATE_SEASON_SUMMER = 1215538628U;
             } // namespace STATE
-        } // namespace LEVEL
-
-        namespace MUSICLEVELS
-        {
-            static const AkUniqueID GROUP = 4206939811U;
-
-            namespace STATE
-            {
-                static const AkUniqueID NONE = 748895195U;
-            } // namespace STATE
-        } // namespace MUSICLEVELS
+        } // namespace STATE_SEASON
 
     } // namespace STATES
 
