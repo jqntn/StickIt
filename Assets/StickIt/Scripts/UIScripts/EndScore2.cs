@@ -167,7 +167,6 @@ public class EndScore2 : MonoBehaviour
         {
             Time.timeScale = 1;
             AkSoundEngine.PostEvent("Play_SFX_UI_Submit", gameObject);
-            SceneManager.LoadScene("0_MainMenu");
             Destroy(MultiplayerManager.instance.gameObject);
             MultiplayerManager.instance = null;
             Destroy(MainCamera.instance.gameObject);
@@ -177,6 +176,8 @@ public class EndScore2 : MonoBehaviour
             Destroy(Sun.instance.gameObject);
             Sun.instance = null;
             foreach (var item in GameObject.FindGameObjectsWithTag("Player")) Destroy(item);
+            Pause.instance = null;
+            SceneManager.LoadScene("0_MainMenu");
         }));
     }
 

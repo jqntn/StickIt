@@ -61,10 +61,9 @@ public class MapManager : Unique<MapManager>
         // End Game
         if (roundCount == numberOfRounds)
         {
-            Debug.Log("End Game");
             curMod = "End";
-            curMap = "EndScene 2";
-            return "EndScene 2";
+            curMap = "100_EndScene";
+            return "100_EndScene";
         }
         // Next Map
         ModsData.Mod mod;

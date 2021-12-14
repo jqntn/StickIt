@@ -17,7 +17,6 @@ public class CameraStateDriven : MonoBehaviour
             if (state.isActiveAndEnabled)
             {
                 currentState = state;
-                Debug.Log("State");
                 break;
             }
         }

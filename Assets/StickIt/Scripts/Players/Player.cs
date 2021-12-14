@@ -118,7 +118,7 @@ public class Player : MonoBehaviour
     }
     public void OnPause(InputAction.CallbackContext context)
     {
-        if (context.performed && !isDead && !MapManager.instance.isBusy && SceneManager.GetActiveScene().name != "1_MenuSelection")
+        if (context.performed && !isDead && !MapManager.instance.isBusy && SceneManager.GetActiveScene().name != "1_MenuSelection" && SceneManager.GetActiveScene().name != "100_EndScene")
         {
             AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
             if (MapManager.instance.curMod == "MusicalChairs" && FindObjectOfType<MusicalChairManager>().inTransition)
