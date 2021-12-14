@@ -125,6 +125,7 @@ public class MultiplayerManager : MonoBehaviour
 #endif
     public void StartChangeMap(Transform nextStartPos)
     {
+        SetMassEndLVL();
         playersStartingPos = nextStartPos;
         // Disable the players
         foreach (Player player in players)
@@ -162,7 +163,6 @@ public class MultiplayerManager : MonoBehaviour
     public void EndChangeMap()
     {
         isChangingMap = false;
-        SetMassEndLVL();
         // Reset the lists and re-enable the players
         alivePlayers = new List<Player>(players);
         deadPlayers.Clear();
@@ -180,18 +180,20 @@ public class MultiplayerManager : MonoBehaviour
     {
         // Winners
         bool isAWinner = false;
-        int i = 0;
-        for (; i < alivePlayers.Count; i++)
+        for (int i = 0; i < alivePlayers.Count; i++)
         {
             alivePlayers[i].SetScoreAndMass(scoreAddIfWin, massAddIfWin) ;
             isAWinner = true;
+            print(i);
         }
 
         // Losers
-        i = (isAWinner) ? 1 : 0;
-        for (; i < deadPlayers.Count; i++)
+        print(deadPlayers.Count);
+        for (int i = 0; i < deadPlayers.Count; i++)
         {
-            deadPlayers[i].SetScoreAndMass(scoreAddIfLoss[i], -massRemoveIfLoss[i]);
+            int i2 = (isAWinner) ? i + 1 : i;
+            deadPlayers[i].SetScoreAndMass(scoreAddIfLoss[i2], -massRemoveIfLoss[i2]);
+            print(-massRemoveIfLoss[i2]);
         }
     }
 }

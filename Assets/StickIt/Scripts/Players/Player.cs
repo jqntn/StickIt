@@ -103,7 +103,7 @@ public class Player : MonoBehaviour
     {
         if (!MultiplayerManager.instance.isMenuSelection && context.started)
         {
-            SetScoreAndMass(0, 25);
+            SetScoreAndMass(0, -25);
             myMouvementScript.RescaleMeshWithMass();
         }
     }
@@ -111,7 +111,7 @@ public class Player : MonoBehaviour
     {
         if (!MultiplayerManager.instance.isMenuSelection && context.started)
         {
-            SetScoreAndMass(0, 5);
+            SetScoreAndMass(0, -5);
             myMouvementScript.RescaleMeshWithMass();
         }
     }
