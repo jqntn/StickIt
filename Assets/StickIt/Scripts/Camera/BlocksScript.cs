@@ -49,7 +49,7 @@ public class BlocksScript : MonoBehaviour
         }
 
         Collider childCollider = temp_width.GetComponent<Collider>();
-        if(childCollider == null)
+        if (childCollider == null)
         {
             childCollider = temp_width.gameObject.GetComponentInChildren<Collider>();
         }

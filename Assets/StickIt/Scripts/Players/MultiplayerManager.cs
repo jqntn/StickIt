@@ -191,7 +191,6 @@ public class MultiplayerManager : MonoBehaviour
         }
 
         // Losers
-        print(deadPlayers.Count);
         for (int i = 0; i < deadPlayers.Count; i++)
         {
             int i2 = (isAWinner) ? i + 1 : i;

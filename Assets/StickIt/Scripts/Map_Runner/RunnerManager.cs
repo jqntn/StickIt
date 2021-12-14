@@ -52,13 +52,13 @@ public class RunnerManager : Level
    
     public bool hasEndLevel = false;
 
-    private void Update()
+    protected override void Update()
     {
         if (hasStopTimer) { return; }
         timer += Time.deltaTime;
     }
     public static RunnerManager Instance { get; private set; }
-    private void Awake()
+    protected override void Awake()
     {
         Instance = this;
     }
