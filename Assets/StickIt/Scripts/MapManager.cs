@@ -44,6 +44,13 @@ public class MapManager : Unique<MapManager>
     }
     public bool NextMap(string nextMap = "", bool fromMenu = false)
     {
+        //if (fromMenu)
+        //{
+        //    nextMap = SelectNextMap();
+        //    SceneManager.LoadScene(nextMap);
+        //    camManager.SwitchStates(Utils.GetCameraType(curMod));
+        //    return true;
+        //}
         foreach (Player player in MultiplayerManager.instance.players) player.PrepareToChangeLevel();
         if (_coroutine == null) _coroutine = StartCoroutine(BeginTransition(nextMap, fromMenu));
         else return false;
@@ -52,13 +59,12 @@ public class MapManager : Unique<MapManager>
     private string SelectNextMap()
     {
         // End Game
-        if(roundCount == numberOfRounds) { 
-            Debug.Log("End Game");
+        if (roundCount == numberOfRounds)
+        {
             curMod = "End";
-            curMap = "EndScene 2";
-            return "EndScene 2"; 
+            curMap = "100_EndScene";
+            return "100_EndScene";
         }
-
         // Next Map
         ModsData.Mod mod;
         string map = SceneManager.GetActiveScene().name;
@@ -109,7 +115,7 @@ public class MapManager : Unique<MapManager>
         // ----------
         GameObject[] nextStartPos = GameObject.FindGameObjectsWithTag("StartPos");
         MultiplayerManager.instance.speedChangeMap = 1 / slowTime;
-        MultiplayerManager.instance.StartChangeMap(nextStartPos[nextStartPos.Length - 1].transform); 
+        MultiplayerManager.instance.StartChangeMap(nextStartPos[nextStartPos.Length - 1].transform);
         while (MultiplayerManager.instance.isChangingMap) yield return null;
         StartCoroutine(EndTransition());
     }

@@ -373,10 +373,14 @@ MonoBehaviour:
     m_ActionId: b0ad7773-f602-4180-bfda-02abba2ebfd3
     m_ActionName: NormalInputs/Quit[/Keyboard/escape]
   - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: b9b77ec6-9fc8-4ad8-a2f8-fcf304d35387
+    m_ActionName: NormalInputs/Test[/Keyboard/t]
+  - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 206067774022311510}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: InputTestMassM5
+        m_MethodName: OnReturn
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -386,18 +390,50 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: b9b77ec6-9fc8-4ad8-a2f8-fcf304d35387
-    m_ActionName: NormalInputs/Test[/Keyboard/t]
-  - m_PersistentCalls:
-      m_Calls: []
+      - m_Target: {fileID: 206067774022311510}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: SoundReturn
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: d899757b-19de-4aa5-b97e-e4e9451fda29
     m_ActionName: UIInputs/Return[/XInputControllerWindows/buttonEast]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 206067774022311510}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: SoundMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: a0e037f6-2ae6-4d18-9967-23e1225a3bb3
     m_ActionName: UIInputs/Navigate[/XInputControllerWindows/leftStick/up,/XInputControllerWindows/rightStick/up,/XInputControllerWindows/leftStick/down,/XInputControllerWindows/rightStick/down,/XInputControllerWindows/leftStick/left,/XInputControllerWindows/rightStick/left,/XInputControllerWindows/leftStick/right,/XInputControllerWindows/rightStick/right,/XInputControllerWindows/dpad,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 206067774022311510}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: SoundSubmit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 3ff5497e-0b95-4bcd-9cc8-79627a38bb74
     m_ActionName: UIInputs/Submit[/Keyboard/enter,/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
@@ -405,42 +441,22 @@ MonoBehaviour:
     m_ActionId: 827cc017-87a6-4b7b-b4ba-f6028add973a
     m_ActionName: UIInputs/Click[/Mouse/leftButton]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: InputTestMassM25
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: eb04e253-26f8-4f39-abd6-2de47bfaec10
     m_ActionName: NormalInputs/Test1[/XInputControllerWindows/dpad/down]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: InputTestMassP5
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: c604141d-c625-454e-8327-c75afb25a057
     m_ActionName: NormalInputs/Test2[/XInputControllerWindows/dpad/right]
   - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 420328b5-a567-4224-b208-a5a36f816c60
+    m_ActionName: NormalInputs/Test3[/XInputControllerWindows/dpad/up]
+  - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 206067774022311510}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: InputTestMassP25
+        m_MethodName: Jump
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -450,18 +466,38 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-    m_ActionId: 420328b5-a567-4224-b208-a5a36f816c60
-    m_ActionName: NormalInputs/Test3[/XInputControllerWindows/dpad/up]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 18d17c69-d01a-4edb-b4f8-e94ecb57429e
     m_ActionName: UIInputs/Validate[/XInputControllerWindows/buttonSouth,/XInputControllerWindows/buttonSouth]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 206067774022311510}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnLeftPage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 1e9a4ed8-65be-47f1-b444-39d31d6f1a65
     m_ActionName: UIInputs/Page_Left
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 206067774022311510}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnRightPage
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 7e5b72cc-2de5-42bd-82c9-1bb2cd77574d
     m_ActionName: UIInputs/Page_Right
   - m_PersistentCalls:
@@ -478,9 +514,21 @@ MonoBehaviour:
     m_ActionName: UIInputs/Y
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 206067774022311510}
         m_TargetAssemblyTypeName: Player, Assembly-CSharp
         m_MethodName: OnPause
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 206067774022311510}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: SoundReturn
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

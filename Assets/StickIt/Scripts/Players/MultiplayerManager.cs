@@ -51,16 +51,12 @@ public class MultiplayerManager : MonoBehaviour
     private float[] initPosX;
     private float[] initPosY;
     public bool isChangingMap = false;
-
     public int initialMass;
-
     public int massAddIfWin;
     public int[] massAddIfLoss;
     public int scoreAddIfWin;
     public int[] scoreAddIfLoss;
-
     [SerializeField] public bool isMenuSelection = true; // should be private
-
     private void Awake()
     {
         // Initialization();
@@ -84,11 +80,9 @@ public class MultiplayerManager : MonoBehaviour
 #if UNITY_EDITOR
         if (!isMenuSelection)
             InitializePlayersWithoutMenuSelector(nbrOfPlayer);
-
         Level lvl = FindObjectOfType<Level>();
         if (lvl != null) StartCoroutine(lvl.Init());
 #endif
-
     }
     private void Update()
     {
@@ -122,7 +116,6 @@ public class MultiplayerManager : MonoBehaviour
             alivePlayers.Add(scriptPlayer);
             newPlayer.transform.position = playersStartingPos.GetChild(i).position;
         }
-
     }
 #endif
     public void StartChangeMap(Transform nextStartPos)
@@ -177,19 +170,17 @@ public class MultiplayerManager : MonoBehaviour
             players[i].Respawn();
         }
     }
-
     public void SetMassEndLVL()
     {
         // Winners
         bool isAWinner = false;
         for (int i = 0; i < alivePlayers.Count; i++)
         {
-            alivePlayers[i].SetScoreAndMass(scoreAddIfWin, massAddIfWin) ;
+            alivePlayers[i].SetScoreAndMass(scoreAddIfWin, massAddIfWin);
             alivePlayers[i].myDatas.nbrVictories++;
             isAWinner = true;
             print(i);
         }
-
         // Losers
         for (int i = 0; i < deadPlayers.Count; i++)
         {
