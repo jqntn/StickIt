@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4215253288919290737}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0, z: 1.47}
+  m_LocalPosition: {x: 0, y: -0, z: 0.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8174821915389170269}
@@ -235,7 +235,7 @@ Transform:
   m_GameObject: {fileID: 8807103071188011239}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 8572729732386786226}
   - {fileID: 2616574719682230840}
@@ -270,7 +270,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5f3b4178bf278924ca2c269f4e47cbda, type: 2}
+  - {fileID: 2100000, guid: dbe55ab14d92a89458af338e8b91bfbe, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -306,7 +306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playersInChair: []
   chosenOne: {fileID: 0}
-  offsetSpawn: 2.5
+  offsetSpawn: 2.92
   animCurve:
     serializedVersion: 2
     m_Curve:
@@ -346,8 +346,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.2666557, y: 6.2703924, z: 1.0661068}
-  m_Center: {x: 0, y: 1.2316357, z: 0.5511792}
+  m_Size: {x: 3.2666557, y: 6.2703924, z: 1.6634974}
+  m_Center: {x: 0, y: 1.2316358, z: 0.84987456}
 --- !u!54 &8807103071188011236
 Rigidbody:
   m_ObjectHideFlags: 0

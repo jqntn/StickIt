@@ -17,8 +17,6 @@ public class Chair : MonoBehaviour
     public bool isActive;
     [HideInInspector]
     public bool isTaken;
-    private Color activatedColor;
-    private Color deactivatedColor;
     private Vector3 spawnPosition;
     private Vector3 originalPos;
     [SerializeField]
@@ -30,6 +28,7 @@ public class Chair : MonoBehaviour
     [SerializeField]
     private Transform lrBeginPos;
     private MeshRenderer myMeshRenderer;
+    Material matChair;
     // Start is called before the first frame update
     private void Start()
     {
@@ -42,7 +41,9 @@ public class Chair : MonoBehaviour
         spawnPosition = transform.position + transform.forward * offsetSpawn;
         originalPos = transform.position;
         shieldMesh = shield.GetComponent<MeshRenderer>();
+        matChair = myMeshRenderer.material;
         shield.SetActive(false);
+        transform.position = spawnPosition;
     }
     // Update is called once per frame
     private void Update()
@@ -97,14 +98,15 @@ public class Chair : MonoBehaviour
         {
             ratio = elapsed / duration;
             ratio = animCurve.Evaluate(ratio);
-            transform.position = Vector3.Lerp(originalPos, spawnPosition, ratio);
+            matChair.SetFloat("_Fade", 1 - ratio);
+            //transform.position = Vector3.Lerp(originalPos, spawnPosition, ratio);
             elapsed += Time.deltaTime;
             yield return null;
         }
         isSpawnAnimation = false;
         //myMeshRenderer.material = musicalChairManager.chairTaken;
-        if (!isTaken)
-            myMeshRenderer.material = musicalChairManager.chairNotTaken;
+       /* if (!isTaken)
+            myMeshRenderer.material = musicalChairManager.chairNotTaken;*/
     }
     private IEnumerator DespawnChairCor(float duration)
     {
@@ -113,9 +115,11 @@ public class Chair : MonoBehaviour
         isSpawnAnimation = true;
         while (elapsed < duration)
         {
+
             ratio = elapsed / duration;
             ratio = animCurve.Evaluate(ratio);
-            transform.position = Vector3.Lerp(spawnPosition, originalPos, ratio);
+            matChair.SetFloat("_Fade", ratio);
+            //transform.position = Vector3.Lerp(spawnPosition, originalPos, ratio);
             elapsed += Time.deltaTime;
             yield return null;
         }
@@ -139,7 +143,8 @@ public class Chair : MonoBehaviour
                     isTaken = true;
                     lr.enabled = true;
                     if (!isSpawnAnimation)
-                        myMeshRenderer.material = musicalChairManager.chairTaken;
+                        matChair.SetFloat("_Intensity", musicalChairManager.intensityEmissive);
+                    //myMeshRenderer.material = musicalChairManager.chairTaken;
                     chosenOne = playersInChair[0];
                     shield.SetActive(true);
                 }
@@ -158,7 +163,8 @@ public class Chair : MonoBehaviour
                     isTaken = false;
                     lr.enabled = false;
                     if (!isSpawnAnimation)
-                        myMeshRenderer.material = musicalChairManager.chairNotTaken;
+                        matChair.SetFloat("_Intensity", 0);
+                    //myMeshRenderer.material = musicalChairManager.chairNotTaken;
                     shield.transform.SetParent(transform);
                     shield.SetActive(false);
                 }
