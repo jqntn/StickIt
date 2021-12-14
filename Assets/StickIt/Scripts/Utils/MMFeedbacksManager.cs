@@ -33,4 +33,9 @@ public class MMFeedbacksManager : MonoBehaviour
 		}
 	}
 	// | End Calls
+
+	public void CameraShake_C2(MMFeedbacksData data)
+    {
+		feedbacksList[0].PlayFeedbacks();
+    }
 }
