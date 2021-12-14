@@ -19,9 +19,9 @@ public class ParallaxSettingsEditor : Editor
         GUILayout.Label("\nParallax settings");
 
         EditorGUILayout.PropertyField(property, true);
-        //parallaxSettings.ParallaxElements = EditorGUILayout.ObjectField("Size collider root", GameObject[],parallaxSettings.ParallaxElements);
         parallaxSettings.posZBegin = EditorGUILayout.IntField("Position of the first element on Z", parallaxSettings.posZBegin);
         parallaxSettings.parallaxMultiplier = EditorGUILayout.IntField("Multiplier for Z", parallaxSettings.parallaxMultiplier);
+        //BUTTON TO APPLY CHANGES DIRECTLY IN EDITOR
         if (GUILayout.Button("Do changes"))
         {
             parallaxSettings.ChangePosZ();
