@@ -49,8 +49,16 @@ public class BlocksScript : MonoBehaviour
         }
 
         Collider childCollider = temp_width.GetComponent<Collider>();
+        if (childCollider == null)
+        {
+            childCollider = temp_width.gameObject.GetComponentInChildren<Collider>();
+        }
         dimension.x = bounds.size.x + childCollider.bounds.size.x;
         childCollider = temp_height.GetComponent<Collider>();
+        if (childCollider == null)
+        {
+            childCollider = temp_height.gameObject.GetComponentInChildren<Collider>();
+        }
         dimension.y = bounds.size.y + childCollider.bounds.size.y;
 
 
