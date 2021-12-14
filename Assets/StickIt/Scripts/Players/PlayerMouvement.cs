@@ -462,6 +462,7 @@ public class PlayerMouvement : MonoBehaviour
         transform.localScale = new Vector3(newScale, newScale, newScale);
         GameObject bonesParent = transform.Find("Bones").gameObject;
         bonesParent.SetActive(false);
+        print(myScriptSoftBody);
         myScriptSoftBody.ReplaceBones(ratioMass);
         bonesParent.SetActive(true);
         rb.mass = myPlayer.myDatas.mass;

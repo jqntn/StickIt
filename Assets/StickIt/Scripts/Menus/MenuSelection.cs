@@ -90,6 +90,7 @@ public class MenuSelection : MonoBehaviour
         scriptPlayer.myDatas.deviceID = gamepad.deviceId;
         scriptPlayer.myDatas.name = "Player" + i.ToString();
         scriptPlayer.myDatas.material = materials[i];
+        scriptPlayer.myDatas.mass = MultiplayerManager.instance.initialMass;
         scriptPlayer.gameObject.name = scriptPlayer.myDatas.name;
         if (scriptPlayer.transform.parent)
         {

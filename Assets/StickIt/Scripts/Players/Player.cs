@@ -18,9 +18,11 @@ public class Player : MonoBehaviour
         {
             myMouvementScript = pm;
             myMouvementScript.myPlayer = this;
+           
         }
         DontDestroyOnLoad(this);
     }
+
     public void Death(bool intensityAnim = false)
     {
         isDead = true;
@@ -75,7 +77,7 @@ public class Player : MonoBehaviour
         myMouvementScript.Respawn();
         isDead = false;
     }
-    public void SetScoreAndMass(uint score, int mass)
+    public void SetScoreAndMass(int score, int mass)
     {
         myDatas.score += score;
         myDatas.mass += mass;
