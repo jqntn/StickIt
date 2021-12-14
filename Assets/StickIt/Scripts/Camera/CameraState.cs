@@ -7,6 +7,7 @@ public abstract class CameraState : MonoBehaviour
 {
     [Header("------- Data -------")]
     public CameraType type = CameraType.BARYCENTER;
+    public CameraData data;
     public bool autoBounds = true;
     public Collider camBounds;
     [Min(0.1f)]
@@ -60,6 +61,7 @@ public abstract class CameraState : MonoBehaviour
     {
         GameEvents.OnSwitchCamera.AddListener(UpdateCameraDatas);
         cam = Camera.main;
+        maxIn_Z = data.maxZoomIn;
     }
 
     protected virtual void Start()
@@ -250,7 +252,7 @@ public abstract class CameraState : MonoBehaviour
     //<summary>
     //      Get all data from camera bounds
     //<summary>
-    public void SubscribeToCamera(Vector2 _bounds_pos, Vector2 _dimension)
+    public void SubscribeToCamera(Vector2 _bounds_pos, Vector2 _dimension, CameraData _data)
     {
         bounds_pos = _bounds_pos;
         bounds_dimension = _dimension;
@@ -260,16 +262,24 @@ public abstract class CameraState : MonoBehaviour
         max_bounds.x = bounds_pos.x + offsetX;
         min_bounds.y = bounds_pos.y - offsetY;
         max_bounds.y = bounds_pos.y + offsetY;
-
+        data = _data;
         // Dezoom to new map
- 
         StartCoroutine(OnSubscribeCamera());    
+    }
+
+    /// <summary>
+    ///     Update the max Zoom In Value depending of the current map
+    /// </summary>
+    private void UpdateZoomInValue()
+    {
+        maxIn_Z = data.maxZoomIn;
     }
 
     public void UpdateCameraDatas()
     {
         if (autoMaxOut_Z) SearchMaxOut_Z();
         if (autoOffset) SearchPosOffset();
+        UpdateZoomInValue();
         UpdateFrustum();
         UpdateMoveBounds();
         UpdatePlayersBounds();

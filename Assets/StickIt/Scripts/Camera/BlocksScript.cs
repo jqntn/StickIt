@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class BlocksScript : MonoBehaviour
 {
+    public CameraData data;
     public float extendsFactor = 1.0f;
     public Vector3 offsets = new Vector3(0.0f, 0.0f, 0.0f);
     #region Grayed out
@@ -87,7 +88,7 @@ public class BlocksScript : MonoBehaviour
             yield return null;
         }
         CameraState state = Camera.main.GetComponentInChildren<CameraState>();
-        state.SubscribeToCamera(boundsPos, dimension);
+        state.SubscribeToCamera(boundsPos, dimension, data);
     }
 
     #region Debug
