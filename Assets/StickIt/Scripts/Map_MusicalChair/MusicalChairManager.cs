@@ -19,10 +19,10 @@ public class MusicalChairManager : Level
     public Chair[] chairs;
     private int maxChairsActive;
     private bool spawning = true;
+    public float sizeShieldChair;
+    public float intensityEmissive;
     [HideInInspector]
     public float durationSpawn;
-    public Material chairNotTaken;
-    public Material chairTaken;
     public GameObject winTxt;
     public MoreMountains.Feedbacks.MMFeedbacks spawnFeedback;
     public bool GameLaunched = false;
