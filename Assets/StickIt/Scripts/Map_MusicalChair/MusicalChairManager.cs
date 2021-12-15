@@ -180,12 +180,12 @@ public class MusicalChairManager : Level
         if (MultiplayerManager.instance.alivePlayers.Count == 1)
         {
             EndLvl();
-            winTxt.GetComponent<Text>().text = MultiplayerManager.instance.alivePlayers[0].myDatas.name + " win!";
+            winTxt.GetComponent<Text>().text = "Player " + (MultiplayerManager.instance.alivePlayers[0].myDatas.id + 1).ToString() + " wins !";
         }
         else if (MultiplayerManager.instance.alivePlayers.Count <= 0)
         {
             EndLvl();
-            winTxt.GetComponent<Text>().text = "It's a draw";
+            winTxt.GetComponent<Text>().text = "It's a draw !";
             winTxt.GetComponent<Text>().color = Color.red;
         }
         else
