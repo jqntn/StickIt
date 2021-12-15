@@ -41,7 +41,6 @@ public class MapManager : Unique<MapManager>
     {
         if (!levelEnded && MultiplayerManager.instance.alivePlayers.Count <= 1)
         {
-            Debug.Log("CALL END LEVEL");
             shaderScript.AllObjectsDisappear();
             NextMap();
             levelEnded = true;

@@ -36,9 +36,9 @@ public class Player : MonoBehaviour
         deathAnim.PlayFeedbacks();
         if (intensityAnim)
         {
-            //AudioManager.instance.PlayDeathSounds(this.gameObject);
             yield return new WaitForSeconds(deathAnim.TotalDuration / deathAnim.DurationMultiplier);
         }
+        AudioManager.instance.PlayDeathSounds(gameObject);
         myMouvementScript.Death();
         GameObject obj = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Quaternion.identity);
         obj.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
@@ -53,7 +53,6 @@ public class Player : MonoBehaviour
         // }
         //
         MapManager.instance.EndLevel();
-        Debug.Log(gameObject.name + " CALL END LEVEL");
     }
     public void PrepareToChangeLevel() // When the player is still alive
     {

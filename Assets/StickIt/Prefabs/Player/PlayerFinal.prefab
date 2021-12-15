@@ -288,13 +288,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   matBones: {fileID: 13400000, guid: b4a9cef7130b7ec4eb4a2a937d5ad794, type: 2}
   ConfigurableJoint: 1
-  Spring: 250
-  Damper: 0.5
+  Spring: 200
+  Damper: 0.2
   ColliderSizeRoot: 13
   collSizeRoot: 0.0013
   ColliderSize: 2
   collSizeBones: 0.0002
-  RigidbodyMass: 0.5
+  RigidbodyMass: 0.6
 --- !u!135 &206067774022311515
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -541,6 +541,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5bd62fbb-d5f2-4c01-8b2d-189eb6b62aca
     m_ActionName: NormalInputs/Pause[/XInputControllerWindows/start]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fd67e296-beee-451d-99b5-738bce9d8fd6
+    m_ActionName: NormalInputs/Menu
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: NormalInputs
