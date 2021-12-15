@@ -31,6 +31,7 @@ public class MusicalChairManager : Level
     [SerializeField] private Material bigMushroomMat, bigMushroomAngryMat;
     protected override void Awake()
     {
+        AudioManager.instance.SwitchAmbianceToFall(gameObject);
         //durationSpawn = 2;
     }
     protected override void Start()

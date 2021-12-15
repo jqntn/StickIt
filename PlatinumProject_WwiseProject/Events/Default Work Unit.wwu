@@ -81,6 +81,44 @@
 										</Reference>
 									</ReferenceList>
 								</Action>
+								<Action Name="" ID="{4A31B5DC-9741-4A07-9F6B-244ECB25ECAB}" ShortID="664360973">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="NoState" ID="{37F35E69-E59F-43A5-8AC0-F0281052D192}" WorkUnitID="{F69E1AE3-7C18-49BC-905B-CA8FDDA6EBAD}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Set_State_Season_Fall" ID="{CA4D67D4-5848-4509-8C5E-093CABE83275}">
+							<ChildrenList>
+								<Action Name="" ID="{F2E54371-77AC-4521-8601-64C1E042BD06}" ShortID="1035077107">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="State_Season_Fall" ID="{73B4FBC8-2834-4E24-88D4-DACE35264EBB}" WorkUnitID="{F69E1AE3-7C18-49BC-905B-CA8FDDA6EBAD}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Set_State_Season_Summer" ID="{F120D75E-4B77-4934-82A0-F2B703A582EC}">
+							<ChildrenList>
+								<Action Name="" ID="{20AC215B-4A11-4B2C-96FF-AA9CEE879355}" ShortID="49510258">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="State_Season_Summer" ID="{0E72AAD5-BB5F-46E8-BADD-E4115884D4DC}" WorkUnitID="{F69E1AE3-7C18-49BC-905B-CA8FDDA6EBAD}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
 							</ChildrenList>
 						</Event>
 					</ChildrenList>
