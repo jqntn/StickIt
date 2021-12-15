@@ -4,46 +4,40 @@ using MoreMountains.Feedbacks;
 public class MMFeedbacksManager : MonoBehaviour
 {
     public List<MMFeedbacks> feedbacksList = new List<MMFeedbacks>();
+
+	[Header("DEBUG______________________________________________")]
+	[SerializeField] private List<float> startDurationList = new List<float>(); 
     private void Awake()
     {
         // | Listeners
 		GameEvents.ShakeAppearChairEvent.AddListener(ShakeAppearChairCall);
 		GameEvents.CameraShake_CEvent.AddListener(CameraShake_CCall);
 		// | End Listeners
+
+		foreach(MMFeedbacks feedback in feedbacksList)
+        {
+			startDurationList.Add(feedback.TotalDuration);
+        }
     }
 
 	// | Calls
 	public void ShakeAppearChairCall(float duration, float intensity)
 	{
 		if (!feedbacksList[1].IsPlaying){
-			float durationMultiplier = Mathf.Sqrt(duration) / feedbacksList[1].TotalDuration;
+			float durationMultiplier = Mathf.Sqrt(duration / startDurationList[1]);
 			feedbacksList[1].FeedbacksIntensity = intensity;
 			feedbacksList[1].DurationMultiplier = durationMultiplier;
 			feedbacksList[1].PlayFeedbacks();
-			Debug.Log("Duration " + feedbacksList[0].DurationMultiplier);
-			Debug.Log("TotalDuration " + feedbacksList[0].TotalDuration);
 		}
 	}
-
-	public void CameraShake_CCall(float duration = 1.0f, float intensity = 1.0f)
+	public void CameraShake_CCall(float duration, float intensity)
 	{
 		if (!feedbacksList[0].IsPlaying){
-			feedbacksList[0].DurationMultiplier = 1.0f;
-			float durationMultiplier = feedbacksList[0].TotalDuration / duration;
-			durationMultiplier = Mathf.Sqrt(durationMultiplier);
+			float durationMultiplier = Mathf.Sqrt(duration / startDurationList[0]);
 			feedbacksList[0].FeedbacksIntensity = intensity;
 			feedbacksList[0].DurationMultiplier = durationMultiplier;
-			//Debug.Log("Duration " + feedbacksList[0].DurationMultiplier);
-			//Debug.Log("TotalDuration " + feedbacksList[0].TotalDuration);
 			feedbacksList[0].PlayFeedbacks();
 		}
 	}
 	// | End Calls
-
-	public void CameraShake_C2(MMFeedbacksData data)
-	{
-		Debug.Log("Duration " + feedbacksList[0].DurationMultiplier);
-		Debug.Log("TotalDuration " + feedbacksList[0].TotalDuration);
-		feedbacksList[0].PlayFeedbacks();
-    }
 }
