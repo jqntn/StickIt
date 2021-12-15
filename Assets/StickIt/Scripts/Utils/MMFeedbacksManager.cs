@@ -26,6 +26,7 @@ public class MMFeedbacksManager : MonoBehaviour
 	public void CameraShake_CCall(float duration = 1.0f, float intensity = 1.0f)
 	{
 		if (!feedbacksList[0].IsPlaying){
+			feedbacksList[0].DurationMultiplier = 1.0f;
 			float durationMultiplier = feedbacksList[0].TotalDuration / duration;
 			feedbacksList[0].FeedbacksIntensity = intensity;
 			feedbacksList[0].DurationMultiplier = durationMultiplier;
