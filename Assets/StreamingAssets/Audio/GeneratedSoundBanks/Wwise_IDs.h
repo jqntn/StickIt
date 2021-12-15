@@ -29,6 +29,8 @@ namespace AK
         static const AkUniqueID PLAY_SFX_UI_MOVE = 445139456U;
         static const AkUniqueID PLAY_SFX_UI_RETURN = 811711225U;
         static const AkUniqueID PLAY_SFX_UI_SUBMIT = 3895889347U;
+        static const AkUniqueID SET_STATE_SEASON_FALL = 442955453U;
+        static const AkUniqueID SET_STATE_SEASON_SUMMER = 3566163661U;
     } // namespace EVENTS
 
     namespace STATES
@@ -40,6 +42,7 @@ namespace AK
             namespace STATE
             {
                 static const AkUniqueID NONE = 748895195U;
+                static const AkUniqueID NOSTATE = 302661891U;
                 static const AkUniqueID STATE_SEASON_FALL = 2028143368U;
                 static const AkUniqueID STATE_SEASON_SUMMER = 1215538628U;
             } // namespace STATE

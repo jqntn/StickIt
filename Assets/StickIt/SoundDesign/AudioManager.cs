@@ -64,15 +64,16 @@ public class AudioManager : Unique<AudioManager>
     #region Environment
     public void PlayAmbiantSounds(GameObject go)
     {
+        Debug.Log("Play Ambiance");
         AkSoundEngine.PostEvent("Event_Play_Ambiance", go);
     }
-    public void SwitchAmbianceToFall()
+    public void SwitchAmbianceToFall(GameObject go)
     {
-        AkSoundEngine.SetState("State_Season","State_Season_Fall");
+        AkSoundEngine.PostEvent("Set_State_Season_Fall", go);
     }
-    public void SwitchAmbianceToSummer()
+    public void SwitchAmbianceToSummer(GameObject go)
     {
-        AkSoundEngine.SetState("State_Season", "State_Season_Summer");
+        AkSoundEngine.PostEvent("Set_State_Season_Summer", go);
     }
     #endregion
 }

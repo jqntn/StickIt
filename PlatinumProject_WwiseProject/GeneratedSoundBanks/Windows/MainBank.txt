@@ -1,5 +1,6 @@
 Event	ID	Name			Wwise Object Path	Notes
 	239606594	Play_SFX_S_Death			\Default Work Unit\SFX_Slime\Play_SFX_S_Death	
+	442955453	Set_State_Season_Fall			\Default Work Unit\Environment\Set_State_Season_Fall	
 	445139456	Play_SFX_UI_Move			\Default Work Unit\SFX_UI\Play_SFX_UI_Move	
 	501088891	Play_SFX_S_BrambleImpact			\Default Work Unit\SFX_General\Play_SFX_S_BrambleImpact	
 	717539115	Play_SFX_Platform_Rotate			\Default Work Unit\Play_SFX_Platform_Rotate	
@@ -14,12 +15,14 @@ Event	ID	Name			Wwise Object Path	Notes
 	2897847363	Play_SFX_UI_CountdownEnd			\Default Work Unit\SFX_UI\Play_SFX_UI_CountdownEnd	
 	3182511947	Event_Play_Ambiance			\Default Work Unit\Environment\Event_Play_Ambiance	
 	3510434704	Play_SFX_S_Jump			\Default Work Unit\SFX_Slime\Play_SFX_S_Jump	
+	3566163661	Set_State_Season_Summer			\Default Work Unit\Environment\Set_State_Season_Summer	
 	3895889347	Play_SFX_UI_Submit			\Default Work Unit\SFX_UI\Play_SFX_UI_Submit	
 
 State Group	ID	Name			Wwise Object Path	Notes
 	3774929168	State_Season			\Default Work Unit\State_Season	
 
 State	ID	Name	State Group			Notes
+	302661891	NoState	State_Season			
 	748895195	None	State_Season			
 	1215538628	State_Season_Summer	State_Season			
 	2028143368	State_Season_Fall	State_Season			
@@ -27,6 +30,8 @@ State	ID	Name	State Group			Notes
 Custom State	ID	Name	State Group	Owner		Notes
 	187240482	State_Season_Summer	State_Season	\Actor-Mixer Hierarchy\Default Work Unit\Enviro\Enviro_Fall		
 	243688673	State_Season_Fall	State_Season	\Actor-Mixer Hierarchy\Default Work Unit\Enviro\Enviro_Summer		
+	417467970	NoState	State_Season	\Actor-Mixer Hierarchy\Default Work Unit\Enviro\Enviro_Fall		
+	935752738	NoState	State_Season	\Actor-Mixer Hierarchy\Default Work Unit\Enviro\Enviro_Summer		
 
 In Memory Audio	ID	Name	Audio source file		Wwise Object Path	Notes	Data Size
 	28291394	SFX_Slime_Death_01	C:\Projects\Unity\PlatinumProject\PlatinumProject_WwiseProject\.cache\Windows\SFX\SFX_Slime_Death_01_10C4C929.wem		\Actor-Mixer Hierarchy\Default Work Unit\SFX_Slime\SFX_S_Death\SFX_Slime_Death_01		188342
