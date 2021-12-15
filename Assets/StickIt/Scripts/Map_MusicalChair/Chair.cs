@@ -62,7 +62,7 @@ public class Chair : MonoBehaviour
             if (chosenOne)
             {
                 shield.transform.SetParent(chosenOne.transform);
-                shield.transform.localScale =  new Vector3(musicalChairManager.sizeShieldChair, musicalChairManager.sizeShieldChair, musicalChairManager.sizeShieldChair) / 10000;
+                shield.transform.localScale =  new Vector3(musicalChairManager.sizeShieldChair, musicalChairManager.sizeShieldChair, musicalChairManager.sizeShieldChair) / 100;
                 shield.transform.localPosition = new Vector3(0, 0, 0);
                 colShield = chosenOne.GetComponent<Player>().myDatas.material.GetColor("_Color");
                 colShield.a = shieldMesh.material.GetColor("_Tint").a;
@@ -134,7 +134,10 @@ public class Chair : MonoBehaviour
                     //myMeshRenderer.material = musicalChairManager.chairTaken;
                     chosenOne = playersInChair[0];
                     shield.SetActive(true);
-                    AudioManager.instance.PlayGainShieldSounds(gameObject);
+                    if (AudioManager.instance != null)
+                    {
+                        AudioManager.instance.PlayGainShieldSounds(gameObject);
+                    }
                 }
                 if(playersInChair.Count >= 1)
                 {
