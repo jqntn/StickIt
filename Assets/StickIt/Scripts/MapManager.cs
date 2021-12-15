@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.VFX;
 public class MapManager : Unique<MapManager>
 {
     [Header("DATAS____________________")]
@@ -12,6 +13,10 @@ public class MapManager : Unique<MapManager>
     public int mapOffset;
     public float timeScale;
     public bool isBusy;
+
+    //[Header("PREFABS___________________")]
+    //public VisualEffect onDeathVFX;                                             // Take Player death Animation to know how long to wait before transition
+
     [Header("DEBUG____________________")]
     public GameObject curMapRoot;
     public GameObject nextMapRoot;
@@ -38,7 +43,10 @@ public class MapManager : Unique<MapManager>
     }
     private void Start()
     {
-        AudioManager.instance.PlayAmbiantSounds(gameObject);
+        if(AudioManager.instance != null) {
+            AudioManager.instance.PlayAmbiantSounds(gameObject);
+        }
+
     }
     public bool EndLevel()
     {
@@ -100,6 +108,20 @@ public class MapManager : Unique<MapManager>
     {
         isBusy = true;
         if (nextMap == "") nextMap = SelectNextMap();
+
+        // Wait for animation death player to end
+        foreach (Player player in MultiplayerManager.instance.players)
+        {
+            PlayerAnimations snowAnim = player.GetComponent<PlayerAnimations>();
+            if (snowAnim != null)
+            {
+                snowAnim.VFXSnow.Stop();
+                snowAnim.ChangeBoolSnowToFalse();
+            }
+        }
+        yield return new WaitForSecondsRealtime(2.0f);
+        //--------
+
         Time.timeScale = .5f;
         timeScale = Time.timeScale;
         if (curMapRoot == null) curMapRoot = GameObject.Find("MapRoot");

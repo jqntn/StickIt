@@ -134,7 +134,10 @@ public class Chair : MonoBehaviour
                     //myMeshRenderer.material = musicalChairManager.chairTaken;
                     chosenOne = playersInChair[0];
                     shield.SetActive(true);
-                    AudioManager.instance.PlayGainShieldSounds(gameObject);
+                    if (AudioManager.instance != null)
+                    {
+                        AudioManager.instance.PlayGainShieldSounds(gameObject);
+                    }
                 }
                 if(playersInChair.Count >= 1)
                 {

@@ -69,7 +69,7 @@ public class AudioManager : Unique<AudioManager>
     #region Environment
     public void PlayAmbiantSounds(GameObject go)
     {
-        Debug.Log("Play Ambiance");
+        //Debug.Log("Play Ambiance");
         AkSoundEngine.PostEvent("Event_Play_Ambiance", go);
     }
     public void SwitchAmbianceToFall(GameObject go)
