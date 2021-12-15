@@ -78,7 +78,7 @@ public class MultiplayerManager : MonoBehaviour
     {
         playersStartingPos = FindObjectOfType<PlayerStartingPos>().transform;
 #if UNITY_EDITOR
-        if (!isMenuSelection)
+        //if (!isMenuSelection)
             InitializePlayersWithoutMenuSelector(nbrOfPlayer);
         Level lvl = FindObjectOfType<Level>();
         if (lvl != null) StartCoroutine(lvl.Init());

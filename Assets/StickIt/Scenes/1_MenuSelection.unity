@@ -470,7 +470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3071383605669792054, guid: b923fe745e1b2284b93eb9e389bfcb35, type: 3}
       propertyPath: nbrOfPlayer
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3071383605669792055, guid: b923fe745e1b2284b93eb9e389bfcb35, type: 3}
       propertyPath: m_Name
@@ -710,6 +710,63 @@ MonoBehaviour:
   startTimer: 0
   hasReverse: 0
   hasStart: 0
+--- !u!1001 &382822552
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5515026975681557280, guid: a03bc8dfb422e2e4ebabecd192f00026, type: 3}
+      propertyPath: m_Name
+      value: PostProcess
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515026975681557310, guid: a03bc8dfb422e2e4ebabecd192f00026, type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515026975681557310, guid: a03bc8dfb422e2e4ebabecd192f00026, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515026975681557310, guid: a03bc8dfb422e2e4ebabecd192f00026, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515026975681557310, guid: a03bc8dfb422e2e4ebabecd192f00026, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515026975681557310, guid: a03bc8dfb422e2e4ebabecd192f00026, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515026975681557310, guid: a03bc8dfb422e2e4ebabecd192f00026, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515026975681557310, guid: a03bc8dfb422e2e4ebabecd192f00026, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515026975681557310, guid: a03bc8dfb422e2e4ebabecd192f00026, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515026975681557310, guid: a03bc8dfb422e2e4ebabecd192f00026, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515026975681557310, guid: a03bc8dfb422e2e4ebabecd192f00026, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5515026975681557310, guid: a03bc8dfb422e2e4ebabecd192f00026, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: a03bc8dfb422e2e4ebabecd192f00026, type: 3}
 --- !u!1001 &420908401
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2789,9 +2846,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_ActionEvents: []
-  m_NeverAutoSwitchControlSchemes: 1
+  m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: UIInputs
+  m_DefaultActionMap: NormalInputs
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &1709968162
@@ -3381,6 +3438,62 @@ MonoBehaviour:
   startTimer: 0
   hasReverse: 0
   hasStart: 0
+--- !u!1 &1966818497
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1966818499}
+  - component: {fileID: 1966818498}
+  m_Layer: 0
+  m_Name: WwiseGlobal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1966818498
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966818497}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00f5f492c9ceebe4f9de794f5095bd7b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InitializationSettings: {fileID: 11400000, guid: 55d9787b8a5dd82459f97b3bd7feb6cc, type: 2}
+  basePath: 
+  language: 
+  defaultPoolSize: 0
+  lowerPoolSize: 0
+  streamingPoolSize: 0
+  memoryCutoffThreshold: 0
+  monitorPoolSize: 0
+  monitorQueuePoolSize: 0
+  callbackManagerBufferSize: 0
+  spatialAudioPoolSize: 0
+  maxSoundPropagationDepth: 0
+  engineLogging: 0
+--- !u!4 &1966818499
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1966818497}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1977160421
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3544,6 +3657,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 264679286983488418, guid: d2ee1942826cebe4183a8eff1e05dbaa, type: 3}
+      propertyPath: noiseSize
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 264679286983488418, guid: d2ee1942826cebe4183a8eff1e05dbaa, type: 3}
+      propertyPath: colorEdgeDisappear.b
+      value: 1.0039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 264679286983488418, guid: d2ee1942826cebe4183a8eff1e05dbaa, type: 3}
+      propertyPath: colorEdgeDisappear.g
+      value: 1.0039216
+      objectReference: {fileID: 0}
+    - target: {fileID: 264679286983488418, guid: d2ee1942826cebe4183a8eff1e05dbaa, type: 3}
+      propertyPath: colorEdgeDisappear.r
+      value: 26.980392
+      objectReference: {fileID: 0}
     - target: {fileID: 2906344591245672142, guid: d2ee1942826cebe4183a8eff1e05dbaa, type: 3}
       propertyPath: m_RootOrder
       value: 3

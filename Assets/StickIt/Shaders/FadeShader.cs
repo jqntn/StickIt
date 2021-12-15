@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class FadeShader : MonoBehaviour
 {
+    [SerializeField]
     MeshRenderer[] renderers;
+    [SerializeField]
     List<Material> matSave = new List<Material>();
     public Shader shader;
 
@@ -18,13 +20,13 @@ public class FadeShader : MonoBehaviour
     bool isAppearAnimation;
     bool isDisappearAnimation;
 
+    [ColorUsageAttribute(true, true), SerializeField] Color colorEdgeDisappear;
     float time;
 
 
     private void Start()
     {
 
-        //StartCoroutine(test());
     }
     // Update is called once per frame
     void Update()
@@ -43,7 +45,7 @@ public class FadeShader : MonoBehaviour
             {
                 isAppearAnimation = false;
                 SetBackMaterials();
-                print("SetBackMaterialsAppear");
+                //print("SetBackMaterialsAppear");
             }
         }
         else if (isDisappearAnimation)
@@ -56,8 +58,6 @@ public class FadeShader : MonoBehaviour
             }
             if (time >= 1)
             {
-                SetBackMaterials();
-                print("SetBackMaterialsDisappear");
                 isDisappearAnimation = false;
             }
         }
@@ -68,7 +68,7 @@ public class FadeShader : MonoBehaviour
 
     public void AllObjectsDisappear()
     {
-        SetShaders();
+        SetShaders(false);
         isDisappearAnimation = true;
         time = 0;
         //time = Time.time;
@@ -93,21 +93,22 @@ public class FadeShader : MonoBehaviour
         matSave.Clear();
     }
 
-    public void SetShaders()
+    public void SetShaders(bool saveMaterials)
     {
         renderers = FindObjectsOfType<MeshRenderer>();
         for (int i = 0; i < renderers.Length; i++)
         {
             if (renderers[i].material != null)
             {
+                if(saveMaterials)
                 matSave.Add(renderers[i].material);
                 if(!renderers[i].gameObject.CompareTag("Chair"))
-                    renderers[i].material = CreateShaderFromMaterial(renderers[i].material, renderers[i].gameObject.name);
+                    renderers[i].material = CreateShaderFromMaterial(renderers[i].material, renderers[i].gameObject.name, saveMaterials);
             }
         }
     }
 
-    Material CreateShaderFromMaterial(Material material, string name)
+    Material CreateShaderFromMaterial(Material material, string name, bool isAppear)
     {
         Material mat = new Material(shader);
         mat.name = "Shader Disappear - " + name;
@@ -126,21 +127,12 @@ public class FadeShader : MonoBehaviour
 
         mat.SetColor("_Color", material.GetColor("_BaseColor"));
         mat.SetColor("_EmissionColor", material.GetColor("_EmissionColor"));
+        if(!isAppear) mat.SetColor("_ColorEdge", colorEdgeDisappear);
         if (material.IsKeywordEnabled("_EMISSION")) mat.SetFloat("_Intensity", 1);
         mat.SetFloat("_EdgeWidth", edgeWidth);
         mat.SetFloat("_SpeedRotation", speedRotation);
         mat.SetInt("_NoiseSize", noiseSize);
         mat.SetFloat("_Fade", 1);
         return mat;
-    }
-
-    IEnumerator test()
-    {
-        yield return new WaitForSeconds(1);
-        SetShaders();
-        yield return new WaitForSeconds(2);
-        AllObjectsAppear();
-        yield return new WaitForSeconds(5);
-        AllObjectsDisappear();
     }
 }
