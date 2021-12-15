@@ -38,6 +38,7 @@ public class MapManager : Unique<MapManager>
     }
     private void Start()
     {
+        if(AudioManager.instance == null) { return; }
         AudioManager.instance.PlayAmbiantSounds(gameObject);
     }
     public bool EndLevel()

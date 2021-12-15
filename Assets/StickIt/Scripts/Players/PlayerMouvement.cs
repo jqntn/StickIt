@@ -254,7 +254,12 @@ public class PlayerMouvement : MonoBehaviour
                         state = STATE.STICK;
                         break;
                 }
-                AudioManager.instance.PlayLandSounds(gameObject);
+
+                if(AudioManager.instance != null)
+                {
+                    AudioManager.instance.PlayLandSounds(gameObject);
+                }
+
                 hasJumped = false;
                 #endregion Collision Untagged
                 break;

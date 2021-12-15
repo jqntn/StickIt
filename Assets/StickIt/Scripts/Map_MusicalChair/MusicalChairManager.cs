@@ -31,7 +31,7 @@ public class MusicalChairManager : Level
     [SerializeField] private Material bigMushroomMat, bigMushroomAngryMat;
     protected override void Awake()
     {
-        AudioManager.instance.SwitchAmbianceToFall(gameObject);
+        //AudioManager.instance.SwitchAmbianceToFall(gameObject);
         //durationSpawn = 2;
     }
     protected override void Start()
@@ -84,7 +84,7 @@ public class MusicalChairManager : Level
                 //for (int i = 0; i < UnityEngine.InputSystem.Gamepad.all.Count; i++)
                 //    UnityEngine.InputSystem.Gamepad.all[i].SetMotorSpeeds(0.1f, 0.1f);
                 ChangeChairPool();
-                GameEvents.ShakeAppearChairEvent.Invoke(transition, 1.0f);
+                GameEvents.ShakeAppearChairEvent.Invoke(1.0f, 1.0f);
                 spawning = false;
             }
         }
