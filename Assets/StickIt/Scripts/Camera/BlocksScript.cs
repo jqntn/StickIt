@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class BlocksScript : MonoBehaviour
 {
+    [Header("TEST______________________")]
+    public bool isStartingDirect = true;
     public CameraData data;
     public float extendsFactor = 1.0f;
     public Vector3 offsets = new Vector3(0.0f, 0.0f, 0.0f);
@@ -61,7 +63,6 @@ public class BlocksScript : MonoBehaviour
         }
         dimension.y = bounds.size.y + childCollider.bounds.size.y;
 
-
         // Change dimension to respect aspect ratio
         factors.x = dimension.x / Utils.AspectRatio.x;
         factors.y = dimension.y / Utils.AspectRatio.y;
@@ -83,7 +84,7 @@ public class BlocksScript : MonoBehaviour
     void Start()
     {
         //Debug
-        GiveNewBounds();
+        if(isStartingDirect) GiveNewBounds();
     }
     private void GiveNewBounds()
     {

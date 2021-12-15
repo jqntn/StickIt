@@ -24,7 +24,7 @@ public class MapManager : Unique<MapManager>
     [SerializeField] private uint roundCount = 0;
     private Coroutine _coroutine;
     private CameraStateDriven camManager;
-
+    bool levelEnded = false;
     private FadeShader shaderScript;
     //void OnGUI()
     //{
@@ -38,16 +38,25 @@ public class MapManager : Unique<MapManager>
     }
     public bool EndLevel()
     {
-        if (MultiplayerManager.instance.alivePlayers.Count <= 1)
+        if (!levelEnded && MultiplayerManager.instance.alivePlayers.Count <= 1)
         {
+            Debug.Log("CALL END LEVEL");
             shaderScript.AllObjectsDisappear();
             NextMap();
+            levelEnded = true;
             return true;
         }
         return false;
     }
     public bool NextMap(string nextMap = "", bool fromMenu = false)
     {
+        //if (fromMenu)
+        //{
+        //    nextMap = SelectNextMap();
+        //    SceneManager.LoadScene(nextMap);
+        //    camManager.SwitchStates(Utils.GetCameraType(curMod));
+        //    return true;
+        //}
         foreach (Player player in MultiplayerManager.instance.players) player.PrepareToChangeLevel();
         if (_coroutine == null) _coroutine = StartCoroutine(BeginTransition(nextMap, fromMenu));
         else return false;
@@ -56,13 +65,12 @@ public class MapManager : Unique<MapManager>
     private string SelectNextMap()
     {
         // End Game
-        if(roundCount == numberOfRounds) { 
-            Debug.Log("End Game");
+        if (roundCount == numberOfRounds)
+        {
             curMod = "End";
-            curMap = "EndScene 2";
-            return "EndScene 2"; 
+            curMap = "100_EndScene";
+            return "100_EndScene";
         }
-
         // Next Map
         ModsData.Mod mod;
         string map = SceneManager.GetActiveScene().name;
@@ -113,7 +121,7 @@ public class MapManager : Unique<MapManager>
         // ----------
         GameObject[] nextStartPos = GameObject.FindGameObjectsWithTag("StartPos");
         MultiplayerManager.instance.speedChangeMap = 1 / slowTime;
-        MultiplayerManager.instance.StartChangeMap(nextStartPos[nextStartPos.Length - 1].transform); 
+        MultiplayerManager.instance.StartChangeMap(nextStartPos[nextStartPos.Length - 1].transform);
         while (MultiplayerManager.instance.isChangingMap) yield return null;
         StartCoroutine(EndTransition());
     }
@@ -155,6 +163,7 @@ public class MapManager : Unique<MapManager>
         shaderScript.AllObjectsAppear();
         var lvl = FindObjectOfType<Level>();
         if (lvl != null) StartCoroutine(lvl.Init());
+        levelEnded = false;
         yield return null;
     }
 }

@@ -52,20 +52,19 @@ public class MusicalChairManager : Level
     protected override void StartMap()
     {
         base.StartMap();
-        Debug.Log("Child Start Map");
+        //Debug.Log("Child Start Map");
         chairs = FindObjectsOfType<Chair>();
         inTransition = true;
         transition = transitionValue + 1;
         maxChairsActive = MultiplayerManager.instance.alivePlayers.Count - 1;
         GameLaunched = true;
-      
     }
     private void UpdateText()
     {
         if (Debug.isDebugBuild)
         {
-            Debug.Log("inTransition = " + inTransition);
-            Debug.Log("isSpawning = " + spawning);
+            //Debug.Log("inTransition = " + inTransition);
+            //Debug.Log("isSpawning = " + spawning);
         }
         if (inTransition)
         {
@@ -118,7 +117,7 @@ public class MusicalChairManager : Level
     {
         if (Debug.isDebugBuild)
         {
-            Debug.Log("ChangeChairPool");
+            //Debug.Log("ChangeChairPool");
         }
         //spawnFeedback.PlayFeedbacks();
         if (sporeScript == null)

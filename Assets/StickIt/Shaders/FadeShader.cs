@@ -43,7 +43,7 @@ public class FadeShader : MonoBehaviour
             {
                 isAppearAnimation = false;
                 SetBackMaterials();
-                print("SetBackMaterialsAppear");
+                //print("SetBackMaterialsAppear");
             }
         }
         else if (isDisappearAnimation)
@@ -56,8 +56,8 @@ public class FadeShader : MonoBehaviour
             }
             if (time >= 1)
             {
+                print("SetBackMaterialsDisappear - Size matSave  - " + matSave.Count);
                 SetBackMaterials();
-                print("SetBackMaterialsDisappear");
                 isDisappearAnimation = false;
             }
         }
