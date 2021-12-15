@@ -132,7 +132,7 @@ public class EndScore2 : MonoBehaviour
         {
             yield return new WaitForSeconds(timeBetweenRankAppear);
             panelPlayers[i].SetActive(true);
-            textP[i].text = "P" + ranking[i].myDatas.id.ToString();
+            textP[i].text = "Player " + ranking[i].myDatas.id.ToString();
             textScores[i].text = ranking[i].myDatas.score.ToString();
             canvasRank[i].SetActive(true);
         }
