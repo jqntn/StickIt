@@ -136,9 +136,9 @@ public abstract class CameraState : MonoBehaviour
         transform.parent.position = Vector3.SmoothDamp(transform.parent.position, newPos, ref moveVelocity, moveTime, Mathf.Infinity, Time.unscaledDeltaTime);
 
         // if zooming out and is touching border > return and wait to move first
-        bool isTouchingBorder =
-            min_viewport.x <= min_bounds.x || max_viewport.x >= max_bounds.x;
-        if (canClampZoom && positionToGoTo.z < transform.parent.position.z && isTouchingBorder) { return; }
+        //bool isTouchingBorder =
+        //    min_viewport.x <= min_bounds.x || max_viewport.x >= max_bounds.x;
+        //if (canClampZoom && positionToGoTo.z < transform.parent.position.z && isTouchingBorder) { return; }
 
         // Zoom Camera
         Vector3 newZoom = new Vector3(
@@ -189,10 +189,15 @@ public abstract class CameraState : MonoBehaviour
         playerBounds = new Bounds();
         foreach (Player player in playerList)
         {
-            playerBounds.Encapsulate(player.transform.position);
+            Collider collider = player.GetComponent<SphereCollider>();
+            if(collider != null)
+            {
+                Bounds bounds = collider.bounds;
+                playerBounds.Encapsulate(bounds);
+            }
         }
 
-        Vector2 offset = new Vector2(playerBounds.extents.x, playerBounds.extents.y);
+        Vector2 offset = new Vector2(playerBounds.size.x, playerBounds.size.y);
 
         min_playerBounds.x = playerBounds.center.x - offset.x;
         min_playerBounds.y = playerBounds.center.y - offset.y;
@@ -217,7 +222,6 @@ public abstract class CameraState : MonoBehaviour
         if(maxDistance.y != 0) { 
             ratio.y = Mathf.Clamp(playerBounds.size.y, 0, maxDistance.y) / maxDistance.y; 
         }
-
 
         positionToGoTo.z = Mathf.Lerp(maxIn_Z, maxOut_Z, Mathf.Max(ratio.x, ratio.y));
     }
@@ -311,7 +315,7 @@ public abstract class CameraState : MonoBehaviour
         }
     }
     #region Debug
-    protected virtual void OnDrawGizmosSelected()
+    protected virtual void OnDrawGizmos()
     {
         // Draw Camera Viewport
         Gizmos.color = Color.yellow;
@@ -327,7 +331,7 @@ public abstract class CameraState : MonoBehaviour
 
         // Draw Players Bounds
         Gizmos.color = Color.blue;
-        Gizmos.DrawWireCube(playerBounds.center, new Vector3(playerBounds.extents.x, playerBounds.extents.y, 1));
+        Gizmos.DrawWireCube(playerBounds.center, new Vector3(playerBounds.size.x, playerBounds.size.y, 1));
     }
     #endregion
 }
