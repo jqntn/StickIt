@@ -95,7 +95,7 @@ public class MusicalChairManager : Level
             textValue = (int)duration;
             countdown.color = colorTextRound;
             countdown.text = textValue.ToString();
-            if (duration < 1)
+            if (duration < 0)
             {
                 inTransition = true;
                 spawning = true;
@@ -147,7 +147,6 @@ public class MusicalChairManager : Level
     }
     private void ResetChairPool()
     {
-        //spawnFeedback.PlayFeedbacksInReverse();
         StartCoroutine("ResetText");
         foreach (Chair c in chairs)
         {

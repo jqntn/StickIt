@@ -4,6 +4,10 @@ class SpikesPlatform : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Player player = other.gameObject.GetComponent<Player>();
-        if (player != null) player.Death();
+        if (player != null)
+        {
+            player.Death();
+            AudioManager.instance.PlayBrambleImpactSounds(gameObject);
+        }
     }
 }

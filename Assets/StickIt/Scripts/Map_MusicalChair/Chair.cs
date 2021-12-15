@@ -56,13 +56,13 @@ public class Chair : MonoBehaviour
                 if (playersInChair.Count > 1 && Vector3.Distance(chosenOne.transform.position, transform.position) > Vector3.Distance(playersInChair[i].transform.position, transform.position))
                 {
                     chosenOne = playersInChair[i];
+                    AudioManager.instance.PlayGainShieldSounds(gameObject);
                 }
             }
             if (chosenOne)
             {
-                matChair.SetFloat("_Intensity", musicalChairManager.intensityEmissive);
                 shield.transform.SetParent(chosenOne.transform);
-                shield.transform.localScale = chosenOne.transform.localScale / (musicalChairManager.sizeShieldChair * 10000);
+                shield.transform.localScale =  new Vector3(musicalChairManager.sizeShieldChair, musicalChairManager.sizeShieldChair, musicalChairManager.sizeShieldChair) / 10000;
                 shield.transform.localPosition = new Vector3(0, 0, 0);
                 colShield = chosenOne.GetComponent<Player>().myDatas.material.GetColor("_Color");
                 colShield.a = shieldMesh.material.GetColor("_Tint").a;
@@ -73,24 +73,13 @@ public class Chair : MonoBehaviour
     }
     public void ActivateChair(float duration)
     {
-        StartCoroutine(SpawnChairCor(duration));
         isActive = true;
-    }
-    public void DeactivateChair(float duration)
-    {
-        //FAIRE TREMBLER LA CHAISE A L'INVERSE
-        if (isTaken)
-            musicalChairManager.winners.Add(chosenOne);
-        isActive = false;
-        lr.enabled = false;
-        chosenOne = null;
-        playersInChair.Clear();
-        StartCoroutine(DespawnChairCor(duration));
+        StartCoroutine(SpawnChairCor(duration));
     }
     private IEnumerator SpawnChairCor(float duration)
     {
         float elapsed = 0;
-        float ratio = 0;
+        float ratio;
         while (elapsed < duration)
         {
             ratio = elapsed / duration;
@@ -100,21 +89,27 @@ public class Chair : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-        //myMeshRenderer.material = musicalChairManager.chairTaken;
-       /* if (!isTaken)
-            myMeshRenderer.material = musicalChairManager.chairNotTaken;*/
+    }
+    public void DeactivateChair(float duration)
+    {
+        if (isTaken)
+            musicalChairManager.winners.Add(chosenOne);
+        isActive = false;
+        lr.enabled = false;
+        chosenOne = null;
+        playersInChair.Clear();
+        StartCoroutine(DespawnChairCor(duration));
     }
     private IEnumerator DespawnChairCor(float duration)
     {
         float elapsed = 0;
-        float ratio = 0;
+        float ratio;
         while (elapsed < duration)
         {
 
             ratio = elapsed / duration;
             ratio = animCurve.Evaluate(ratio);
             matChair.SetFloat("_Fade", ratio);
-            //transform.position = Vector3.Lerp(spawnPosition, originalPos, ratio);
             elapsed += Time.deltaTime;
             yield return null;
         }
@@ -134,35 +129,41 @@ public class Chair : MonoBehaviour
                 playersInChair.Add(c.gameObject.GetComponentInParent<Player>());
                 if (playersInChair.Count == 1)
                 {
-                    isTaken = true;
-                    lr.enabled = true;
-                   // if (!isSpawnAnimation)
+                    // if (!isSpawnAnimation)
                     //    matChair.SetFloat("_Intensity", musicalChairManager.intensityEmissive);
                     //myMeshRenderer.material = musicalChairManager.chairTaken;
                     chosenOne = playersInChair[0];
                     shield.SetActive(true);
+                    AudioManager.instance.PlayGainShieldSounds(gameObject);
+                }
+                if(playersInChair.Count >= 1)
+                {
+                    isTaken = true;
+                    lr.enabled = true;
+                    matChair.SetFloat("_Intensity", musicalChairManager.intensityEmissive);
                 }
             }
         }
     }
     private void OnTriggerExit(Collider c)
     {
+        if (c.tag == "Player")
+        {
+            playersInChair.Remove(playersInChair.Find(x => c.gameObject.GetComponentInParent<Player>()));
+            if (playersInChair.Count < 1)
+            {
+                isTaken = false;
+                lr.enabled = false;
+                matChair.SetFloat("_Intensity", 0.5f);
+                //if (!isSpawnAnimation)
+                //myMeshRenderer.material = musicalChairManager.chairNotTaken;
+                shield.transform.SetParent(transform);
+                shield.SetActive(false);
+            }
+        }
         if (isActive)
         {
-            if (c.tag == "Player")
-            {
-                playersInChair.Remove(playersInChair.Find(x => c.gameObject.GetComponentInParent<Player>()));
-                if (playersInChair.Count < 1)
-                {
-                    isTaken = false;
-                    lr.enabled = false;
-                    matChair.SetFloat("_Intensity", 0.5f);
-                    //if (!isSpawnAnimation)
-                    //myMeshRenderer.material = musicalChairManager.chairNotTaken;
-                    shield.transform.SetParent(transform);
-                    shield.SetActive(false);
-                }
-            }
+            
         }
     }
     private void OnDrawGizmos()

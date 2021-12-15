@@ -46,7 +46,7 @@ public class SelectionOptions : MonoBehaviour
                 inputInstantiated = true;
             }
             ChangeOption();
-            ChangeTypeOption();
+            //ChangeTypeOption();
             if (!playerAdded)
             {
                 selectOptions.SetActive(true);

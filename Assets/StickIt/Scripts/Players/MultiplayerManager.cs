@@ -158,6 +158,7 @@ public class MultiplayerManager : MonoBehaviour
     public void EndChangeMap()
     {
         isChangingMap = false;
+        SetMassEndLVL();
         // Reset the lists and re-enable the players
         alivePlayers = new List<Player>(players);
         deadPlayers.Clear();
