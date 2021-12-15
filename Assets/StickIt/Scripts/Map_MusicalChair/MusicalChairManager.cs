@@ -80,7 +80,7 @@ public class MusicalChairManager : Level
             }
             else if (spawning) //  Start Spawn
             {
-                //GameEvents.CameraShake_CEvent?.Invoke(transition, 1.0f);
+                GameEvents.CameraShake_CEvent?.Invoke(1, 1.0f);
                 //for (int i = 0; i < UnityEngine.InputSystem.Gamepad.all.Count; i++)
                 //    UnityEngine.InputSystem.Gamepad.all[i].SetMotorSpeeds(0.1f, 0.1f);
                 ChangeChairPool();
@@ -100,7 +100,7 @@ public class MusicalChairManager : Level
                 inTransition = true;
                 spawning = true;
                 ResetChairPool();
-                GameEvents.CameraShake_CEvent.Invoke(1.0f, 1.0f);
+                GameEvents.CameraShake_CEvent.Invoke(1, 1.0f);
             }
         }
         if (textValue < countDownSave)
