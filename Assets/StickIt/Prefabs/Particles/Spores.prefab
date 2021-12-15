@@ -4974,7 +4974,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 1.3
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -5406,7 +5406,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 100
+    maxNumParticles: 300
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -5466,7 +5466,7 @@ ParticleSystem:
     serializedVersion: 6
     enabled: 1
     type: 4
-    angle: 49.32
+    angle: 20
     length: 5
     boxThickness: {x: 0, y: 0, z: 0}
     radiusThickness: 1
@@ -5552,7 +5552,7 @@ ParticleSystem:
     sphericalDirectionAmount: 0
     randomPositionAmount: 0
     radius:
-      value: 2.2
+      value: 7
       mode: 0
       spread: 0
       speed:
@@ -5671,7 +5671,7 @@ ParticleSystem:
     rateOverTime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 10
+      scalar: 20
       minScalar: 10
       maxCurve:
         serializedVersion: 2
@@ -6427,17 +6427,17 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: 0.02702707
-          inSlope: 0
-          outSlope: 0
+          inSlope: -0.9189186
+          outSlope: -0.9189186
           tangentMode: 34
           weightedMode: 0
           inWeight: 0
           outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
-          value: 0.02702707
-          inSlope: 0
-          outSlope: 0
+          value: -0.89189154
+          inSlope: -0.9189186
+          outSlope: -0.9189186
           tangentMode: 34
           weightedMode: 0
           inWeight: 0.33333334
@@ -6451,17 +6451,17 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0
           value: -0.2
-          inSlope: 0
-          outSlope: 0
+          inSlope: -0.8
+          outSlope: -0.8
           tangentMode: 34
           weightedMode: 0
           inWeight: 0
           outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
-          value: -0.2
-          inSlope: 0
-          outSlope: 0
+          value: -1
+          inSlope: -0.8
+          outSlope: -0.8
           tangentMode: 34
           weightedMode: 0
           inWeight: 0.33333334
@@ -6489,17 +6489,17 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0.13390313
           value: 0.02702707
-          inSlope: -3.6331224
-          outSlope: -3.6331224
+          inSlope: -3.0714226
+          outSlope: -3.0714226
           tangentMode: 34
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
-          value: 0.02702707
-          inSlope: 0
-          outSlope: 0
+          value: 1
+          inSlope: 1.1233997
+          outSlope: 1.1233997
           tangentMode: 34
           weightedMode: 0
           inWeight: 0.33333334
@@ -6522,17 +6522,17 @@ ParticleSystem:
         - serializedVersion: 3
           time: 0.13960114
           value: -1
-          inSlope: -6.388858
-          outSlope: -6.388858
+          inSlope: -5.2580194
+          outSlope: -5.2580194
           tangentMode: 34
           weightedMode: 0
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 0.991453
-          value: -1
-          inSlope: 0
-          outSlope: 0
+          time: 1
+          value: 0.9459445
+          inSlope: 2.2616773
+          outSlope: 2.2616773
           tangentMode: 34
           weightedMode: 0
           inWeight: 0.33333334
@@ -8729,7 +8729,7 @@ ParticleSystem:
     enabled: 1
     subEmitters:
     - serializedVersion: 3
-      emitter: {fileID: 1231690106867332134}
+      emitter: {fileID: 0}
       type: 0
       properties: 0
       emitProbability: 1
@@ -9740,7 +9740,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2187ea093c081884dade8853f87f85c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  diffSpeed: 0.5
-  speedParticles: 0.1
+  diffSpeed: 0
+  speedParticles: 0.5
   redMat: {fileID: 2100000, guid: 19c6cab3f649ba847b1c73b788e4900c, type: 2}
   blueMat: {fileID: 2100000, guid: cab20369a75bdec4dabc0ef861c30193, type: 2}
+  curveParticlesKiller:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.0029037036
+      value: 0.0063790083
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 0.72176284
+      value: 0.1872487
+      inSlope: 0.668116
+      outSlope: 0.668116
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.16162002
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 5.634222
+      outSlope: 5.634222
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.12287371
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

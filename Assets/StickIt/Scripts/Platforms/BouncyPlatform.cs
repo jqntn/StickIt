@@ -12,6 +12,10 @@ class BouncyPlatform : MonoBehaviour
             {
                 var reflectVec = Vector3.Reflect(v, hit.normal);
                 other.gameObject.GetComponent<Rigidbody>().velocity = reflectVec.normalized * impulseForce;
+                if (AudioManager.instance != null)
+                {
+                    AudioManager.instance.PlayBounceShroomSounds(gameObject);
+                }
             }
         }
     }

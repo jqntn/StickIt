@@ -36,11 +36,15 @@ public class MapManager : Unique<MapManager>
         camManager = Camera.main.GetComponent<CameraStateDriven>();
         shaderScript = GetComponent<FadeShader>();
     }
+    private void Start()
+    {
+        if(AudioManager.instance == null) { return; }
+        AudioManager.instance.PlayAmbiantSounds(gameObject);
+    }
     public bool EndLevel()
     {
         if (!levelEnded && MultiplayerManager.instance.alivePlayers.Count <= 1)
         {
-            Debug.Log("CALL END LEVEL");
             shaderScript.AllObjectsDisappear();
             NextMap();
             levelEnded = true;

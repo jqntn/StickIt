@@ -20,7 +20,7 @@
 	</StreamedFiles>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Language="SFX" Hash="4102988942">
+		<SoundBank Id="1355168291" Language="SFX" Hash="1501740985">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
@@ -31,7 +31,7 @@
 				<GameParameter Id="4276639445" Name="RTPC_Volume_SFX" ObjectPath="\Game Parameters\Default Work Unit\RTPC_Volume_SFX"/>
 			</GameParameters>
 		</SoundBank>
-		<SoundBank Id="2880737896" Language="SFX" Hash="171826639">
+		<SoundBank Id="2880737896" Language="SFX" Hash="46926542">
 			<ObjectPath>\SoundBanks\Default Work Unit\MainBank</ObjectPath>
 			<ShortName>MainBank</ShortName>
 			<Path>MainBank.bnk</Path>
@@ -47,6 +47,9 @@
 							<Path>SFX\AMB_Summer_ST_LP_D79FB2B7.wem</Path>
 						</File>
 					</ReferencedStreamedFiles>
+					<ActionSetState>
+						<ActionSetStateEntry Id="302661891" Name="NoState" ObjectPath="\States\Default Work Unit\State_Season\NoState"/>
+					</ActionSetState>
 				</Event>
 				<Event Id="717539115" Name="Play_SFX_Platform_Rotate" ObjectPath="\Events\Default Work Unit\Play_SFX_Platform_Rotate" DurationType="Infinite">
 					<IncludedMemoryFiles>
@@ -492,6 +495,16 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
+				<Event Id="442955453" Name="Set_State_Season_Fall" ObjectPath="\Events\Default Work Unit\Environment\Set_State_Season_Fall" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000">
+					<ActionSetState>
+						<ActionSetStateEntry Id="2028143368" Name="State_Season_Fall" ObjectPath="\States\Default Work Unit\State_Season\State_Season_Fall"/>
+					</ActionSetState>
+				</Event>
+				<Event Id="3566163661" Name="Set_State_Season_Summer" ObjectPath="\Events\Default Work Unit\Environment\Set_State_Season_Summer" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000">
+					<ActionSetState>
+						<ActionSetStateEntry Id="1215538628" Name="State_Season_Summer" ObjectPath="\States\Default Work Unit\State_Season\State_Season_Summer"/>
+					</ActionSetState>
+				</Event>
 			</IncludedEvents>
 			<ReferencedStreamedFiles>
 				<File Id="103556048"/>
@@ -735,6 +748,17 @@
 					<Path>SFX\SFX_Slime_Jump_06_10C4C929.wem</Path>
 				</File>
 			</IncludedMemoryFiles>
+			<StateGroups>
+				<StateGroup Id="302661891" Name="NoState" ObjectPath="\States\Default Work Unit\State_Season\NoState" GUID="{37F35E69-E59F-43A5-8AC0-F0281052D192}">
+					<States/>
+				</StateGroup>
+				<StateGroup Id="1215538628" Name="State_Season_Summer" ObjectPath="\States\Default Work Unit\State_Season\State_Season_Summer" GUID="{0E72AAD5-BB5F-46E8-BADD-E4115884D4DC}">
+					<States/>
+				</StateGroup>
+				<StateGroup Id="2028143368" Name="State_Season_Fall" ObjectPath="\States\Default Work Unit\State_Season\State_Season_Fall" GUID="{73B4FBC8-2834-4E24-88D4-DACE35264EBB}">
+					<States/>
+				</StateGroup>
+			</StateGroups>
 		</SoundBank>
 	</SoundBanks>
 </SoundBanksInfo>

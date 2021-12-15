@@ -8,6 +8,7 @@
 						<State Name="None" ID="{A9D7449E-B892-4D76-AD49-3B5E3E0EF9DE}"/>
 						<State Name="State_Season_Fall" ID="{73B4FBC8-2834-4E24-88D4-DACE35264EBB}"/>
 						<State Name="State_Season_Summer" ID="{0E72AAD5-BB5F-46E8-BADD-E4115884D4DC}"/>
+						<State Name="NoState" ID="{37F35E69-E59F-43A5-8AC0-F0281052D192}"/>
 					</ChildrenList>
 					<TransitionList>
 						<Transition>
@@ -15,6 +16,18 @@
 							<EndState Name="State_Season_Summer" ID="{0E72AAD5-BB5F-46E8-BADD-E4115884D4DC}"/>
 							<Time>1</Time>
 							<IsShared>true</IsShared>
+						</Transition>
+						<Transition>
+							<StartState Name="NoState" ID="{37F35E69-E59F-43A5-8AC0-F0281052D192}"/>
+							<EndState Name="State_Season_Fall" ID="{73B4FBC8-2834-4E24-88D4-DACE35264EBB}"/>
+							<Time>1</Time>
+							<IsShared>false</IsShared>
+						</Transition>
+						<Transition>
+							<StartState Name="NoState" ID="{37F35E69-E59F-43A5-8AC0-F0281052D192}"/>
+							<EndState Name="State_Season_Summer" ID="{0E72AAD5-BB5F-46E8-BADD-E4115884D4DC}"/>
+							<Time>1</Time>
+							<IsShared>false</IsShared>
 						</Transition>
 					</TransitionList>
 				</StateGroup>
