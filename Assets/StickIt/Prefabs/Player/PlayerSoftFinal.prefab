@@ -132,7 +132,7 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 0.019607844}
+      key0: {r: 1, g: 1, b: 1, a: 0.39215687}
       key1: {r: 1, g: 1, b: 1, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -1422,7 +1422,9 @@ MonoBehaviour:
   canvasCameraPlayer: {fileID: 4740713445456180923}
   playerStartPos: []
   hasFinish: 0
-  pos2Go: {x: 0, y: 0}
+  depthOffset: -0.03
+  offset: {x: 0, y: 0, z: 0}
+  pos2Go: {x: 0, y: 0, z: 0}
 --- !u!1 &4145983037532592913
 GameObject:
   m_ObjectHideFlags: 0
