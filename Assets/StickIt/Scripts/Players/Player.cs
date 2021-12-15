@@ -19,7 +19,6 @@ public class Player : MonoBehaviour
     [SerializeField] private int maxMass = 250;
     private void Awake()
     {
-
         _multiplayerManager = MultiplayerManager.instance;
         if (TryGetComponent<PlayerMouvement>(out PlayerMouvement pm))
         {
@@ -27,7 +26,6 @@ public class Player : MonoBehaviour
             myMouvementScript.myPlayer = this;
         }
         DontDestroyOnLoad(this);
-
 
         VFXExplosionParticle = VFXExplosion.GetComponent<VisualEffect>();
         VFXExplosionParticle.Stop();
@@ -50,7 +48,10 @@ public class Player : MonoBehaviour
             yield return new WaitForSeconds(deathAnim.TotalDuration / deathAnim.DurationMultiplier);
         }
 
-        if (AudioManager.instance != null) { AudioManager.instance.PlayDeathSounds(gameObject); }
+        if (AudioManager.instance != null) { 
+            AudioManager.instance.PlayDeathSounds(gameObject); 
+        }
+
         myMouvementScript.Death();
         GameObject obj = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Quaternion.identity);
         obj.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
