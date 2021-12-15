@@ -16,10 +16,12 @@ public class MMFeedbacksManager : MonoBehaviour
 	public void ShakeAppearChairCall(float duration, float intensity)
 	{
 		if (!feedbacksList[1].IsPlaying){
-			float durationMultiplier = duration / feedbacksList[1].TotalDuration;
+			float durationMultiplier = Mathf.Sqrt(duration) / feedbacksList[1].TotalDuration;
 			feedbacksList[1].FeedbacksIntensity = intensity;
 			feedbacksList[1].DurationMultiplier = durationMultiplier;
 			feedbacksList[1].PlayFeedbacks();
+			Debug.Log("Duration " + feedbacksList[0].DurationMultiplier);
+			Debug.Log("TotalDuration " + feedbacksList[0].TotalDuration);
 		}
 	}
 
@@ -28,15 +30,20 @@ public class MMFeedbacksManager : MonoBehaviour
 		if (!feedbacksList[0].IsPlaying){
 			feedbacksList[0].DurationMultiplier = 1.0f;
 			float durationMultiplier = feedbacksList[0].TotalDuration / duration;
+			durationMultiplier = Mathf.Sqrt(durationMultiplier);
 			feedbacksList[0].FeedbacksIntensity = intensity;
 			feedbacksList[0].DurationMultiplier = durationMultiplier;
+			//Debug.Log("Duration " + feedbacksList[0].DurationMultiplier);
+			//Debug.Log("TotalDuration " + feedbacksList[0].TotalDuration);
 			feedbacksList[0].PlayFeedbacks();
 		}
 	}
 	// | End Calls
 
 	public void CameraShake_C2(MMFeedbacksData data)
-    {
+	{
+		Debug.Log("Duration " + feedbacksList[0].DurationMultiplier);
+		Debug.Log("TotalDuration " + feedbacksList[0].TotalDuration);
 		feedbacksList[0].PlayFeedbacks();
     }
 }
