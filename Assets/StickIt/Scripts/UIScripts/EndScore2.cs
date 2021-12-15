@@ -28,6 +28,7 @@ public class EndScore2 : MonoBehaviour
     [Header("HIERARCHY ELEMENTS_________________")]
     public Transform[] startPos;
     public GameObject[] canvasRank;
+    public TMP_Text[] textRank;
     
     [Header("DEBUG___________________________")]
     [SerializeField] private Player[] ranking;
@@ -51,10 +52,6 @@ public class EndScore2 : MonoBehaviour
 
     }
 
-    private void OnDisable()
-    {
-        controller.NormalInputs.Menu.performed -= _ => Menu();
-    }
 
     private void Start()
     {
@@ -132,8 +129,11 @@ public class EndScore2 : MonoBehaviour
         {
             yield return new WaitForSeconds(timeBetweenRankAppear);
             panelPlayers[i].SetActive(true);
+            textP[i].color = ranking[i].myDatas.material.color;
             textP[i].text = "Player " + ranking[i].myDatas.id.ToString();
+            textScores[i].color = ranking[i].myDatas.material.color;
             textScores[i].text = ranking[i].myDatas.score.ToString();
+            textRank[i].color = ranking[i].myDatas.material.color;
             canvasRank[i].SetActive(true);
         }
 
