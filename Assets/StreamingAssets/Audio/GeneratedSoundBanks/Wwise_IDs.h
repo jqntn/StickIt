@@ -14,6 +14,7 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID EVENT_PLAY_AMBIANCE = 3182511947U;
+        static const AkUniqueID PLAY_SFX_PLATFORM_ROTATE = 717539115U;
         static const AkUniqueID PLAY_SFX_S_BOUNCEMUSHROOM = 1190391802U;
         static const AkUniqueID PLAY_SFX_S_BRAMBLEIMPACT = 501088891U;
         static const AkUniqueID PLAY_SFX_S_COLLISION = 2655917940U;
