@@ -9,9 +9,13 @@
 	</RootPaths>
 	<DialogueEvents/>
 	<StreamedFiles>
-		<File Id="417541845" Language="SFX">
-			<ShortName>AMB_Fall.wav</ShortName>
-			<Path>SFX\AMB_Fall_D79FB2B7.wem</Path>
+		<File Id="103556048" Language="SFX">
+			<ShortName>AMB_Fall_ST_LP.wav</ShortName>
+			<Path>SFX\AMB_Fall_ST_LP_D79FB2B7.wem</Path>
+		</File>
+		<File Id="961351658" Language="SFX">
+			<ShortName>AMB_Summer_ST_LP.wav</ShortName>
+			<Path>SFX\AMB_Summer_ST_LP_D79FB2B7.wem</Path>
 		</File>
 	</StreamedFiles>
 	<MediaFilesNotInAnyBank/>
@@ -27,18 +31,30 @@
 				<GameParameter Id="4276639445" Name="RTPC_Volume_SFX" ObjectPath="\Game Parameters\Default Work Unit\RTPC_Volume_SFX"/>
 			</GameParameters>
 		</SoundBank>
-		<SoundBank Id="2880737896" Language="SFX" Hash="2469303152">
+		<SoundBank Id="2880737896" Language="SFX" Hash="171826639">
 			<ObjectPath>\SoundBanks\Default Work Unit\MainBank</ObjectPath>
 			<ShortName>MainBank</ShortName>
 			<Path>MainBank.bnk</Path>
 			<IncludedEvents>
 				<Event Id="3182511947" Name="Event_Play_Ambiance" ObjectPath="\Events\Default Work Unit\Environment\Event_Play_Ambiance" DurationType="Infinite">
 					<ReferencedStreamedFiles>
-						<File Id="417541845" Language="SFX">
-							<ShortName>AMB_Fall.wav</ShortName>
-							<Path>SFX\AMB_Fall_D79FB2B7.wem</Path>
+						<File Id="103556048" Language="SFX">
+							<ShortName>AMB_Fall_ST_LP.wav</ShortName>
+							<Path>SFX\AMB_Fall_ST_LP_D79FB2B7.wem</Path>
+						</File>
+						<File Id="961351658" Language="SFX">
+							<ShortName>AMB_Summer_ST_LP.wav</ShortName>
+							<Path>SFX\AMB_Summer_ST_LP_D79FB2B7.wem</Path>
 						</File>
 					</ReferencedStreamedFiles>
+				</Event>
+				<Event Id="717539115" Name="Play_SFX_Platform_Rotate" ObjectPath="\Events\Default Work Unit\Play_SFX_Platform_Rotate" DurationType="Infinite">
+					<IncludedMemoryFiles>
+						<File Id="646238974" Language="SFX">
+							<ShortName>SFX_Platform_Rotate.wav</ShortName>
+							<Path>SFX\SFX_Platform_Rotate_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
 				</Event>
 				<Event Id="1190391802" Name="Play_SFX_S_BounceMushroom" ObjectPath="\Events\Default Work Unit\SFX_General\Play_SFX_S_BounceMushroom" DurationType="OneShot" DurationMin="0.279341" DurationMax="0.377440">
 					<IncludedMemoryFiles>
@@ -224,55 +240,31 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="1812787314" Name="Play_SFX_S_GainShield" ObjectPath="\Events\Default Work Unit\SFX_General\Play_SFX_S_GainShield" DurationType="OneShot" DurationMin="0.279341" DurationMax="0.377440">
+				<Event Id="1812787314" Name="Play_SFX_S_GainShield" ObjectPath="\Events\Default Work Unit\SFX_General\Play_SFX_S_GainShield" DurationType="OneShot" DurationMin="0.414762" DurationMax="0.522137">
 					<IncludedMemoryFiles>
-						<File Id="108048071" Language="SFX">
-							<ShortName>SFX_Slime_Collision_08.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_08_10C4C929.wem</Path>
+						<File Id="202566191" Language="SFX">
+							<ShortName>SFX_GainShield_03.wav</ShortName>
+							<Path>SFX\SFX_GainShield_03_10C4C929.wem</Path>
 						</File>
-						<File Id="183655441" Language="SFX">
-							<ShortName>SFX_Slime_Collision_06.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_06_10C4C929.wem</Path>
+						<File Id="518837651" Language="SFX">
+							<ShortName>SFX_GainShield_06.wav</ShortName>
+							<Path>SFX\SFX_GainShield_06_10C4C929.wem</Path>
 						</File>
-						<File Id="191800848" Language="SFX">
-							<ShortName>SFX_Slime_Collision_07.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_07_10C4C929.wem</Path>
+						<File Id="655903998" Language="SFX">
+							<ShortName>SFX_GainShield_01.wav</ShortName>
+							<Path>SFX\SFX_GainShield_01_10C4C929.wem</Path>
 						</File>
-						<File Id="254376900" Language="SFX">
-							<ShortName>SFX_Slime_Collision_12.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_12_10C4C929.wem</Path>
+						<File Id="744264440" Language="SFX">
+							<ShortName>SFX_GainShield_04.wav</ShortName>
+							<Path>SFX\SFX_GainShield_04_10C4C929.wem</Path>
 						</File>
-						<File Id="319330301" Language="SFX">
-							<ShortName>SFX_Slime_Collision_01.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_01_10C4C929.wem</Path>
+						<File Id="856908302" Language="SFX">
+							<ShortName>SFX_GainShield_05.wav</ShortName>
+							<Path>SFX\SFX_GainShield_05_10C4C929.wem</Path>
 						</File>
-						<File Id="493223277" Language="SFX">
-							<ShortName>SFX_Slime_Collision_09.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_09_10C4C929.wem</Path>
-						</File>
-						<File Id="569310315" Language="SFX">
-							<ShortName>SFX_Slime_Collision_05.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_05_10C4C929.wem</Path>
-						</File>
-						<File Id="697420587" Language="SFX">
-							<ShortName>SFX_Slime_Collision_10.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_10_10C4C929.wem</Path>
-						</File>
-						<File Id="722760187" Language="SFX">
-							<ShortName>SFX_Slime_Collision_04.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_04_10C4C929.wem</Path>
-						</File>
-						<File Id="769587429" Language="SFX">
-							<ShortName>SFX_Slime_Collision_11.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_11_10C4C929.wem</Path>
-						</File>
-						<File Id="770795266" Language="SFX">
-							<ShortName>SFX_Slime_Collision_03.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_03_10C4C929.wem</Path>
-						</File>
-						<File Id="827318304" Language="SFX">
-							<ShortName>SFX_Slime_Collision_02.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_02_10C4C929.wem</Path>
+						<File Id="921236235" Language="SFX">
+							<ShortName>SFX_GainShield_02.wav</ShortName>
+							<Path>SFX\SFX_GainShield_02_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -476,33 +468,34 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="445139456" Name="Play_SFX_UI_Move" ObjectPath="\Events\Default Work Unit\SFX_UI\Play_SFX_UI_Move" DurationType="OneShot" DurationMin="0.193171" DurationMax="0.210654">
+				<Event Id="445139456" Name="Play_SFX_UI_Move" ObjectPath="\Events\Default Work Unit\SFX_UI\Play_SFX_UI_Move" DurationType="OneShot" DurationMin="0.068114" DurationMax="0.093911">
 					<IncludedMemoryFiles>
-						<File Id="880268067" Language="SFX">
-							<ShortName>drop_002.wav</ShortName>
-							<Path>SFX\drop_002_10C4C929.wem</Path>
+						<File Id="496442497" Language="SFX">
+							<ShortName>UI_Menu_Switch.wav</ShortName>
+							<Path>SFX\UI_Menu_Switch_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="811711225" Name="Play_SFX_UI_Return" ObjectPath="\Events\Default Work Unit\SFX_UI\Play_SFX_UI_Return" DurationType="OneShot" DurationMin="0.282113" DurationMax="0.307646">
+				<Event Id="811711225" Name="Play_SFX_UI_Return" ObjectPath="\Events\Default Work Unit\SFX_UI\Play_SFX_UI_Return" DurationType="OneShot" DurationMin="0.084249" DurationMax="0.091874">
 					<IncludedMemoryFiles>
-						<File Id="662569354" Language="SFX">
-							<ShortName>drop_004.wav</ShortName>
-							<Path>SFX\drop_004_10C4C929.wem</Path>
+						<File Id="208502524" Language="SFX">
+							<ShortName>UI_Menu_Cancel.wav</ShortName>
+							<Path>SFX\UI_Menu_Cancel_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="3895889347" Name="Play_SFX_UI_Submit" ObjectPath="\Events\Default Work Unit\SFX_UI\Play_SFX_UI_Submit" DurationType="OneShot" DurationMin="0.174590" DurationMax="0.261589">
+				<Event Id="3895889347" Name="Play_SFX_UI_Submit" ObjectPath="\Events\Default Work Unit\SFX_UI\Play_SFX_UI_Submit" DurationType="OneShot" DurationMin="0.070783" DurationMax="0.077189">
 					<IncludedMemoryFiles>
-						<File Id="657021719" Language="SFX">
-							<ShortName>drop_003.wav</ShortName>
-							<Path>SFX\drop_003_10C4C929.wem</Path>
+						<File Id="115182836" Language="SFX">
+							<ShortName>UI_Menu_Validation.wav</ShortName>
+							<Path>SFX\UI_Menu_Validation_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
 			</IncludedEvents>
 			<ReferencedStreamedFiles>
-				<File Id="417541845"/>
+				<File Id="103556048"/>
+				<File Id="961351658"/>
 			</ReferencedStreamedFiles>
 			<IncludedMemoryFiles>
 				<File Id="28291394" Language="SFX">
@@ -525,6 +518,10 @@
 					<ShortName>SFX_Slime_Collision_08.wav</ShortName>
 					<Path>SFX\SFX_Slime_Collision_08_10C4C929.wem</Path>
 				</File>
+				<File Id="115182836" Language="SFX">
+					<ShortName>UI_Menu_Validation.wav</ShortName>
+					<Path>SFX\UI_Menu_Validation_10C4C929.wem</Path>
+				</File>
 				<File Id="158094771" Language="SFX">
 					<ShortName>SFX_Slime_Jump_03.wav</ShortName>
 					<Path>SFX\SFX_Slime_Jump_03_10C4C929.wem</Path>
@@ -540,6 +537,14 @@
 				<File Id="191800848" Language="SFX">
 					<ShortName>SFX_Slime_Collision_07.wav</ShortName>
 					<Path>SFX\SFX_Slime_Collision_07_10C4C929.wem</Path>
+				</File>
+				<File Id="202566191" Language="SFX">
+					<ShortName>SFX_GainShield_03.wav</ShortName>
+					<Path>SFX\SFX_GainShield_03_10C4C929.wem</Path>
+				</File>
+				<File Id="208502524" Language="SFX">
+					<ShortName>UI_Menu_Cancel.wav</ShortName>
+					<Path>SFX\UI_Menu_Cancel_10C4C929.wem</Path>
 				</File>
 				<File Id="243176699" Language="SFX">
 					<ShortName>SFX_Slime_Slingshot_Charge_07.wav</ShortName>
@@ -581,6 +586,14 @@
 					<ShortName>SFX_Slime_Collision_09.wav</ShortName>
 					<Path>SFX\SFX_Slime_Collision_09_10C4C929.wem</Path>
 				</File>
+				<File Id="496442497" Language="SFX">
+					<ShortName>UI_Menu_Switch.wav</ShortName>
+					<Path>SFX\UI_Menu_Switch_10C4C929.wem</Path>
+				</File>
+				<File Id="518837651" Language="SFX">
+					<ShortName>SFX_GainShield_06.wav</ShortName>
+					<Path>SFX\SFX_GainShield_06_10C4C929.wem</Path>
+				</File>
 				<File Id="520780249" Language="SFX">
 					<ShortName>SFX_Slime_Jump_10.wav</ShortName>
 					<Path>SFX\SFX_Slime_Jump_10_10C4C929.wem</Path>
@@ -605,21 +618,21 @@
 					<ShortName>SFX_Slime_Slingshot_Charge_08.wav</ShortName>
 					<Path>SFX\SFX_Slime_Slingshot_Charge_08_10C4C929.wem</Path>
 				</File>
+				<File Id="646238974" Language="SFX">
+					<ShortName>SFX_Platform_Rotate.wav</ShortName>
+					<Path>SFX\SFX_Platform_Rotate_D79FB2B7.wem</Path>
+				</File>
 				<File Id="653138667" Language="SFX">
 					<ShortName>SFX_Slime_Jump_02.wav</ShortName>
 					<Path>SFX\SFX_Slime_Jump_02_10C4C929.wem</Path>
 				</File>
-				<File Id="657021719" Language="SFX">
-					<ShortName>drop_003.wav</ShortName>
-					<Path>SFX\drop_003_10C4C929.wem</Path>
+				<File Id="655903998" Language="SFX">
+					<ShortName>SFX_GainShield_01.wav</ShortName>
+					<Path>SFX\SFX_GainShield_01_10C4C929.wem</Path>
 				</File>
 				<File Id="660285715" Language="SFX">
 					<ShortName>SFX_Slime_Slingshot_Charge_03.wav</ShortName>
 					<Path>SFX\SFX_Slime_Slingshot_Charge_03_10C4C929.wem</Path>
-				</File>
-				<File Id="662569354" Language="SFX">
-					<ShortName>drop_004.wav</ShortName>
-					<Path>SFX\drop_004_10C4C929.wem</Path>
 				</File>
 				<File Id="664222708" Language="SFX">
 					<ShortName>SFX_Slime_Jump_09.wav</ShortName>
@@ -649,6 +662,10 @@
 					<ShortName>SFX_Slime_Land_02.wav</ShortName>
 					<Path>SFX\SFX_Slime_Land_02_10C4C929.wem</Path>
 				</File>
+				<File Id="744264440" Language="SFX">
+					<ShortName>SFX_GainShield_04.wav</ShortName>
+					<Path>SFX\SFX_GainShield_04_10C4C929.wem</Path>
+				</File>
 				<File Id="751476754" Language="SFX">
 					<ShortName>SFX_Slime_Death_05.wav</ShortName>
 					<Path>SFX\SFX_Slime_Death_05_10C4C929.wem</Path>
@@ -673,6 +690,10 @@
 					<ShortName>SFX_Slime_Collision_02.wav</ShortName>
 					<Path>SFX\SFX_Slime_Collision_02_10C4C929.wem</Path>
 				</File>
+				<File Id="856908302" Language="SFX">
+					<ShortName>SFX_GainShield_05.wav</ShortName>
+					<Path>SFX\SFX_GainShield_05_10C4C929.wem</Path>
+				</File>
 				<File Id="873874682" Language="SFX">
 					<ShortName>SFX_Slime_Death_03.wav</ShortName>
 					<Path>SFX\SFX_Slime_Death_03_10C4C929.wem</Path>
@@ -680,6 +701,10 @@
 				<File Id="880268067" Language="SFX">
 					<ShortName>drop_002.wav</ShortName>
 					<Path>SFX\drop_002_10C4C929.wem</Path>
+				</File>
+				<File Id="921236235" Language="SFX">
+					<ShortName>SFX_GainShield_02.wav</ShortName>
+					<Path>SFX\SFX_GainShield_02_10C4C929.wem</Path>
 				</File>
 				<File Id="923745404" Language="SFX">
 					<ShortName>SFX_Slime_Slingshot_Charge_09.wav</ShortName>
