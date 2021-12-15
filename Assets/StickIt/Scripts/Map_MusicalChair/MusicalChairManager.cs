@@ -75,14 +75,14 @@ public class MusicalChairManager : Level
                 inTransition = false;
                 duration = durationValue + 1;
                 //Haptics
-                for (int i = 0; i < UnityEngine.InputSystem.Gamepad.all.Count; i++)
-                    UnityEngine.InputSystem.Gamepad.all[i].PauseHaptics();
+                //for (int i = 0; i < UnityEngine.InputSystem.Gamepad.all.Count; i++)
+                //    UnityEngine.InputSystem.Gamepad.all[i].PauseHaptics();
             }
             else if (spawning) //  Start Spawn
             {
                 GameEvents.CameraShake_CEvent?.Invoke(transition, 1.0f);
-                for (int i = 0; i < UnityEngine.InputSystem.Gamepad.all.Count; i++)
-                    UnityEngine.InputSystem.Gamepad.all[i].SetMotorSpeeds(0.1f, 0.1f);
+                //for (int i = 0; i < UnityEngine.InputSystem.Gamepad.all.Count; i++)
+                //    UnityEngine.InputSystem.Gamepad.all[i].SetMotorSpeeds(0.1f, 0.1f);
                 ChangeChairPool();
                 GameEvents.ShakeAppearChairEvent.Invoke(transition, 1.0f);
                 spawning = false;

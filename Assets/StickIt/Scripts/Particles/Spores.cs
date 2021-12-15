@@ -19,7 +19,8 @@ public class Spores : MonoBehaviour
     public float diffSpeed = 0.3f;
     public float speedParticles;
     [SerializeField] Material redMat, blueMat;
-    
+
+    [SerializeField] AnimationCurve curveParticlesKiller;
     // Start is called before the first frame update
 
     public void Initialize()
@@ -52,13 +53,11 @@ public class Spores : MonoBehaviour
                 Vector3 playerPos = MultiplayerManager.instance.players[savePlayerId[i]].transform.position;
                 float dist = (playerPos - particlePos).magnitude;
 
-                a = (Time.time - particlesDatas[i].time) * particlesDatas[i].initDist * particlesDatas[i].speed;
+                a = (Time.time - particlesDatas[i].time) * particlesDatas[i].speed;
+                a = curveParticlesKiller.Evaluate(a);
                 Vector3 newPos = Vector3.Lerp(particlesDatas[i].initPos, losers[particlesDatas[i].IdPlayerTarget].transform.position, a );
 
                 particles[i].position = transform.InverseTransformPoint(newPos);
-
-                
-
             }
             if (a >= 1)
             {
@@ -96,7 +95,7 @@ public class Spores : MonoBehaviour
         var subEmit = ps.subEmitters;
         subEmit.enabled = false;
         ps.SetParticles(particles, numParticlesAlive);
-        StartCoroutine(CallLaunchParticlesKiller());
+        LaunchParticlesKiller();
     }
 
     public void LaunchParticlesKiller()
@@ -127,12 +126,6 @@ public class Spores : MonoBehaviour
     }
 
 
-
-    IEnumerator CallLaunchParticlesKiller()
-    {
-        yield return new WaitForSeconds(1);
-        LaunchParticlesKiller();
-    }
 }
 
 public struct ParticleDatas
