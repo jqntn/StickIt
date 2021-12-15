@@ -53,6 +53,7 @@ public class Player : MonoBehaviour
         // }
         //
         MapManager.instance.EndLevel();
+        Debug.Log(gameObject.name + " CALL END LEVEL");
     }
     public void PrepareToChangeLevel() // When the player is still alive
     {

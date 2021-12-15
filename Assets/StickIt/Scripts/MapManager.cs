@@ -24,7 +24,7 @@ public class MapManager : Unique<MapManager>
     [SerializeField] private uint roundCount = 0;
     private Coroutine _coroutine;
     private CameraStateDriven camManager;
-
+    bool levelEnded = false;
     private FadeShader shaderScript;
     //void OnGUI()
     //{
@@ -38,10 +38,12 @@ public class MapManager : Unique<MapManager>
     }
     public bool EndLevel()
     {
-        if (MultiplayerManager.instance.alivePlayers.Count <= 1)
+        if (!levelEnded && MultiplayerManager.instance.alivePlayers.Count <= 1)
         {
+            Debug.Log("CALL END LEVEL");
             shaderScript.AllObjectsDisappear();
             NextMap();
+            levelEnded = true;
             return true;
         }
         return false;
@@ -161,6 +163,7 @@ public class MapManager : Unique<MapManager>
         shaderScript.AllObjectsAppear();
         var lvl = FindObjectOfType<Level>();
         if (lvl != null) StartCoroutine(lvl.Init());
+        levelEnded = false;
         yield return null;
     }
 }
