@@ -24,6 +24,8 @@ public class MapManager : Unique<MapManager>
     [SerializeField] private uint roundCount = 0;
     private Coroutine _coroutine;
     private CameraStateDriven camManager;
+    bool levelEnded = false;
+    private FadeShader shaderScript;
     //void OnGUI()
     //{
     //    if (GUI.Button(new Rect(0, 0, 200, 100), "NextMap")) NextMap(nextMapManual, true);
@@ -31,19 +33,31 @@ public class MapManager : Unique<MapManager>
     protected override void Awake()
     {
         base.Awake();
+        AudioManager.instance.PlayAmbiantSounds(gameObject);
         camManager = Camera.main.GetComponent<CameraStateDriven>();
+        shaderScript = GetComponent<FadeShader>();
     }
     public bool EndLevel()
     {
-        if (MultiplayerManager.instance.alivePlayers.Count <= 1)
+        if (!levelEnded && MultiplayerManager.instance.alivePlayers.Count <= 1)
         {
+            Debug.Log("CALL END LEVEL");
+            shaderScript.AllObjectsDisappear();
             NextMap();
+            levelEnded = true;
             return true;
         }
         return false;
     }
     public bool NextMap(string nextMap = "", bool fromMenu = false)
     {
+        //if (fromMenu)
+        //{
+        //    nextMap = SelectNextMap();
+        //    SceneManager.LoadScene(nextMap);
+        //    camManager.SwitchStates(Utils.GetCameraType(curMod));
+        //    return true;
+        //}
         foreach (Player player in MultiplayerManager.instance.players) player.PrepareToChangeLevel();
         if (_coroutine == null) _coroutine = StartCoroutine(BeginTransition(nextMap, fromMenu));
         else return false;
@@ -52,13 +66,12 @@ public class MapManager : Unique<MapManager>
     private string SelectNextMap()
     {
         // End Game
-        if(roundCount == numberOfRounds) { 
-            Debug.Log("End Game");
+        if (roundCount == numberOfRounds)
+        {
             curMod = "End";
-            curMap = "EndScene 2";
-            return "EndScene 2"; 
+            curMap = "100_EndScene";
+            return "100_EndScene";
         }
-
         // Next Map
         ModsData.Mod mod;
         string map = SceneManager.GetActiveScene().name;
@@ -109,34 +122,45 @@ public class MapManager : Unique<MapManager>
         // ----------
         GameObject[] nextStartPos = GameObject.FindGameObjectsWithTag("StartPos");
         MultiplayerManager.instance.speedChangeMap = 1 / slowTime;
-        MultiplayerManager.instance.StartChangeMap(nextStartPos[nextStartPos.Length - 1].transform); 
+        MultiplayerManager.instance.StartChangeMap(nextStartPos[nextStartPos.Length - 1].transform);
         while (MultiplayerManager.instance.isChangingMap) yield return null;
         StartCoroutine(EndTransition());
     }
     public IEnumerator EndTransition()
     {
-        Vector3 v0 = Vector3.zero, v1 = Vector3.zero, d0 = Vector3.one, d1 = Vector3.one;
-        while (d0.sqrMagnitude > smoothMOE && d1.sqrMagnitude > smoothMOE)
-        {
-            curMapRoot.transform.position = Vector3.SmoothDamp(curMapRoot.transform.position, new Vector3(-mapOffset, 0), ref v0, smoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
-            nextMapRoot.transform.position = Vector3.SmoothDamp(nextMapRoot.transform.position, Vector3.zero, ref v1, smoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
-            d0 = curMapRoot.transform.position - new Vector3(-mapOffset, 0);
-            d1 = nextMapRoot.transform.position - Vector3.zero;
-            yield return null;
+      
+        //Vector3 v0 = Vector3.zero, v1 = Vector3.zero, d0 = Vector3.one, d1 = Vector3.one;
+   
+        //while (d0.sqrMagnitude > smoothMOE && d1.sqrMagnitude > smoothMOE)
+        //{
+        //    curMapRoot.transform.position = Vector3.SmoothDamp(curMapRoot.transform.position, new Vector3(-mapOffset, 0), ref v0, smoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
+        //    nextMapRoot.transform.position = Vector3.SmoothDamp(nextMapRoot.transform.position, Vector3.zero, ref v1, smoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
+        //    d0 = curMapRoot.transform.position - new Vector3(-mapOffset, 0);
+        //    d1 = nextMapRoot.transform.position - Vector3.zero;
+        //    yield return null;
+        //}
+       
+        AsyncOperation asyncOp = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+
+        while (!asyncOp.isDone)
+        {        
+             yield return null;
         }
+        shaderScript.SetShaders(true);
         nextMapRoot.transform.position = Vector3.zero;
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
         // Switch camera state depending of map mode
         camManager.SwitchStates(Utils.GetCameraType(curMod));
         //-------
-        yield return null;
         Time.timeScale = 1;
         timeScale = Time.timeScale;
         curMapRoot = nextMapRoot;
         nextMapRoot = null;
         isBusy = false;
         _coroutine = null;
+        shaderScript.AllObjectsAppear();
         var lvl = FindObjectOfType<Level>();
         if (lvl != null) StartCoroutine(lvl.Init());
+        levelEnded = false;
+        yield return null;
     }
 }

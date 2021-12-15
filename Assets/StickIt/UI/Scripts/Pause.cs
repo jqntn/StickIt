@@ -1,15 +1,16 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 public class Pause : Unique<Pause>
 {
+    public bool isPaused;
     public LayerSwitch mainLayerSwitch;
+    public LayerSwitch hLayerSwitch;
+    public LayerSwitch oLayerSwitch;
+    public EasterEgg easterEgg;
+    public GameObject mainLayer;
     [SerializeField] private float secondsToPress;
-    [SerializeField] private LayerSwitch subLayerSwitch;
-    [SerializeField] private GameObject mainLayer;
-    [SerializeField] private bool isPaused;
     private void Start() => mainLayer.SetActive(false);
     public void PauseGame()
     {
@@ -26,7 +27,7 @@ public class Pause : Unique<Pause>
     {
         StartCoroutine(PressCoroutine(() =>
         {
-            foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
+            Time.timeScale = 1;
             AkSoundEngine.PostEvent("Play_SFX_UI_Submit", gameObject);
             SceneManager.LoadScene("0_MainMenu");
             Destroy(MultiplayerManager.instance.gameObject);
@@ -38,6 +39,7 @@ public class Pause : Unique<Pause>
             Destroy(Sun.instance.gameObject);
             Sun.instance = null;
             foreach (var item in GameObject.FindGameObjectsWithTag("Player")) Destroy(item);
+            Pause.instance = null;
             Destroy(gameObject);
         }));
     }
@@ -46,43 +48,4 @@ public class Pause : Unique<Pause>
         yield return new WaitForSecondsRealtime(secondsToPress);
         func?.Invoke();
     }
-    public void OnReturn(InputAction.CallbackContext context)
-    {
-        if (context.performed && isPaused)
-        {
-            if (mainLayer.activeSelf)
-            {
-                foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
-                foreach (var item in GameObject.FindGameObjectsWithTag("Player")) item.GetComponent<PlayerInput>().enabled = true;
-                PauseGame();
-            }
-            else
-            {
-                mainLayerSwitch.ChangeLayer("Layer_Main");
-                subLayerSwitch.ChangeLayer("Layer_Video");
-            }
-        }
-    }
-    public void OnPause(InputAction.CallbackContext context)
-    {
-        if (context.performed)
-        {
-            AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
-            if (MapManager.instance.curMod == "MusicalChairs" && FindObjectOfType<MusicalChairManager>().inTransition)
-                for (var i = 0; i < Gamepad.all.Count; i++)
-                    Gamepad.all[i].SetMotorSpeeds(.1f, .1f);
-            foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
-            foreach (var item in GameObject.FindGameObjectsWithTag("Player")) item.GetComponent<PlayerInput>().enabled = true;
-            mainLayerSwitch.ChangeLayer("Layer_Main");
-            PauseGame();
-        }
-    }
-    public void SoundMove(InputAction.CallbackContext context)
-    { if (context.performed) AkSoundEngine.PostEvent("Play_SFX_UI_Move", gameObject); }
-    public void SoundSubmit(InputAction.CallbackContext context)
-    { if (context.performed) AkSoundEngine.PostEvent("Play_SFX_UI_Submit", gameObject); }
-    public void SoundReturn(InputAction.CallbackContext context)
-    { if (context.performed) AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject); }
-    public void SoundY(InputAction.CallbackContext context)
-    { if (context.performed && mainLayer.activeSelf) AkSoundEngine.PostEvent("Play_SFX_UI_Submit", gameObject); }
 }

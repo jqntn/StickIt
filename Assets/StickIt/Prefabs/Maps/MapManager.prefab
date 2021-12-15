@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2906344591245672142}
   - component: {fileID: 5004924966347676183}
+  - component: {fileID: 264679286983488418}
   m_Layer: 0
   m_Name: MapManager
   m_TagString: Untagged
@@ -43,12 +44,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb566c5b7b50d2c49a80e4f9351c4c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  numberOfRounds: 2
   smoothTime: 0.2
   slowTime: 2
   smoothMOE: 0.001
-  mapOffset: 50
-  nextMap: 
+  mapOffset: 100
   timeScale: 0
   isBusy: 0
+  curMapRoot: {fileID: 0}
   nextMapRoot: {fileID: 0}
   modsData: {fileID: 11400000, guid: 1f9c3a10f541edd4a9217b088aa49aa3, type: 2}
+  nextMapManual: 
+  prevMod: 
+  prevMap: 
+  curMod: 
+  curMap: 
+  roundCount: 0
+--- !u!114 &264679286983488418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3262738988708969533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 928923792d2cbd9458eafd03240943bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers: []
+  matSave: []
+  shader: {fileID: -6465566751694194690, guid: 2179a8b2a755db4449269171df54f95a, type: 3}
+  speedFade: 1
+  edgeWidth: 0.01
+  noiseSize: 100
+  speedRotation: 0
+  colorEdgeDisappear: {r: 10.680627, g: 1.0579866, b: 1.0579866, a: 1}

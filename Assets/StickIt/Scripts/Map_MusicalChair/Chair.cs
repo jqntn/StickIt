@@ -11,14 +11,12 @@ public class Chair : MonoBehaviour
     [SerializeField]
     public float offsetSpawn;
     private float duration;
-    private bool isSpawnAnimation;
     public AnimationCurve animCurve;
     [HideInInspector]
     public bool isActive;
     [HideInInspector]
     public bool isTaken;
     private Vector3 spawnPosition;
-    private Vector3 originalPos;
     [SerializeField]
     public GameObject shield;
     MeshRenderer shieldMesh;
@@ -39,7 +37,6 @@ public class Chair : MonoBehaviour
         musicalChairManager = FindObjectOfType<MusicalChairManager>();
         duration = musicalChairManager.durationSpawn;
         spawnPosition = transform.position + transform.forward * offsetSpawn;
-        originalPos = transform.position;
         shieldMesh = shield.GetComponent<MeshRenderer>();
         matChair = myMeshRenderer.material;
         shield.SetActive(false);
@@ -92,7 +89,6 @@ public class Chair : MonoBehaviour
     }
     private IEnumerator SpawnChairCor(float duration)
     {
-        isSpawnAnimation = true;
         float elapsed = 0;
         float ratio = 0;
         while (elapsed < duration)
@@ -104,7 +100,6 @@ public class Chair : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-        isSpawnAnimation = false;
         //myMeshRenderer.material = musicalChairManager.chairTaken;
        /* if (!isTaken)
             myMeshRenderer.material = musicalChairManager.chairNotTaken;*/
@@ -113,7 +108,6 @@ public class Chair : MonoBehaviour
     {
         float elapsed = 0;
         float ratio = 0;
-        isSpawnAnimation = true;
         while (elapsed < duration)
         {
 
@@ -124,7 +118,6 @@ public class Chair : MonoBehaviour
             elapsed += Time.deltaTime;
             yield return null;
         }
-        isSpawnAnimation = false;
         DeactivateShield();
     }
     public void DeactivateShield()

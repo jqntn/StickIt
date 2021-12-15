@@ -14,14 +14,23 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID EVENT_PLAY_AMBIANCE = 3182511947U;
+        static const AkUniqueID PLAY_SFX_PLATFORM_ROTATE = 717539115U;
+        static const AkUniqueID PLAY_SFX_S_BOUNCEMUSHROOM = 1190391802U;
+        static const AkUniqueID PLAY_SFX_S_BRAMBLEIMPACT = 501088891U;
         static const AkUniqueID PLAY_SFX_S_COLLISION = 2655917940U;
         static const AkUniqueID PLAY_SFX_S_DEATH = 239606594U;
+        static const AkUniqueID PLAY_SFX_S_GAINSHIELD = 1812787314U;
+        static const AkUniqueID PLAY_SFX_S_ICESLIDE = 949470004U;
         static const AkUniqueID PLAY_SFX_S_JUMP = 3510434704U;
         static const AkUniqueID PLAY_SFX_S_LAND = 1721975435U;
         static const AkUniqueID PLAY_SFX_S_SLINGSHOTCHARGE = 799208851U;
+        static const AkUniqueID PLAY_SFX_UI_COUNTDOWN = 2820203820U;
+        static const AkUniqueID PLAY_SFX_UI_COUNTDOWNEND = 2897847363U;
         static const AkUniqueID PLAY_SFX_UI_MOVE = 445139456U;
         static const AkUniqueID PLAY_SFX_UI_RETURN = 811711225U;
         static const AkUniqueID PLAY_SFX_UI_SUBMIT = 3895889347U;
+        static const AkUniqueID SET_STATE_SEASON_FALL = 442955453U;
+        static const AkUniqueID SET_STATE_SEASON_SUMMER = 3566163661U;
     } // namespace EVENTS
 
     namespace STATES
@@ -33,6 +42,7 @@ namespace AK
             namespace STATE
             {
                 static const AkUniqueID NONE = 748895195U;
+                static const AkUniqueID NOSTATE = 302661891U;
                 static const AkUniqueID STATE_SEASON_FALL = 2028143368U;
                 static const AkUniqueID STATE_SEASON_SUMMER = 1215538628U;
             } // namespace STATE

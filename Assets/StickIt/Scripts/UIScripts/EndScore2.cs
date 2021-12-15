@@ -1,25 +1,40 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class EndScore2 : MonoBehaviour
 {
     [Header("TEST_______________________________")]
     public bool isStartingDirect = true;
+
+    [Header("DATA_______________________________")]
+    public bool hasTimer = false;
+    public float timerBeforeReturnToMenu = 10.0f;
+    [SerializeField] private float secondsToPress = 1.0f;
+
     [Header("ANIMATION__________________________")]
     public float timeBetweenRankAppear = 1.0f;
     public float vfxTime = 2.0f;
     public float timeToUnlockController = 1.0f;
+
     [Header("CANVAS ELEMENTS____________________")]
     public GameObject[] panelPlayers;
     public TMP_Text[] textP;
     public TMP_Text[] textScores;
+    public GameObject returnToMenu;
+
     [Header("HIERARCHY ELEMENTS_________________")]
     public Transform[] startPos;
     public GameObject[] canvasRank;
+    public TMP_Text[] textRank;
     
     [Header("DEBUG___________________________")]
     [SerializeField] private Player[] ranking;
+    [SerializeField] private float timer = 0.0f;
+    [SerializeField] private PlayerInputs controller;
 
     private void OnEnable()
     {
@@ -34,7 +49,11 @@ public class EndScore2 : MonoBehaviour
         }
 
         GameEvents.OnSwitchCamera.AddListener(EndGame);
+        timer = 0.0f;
+        returnToMenu.SetActive(false);
+
     }
+
 
     private void Start()
     {
@@ -44,6 +63,23 @@ public class EndScore2 : MonoBehaviour
             EndGame();
         }
     }
+
+    
+    private void Update()
+    {
+        if (hasTimer)
+        {
+            if (timer < timerBeforeReturnToMenu)
+            {
+                timer += Time.deltaTime;
+                return;
+            }
+
+            Menu();
+        }
+
+    }
+
     public void EndGame()
     {
         StartCoroutine(OnEndGame());
@@ -63,6 +99,11 @@ public class EndScore2 : MonoBehaviour
         // Debug
         if (isStartingDirect) { ranking[1].myDatas.score = 5; }
 
+        // Adding listerner to one player
+        //controller = ranking[0].GetComponent<PlayerInput>();
+        controller = new PlayerInputs();
+
+        // Sort Ranking (slow sorting > change to quicksort)
         bool hasPermute = false;
         do
         {
@@ -90,8 +131,11 @@ public class EndScore2 : MonoBehaviour
         {
             yield return new WaitForSeconds(timeBetweenRankAppear);
             panelPlayers[i].SetActive(true);
-            textP[i].text = "P" + ranking[i].myDatas.id.ToString();
+            textP[i].color = ranking[i].myDatas.material.color;
+            textP[i].text = "Player " + ranking[i].myDatas.id.ToString();
+            textScores[i].color = ranking[i].myDatas.material.color;
             textScores[i].text = ranking[i].myDatas.score.ToString();
+            textRank[i].color = ranking[i].myDatas.material.color;
             canvasRank[i].SetActive(true);
         }
 
@@ -101,6 +145,10 @@ public class EndScore2 : MonoBehaviour
         {
             player.myMouvementScript.enabled = true;
         }
+
+        controller.Enable();
+        returnToMenu.SetActive(true);
+        controller.NormalInputs.Menu.performed += _ => Menu();
     }
 
     private void Swap(int i, int j)
@@ -113,5 +161,31 @@ public class EndScore2 : MonoBehaviour
     IEnumerator OnEndScreen()
     {
         yield return null;
+    }
+
+    public void Menu()
+    {
+        StartCoroutine(PressCoroutine(() =>
+        {
+            Time.timeScale = 1;
+            AkSoundEngine.PostEvent("Play_SFX_UI_Submit", gameObject);
+            Destroy(MultiplayerManager.instance.gameObject);
+            MultiplayerManager.instance = null;
+            Destroy(MainCamera.instance.gameObject);
+            MainCamera.instance = null;
+            Destroy(MapManager.instance.gameObject);
+            MapManager.instance = null;
+            Destroy(Sun.instance.gameObject);
+            Sun.instance = null;
+            foreach (var item in GameObject.FindGameObjectsWithTag("Player")) Destroy(item);
+            Pause.instance = null;
+            SceneManager.LoadScene("0_MainMenu");
+        }));
+    }
+
+    public IEnumerator PressCoroutine(Action func)
+    {
+        yield return new WaitForSecondsRealtime(secondsToPress);
+        func?.Invoke();
     }
 }

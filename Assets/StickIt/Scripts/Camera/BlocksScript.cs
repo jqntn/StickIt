@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class BlocksScript : MonoBehaviour
 {
+    [Header("TEST______________________")]
+    public bool isStartingDirect = true;
     public CameraData data;
     public float extendsFactor = 1.0f;
     public Vector3 offsets = new Vector3(0.0f, 0.0f, 0.0f);
@@ -49,10 +51,17 @@ public class BlocksScript : MonoBehaviour
         }
 
         Collider childCollider = temp_width.GetComponent<Collider>();
+        if (childCollider == null)
+        {
+            childCollider = temp_width.gameObject.GetComponentInChildren<Collider>();
+        }
         dimension.x = bounds.size.x + childCollider.bounds.size.x;
         childCollider = temp_height.GetComponent<Collider>();
+        if (childCollider == null)
+        {
+            childCollider = temp_height.gameObject.GetComponentInChildren<Collider>();
+        }
         dimension.y = bounds.size.y + childCollider.bounds.size.y;
-
 
         // Change dimension to respect aspect ratio
         factors.x = dimension.x / Utils.AspectRatio.x;
@@ -75,7 +84,7 @@ public class BlocksScript : MonoBehaviour
     void Start()
     {
         //Debug
-        GiveNewBounds();
+        if(isStartingDirect) GiveNewBounds();
     }
     private void GiveNewBounds()
     {

@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     private MultiplayerManager _multiplayerManager;
@@ -18,11 +19,9 @@ public class Player : MonoBehaviour
         {
             myMouvementScript = pm;
             myMouvementScript.myPlayer = this;
-           
         }
         DontDestroyOnLoad(this);
     }
-
     public void Death(bool intensityAnim = false)
     {
         isDead = true;
@@ -54,6 +53,7 @@ public class Player : MonoBehaviour
         // }
         //
         MapManager.instance.EndLevel();
+        Debug.Log(gameObject.name + " CALL END LEVEL");
     }
     public void PrepareToChangeLevel() // When the player is still alive
     {
@@ -119,31 +119,55 @@ public class Player : MonoBehaviour
     }
     public void OnPause(InputAction.CallbackContext context)
     {
-        if (context.performed && !isDead && !MapManager.instance.isBusy && !MultiplayerManager.instance.isMenuSelection)
+        if (context.performed && !isDead && !MapManager.instance.isBusy && SceneManager.GetActiveScene().name != "1_MenuSelection" && SceneManager.GetActiveScene().name != "100_EndScene")
         {
-            if (MapManager.instance.curMod == "MusicalChairs")
+
+            AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
+            if (MapManager.instance.curMod == "MusicalChairs" && FindObjectOfType<MusicalChairManager>().inTransition)
+                for (var i = 0; i < Gamepad.all.Count; i++)
+                    if (Pause.instance.isPaused) Gamepad.all[i].SetMotorSpeeds(.1f, .1f);
+                    else Gamepad.all[i].PauseHaptics();
+            Pause.instance.mainLayerSwitch.ChangeLayer("Layer_Main");
+            Pause.instance.PauseGame();
+            if (Pause.instance.isPaused) GetComponent<PlayerInput>().actions.FindActionMap("UIInputs").Enable();
+            else GetComponent<PlayerInput>().actions.FindActionMap("UIInputs").Disable();
+        }
+    }
+    public void OnReturn(InputAction.CallbackContext context)
+    {
+        if (context.performed && Pause.instance.isPaused)
+        {
+            if (Pause.instance.mainLayer.activeSelf)
             {
-                var mcm = FindObjectOfType<MusicalChairManager>();
-                if (mcm.GameLaunched)
-                {
-                    AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
-                    if (mcm.inTransition)
-                        for (var i = 0; i < Gamepad.all.Count; i++)
-                            Gamepad.all[i].PauseHaptics();
-                    foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
-                    Pause.instance.GetComponent<PlayerInput>().enabled = true;
-                    Pause.instance.mainLayerSwitch.ChangeLayer("Layer_Main");
-                    Pause.instance.PauseGame();
-                }
+                Pause.instance.PauseGame();
             }
             else
             {
-                AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
-                foreach (var item in FindObjectsOfType<PlayerInput>()) item.enabled = false;
-                Pause.instance.GetComponent<PlayerInput>().enabled = true;
                 Pause.instance.mainLayerSwitch.ChangeLayer("Layer_Main");
-                Pause.instance.PauseGame();
+                Pause.instance.oLayerSwitch.ChangeLayer("Layer_Video");
             }
         }
     }
+    public void SoundMove(InputAction.CallbackContext context)
+    { if (context.performed && Pause.instance.isPaused) AkSoundEngine.PostEvent("Play_SFX_UI_Move", gameObject); }
+    public void SoundSubmit(InputAction.CallbackContext context)
+    { if (context.performed && Pause.instance.isPaused) AkSoundEngine.PostEvent("Play_SFX_UI_Submit", gameObject); }
+    public void SoundReturn(InputAction.CallbackContext context)
+    { if (context.performed && SceneManager.GetActiveScene().name != "1_MenuSelection") AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject); }
+    public void SoundY(InputAction.CallbackContext context)
+    { if (context.performed && Pause.instance.mainLayer.activeSelf && Pause.instance.isPaused) AkSoundEngine.PostEvent("Play_SFX_UI_Submit", gameObject); }
+    public void OnLeftPage(InputAction.CallbackContext context)
+    {
+        if (context.performed && Pause.instance.isPaused)
+            if (Pause.instance.hLayerSwitch.gameObject.activeSelf) Pause.instance.hLayerSwitch.IncLayer(-1);
+            else Pause.instance.oLayerSwitch.IncLayer(-1);
+    }
+    public void OnRightPage(InputAction.CallbackContext context)
+    {
+        if (context.performed && Pause.instance.isPaused)
+            if (Pause.instance.hLayerSwitch.gameObject.activeSelf) Pause.instance.hLayerSwitch.IncLayer(1);
+            else Pause.instance.oLayerSwitch.IncLayer(1);
+    }
+    public void Jump(InputAction.CallbackContext context)
+    { if (context.performed && Pause.instance.easterEgg.layer.activeSelf && Pause.instance.easterEgg.canJump && Pause.instance.isPaused) StartCoroutine(Pause.instance.easterEgg.MainCoroutine()); }
 }

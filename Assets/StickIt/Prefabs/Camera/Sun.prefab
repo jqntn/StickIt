@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1334176944403652362}
   - component: {fileID: 1334176944403652363}
   - component: {fileID: 595723468}
+  - component: {fileID: 1262055559}
+  - component: {fileID: 5298416510308072216}
   m_Layer: 0
   m_Name: Sun
   m_TagString: Untagged
@@ -106,3 +108,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 753de474e2145b741bef02c35fb152db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1262055559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1334176944403652372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c19bb62c72988304288954e1278b234b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &5298416510308072216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1334176944403652372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f452db35f2409ed43a1a8dd2215b8192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  triggerList: ae8d9d44
+  useOtherObject: 0
+  data:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: 1d5bfa6336f656943a167e247157f9b4, type: 2}
+  decodeBank: 0
+  loadAsynchronous: 0
+  saveDecodedBank: 0
+  unloadTriggerList: 
+  bankNameInternal: 
+  valueGuidInternal: 
