@@ -4,7 +4,7 @@
 		<WorkUnit Name="Default Work Unit" ID="{0742BF3C-F919-4DA7-B393-E7EE75D4DEE4}" PersistMode="Standalone">
 			<ChildrenList>
 				<Folder Name="Music" ID="{5BDC3F9F-9FC5-4DF3-8769-A6267335126B}" ShortID="290966774"/>
-				<Folder Name="SFX" ID="{79D5F0CC-B7C9-4250-AF69-EDB99B1643BF}" ShortID="1041850501">
+				<Folder Name="SFX_Slime" ID="{79D5F0CC-B7C9-4250-AF69-EDB99B1643BF}" ShortID="1041850501">
 					<ChildrenList>
 						<Event Name="Play_SFX_S_Jump" ID="{C8280902-8B3D-4673-8F7D-DF0313B44CEC}">
 							<ChildrenList>
@@ -61,6 +61,32 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="Environment" ID="{92ED3CBC-72BE-49EA-ABD5-E4D45E53B89E}" ShortID="330771865">
+					<ChildrenList>
+						<Event Name="Event_Play_Ambiance" ID="{42375DA6-3EDD-4286-A5D8-F4DA580E7577}">
+							<ChildrenList>
+								<Action Name="" ID="{860B351A-7FF5-40EA-9CA8-E9002B5C6AA4}" ShortID="802051306">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Enviro_Fall" ID="{CD0FEEC3-A7F4-4224-AEE7-0DF18ACAAAAF}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{1D542ADD-DFC3-4F8D-AFC0-43EC74272A4C}" ShortID="801456609">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Enviro_Summer" ID="{3CBB1030-E020-4878-8386-7860D7C62341}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="SFX_UI" ID="{384DA51E-14B4-491D-89A8-3712F0239F1C}" ShortID="14803768">
+					<ChildrenList>
 						<Event Name="Play_SFX_UI_Submit" ID="{11853204-F32C-41B8-B9FE-0BEC30CC258A}">
 							<ChildrenList>
 								<Action Name="" ID="{2889DD9C-F372-49D8-B60D-960EA4CBEF3C}" ShortID="1066152323">
@@ -94,23 +120,71 @@
 								</Action>
 							</ChildrenList>
 						</Event>
-					</ChildrenList>
-				</Folder>
-				<Folder Name="Environment" ID="{92ED3CBC-72BE-49EA-ABD5-E4D45E53B89E}" ShortID="330771865">
-					<ChildrenList>
-						<Event Name="Event_Play_Ambiance" ID="{42375DA6-3EDD-4286-A5D8-F4DA580E7577}">
+						<Event Name="Play_SFX_UI_Countdown" ID="{6E6BE563-5932-452A-8B66-C9B6FCB7BAA7}">
 							<ChildrenList>
-								<Action Name="" ID="{860B351A-7FF5-40EA-9CA8-E9002B5C6AA4}" ShortID="802051306">
+								<Action Name="" ID="{B9BD3C05-8AC3-4356-BDB4-F6ED34FC032E}" ShortID="30210034">
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="AMB_Fall" ID="{CD0FEEC3-A7F4-4224-AEE7-0DF18ACAAAAF}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+											<ObjectRef Name="SFX_UI_Countdown" ID="{9ECC4959-ECBE-435B-B2DC-08FA8E4182F5}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
-								<Action Name="" ID="{1D542ADD-DFC3-4F8D-AFC0-43EC74272A4C}" ShortID="801456609">
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_SFX_UI_CountdownEnd" ID="{16A99E1F-5F22-457D-B7C6-616CC2E24C30}">
+							<ChildrenList>
+								<Action Name="" ID="{E6D16353-CF99-44FF-8367-D986CFFD6FC3}" ShortID="159045627">
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="AMB_Summer" ID="{3CBB1030-E020-4878-8386-7860D7C62341}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+											<ObjectRef Name="SFX_UI_CountdownEnd" ID="{879C4BC6-1106-4876-A89B-783C3C1DA64B}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
+				<Folder Name="SFX_General" ID="{EAA72702-9D4E-4866-9B64-713D0AA933A4}" ShortID="1006964656">
+					<ChildrenList>
+						<Event Name="Play_SFX_S_BounceMushroom" ID="{95D71276-1A46-4F99-9234-AC08D4741082}">
+							<ChildrenList>
+								<Action Name="" ID="{C5BF1CF9-737F-49C5-82C0-9A1D2F180B7D}" ShortID="742130418">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SFX_S_BounceMushroom" ID="{CE55F0C3-053B-48E9-902C-1E67FA30FCCC}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_SFX_S_IceSlide" ID="{A4A51EE5-9427-42F0-A664-AB7013CD9BEE}">
+							<ChildrenList>
+								<Action Name="" ID="{AA399714-3D24-478A-BDDE-1B915C4002E7}" ShortID="1041285553">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SFX_S_IceSlide" ID="{E2FE9438-22A7-4269-AE15-3271E03C8E32}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_SFX_S_BrambleImpact" ID="{CA7CC831-AB44-4710-91F7-296AB0F4883F}">
+							<ChildrenList>
+								<Action Name="" ID="{46B875EF-F62C-4440-B281-36D130C59A04}" ShortID="988024298">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SFX_S_BrambleImpact" ID="{8C5FD9D6-213E-48B2-AC98-3045CA16C7FB}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_SFX_S_GainShield" ID="{DC5C41C4-13B1-4516-A2CD-4B66C17A13EA}">
+							<ChildrenList>
+								<Action Name="" ID="{AB7F97AF-3AE4-4D79-ACC0-88A599D1416F}" ShortID="1043884517">
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SFX_S_GainShield" ID="{AE4F9018-2FA7-44DC-8473-36B2421D5799}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>

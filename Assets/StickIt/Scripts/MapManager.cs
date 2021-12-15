@@ -24,6 +24,8 @@ public class MapManager : Unique<MapManager>
     [SerializeField] private uint roundCount = 0;
     private Coroutine _coroutine;
     private CameraStateDriven camManager;
+
+    private FadeShader shaderScript;
     //void OnGUI()
     //{
     //    if (GUI.Button(new Rect(0, 0, 200, 100), "NextMap")) NextMap(nextMapManual, true);
@@ -32,11 +34,13 @@ public class MapManager : Unique<MapManager>
     {
         base.Awake();
         camManager = Camera.main.GetComponent<CameraStateDriven>();
+        shaderScript = GetComponent<FadeShader>();
     }
     public bool EndLevel()
     {
         if (MultiplayerManager.instance.alivePlayers.Count <= 1)
         {
+            shaderScript.AllObjectsDisappear();
             NextMap();
             return true;
         }
@@ -121,7 +125,9 @@ public class MapManager : Unique<MapManager>
     }
     public IEnumerator EndTransition()
     {
+      
         Vector3 v0 = Vector3.zero, v1 = Vector3.zero, d0 = Vector3.one, d1 = Vector3.one;
+   
         while (d0.sqrMagnitude > smoothMOE && d1.sqrMagnitude > smoothMOE)
         {
             curMapRoot.transform.position = Vector3.SmoothDamp(curMapRoot.transform.position, new Vector3(-mapOffset, 0), ref v0, smoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
@@ -131,18 +137,30 @@ public class MapManager : Unique<MapManager>
             yield return null;
         }
         nextMapRoot.transform.position = Vector3.zero;
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        AsyncOperation asyncOp = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
+        bool activateShaders = false;
+        while (!activateShaders)
+        {
+            if (asyncOp.isDone)
+            {
+                shaderScript.SetShaders();
+                activateShaders = true;
+                yield return null;
+            }
+             yield return null;
+        }
         // Switch camera state depending of map mode
         camManager.SwitchStates(Utils.GetCameraType(curMod));
         //-------
-        yield return null;
         Time.timeScale = 1;
         timeScale = Time.timeScale;
         curMapRoot = nextMapRoot;
         nextMapRoot = null;
         isBusy = false;
         _coroutine = null;
+        shaderScript.AllObjectsAppear();
         var lvl = FindObjectOfType<Level>();
         if (lvl != null) StartCoroutine(lvl.Init());
+        yield return null;
     }
 }
