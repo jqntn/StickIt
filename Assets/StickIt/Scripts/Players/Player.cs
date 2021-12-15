@@ -49,7 +49,8 @@ public class Player : MonoBehaviour
         {
             yield return new WaitForSeconds(deathAnim.TotalDuration / deathAnim.DurationMultiplier);
         }
-        AudioManager.instance.PlayDeathSounds(gameObject);
+
+        if (AudioManager.instance != null) { AudioManager.instance.PlayDeathSounds(gameObject); }
         myMouvementScript.Death();
         GameObject obj = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Quaternion.identity);
         obj.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
