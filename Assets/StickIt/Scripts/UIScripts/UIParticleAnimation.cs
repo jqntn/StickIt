@@ -3,35 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-// TO DO :
-//      Make it move around
 public class UIParticleAnimation : MonoBehaviour
 {
-    // open a bool for which sens you want to turn
-    // don't forget to create one Effect for the winner and another for the loser
-    // do a permanent effect arount each square (material emmisive)
 
     [Header("GAME OBJECT CANVAS_______________")]
     public RectTransform rawImage;
-
+    public ParticleSystem ps;
 
     [Header("ANIMATION_____________________")]
     public bool hasRandomStart = true;
     [Tooltip("Start in the middle by default\nActivate it if you want the start to have an offset")]
     public bool hasRandomStartOffset = true;
     public StartPosition startPosition = StartPosition.UP;
-    public float speed = 100.0f;
-    public Vector2 offset = new Vector2(10.0f, 10.0f);
-
+    public float minSpeed = 100.0f;
+    public float maxSpeed = 500.0f;
+    public float minTrailMultiplier = .1f;
+    public float maxTrailMultiplier = 10.0f;
+    public AnimationCurve curve = new AnimationCurve();
+    public AnimationCurve curveTrail = new AnimationCurve();
+    public Vector2 min = new Vector2(-35.0f, -35.0f);
+    public Vector2 max = new Vector2(35.0f, 35.0f);
 
     [Header("DEBUG_________________________")]
     [SerializeField] private Vector2 dimension = new Vector2(.0f, .0f);
-    [SerializeField] private Vector2 min = new Vector2(.0f, .0f);
-    [SerializeField] private Vector2 max = new Vector2(.0f, .0f);
+
     [SerializeField] private Vector2 startPos = new Vector2(.0f, 200.0f);
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private MoveDirection direction;
-    [SerializeField] 
+    [SerializeField] private Coroutine coroutine = null;
+    [SerializeField] private float speed = 0.0f;
 
     private void OnEnable()
     {
@@ -39,11 +39,7 @@ public class UIParticleAnimation : MonoBehaviour
 
         float width = rawImage.rect.width / 2.0f;
         float height = rawImage.rect.height / 2.0f;
-        dimension = new Vector2(width, height);
-        min.x = rawImage.anchoredPosition.x - width;
-        max.x = rawImage.anchoredPosition.x + width;
-        min.y = rawImage.anchoredPosition.y - height;
-        max.y = rawImage.anchoredPosition.y + height;
+        dimension = new Vector2(max.x, max.y);
 
         if (hasRandomStart)
         {
@@ -66,70 +62,112 @@ public class UIParticleAnimation : MonoBehaviour
     {
         Move();
         SwitchDirection();
+        SwitchTrail();
+    }
+
+    private void SwitchTrail()
+    {
+        if(ps == null) { return; }
+
+        var main = ps.main;
+        var shape = ps.shape;
+        float ratio = 0.0f;
+        switch (direction)
+        {
+            case MoveDirection.UP:
+                ratio = (shape.position.y + max.y) / (dimension.y * 2.0f);
+                main.startSpeedMultiplier = Mathf.Lerp(minTrailMultiplier, maxTrailMultiplier, curveTrail.Evaluate(ratio));
+                speed = Mathf.Lerp(minSpeed, maxSpeed, curve.Evaluate(ratio));
+                break;
+            case MoveDirection.DOWN:
+                //ratio = Mathf.Abs(shape.position.y) / dimension.y;
+                ratio = (shape.position.y + max.y) / (dimension.y * 2.0f);
+                main.startSpeedMultiplier = Mathf.Lerp(maxTrailMultiplier, minTrailMultiplier, curveTrail.Evaluate(ratio));
+                speed = Mathf.Lerp(minSpeed, maxSpeed, curve.Evaluate(ratio));
+                break;
+            case MoveDirection.LEFT:
+                //ratio = Mathf.Abs(shape.position.x) / dimension.x;
+                ratio = (shape.position.x + max.x) / (dimension.x * 2.0f);
+                main.startSpeedMultiplier = Mathf.Lerp(maxTrailMultiplier, minTrailMultiplier, curveTrail.Evaluate(ratio));
+                speed = Mathf.Lerp(minSpeed, maxSpeed, curve.Evaluate(ratio));
+                break;
+            case MoveDirection.RIGHT:
+                //ratio = Mathf.Abs(shape.position.x) / dimension.x;
+                ratio = (shape.position.x + max.x) / (dimension.x * 2.0f);
+                main.startSpeedMultiplier = Mathf.Lerp(minTrailMultiplier, maxTrailMultiplier, curveTrail.Evaluate(ratio));
+                speed = Mathf.Lerp(minSpeed, maxSpeed, curve.Evaluate(ratio));
+                break;
+        }
+
     }
 
     private void Move()
     {
+        var shape = ps.shape;
         switch (direction)
         {
             case MoveDirection.RIGHT:
-                rectTransform.anchoredPosition = new Vector2(
-                    Mathf.Clamp(rectTransform.anchoredPosition.x + speed * Time.deltaTime, min.x - offset.x, max.x + offset.x),
-                    rectTransform.anchoredPosition.y
-                    );
+                shape.position = new Vector3(
+                    Mathf.Clamp(shape.position.x + speed * Time.deltaTime, min.x, max.x),
+                    shape.position.y,
+                    shape.position.z);
                 break;
             case MoveDirection.LEFT:
-
-                rectTransform.anchoredPosition = new Vector2(
-                    Mathf.Clamp(rectTransform.anchoredPosition.x - speed * Time.deltaTime, min.x - offset.x, max.x + offset.x),
-                    rectTransform.anchoredPosition.y
-                    );
+                shape.position = new Vector3(
+                    Mathf.Clamp(shape.position.x - speed * Time.deltaTime, min.x, max.x),
+                    shape.position.y,
+                    shape.position.z);
                 break;
             case MoveDirection.UP:
-                rectTransform.anchoredPosition = new Vector2(
-                    rectTransform.anchoredPosition.x,
-                    Mathf.Clamp(rectTransform.anchoredPosition.y + speed * Time.deltaTime, min.y - offset.y, max.y + offset.y)
-                    );
+                shape.position = new Vector3(
+                    shape.position.x,
+                    Mathf.Clamp(shape.position.y + speed * Time.deltaTime, min.y, max.y),
+                    shape.position.z);
                 break;
             case MoveDirection.DOWN:
-                rectTransform.anchoredPosition = new Vector2(
-                    rectTransform.anchoredPosition.x,
-                    Mathf.Clamp(rectTransform.anchoredPosition.y - speed * Time.deltaTime, min.y - offset.y, max.y + offset.y)
-                    );
+                shape.position = new Vector3(
+                    shape.position.x,
+                    Mathf.Clamp(shape.position.y - speed * Time.deltaTime, min.y, max.y),
+                    shape.position.z);
                 break;
         }
     }
 
     private void SwitchDirection()
     {
+        var shape = ps.shape;
         switch (direction)
         {
             case MoveDirection.RIGHT:
-                // if too much on the right
-                if (rectTransform.anchoredPosition.x >= max.x + offset.x)
+                // if too much on the right > move DOWN
+                if(shape.position.x >= max.x)
                 {
                     direction = MoveDirection.DOWN;
+                    shape.rotation = new Vector3(.0f, .0f, 90f);
                 }
                 break;
             case MoveDirection.LEFT:
-                // if too much on the left
-                if (rectTransform.anchoredPosition.x <= min.x - offset.x)
+                // if too much on the left > move UP
+                if (shape.position.x <= min.x)
                 {
                     direction = MoveDirection.UP;
+                    shape.rotation = new Vector3(.0f, .0f, -90f);
                 }
                 break;
             case MoveDirection.UP:
-                // if too much upward
-                if (rectTransform.anchoredPosition.y >= max.y + offset.y)
+                // if too much upward > move RIGHT
+                if (shape.position.y >= max.y)
                 {
                     direction = MoveDirection.RIGHT;
+                    shape.rotation = new Vector3(.0f, .0f, 180f);
                 }
                 break;
             case MoveDirection.DOWN:
-                // if too much downward
-                if (rectTransform.anchoredPosition.y <= min.y - offset.y)
+                // if too much downward > move LEFT
+                if (shape.position.y <= min.y)
                 {
                     direction = MoveDirection.LEFT;
+                    shape.rotation = new Vector3(.0f, .0f, 0f);
                 }
                 break;
         }
@@ -139,12 +177,13 @@ public class UIParticleAnimation : MonoBehaviour
     /// </summary>
     private void SearchStartPos()
     {
+        float offset = 0.1f;
         // slight +1 and -1 is to avoid conflict and changing direction immediatly
         switch (startPosition)
         {
             case StartPosition.UP:
                 if (hasRandomStartOffset) { 
-                    startPos.x = Random.Range(min.x + 1, max.x - 1); 
+                    startPos.x = Random.Range(min.x + offset, max.x - offset); 
                 }
                 else { 
                     startPos.x = .0f; 
@@ -154,7 +193,7 @@ public class UIParticleAnimation : MonoBehaviour
                 break;
             case StartPosition.DOWN:
                 if (hasRandomStartOffset) { 
-                    startPos.x = Random.Range(min.x + 1, max.x - 1); 
+                    startPos.x = Random.Range(min.x + offset, max.x - offset); 
                 }
                 else { 
                     startPos.x = .0f; 
@@ -165,7 +204,7 @@ public class UIParticleAnimation : MonoBehaviour
             case StartPosition.LEFT:
                 startPos.x = dimension.x;
                 if (hasRandomStartOffset) { 
-                    startPos.y = Random.Range(min.y + 1, max.y - 1); 
+                    startPos.y = Random.Range(min.y + offset, max.y - offset); 
                 }
                 else {
                     startPos.y = .0f; 
@@ -176,7 +215,7 @@ public class UIParticleAnimation : MonoBehaviour
             case StartPosition.RIGHT:
                 startPos.x = -dimension.x;
                 if (hasRandomStartOffset) { 
-                    startPos.y = Random.Range(min.y + 1, max.y - 1); 
+                    startPos.y = Random.Range(min.y + offset, max.y - offset); 
                 }
                 else { 
                     startPos.y = .0f; 
