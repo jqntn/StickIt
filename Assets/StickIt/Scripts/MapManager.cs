@@ -33,6 +33,7 @@ public class MapManager : Unique<MapManager>
     protected override void Awake()
     {
         base.Awake();
+        AudioManager.instance.PlayAmbiantSounds(gameObject);
         camManager = Camera.main.GetComponent<CameraStateDriven>();
         shaderScript = GetComponent<FadeShader>();
     }
