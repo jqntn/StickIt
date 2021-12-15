@@ -24,6 +24,7 @@ public class EndScore2 : MonoBehaviour
     public GameObject[] panelPlayers;
     public TMP_Text[] textP;
     public TMP_Text[] textScores;
+    public GameObject returnToMenu;
 
     [Header("HIERARCHY ELEMENTS_________________")]
     public Transform[] startPos;
@@ -49,6 +50,7 @@ public class EndScore2 : MonoBehaviour
 
         GameEvents.OnSwitchCamera.AddListener(EndGame);
         timer = 0.0f;
+        returnToMenu.SetActive(false);
 
     }
 
@@ -145,7 +147,7 @@ public class EndScore2 : MonoBehaviour
         }
 
         controller.Enable();
-
+        returnToMenu.SetActive(true);
         controller.NormalInputs.Menu.performed += _ => Menu();
     }
 

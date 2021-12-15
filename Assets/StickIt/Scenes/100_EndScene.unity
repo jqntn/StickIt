@@ -1634,7 +1634,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e1589a5522e474d97aae598bc0f2c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isStartingDirect: 0
+  isStartingDirect: 1
   data: {fileID: 11400000, guid: 35b2b7044abee3f489c2fc1434a426c7, type: 2}
   extendsFactor: 1
   offsets: {x: 0, y: 7, z: 0}
@@ -2886,6 +2886,38 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1384256369, guid: 5836d05c590660b43a6b5585a7ca7e66, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1384256369, guid: 5836d05c590660b43a6b5585a7ca7e66, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1384256369, guid: 5836d05c590660b43a6b5585a7ca7e66, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1384256369, guid: 5836d05c590660b43a6b5585a7ca7e66, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1604493060, guid: 5836d05c590660b43a6b5585a7ca7e66, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1604493060, guid: 5836d05c590660b43a6b5585a7ca7e66, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1604493060, guid: 5836d05c590660b43a6b5585a7ca7e66, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1604493060, guid: 5836d05c590660b43a6b5585a7ca7e66, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5966083539519659771, guid: 5836d05c590660b43a6b5585a7ca7e66, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3044,11 +3076,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5966083540063858958, guid: 5836d05c590660b43a6b5585a7ca7e66, type: 3}
       propertyPath: isStartingDirect
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5966083540063858958, guid: 5836d05c590660b43a6b5585a7ca7e66, type: 3}
-      propertyPath: textRank.Array.size
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5966083540063858958, guid: 5836d05c590660b43a6b5585a7ca7e66, type: 3}
       propertyPath: startPos.Array.data[0]
