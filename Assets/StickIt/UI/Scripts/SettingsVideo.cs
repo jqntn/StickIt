@@ -1,11 +1,9 @@
 using UnityEngine;
+using UnityEngine.UI;
 public class SettingsVideo : MonoBehaviour
 {
-    private bool vsync;
-    public void Fullscreen() => Screen.fullScreen = !Screen.fullScreen;
-    public void Vsync()
-    {
-        vsync ^= true;
-        QualitySettings.vSyncCount = vsync ? 1 : 0;
-    }
+    [SerializeField] private Toggle fullscreenToggle;
+    [SerializeField] private Toggle vsyncToggle;
+    public void Fullscreen() => Screen.fullScreen = fullscreenToggle.isOn;
+    public void Vsync() => QualitySettings.vSyncCount = vsyncToggle.isOn ? 1 : 0;
 }

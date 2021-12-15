@@ -33,15 +33,17 @@ public class MapManager : Unique<MapManager>
     protected override void Awake()
     {
         base.Awake();
-        AudioManager.instance.PlayAmbiantSounds(gameObject);
         camManager = Camera.main.GetComponent<CameraStateDriven>();
         shaderScript = GetComponent<FadeShader>();
+    }
+    private void Start()
+    {
+        AudioManager.instance.PlayAmbiantSounds(gameObject);
     }
     public bool EndLevel()
     {
         if (!levelEnded && MultiplayerManager.instance.alivePlayers.Count <= 1)
         {
-            Debug.Log("CALL END LEVEL");
             shaderScript.AllObjectsDisappear();
             NextMap();
             levelEnded = true;
