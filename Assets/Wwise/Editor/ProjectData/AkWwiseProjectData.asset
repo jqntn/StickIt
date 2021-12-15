@@ -232,8 +232,8 @@ MonoBehaviour:
         guid: b72e3e5a6a0cbe4182e2df79f91d6daf
       Path: Events\Default Work Unit\Play_SFX_Platform_Rotate
       maxAttenuation: 0
-      maxDuration: 5.6685
-      minDuration: 5.6685
+      maxDuration: -1
+      minDuration: -1
     - name: Play_SFX_S_BounceMushroom
       guid: 7612d795461a994f9234ac08d4741082
       id: 1190391802
@@ -472,8 +472,8 @@ MonoBehaviour:
         guid: f6f4b00cb3ee9f448b1c7a6f19e5e4fd
       Path: Events\Default Work Unit\SFX_UI\Play_SFX_UI_Move
       maxAttenuation: 0
-      maxDuration: 0.08352
-      minDuration: 0.076588
+      maxDuration: 0.093911
+      minDuration: 0.068114
     - name: Play_SFX_UI_Return
       guid: 90c92b4486a153449b50ba4867c68248
       id: 811711225
@@ -514,6 +514,46 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.077189
       minDuration: 0.070783
+    - name: Set_State_Season_Fall
+      guid: d4674dca485809458c5e093cabe83275
+      id: 442955453
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: Environment
+        ObjectType: 4
+        guid: bc3ced92be72ea49abd5e4d45e53b89e
+      - ElementName: Set_State_Season_Fall
+        ObjectType: 3
+        guid: d4674dca485809458c5e093cabe83275
+      Path: Events\Default Work Unit\Environment\Set_State_Season_Fall
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Set_State_Season_Summer
+      guid: 5ed720f1774b344982a0f2b703a582ec
+      id: 3566163661
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: Environment
+        ObjectType: 4
+        guid: bc3ced92be72ea49abd5e4d45e53b89e
+      - ElementName: Set_State_Season_Summer
+        ObjectType: 3
+        guid: 5ed720f1774b344982a0f2b703a582ec
+      Path: Events\Default Work Unit\Environment\Set_State_Season_Summer
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
     - name: SFX_General
       guid: 0227a7ea4e9d66489b64713d0aa933a4
       id: 515334391
@@ -688,6 +728,22 @@ MonoBehaviour:
         - ElementName: None
           ObjectType: 8
           guid: 9e44d7a992b8764dad493b5e3e0ef9de
+      - name: NoState
+        guid: 695ef3379fe5a5438ac0f0281052d192
+        id: 302661891
+        PathAndIcons:
+        - ElementName: States
+          ObjectType: 5
+          guid: 00000000000000000000000000000000
+        - ElementName: Default Work Unit
+          ObjectType: 12
+          guid: e31a9ef6187cbc49905bca8fdda6ebad
+        - ElementName: State_Season
+          ObjectType: 9
+          guid: 01d8adccb7675748b12717f3f4f64d04
+        - ElementName: NoState
+          ObjectType: 8
+          guid: 695ef3379fe5a5438ac0f0281052d192
       - name: State_Season_Fall
         guid: c8fbb4733428244e88d4dace35264ebb
         id: 2028143368
@@ -826,7 +882,7 @@ MonoBehaviour:
 >>>>>>> Stashed changes
     List: []
   ExpandedFileSystemItemIds: 
-  ExpandedWaapiItemIds: 0d0000000e0000000f000000
+  ExpandedWaapiItemIds: 
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
   currentDataSource: 0

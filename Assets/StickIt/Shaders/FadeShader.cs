@@ -20,6 +20,7 @@ public class FadeShader : MonoBehaviour
     bool isAppearAnimation;
     bool isDisappearAnimation;
 
+    [ColorUsageAttribute(true, true), SerializeField] Color colorEdgeDisappear;
     float time;
 
 
@@ -102,12 +103,12 @@ public class FadeShader : MonoBehaviour
                 if(saveMaterials)
                 matSave.Add(renderers[i].material);
                 if(!renderers[i].gameObject.CompareTag("Chair"))
-                    renderers[i].material = CreateShaderFromMaterial(renderers[i].material, renderers[i].gameObject.name);
+                    renderers[i].material = CreateShaderFromMaterial(renderers[i].material, renderers[i].gameObject.name, saveMaterials);
             }
         }
     }
 
-    Material CreateShaderFromMaterial(Material material, string name)
+    Material CreateShaderFromMaterial(Material material, string name, bool isAppear)
     {
         Material mat = new Material(shader);
         mat.name = "Shader Disappear - " + name;
@@ -126,6 +127,7 @@ public class FadeShader : MonoBehaviour
 
         mat.SetColor("_Color", material.GetColor("_BaseColor"));
         mat.SetColor("_EmissionColor", material.GetColor("_EmissionColor"));
+        if(!isAppear) mat.SetColor("_ColorEdge", colorEdgeDisappear);
         if (material.IsKeywordEnabled("_EMISSION")) mat.SetFloat("_Intensity", 1);
         mat.SetFloat("_EdgeWidth", edgeWidth);
         mat.SetFloat("_SpeedRotation", speedRotation);
