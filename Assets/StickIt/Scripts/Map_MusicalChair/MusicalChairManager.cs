@@ -10,6 +10,7 @@ public class MusicalChairManager : Level
     [SerializeField] private float transitionValue;
     [SerializeField] private Color colorTextRound;
     private float transition;
+    bool soundCountdownBool;
     public Text countdown;
     private Animator textAnim;
     private float countDownSave;
@@ -102,6 +103,14 @@ public class MusicalChairManager : Level
                 ResetChairPool();
                 GameEvents.CameraShake_CEvent.Invoke(1, 1.0f);
             }
+            if(duration % 1 < 0.01f && textValue > 4)
+            {
+                AkSoundEngine.PostEvent("Play_SFX_UI_Countdown", gameObject);
+            }
+            else if (duration % 1 < 0.01f && textValue <= 4)
+            {
+                AkSoundEngine.PostEvent("Play_SFX_UI_CountdownEnd", gameObject);
+            }
         }
         if (textValue < countDownSave)
         {
@@ -113,6 +122,12 @@ public class MusicalChairManager : Level
             }
         }
         countDownSave = textValue;
+    }
+    IEnumerator CountdownCor()
+    {
+        AkSoundEngine.PostEvent("Play_SFX_UI_Countdown", gameObject);
+        yield return new WaitForSeconds(1);
+
     }
     private void ChangeChairPool()
     {

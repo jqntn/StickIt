@@ -2,6 +2,11 @@ using UnityEngine;
 
 public class AudioManager : Unique<AudioManager>
 {
+    private void Start()
+    {
+        AkSoundEngine.PostEvent("Play_Music_Main", gameObject);
+        AkSoundEngine.PostEvent("Stop_Music_End", gameObject);
+    }
     public void PlayMusicMenu(GameObject go)
     {
         AkSoundEngine.PostEvent("Event_M_Play_Menu", go);
@@ -56,7 +61,7 @@ public class AudioManager : Unique<AudioManager>
     }
     public void PlayIceSlideSounds(GameObject go)
     {
-        AkSoundEngine.PostEvent("Play_SFX_S_IceSlide", go);
+       
     }
     #endregion
 

@@ -62,6 +62,7 @@ public class EndScore2 : MonoBehaviour
         {
             EndGame();
         }
+        AkSoundEngine.PostEvent("Stop_Music_Main", gameObject);
     }
 
     
