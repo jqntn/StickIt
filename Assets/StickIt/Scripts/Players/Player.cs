@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.VFX;
 public class Player : MonoBehaviour
 {
     private MultiplayerManager _multiplayerManager;
@@ -10,10 +11,15 @@ public class Player : MonoBehaviour
     public MoreMountains.Feedbacks.MMFeedbacks deathAnim;
     public GameObject deathPart;
     public bool isDead;
+
+    [Header("VFX__________________________________")]
+    public GameObject VFXExplosion;
+    public VisualEffect VFXExplosionParticle;
     [SerializeField] private int minMass = 100;
     [SerializeField] private int maxMass = 250;
     private void Awake()
     {
+
         _multiplayerManager = MultiplayerManager.instance;
         if (TryGetComponent<PlayerMouvement>(out PlayerMouvement pm))
         {
@@ -21,6 +27,11 @@ public class Player : MonoBehaviour
             myMouvementScript.myPlayer = this;
         }
         DontDestroyOnLoad(this);
+
+
+        VFXExplosionParticle = VFXExplosion.GetComponent<VisualEffect>();
+        VFXExplosionParticle.Stop();
+        VFXExplosion.SetActive(false);
     }
     public void Death(bool intensityAnim = false)
     {
@@ -43,6 +54,10 @@ public class Player : MonoBehaviour
         GameObject obj = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Quaternion.identity);
         obj.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
         GameEvents.CameraShake_CEvent?.Invoke(2.0f, 1.0f);
+
+        if(!VFXExplosion.activeInHierarchy) VFXExplosion.SetActive(true);
+        VFXExplosionParticle.SendEvent("Trigger");
+
         //
         // ParticleSystem ps = obj.GetComponent<ParticleSystem>();
         // ParticleSystem.Particle[] particles = new ParticleSystem.Particle[ps.particleCount];
