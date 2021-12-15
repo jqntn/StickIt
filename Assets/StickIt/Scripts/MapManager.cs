@@ -128,29 +128,25 @@ public class MapManager : Unique<MapManager>
     public IEnumerator EndTransition()
     {
       
-        Vector3 v0 = Vector3.zero, v1 = Vector3.zero, d0 = Vector3.one, d1 = Vector3.one;
+        //Vector3 v0 = Vector3.zero, v1 = Vector3.zero, d0 = Vector3.one, d1 = Vector3.one;
    
-        while (d0.sqrMagnitude > smoothMOE && d1.sqrMagnitude > smoothMOE)
-        {
-            curMapRoot.transform.position = Vector3.SmoothDamp(curMapRoot.transform.position, new Vector3(-mapOffset, 0), ref v0, smoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
-            nextMapRoot.transform.position = Vector3.SmoothDamp(nextMapRoot.transform.position, Vector3.zero, ref v1, smoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
-            d0 = curMapRoot.transform.position - new Vector3(-mapOffset, 0);
-            d1 = nextMapRoot.transform.position - Vector3.zero;
-            yield return null;
-        }
-        nextMapRoot.transform.position = Vector3.zero;
+        //while (d0.sqrMagnitude > smoothMOE && d1.sqrMagnitude > smoothMOE)
+        //{
+        //    curMapRoot.transform.position = Vector3.SmoothDamp(curMapRoot.transform.position, new Vector3(-mapOffset, 0), ref v0, smoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
+        //    nextMapRoot.transform.position = Vector3.SmoothDamp(nextMapRoot.transform.position, Vector3.zero, ref v1, smoothTime, Mathf.Infinity, Time.unscaledDeltaTime);
+        //    d0 = curMapRoot.transform.position - new Vector3(-mapOffset, 0);
+        //    d1 = nextMapRoot.transform.position - Vector3.zero;
+        //    yield return null;
+        //}
+       
         AsyncOperation asyncOp = SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-        bool activateShaders = false;
-        while (!activateShaders)
-        {
-            if (asyncOp.isDone)
-            {
-                shaderScript.SetShaders();
-                activateShaders = true;
-                yield return null;
-            }
+
+        while (!asyncOp.isDone)
+        {        
              yield return null;
         }
+        shaderScript.SetShaders(true);
+        nextMapRoot.transform.position = Vector3.zero;
         // Switch camera state depending of map mode
         camManager.SwitchStates(Utils.GetCameraType(curMod));
         //-------

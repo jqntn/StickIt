@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class FadeShader : MonoBehaviour
 {
+    [SerializeField]
     MeshRenderer[] renderers;
+    [SerializeField]
     List<Material> matSave = new List<Material>();
     public Shader shader;
 
@@ -24,7 +26,6 @@ public class FadeShader : MonoBehaviour
     private void Start()
     {
 
-        //StartCoroutine(test());
     }
     // Update is called once per frame
     void Update()
@@ -56,8 +57,6 @@ public class FadeShader : MonoBehaviour
             }
             if (time >= 1)
             {
-                print("SetBackMaterialsDisappear - Size matSave  - " + matSave.Count);
-                SetBackMaterials();
                 isDisappearAnimation = false;
             }
         }
@@ -68,7 +67,7 @@ public class FadeShader : MonoBehaviour
 
     public void AllObjectsDisappear()
     {
-        SetShaders();
+        SetShaders(false);
         isDisappearAnimation = true;
         time = 0;
         //time = Time.time;
@@ -93,13 +92,14 @@ public class FadeShader : MonoBehaviour
         matSave.Clear();
     }
 
-    public void SetShaders()
+    public void SetShaders(bool saveMaterials)
     {
         renderers = FindObjectsOfType<MeshRenderer>();
         for (int i = 0; i < renderers.Length; i++)
         {
             if (renderers[i].material != null)
             {
+                if(saveMaterials)
                 matSave.Add(renderers[i].material);
                 if(!renderers[i].gameObject.CompareTag("Chair"))
                     renderers[i].material = CreateShaderFromMaterial(renderers[i].material, renderers[i].gameObject.name);
@@ -132,15 +132,5 @@ public class FadeShader : MonoBehaviour
         mat.SetInt("_NoiseSize", noiseSize);
         mat.SetFloat("_Fade", 1);
         return mat;
-    }
-
-    IEnumerator test()
-    {
-        yield return new WaitForSeconds(1);
-        SetShaders();
-        yield return new WaitForSeconds(2);
-        AllObjectsAppear();
-        yield return new WaitForSeconds(5);
-        AllObjectsDisappear();
     }
 }
