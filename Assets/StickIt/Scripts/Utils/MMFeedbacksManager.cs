@@ -16,7 +16,7 @@ public class MMFeedbacksManager : MonoBehaviour
 	public void ShakeAppearChairCall(float duration, float intensity)
 	{
 		if (!feedbacksList[1].IsPlaying){
-			float durationMultiplier = duration / feedbacksList[1].TotalDuration;
+			float durationMultiplier = Mathf.Sqrt(duration / feedbacksList[1].TotalDuration);
 			feedbacksList[1].FeedbacksIntensity = intensity;
 			feedbacksList[1].DurationMultiplier = durationMultiplier;
 			feedbacksList[1].PlayFeedbacks();
@@ -26,7 +26,9 @@ public class MMFeedbacksManager : MonoBehaviour
 	public void CameraShake_CCall(float duration = 1.0f, float intensity = 1.0f)
 	{
 		if (!feedbacksList[0].IsPlaying){
-			float durationMultiplier = feedbacksList[0].TotalDuration / duration;
+
+			Debug.Log("TotalDuration = " + feedbacksList[0].TotalDuration);
+			float durationMultiplier = Mathf.Sqrt(duration / feedbacksList[0].TotalDuration);
 			feedbacksList[0].FeedbacksIntensity = intensity;
 			feedbacksList[0].DurationMultiplier = durationMultiplier;
 			feedbacksList[0].PlayFeedbacks();
