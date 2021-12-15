@@ -132,7 +132,7 @@ public class EndScore2 : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenRankAppear);
             panelPlayers[i].SetActive(true);
             textP[i].color = ranking[i].myDatas.material.color;
-            textP[i].text = "Player " + ranking[i].myDatas.id.ToString();
+            textP[i].text = "Player " + (ranking[i].myDatas.id + 1).ToString();
             textScores[i].color = ranking[i].myDatas.material.color;
             textScores[i].text = ranking[i].myDatas.score.ToString();
             textRank[i].color = ranking[i].myDatas.material.color;
