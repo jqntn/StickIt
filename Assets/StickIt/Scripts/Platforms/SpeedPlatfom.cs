@@ -8,8 +8,7 @@ public class SpeedPlatfom : Platform
 
     public override void Action(Collision c)
     {
-
-        if (AudioManager.instance != null) { AudioManager.instance.PlayIceSlideSounds(gameObject); }
+        AkSoundEngine.PostEvent("Play_SFX_S_IceSlide", gameObject);
         if (imposeDir) c.transform.GetComponent<Rigidbody>().velocity = dir.normalized * impulseForce;
         else
         {
@@ -17,5 +16,11 @@ public class SpeedPlatfom : Platform
             Vector2 proj = Vector3.Project(vel, -transform.up);
             c.transform.GetComponent<Rigidbody>().velocity = proj.normalized * impulseForce;
         }
+    }
+    private void OnCollisionExit(Collision c)
+    {
+        Player player = c.gameObject.GetComponent<Player>();
+        if (player != null)
+            AkSoundEngine.PostEvent("Stop_SFX_S_IceSlide", gameObject);
     }
 }

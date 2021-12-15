@@ -78,6 +78,8 @@ public class MapManager : Unique<MapManager>
         // End Game
         if (roundCount == numberOfRounds)
         {
+
+            AkSoundEngine.PostEvent("Play_Music_End", gameObject);
             curMod = "End";
             curMap = "100_EndScene";
             return "100_EndScene";

@@ -62,7 +62,7 @@ public class Chair : MonoBehaviour
             if (chosenOne)
             {
                 shield.transform.SetParent(chosenOne.transform);
-                shield.transform.localScale =  new Vector3(musicalChairManager.sizeShieldChair, musicalChairManager.sizeShieldChair, musicalChairManager.sizeShieldChair) / 10000;
+                shield.transform.localScale =  new Vector3(musicalChairManager.sizeShieldChair, musicalChairManager.sizeShieldChair, musicalChairManager.sizeShieldChair) / 100;
                 shield.transform.localPosition = new Vector3(0, 0, 0);
                 colShield = chosenOne.GetComponent<Player>().myDatas.material.GetColor("_Color");
                 colShield.a = shieldMesh.material.GetColor("_Tint").a;

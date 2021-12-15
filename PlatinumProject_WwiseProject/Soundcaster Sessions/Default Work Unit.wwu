@@ -1,6 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <WwiseDocument Type="WorkUnit" ID="{98EDF961-E300-4077-91AD-5C1D00A08873}" SchemaVersion="103">
 	<SoundcasterSessions>
-		<WorkUnit Name="Default Work Unit" ID="{98EDF961-E300-4077-91AD-5C1D00A08873}" PersistMode="Standalone"/>
+		<WorkUnit Name="Default Work Unit" ID="{98EDF961-E300-4077-91AD-5C1D00A08873}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundcasterSession Name="Test" ID="{B147B956-AC4E-4038-9B6D-934713074F43}">
+					<ModuleList>
+						<Module>
+							<ObjectRef Name="Play_Music_End" ID="{21BA1A82-0D01-40B0-9B2E-CB81641AC06A}" WorkUnitID="{0742BF3C-F919-4DA7-B393-E7EE75D4DEE4}"/>
+							<Position X="0" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Play_Music_Main" ID="{A64C9790-864C-4FA3-9617-3435B6837F39}" WorkUnitID="{0742BF3C-F919-4DA7-B393-E7EE75D4DEE4}"/>
+							<Position X="0" Y="1"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Stop_Music_End" ID="{3603C0F9-9613-4C4A-8B83-FECA8ACA1AF3}" WorkUnitID="{0742BF3C-F919-4DA7-B393-E7EE75D4DEE4}"/>
+							<Position X="1" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="Stop_Music_Main" ID="{399D331D-7D8B-4B96-984C-7A2ACBB787A4}" WorkUnitID="{0742BF3C-F919-4DA7-B393-E7EE75D4DEE4}"/>
+							<Position X="1" Y="1"/>
+						</Module>
+					</ModuleList>
+					<RTPCValueList ShowAll="true">
+						<RTPCValue>
+							<GameParameterRef Name="RTPC_Volume_SFX" ID="{EF16D0C6-B24C-452B-8869-1DED1A63CC93}"/>
+							<Value>50</Value>
+						</RTPCValue>
+						<RTPCValue>
+							<GameParameterRef Name="RTPC_Volume_Music" ID="{448338EA-3F80-47C6-A0BD-0F4CBB75C998}"/>
+							<Value>50</Value>
+						</RTPCValue>
+						<RTPCValue>
+							<GameParameterRef Name="RTPC_Volume_Environment" ID="{A42FC30F-BA4D-47C6-BE56-E8E8CB97ECB2}"/>
+							<Value>50</Value>
+						</RTPCValue>
+						<RTPCValue>
+							<GameParameterRef Name="RTPC_Volume_Global" ID="{32533AB5-CF2A-4C28-AD07-31E15F5B96D4}"/>
+							<Value>50</Value>
+						</RTPCValue>
+					</RTPCValueList>
+					<CurrentStateList ShowAll="true">
+						<CurrentStateRef Name="None" ID="{A9D7449E-B892-4D76-AD49-3B5E3E0EF9DE}"/>
+					</CurrentStateList>
+					<CurrentSwitchList ShowAll="true">
+						<CurrentSwitchRef Name="Chairs" ID="{7F796544-175B-459A-9B29-8ECC1C06E73C}"/>
+					</CurrentSwitchList>
+				</SoundcasterSession>
+			</ChildrenList>
+		</WorkUnit>
 	</SoundcasterSessions>
 </WwiseDocument>

@@ -20,7 +20,7 @@
 	</StreamedFiles>
 	<MediaFilesNotInAnyBank/>
 	<SoundBanks>
-		<SoundBank Id="1355168291" Language="SFX" Hash="1501740985">
+		<SoundBank Id="1355168291" Language="SFX" Hash="3273776308">
 			<ObjectPath>Init</ObjectPath>
 			<ShortName>Init</ShortName>
 			<Path>Init.bnk</Path>
@@ -31,7 +31,7 @@
 				<GameParameter Id="4276639445" Name="RTPC_Volume_SFX" ObjectPath="\Game Parameters\Default Work Unit\RTPC_Volume_SFX"/>
 			</GameParameters>
 		</SoundBank>
-		<SoundBank Id="2880737896" Language="SFX" Hash="46926542">
+		<SoundBank Id="2880737896" Language="SFX" Hash="3718272150">
 			<ObjectPath>\SoundBanks\Default Work Unit\MainBank</ObjectPath>
 			<ShortName>MainBank</ShortName>
 			<Path>MainBank.bnk</Path>
@@ -51,7 +51,27 @@
 						<ActionSetStateEntry Id="302661891" Name="NoState" ObjectPath="\States\Default Work Unit\State_Season\NoState"/>
 					</ActionSetState>
 				</Event>
-				<Event Id="717539115" Name="Play_SFX_Platform_Rotate" ObjectPath="\Events\Default Work Unit\Play_SFX_Platform_Rotate" DurationType="Infinite">
+				<Event Id="2885083713" Name="Play_Music_End" ObjectPath="\Events\Default Work Unit\Music\Play_Music_End" DurationType="Infinite">
+					<IncludedMemoryFiles>
+						<File Id="82422113" Language="SFX">
+							<ShortName>MUS_Podium_LP.wav</ShortName>
+							<Path>SFX\MUS_Podium_LP_D79FB2B7.wem</Path>
+						</File>
+						<File Id="356695501" Language="SFX">
+							<ShortName>MUS_Podium_Start.wav</ShortName>
+							<Path>SFX\MUS_Podium_Start_10C4C929.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="1614763749" Name="Play_Music_Main" ObjectPath="\Events\Default Work Unit\Music\Play_Music_Main" DurationType="Infinite">
+					<IncludedMemoryFiles>
+						<File Id="806286491" Language="SFX">
+							<ShortName>MUS_Main.wav</ShortName>
+							<Path>SFX\MUS_Main_D79FB2B7.wem</Path>
+						</File>
+					</IncludedMemoryFiles>
+				</Event>
+				<Event Id="717539115" Name="Play_SFX_Platform_Rotate" ObjectPath="\Events\Default Work Unit\SFX_General\Play_SFX_Platform_Rotate" DurationType="Infinite">
 					<IncludedMemoryFiles>
 						<File Id="646238974" Language="SFX">
 							<ShortName>SFX_Platform_Rotate.wav</ShortName>
@@ -271,55 +291,11 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="949470004" Name="Play_SFX_S_IceSlide" ObjectPath="\Events\Default Work Unit\SFX_General\Play_SFX_S_IceSlide" DurationType="OneShot" DurationMin="0.279341" DurationMax="0.377440">
+				<Event Id="949470004" Name="Play_SFX_S_IceSlide" ObjectPath="\Events\Default Work Unit\SFX_General\Play_SFX_S_IceSlide" DurationType="Infinite">
 					<IncludedMemoryFiles>
-						<File Id="108048071" Language="SFX">
-							<ShortName>SFX_Slime_Collision_08.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_08_10C4C929.wem</Path>
-						</File>
-						<File Id="183655441" Language="SFX">
-							<ShortName>SFX_Slime_Collision_06.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_06_10C4C929.wem</Path>
-						</File>
-						<File Id="191800848" Language="SFX">
-							<ShortName>SFX_Slime_Collision_07.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_07_10C4C929.wem</Path>
-						</File>
-						<File Id="254376900" Language="SFX">
-							<ShortName>SFX_Slime_Collision_12.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_12_10C4C929.wem</Path>
-						</File>
-						<File Id="319330301" Language="SFX">
-							<ShortName>SFX_Slime_Collision_01.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_01_10C4C929.wem</Path>
-						</File>
-						<File Id="493223277" Language="SFX">
-							<ShortName>SFX_Slime_Collision_09.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_09_10C4C929.wem</Path>
-						</File>
-						<File Id="569310315" Language="SFX">
-							<ShortName>SFX_Slime_Collision_05.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_05_10C4C929.wem</Path>
-						</File>
-						<File Id="697420587" Language="SFX">
-							<ShortName>SFX_Slime_Collision_10.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_10_10C4C929.wem</Path>
-						</File>
-						<File Id="722760187" Language="SFX">
-							<ShortName>SFX_Slime_Collision_04.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_04_10C4C929.wem</Path>
-						</File>
-						<File Id="769587429" Language="SFX">
-							<ShortName>SFX_Slime_Collision_11.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_11_10C4C929.wem</Path>
-						</File>
-						<File Id="770795266" Language="SFX">
-							<ShortName>SFX_Slime_Collision_03.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_03_10C4C929.wem</Path>
-						</File>
-						<File Id="827318304" Language="SFX">
-							<ShortName>SFX_Slime_Collision_02.wav</ShortName>
-							<Path>SFX\SFX_Slime_Collision_02_10C4C929.wem</Path>
+						<File Id="727074416" Language="SFX">
+							<ShortName>SFX_Slide_IceSlide_LP.wav</ShortName>
+							<Path>SFX\SFX_Slide_IceSlide_LP_D79FB2B7.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
@@ -411,67 +387,24 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="799208851" Name="Play_SFX_S_SlingshotCharge" ObjectPath="\Events\Default Work Unit\SFX_Slime\Play_SFX_S_SlingshotCharge" DurationType="OneShot" DurationMin="0.410293" DurationMax="0.512347">
+				<Event Id="799208851" Name="Play_SFX_S_SlingshotCharge" ObjectPath="\Events\Default Work Unit\SFX_Slime\Play_SFX_S_SlingshotCharge" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="2820203820" Name="Play_SFX_UI_Countdown" ObjectPath="\Events\Default Work Unit\SFX_UI\Play_SFX_UI_Countdown" DurationType="OneShot" DurationMin="2.000000" DurationMax="2.000000">
 					<IncludedMemoryFiles>
-						<File Id="243176699" Language="SFX">
-							<ShortName>SFX_Slime_Slingshot_Charge_07.wav</ShortName>
-							<Path>SFX\SFX_Slime_Slingshot_Charge_07_10C4C929.wem</Path>
-						</File>
-						<File Id="319305046" Language="SFX">
-							<ShortName>SFX_Slime_Slingshot_Charge_05.wav</ShortName>
-							<Path>SFX\SFX_Slime_Slingshot_Charge_05_10C4C929.wem</Path>
-						</File>
-						<File Id="623648346" Language="SFX">
-							<ShortName>SFX_Slime_Slingshot_Charge_08.wav</ShortName>
-							<Path>SFX\SFX_Slime_Slingshot_Charge_08_10C4C929.wem</Path>
-						</File>
-						<File Id="660285715" Language="SFX">
-							<ShortName>SFX_Slime_Slingshot_Charge_03.wav</ShortName>
-							<Path>SFX\SFX_Slime_Slingshot_Charge_03_10C4C929.wem</Path>
-						</File>
-						<File Id="710140718" Language="SFX">
-							<ShortName>SFX_Slime_Slingshot_Charge_04.wav</ShortName>
-							<Path>SFX\SFX_Slime_Slingshot_Charge_04_10C4C929.wem</Path>
-						</File>
-						<File Id="753198260" Language="SFX">
-							<ShortName>SFX_Slime_Slingshot_Charge_10.wav</ShortName>
-							<Path>SFX\SFX_Slime_Slingshot_Charge_10_10C4C929.wem</Path>
-						</File>
-						<File Id="801116563" Language="SFX">
-							<ShortName>SFX_Slime_Slingshot_Charge_02.wav</ShortName>
-							<Path>SFX\SFX_Slime_Slingshot_Charge_02_10C4C929.wem</Path>
-						</File>
-						<File Id="923745404" Language="SFX">
-							<ShortName>SFX_Slime_Slingshot_Charge_09.wav</ShortName>
-							<Path>SFX\SFX_Slime_Slingshot_Charge_09_10C4C929.wem</Path>
-						</File>
-						<File Id="980133187" Language="SFX">
-							<ShortName>SFX_Slime_Slingshot_Charge_06.wav</ShortName>
-							<Path>SFX\SFX_Slime_Slingshot_Charge_06_10C4C929.wem</Path>
-						</File>
-						<File Id="1015612881" Language="SFX">
-							<ShortName>SFX_Slime_Slingshot_Charge_01.wav</ShortName>
-							<Path>SFX\SFX_Slime_Slingshot_Charge_01_10C4C929.wem</Path>
+						<File Id="932497586" Language="SFX">
+							<ShortName>UI_Countdown.wav</ShortName>
+							<Path>SFX\UI_Countdown_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2820203820" Name="Play_SFX_UI_Countdown" ObjectPath="\Events\Default Work Unit\SFX_UI\Play_SFX_UI_Countdown" DurationType="OneShot" DurationMin="0.193171" DurationMax="0.210654">
+				<Event Id="2897847363" Name="Play_SFX_UI_CountdownEnd" ObjectPath="\Events\Default Work Unit\SFX_UI\Play_SFX_UI_CountdownEnd" DurationType="OneShot" DurationMin="1.985188" DurationMax="1.985188">
 					<IncludedMemoryFiles>
-						<File Id="880268067" Language="SFX">
-							<ShortName>drop_002.wav</ShortName>
-							<Path>SFX\drop_002_10C4C929.wem</Path>
+						<File Id="98195360" Language="SFX">
+							<ShortName>UI_Countdown_End.wav</ShortName>
+							<Path>SFX\UI_Countdown_End_10C4C929.wem</Path>
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="2897847363" Name="Play_SFX_UI_CountdownEnd" ObjectPath="\Events\Default Work Unit\SFX_UI\Play_SFX_UI_CountdownEnd" DurationType="OneShot" DurationMin="0.193171" DurationMax="0.210654">
-					<IncludedMemoryFiles>
-						<File Id="880268067" Language="SFX">
-							<ShortName>drop_002.wav</ShortName>
-							<Path>SFX\drop_002_10C4C929.wem</Path>
-						</File>
-					</IncludedMemoryFiles>
-				</Event>
-				<Event Id="445139456" Name="Play_SFX_UI_Move" ObjectPath="\Events\Default Work Unit\SFX_UI\Play_SFX_UI_Move" DurationType="OneShot" DurationMin="0.068114" DurationMax="0.093911">
+				<Event Id="445139456" Name="Play_SFX_UI_Move" ObjectPath="\Events\Default Work Unit\SFX_UI\Play_SFX_UI_Move" DurationType="OneShot" DurationMin="0.079979" DurationMax="0.079979">
 					<IncludedMemoryFiles>
 						<File Id="496442497" Language="SFX">
 							<ShortName>UI_Menu_Switch.wav</ShortName>
@@ -479,7 +412,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="811711225" Name="Play_SFX_UI_Return" ObjectPath="\Events\Default Work Unit\SFX_UI\Play_SFX_UI_Return" DurationType="OneShot" DurationMin="0.084249" DurationMax="0.091874">
+				<Event Id="811711225" Name="Play_SFX_UI_Return" ObjectPath="\Events\Default Work Unit\SFX_UI\Play_SFX_UI_Return" DurationType="OneShot" DurationMin="0.087979" DurationMax="0.087979">
 					<IncludedMemoryFiles>
 						<File Id="208502524" Language="SFX">
 							<ShortName>UI_Menu_Cancel.wav</ShortName>
@@ -487,7 +420,7 @@
 						</File>
 					</IncludedMemoryFiles>
 				</Event>
-				<Event Id="3895889347" Name="Play_SFX_UI_Submit" ObjectPath="\Events\Default Work Unit\SFX_UI\Play_SFX_UI_Submit" DurationType="OneShot" DurationMin="0.070783" DurationMax="0.077189">
+				<Event Id="3895889347" Name="Play_SFX_UI_Submit" ObjectPath="\Events\Default Work Unit\SFX_UI\Play_SFX_UI_Submit" DurationType="OneShot" DurationMin="0.073917" DurationMax="0.073917">
 					<IncludedMemoryFiles>
 						<File Id="115182836" Language="SFX">
 							<ShortName>UI_Menu_Validation.wav</ShortName>
@@ -505,6 +438,10 @@
 						<ActionSetStateEntry Id="1215538628" Name="State_Season_Summer" ObjectPath="\States\Default Work Unit\State_Season\State_Season_Summer"/>
 					</ActionSetState>
 				</Event>
+				<Event Id="797890747" Name="Stop_Music_End" ObjectPath="\Events\Default Work Unit\Music\Stop_Music_End" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="760548323" Name="Stop_Music_Main" ObjectPath="\Events\Default Work Unit\Music\Stop_Music_Main" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="2308253729" Name="Stop_SFX_Platform_Rotate" ObjectPath="\Events\Default Work Unit\SFX_General\Stop_SFX_Platform_Rotate" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
+				<Event Id="1846537750" Name="Stop_SFX_S_IceSlide" ObjectPath="\Events\Default Work Unit\SFX_General\Stop_SFX_S_IceSlide" MaxAttenuation="0.000000" DurationType="OneShot" DurationMin="0.000000" DurationMax="0.000000"/>
 			</IncludedEvents>
 			<ReferencedStreamedFiles>
 				<File Id="103556048"/>
@@ -526,6 +463,14 @@
 				<File Id="78283482" Language="SFX">
 					<ShortName>SFX_Slime_Death_04.wav</ShortName>
 					<Path>SFX\SFX_Slime_Death_04_10C4C929.wem</Path>
+				</File>
+				<File Id="82422113" Language="SFX">
+					<ShortName>MUS_Podium_LP.wav</ShortName>
+					<Path>SFX\MUS_Podium_LP_D79FB2B7.wem</Path>
+				</File>
+				<File Id="98195360" Language="SFX">
+					<ShortName>UI_Countdown_End.wav</ShortName>
+					<Path>SFX\UI_Countdown_End_10C4C929.wem</Path>
 				</File>
 				<File Id="108048071" Language="SFX">
 					<ShortName>SFX_Slime_Collision_08.wav</ShortName>
@@ -559,10 +504,6 @@
 					<ShortName>UI_Menu_Cancel.wav</ShortName>
 					<Path>SFX\UI_Menu_Cancel_10C4C929.wem</Path>
 				</File>
-				<File Id="243176699" Language="SFX">
-					<ShortName>SFX_Slime_Slingshot_Charge_07.wav</ShortName>
-					<Path>SFX\SFX_Slime_Slingshot_Charge_07_10C4C929.wem</Path>
-				</File>
 				<File Id="254376900" Language="SFX">
 					<ShortName>SFX_Slime_Collision_12.wav</ShortName>
 					<Path>SFX\SFX_Slime_Collision_12_10C4C929.wem</Path>
@@ -575,13 +516,13 @@
 					<ShortName>SFX_Slime_Land_08.wav</ShortName>
 					<Path>SFX\SFX_Slime_Land_08_10C4C929.wem</Path>
 				</File>
-				<File Id="319305046" Language="SFX">
-					<ShortName>SFX_Slime_Slingshot_Charge_05.wav</ShortName>
-					<Path>SFX\SFX_Slime_Slingshot_Charge_05_10C4C929.wem</Path>
-				</File>
 				<File Id="319330301" Language="SFX">
 					<ShortName>SFX_Slime_Collision_01.wav</ShortName>
 					<Path>SFX\SFX_Slime_Collision_01_10C4C929.wem</Path>
+				</File>
+				<File Id="356695501" Language="SFX">
+					<ShortName>MUS_Podium_Start.wav</ShortName>
+					<Path>SFX\MUS_Podium_Start_10C4C929.wem</Path>
 				</File>
 				<File Id="379723633" Language="SFX">
 					<ShortName>SFX_Slime_Jump_08.wav</ShortName>
@@ -627,10 +568,6 @@
 					<ShortName>SFX_Slime_Land_06.wav</ShortName>
 					<Path>SFX\SFX_Slime_Land_06_10C4C929.wem</Path>
 				</File>
-				<File Id="623648346" Language="SFX">
-					<ShortName>SFX_Slime_Slingshot_Charge_08.wav</ShortName>
-					<Path>SFX\SFX_Slime_Slingshot_Charge_08_10C4C929.wem</Path>
-				</File>
 				<File Id="646238974" Language="SFX">
 					<ShortName>SFX_Platform_Rotate.wav</ShortName>
 					<Path>SFX\SFX_Platform_Rotate_D79FB2B7.wem</Path>
@@ -642,10 +579,6 @@
 				<File Id="655903998" Language="SFX">
 					<ShortName>SFX_GainShield_01.wav</ShortName>
 					<Path>SFX\SFX_GainShield_01_10C4C929.wem</Path>
-				</File>
-				<File Id="660285715" Language="SFX">
-					<ShortName>SFX_Slime_Slingshot_Charge_03.wav</ShortName>
-					<Path>SFX\SFX_Slime_Slingshot_Charge_03_10C4C929.wem</Path>
 				</File>
 				<File Id="664222708" Language="SFX">
 					<ShortName>SFX_Slime_Jump_09.wav</ShortName>
@@ -659,10 +592,6 @@
 					<ShortName>SFX_Slime_Collision_10.wav</ShortName>
 					<Path>SFX\SFX_Slime_Collision_10_10C4C929.wem</Path>
 				</File>
-				<File Id="710140718" Language="SFX">
-					<ShortName>SFX_Slime_Slingshot_Charge_04.wav</ShortName>
-					<Path>SFX\SFX_Slime_Slingshot_Charge_04_10C4C929.wem</Path>
-				</File>
 				<File Id="720036873" Language="SFX">
 					<ShortName>SFX_Slime_Land_01.wav</ShortName>
 					<Path>SFX\SFX_Slime_Land_01_10C4C929.wem</Path>
@@ -670,6 +599,10 @@
 				<File Id="722760187" Language="SFX">
 					<ShortName>SFX_Slime_Collision_04.wav</ShortName>
 					<Path>SFX\SFX_Slime_Collision_04_10C4C929.wem</Path>
+				</File>
+				<File Id="727074416" Language="SFX">
+					<ShortName>SFX_Slide_IceSlide_LP.wav</ShortName>
+					<Path>SFX\SFX_Slide_IceSlide_LP_D79FB2B7.wem</Path>
 				</File>
 				<File Id="733502543" Language="SFX">
 					<ShortName>SFX_Slime_Land_02.wav</ShortName>
@@ -683,10 +616,6 @@
 					<ShortName>SFX_Slime_Death_05.wav</ShortName>
 					<Path>SFX\SFX_Slime_Death_05_10C4C929.wem</Path>
 				</File>
-				<File Id="753198260" Language="SFX">
-					<ShortName>SFX_Slime_Slingshot_Charge_10.wav</ShortName>
-					<Path>SFX\SFX_Slime_Slingshot_Charge_10_10C4C929.wem</Path>
-				</File>
 				<File Id="769587429" Language="SFX">
 					<ShortName>SFX_Slime_Collision_11.wav</ShortName>
 					<Path>SFX\SFX_Slime_Collision_11_10C4C929.wem</Path>
@@ -695,9 +624,9 @@
 					<ShortName>SFX_Slime_Collision_03.wav</ShortName>
 					<Path>SFX\SFX_Slime_Collision_03_10C4C929.wem</Path>
 				</File>
-				<File Id="801116563" Language="SFX">
-					<ShortName>SFX_Slime_Slingshot_Charge_02.wav</ShortName>
-					<Path>SFX\SFX_Slime_Slingshot_Charge_02_10C4C929.wem</Path>
+				<File Id="806286491" Language="SFX">
+					<ShortName>MUS_Main.wav</ShortName>
+					<Path>SFX\MUS_Main_D79FB2B7.wem</Path>
 				</File>
 				<File Id="827318304" Language="SFX">
 					<ShortName>SFX_Slime_Collision_02.wav</ShortName>
@@ -711,17 +640,13 @@
 					<ShortName>SFX_Slime_Death_03.wav</ShortName>
 					<Path>SFX\SFX_Slime_Death_03_10C4C929.wem</Path>
 				</File>
-				<File Id="880268067" Language="SFX">
-					<ShortName>drop_002.wav</ShortName>
-					<Path>SFX\drop_002_10C4C929.wem</Path>
-				</File>
 				<File Id="921236235" Language="SFX">
 					<ShortName>SFX_GainShield_02.wav</ShortName>
 					<Path>SFX\SFX_GainShield_02_10C4C929.wem</Path>
 				</File>
-				<File Id="923745404" Language="SFX">
-					<ShortName>SFX_Slime_Slingshot_Charge_09.wav</ShortName>
-					<Path>SFX\SFX_Slime_Slingshot_Charge_09_10C4C929.wem</Path>
+				<File Id="932497586" Language="SFX">
+					<ShortName>UI_Countdown.wav</ShortName>
+					<Path>SFX\UI_Countdown_10C4C929.wem</Path>
 				</File>
 				<File Id="941860848" Language="SFX">
 					<ShortName>SFX_Slime_Jump_01.wav</ShortName>
@@ -734,14 +659,6 @@
 				<File Id="970521053" Language="SFX">
 					<ShortName>SFX_Slime_Death_02.wav</ShortName>
 					<Path>SFX\SFX_Slime_Death_02_10C4C929.wem</Path>
-				</File>
-				<File Id="980133187" Language="SFX">
-					<ShortName>SFX_Slime_Slingshot_Charge_06.wav</ShortName>
-					<Path>SFX\SFX_Slime_Slingshot_Charge_06_10C4C929.wem</Path>
-				</File>
-				<File Id="1015612881" Language="SFX">
-					<ShortName>SFX_Slime_Slingshot_Charge_01.wav</ShortName>
-					<Path>SFX\SFX_Slime_Slingshot_Charge_01_10C4C929.wem</Path>
 				</File>
 				<File Id="1040115227" Language="SFX">
 					<ShortName>SFX_Slime_Jump_06.wav</ShortName>
