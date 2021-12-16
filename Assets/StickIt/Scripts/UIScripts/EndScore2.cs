@@ -54,6 +54,8 @@ public class EndScore2 : MonoBehaviour
         GameEvents.OnSwitchCamera.AddListener(EndGame);
         timer = 0.0f;
         returnToMenu.SetActive(false);
+        Canvas canva = GetComponent<Canvas>();
+        canva.worldCamera = Camera.main;
 
     }
 
@@ -130,7 +132,7 @@ public class EndScore2 : MonoBehaviour
         }
 
         // Debug
-        if (isStartingDirect) { ranking[1].myDatas.score = 5; }
+        //if (isStartingDirect) { ranking[1].myDatas.score = 5; }
 
         // Adding listerner to Return to menu
         //controller = ranking[0].GetComponent<PlayerInput>();
