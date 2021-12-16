@@ -30,9 +30,10 @@ public class MusicalChairManager : Level
     private Spores sporeScript;
     [SerializeField] private MeshRenderer bigMushroomRenderer;
     [SerializeField] private Material bigMushroomMat, bigMushroomAngryMat;
-    protected override void Awake()
+    protected override void Awake() 
     {
-        //AudioManager.instance.SwitchAmbianceToFall(gameObject);
+        if (AudioManager.instance == null)
+            AudioManager.instance.SwitchAmbianceToFall(gameObject);
         //durationSpawn = 2;
     }
     protected override void Start()

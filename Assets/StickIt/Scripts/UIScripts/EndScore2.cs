@@ -66,6 +66,7 @@ public class EndScore2 : MonoBehaviour
             EndGame();
         }
         AkSoundEngine.PostEvent("Stop_Music_Main", gameObject);
+        AkSoundEngine.PostEvent("Play_Music_End", gameObject);
     }
 
     
@@ -219,6 +220,9 @@ public class EndScore2 : MonoBehaviour
             foreach (var item in GameObject.FindGameObjectsWithTag("Player")) Destroy(item);
             Pause.instance = null;
             SceneManager.LoadScene("0_MainMenu");
+
+            AkSoundEngine.PostEvent("Play_Music_Main", gameObject);
+            AkSoundEngine.PostEvent("Stop_Music_End", gameObject);
         }));
     }
 
