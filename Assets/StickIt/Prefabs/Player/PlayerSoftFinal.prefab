@@ -1037,8 +1037,10 @@ MonoBehaviour:
   deathAnim: {fileID: 4145983037230705602}
   deathPart: {fileID: 5927887047650766570, guid: d2f8aa8663903e24d8046d9e962db60e, type: 3}
   isDead: 0
+  VFXExplosion: {fileID: 0}
+  VFXExplosionParticle: {fileID: 0}
   minMass: 80
-  maxMass: 200
+  maxMass: 150
 --- !u!114 &2686213359864720554
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1165,6 +1167,8 @@ MonoBehaviour:
   strengthRequiredToBigImpact: 25
   strengthMultiplicator: 3
   ChocParticles: {fileID: 8597058350541634597, guid: 97e8fd232753b2f458d475cb5677f886, type: 3}
+  VFXContact: {fileID: 0}
+  VFXTime: 2
   connexions: 0
   isDebugLimitAngles: 0
 --- !u!114 &4145983037377531704
@@ -1352,6 +1356,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 5bd62fbb-d5f2-4c01-8b2d-189eb6b62aca
     m_ActionName: NormalInputs/Pause[/XInputControllerWindows/start]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fd67e296-beee-451d-99b5-738bce9d8fd6
+    m_ActionName: NormalInputs/Menu[/XInputControllerWindows/start]
   m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: Gamepad
   m_DefaultActionMap: NormalInputs
