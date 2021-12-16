@@ -1,22 +1,26 @@
 using UnityEngine;
-class BouncyPlatform : MonoBehaviour
+internal class BouncyPlatform : MonoBehaviour
 {
     public float impulseForce;
+    public bool b = false;
     private void OnTriggerEnter(Collider other)
     {
-        Player player = other.gameObject.GetComponent<Player>();
-        if (player != null)
+        if (!b)
         {
-            var v = other.gameObject.GetComponent<Rigidbody>().velocity;
-            if (Physics.Raycast(other.transform.position, v, out RaycastHit hit))
+            Player player = other.gameObject.GetComponent<Player>();
+            if (player != null)
             {
-                var reflectVec = Vector3.Reflect(v, hit.normal);
-                other.gameObject.GetComponent<Rigidbody>().velocity = reflectVec.normalized * impulseForce;
-                if (AudioManager.instance != null)
+                var v = other.gameObject.GetComponent<Rigidbody>().velocity.normalized;
+                if (Physics.Raycast(other.transform.position, v, out RaycastHit hit))
                 {
-                    AudioManager.instance.PlayBounceShroomSounds(gameObject);
+                    other.gameObject.GetComponent<Rigidbody>().velocity = Vector3.Reflect(v, hit.normal) * impulseForce;
+                    if (AudioManager.instance != null) AudioManager.instance.PlayBounceShroomSounds(gameObject);
                 }
             }
         }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        //b = false;
     }
 }
