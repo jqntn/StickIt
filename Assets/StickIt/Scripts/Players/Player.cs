@@ -3,40 +3,64 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.VFX;
+using MoreMountains.Feedbacks;
+
+[RequireComponent(typeof(PlayerMouvement))]
+[RequireComponent(typeof(PlayerInput))]
 public class Player : MonoBehaviour
 {
-    private MultiplayerManager _multiplayerManager;
-    public PlayerMouvement myMouvementScript;
-    public MultiplayerManager.PlayerData myDatas;
-    public MoreMountains.Feedbacks.MMFeedbacks deathAnim;
-    public GameObject deathPart;
+    [Header("DATA_________________________________")]
+    public PlayerData myDatas;
     public bool isDead;
 
     [Header("VFX__________________________________")]
+    public MMFeedbacks deathAnim;
+    public GameObject deathPart;
+    private ParticleSystem deathParticle;
     public GameObject VFXExplosion;
-    public VisualEffect VFXExplosionParticle;
+    private VisualEffect VFXExplosionParticle;
+
+    [Header("MASS_________________________________")]
     [SerializeField] private int minMass = 100;
     [SerializeField] private int maxMass = 250;
+
+    [Header("DEBUG________________________________")]
+    [SerializeField] private PlayerMouvement myMouvementScript;
+    public PlayerMouvement MyMouvementScript { get => myMouvementScript; }
+    [SerializeField] private PlayerInput playerInput;
+    [SerializeField] private MultiplayerManager multiplayerManager;
+
     private void Awake()
     {
-        _multiplayerManager = MultiplayerManager.instance;
+        playerInput = GetComponent<PlayerInput>();
+        multiplayerManager = MultiplayerManager.instance;
         if (TryGetComponent<PlayerMouvement>(out PlayerMouvement pm))
         {
             myMouvementScript = pm;
             myMouvementScript.myPlayer = this;
         }
+
         DontDestroyOnLoad(this);
 
+        deathPart.SetActive(true);
+        VFXExplosion.SetActive(true);
+        deathParticle = deathPart.GetComponent<ParticleSystem>();
         VFXExplosionParticle = VFXExplosion.GetComponent<VisualEffect>();
-        VFXExplosionParticle.Stop();
-        VFXExplosion.SetActive(false);
+    }
+
+    private void Start()
+    {
+        // VFX
+        ParticleSystemRenderer particleRenderer = deathPart.GetComponent<ParticleSystemRenderer>();
+        if (particleRenderer != null) { particleRenderer.material = myDatas.material; }
     }
     public void Death(bool intensityAnim = false)
     {
         isDead = true;
         myMouvementScript.enabled = false;
-        _multiplayerManager.alivePlayers.Remove(this);
-        _multiplayerManager.deadPlayers.Add(this);
+        multiplayerManager.alivePlayers.Remove(this);
+        multiplayerManager.deadPlayers.Add(this);
+
         // Play Death Animation
         StartCoroutine(OnDeath(intensityAnim));
     }
@@ -53,22 +77,13 @@ public class Player : MonoBehaviour
         }
 
         myMouvementScript.Death();
-        GameObject obj = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Quaternion.identity);
-        obj.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
-        GameEvents.CameraShake_CEvent?.Invoke(2.0f, 1.0f);
 
+        // Death VFX
+        deathParticle.Play();
+        GameEvents.CameraShake_CEvent?.Invoke(2.0f, 1.0f);
         if(!VFXExplosion.activeInHierarchy) VFXExplosion.SetActive(true);
         VFXExplosionParticle.SendEvent("Trigger");
 
-        //
-        // ParticleSystem ps = obj.GetComponent<ParticleSystem>();
-        // ParticleSystem.Particle[] particles = new ParticleSystem.Particle[ps.particleCount];
-        // int length = ps.GetParticles(particles);
-        // for (int i = 0; i < length; i++)
-        // {
-        //     particles[i].position = Vector3.zero;
-        // }
-        //
         MapManager.instance.EndLevel();
     }
     public void PrepareToChangeLevel() // When the player is still alive
@@ -93,6 +108,7 @@ public class Player : MonoBehaviour
         myMouvementScript.Respawn();
         isDead = false;
     }
+
     public void SetScoreAndMass(int score, int mass)
     {
         myDatas.score += score;
@@ -101,6 +117,7 @@ public class Player : MonoBehaviour
         myDatas.mass = Mathf.Clamp(myDatas.mass, minMass, maxMass);
         myMouvementScript.RescaleMeshWithMass();
     }
+
     // INPUT TOOLS TO REMOVE LATER
     //public void InputTestMassP25(UnityEngine.InputSystem.InputAction.CallbackContext context)
     //{
@@ -134,11 +151,11 @@ public class Player : MonoBehaviour
     //        myMouvementScript.RescaleMeshWithMass();
     //    }
     //}
+
     public void OnPause(InputAction.CallbackContext context)
     {
         if (context.performed && !isDead && !MapManager.instance.isBusy && SceneManager.GetActiveScene().name != "1_MenuSelection" && SceneManager.GetActiveScene().name != "100_EndScene")
         {
-
             AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
             if (MapManager.instance.curMod == "MusicalChairs" && FindObjectOfType<MusicalChairManager>().inTransition)
                 for (var i = 0; i < Gamepad.all.Count; i++)
@@ -165,6 +182,7 @@ public class Player : MonoBehaviour
             }
         }
     }
+
     public void SoundMove(InputAction.CallbackContext context)
     { if (context.performed && Pause.instance.isPaused) AkSoundEngine.PostEvent("Play_SFX_UI_Move", gameObject); }
     public void SoundSubmit(InputAction.CallbackContext context)

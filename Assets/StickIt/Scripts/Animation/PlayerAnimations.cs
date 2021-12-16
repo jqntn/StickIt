@@ -25,65 +25,13 @@ public class PlayerAnimations : MonoBehaviour
     [SerializeField] private bool isJumpingAnim = false;
     public bool IsJumpingAnim { get => isJumpingAnim; set => isJumpingAnim = value; }
 
-    public void ChangeBoolSnowToFalse()
-    {
-        hasCollidedWithSnow = false;
-    }
 
-    public void PlayVictory()
-    {
-        if(playerMovement == null) { return; }
-        if(!isRandomJumping) { return; }
-        isJumpingAnim = true;
-        StartCoroutine(OnPlayVictory());
-    }
-
-    public void PlayRank()
-    {
-        if (playerMovement == null) { return; }
-        if (!isRandomJumping) { return; }
-        isJumpingAnim = true;
-        StartCoroutine(OnPlayRank());
-    }
-
-    private IEnumerator OnPlayVictory()
-    {
-        while (isJumpingAnim)
-        {
-            JumpAnimation();
-            yield return null;
-        }
-    }
-
-    private IEnumerator OnPlayRank()
-    {
-        while (isJumpingAnim)
-        {
-            JumpAnimation();
-            yield return null;
-        }
-    }
-    private void JumpAnimation()
-    {
-        bool hit = Physics.Raycast(transform.position, Vector3.down, rayGroundDistance, layerGround);
-
-        if (hit)
-        {
-            if (hasRandomJumpMultiplicator)
-            {
-                jumpMultiplicator = Random.Range(minJumpMultiplicator, maxJumpMultiplicator);
-            }
-
-            float forceJump = playerMovement.maxSpeed * jumpMultiplicator;
-            rb.velocity = Vector3.up * forceJump;
-        }
-    }
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         VFXSnow.Stop();
-        VFXSnow.gameObject.SetActive(false);
+        VFXSnow.gameObject.SetActive(true);
         hasCollidedWithSnow = false;
         playerMovement = GetComponent<PlayerMouvement>();
     }
@@ -136,6 +84,60 @@ public class PlayerAnimations : MonoBehaviour
     public void PlayVFXSnow()
     {
         VFXSnow.Play();
+    }
+
+    public void ChangeBoolSnowToFalse()
+    {
+        hasCollidedWithSnow = false;
+    }
+
+    public void PlayVictory()
+    {
+        if (playerMovement == null) { return; }
+        if (!isRandomJumping) { return; }
+        isJumpingAnim = true;
+        StartCoroutine(OnPlayVictory());
+    }
+
+    public void PlayRank()
+    {
+        if (playerMovement == null) { return; }
+        if (!isRandomJumping) { return; }
+        isJumpingAnim = true;
+        StartCoroutine(OnPlayRank());
+    }
+
+    private IEnumerator OnPlayVictory()
+    {
+        while (isJumpingAnim)
+        {
+            JumpAnimation();
+            yield return null;
+        }
+    }
+
+    private IEnumerator OnPlayRank()
+    {
+        while (isJumpingAnim)
+        {
+            JumpAnimation();
+            yield return null;
+        }
+    }
+    private void JumpAnimation()
+    {
+        bool hit = Physics.Raycast(transform.position, Vector3.down, rayGroundDistance, layerGround);
+
+        if (hit)
+        {
+            if (hasRandomJumpMultiplicator)
+            {
+                jumpMultiplicator = Random.Range(minJumpMultiplicator, maxJumpMultiplicator);
+            }
+
+            float forceJump = playerMovement.maxSpeed * jumpMultiplicator;
+            rb.velocity = Vector3.up * forceJump;
+        }
     }
 
     #region GIZMOS

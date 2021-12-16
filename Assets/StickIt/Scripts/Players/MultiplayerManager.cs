@@ -5,31 +5,10 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 public class MultiplayerManager : MonoBehaviour
 {
-    [Serializable]
-    public struct PlayerData
-    {
-        public string name;
-        public int id;
-        public int deviceID;
-        public Material material;
-        public RenderTexture renderTexture;
-        public int mass;
-        public int score;
-        public uint nbrDeath;
-        public uint nbrVictories;
-        public PlayerData(string _name, int _id, int _deviceID, Material _material, RenderTexture _renderTexture, int _mass)
-        {
-            name = _name;
-            id = _id;
-            deviceID = _deviceID;
-            material = _material;
-            renderTexture = _renderTexture;
-            mass = _mass;
-            score = 0;
-            nbrDeath = 0;
-            nbrVictories = 0;
-        }
-    }
+    [Header("TEST_________________________________")]
+    public bool isStartingDirect = false;
+
+    [Header("DATA_________________________________")]
     public static MultiplayerManager instance;
     public List<Material> materialsTemp = new List<Material>();
     public int nbrOfPlayer;
@@ -78,7 +57,7 @@ public class MultiplayerManager : MonoBehaviour
     {
         playersStartingPos = FindObjectOfType<PlayerStartingPos>().transform;
 #if UNITY_EDITOR
-        //if (!isMenuSelection)
+        if(isStartingDirect)
             InitializePlayersWithoutMenuSelector(nbrOfPlayer);
         Level lvl = FindObjectOfType<Level>();
         if (lvl != null) StartCoroutine(lvl.Init());
@@ -188,5 +167,31 @@ public class MultiplayerManager : MonoBehaviour
             deadPlayers[i].myDatas.nbrDeath++;
             //print(-massAddIfLoss[i2]);
         }
+    }
+}
+
+[Serializable]
+public struct PlayerData
+{
+    public string name;
+    public int id;
+    public int deviceID;
+    public Material material;
+    public RenderTexture renderTexture;
+    public int mass;
+    public int score;
+    public uint nbrDeath;
+    public uint nbrVictories;
+    public PlayerData(string _name, int _id, int _deviceID, Material _material, RenderTexture _renderTexture, int _mass)
+    {
+        name = _name;
+        id = _id;
+        deviceID = _deviceID;
+        material = _material;
+        renderTexture = _renderTexture;
+        mass = _mass;
+        score = 0;
+        nbrDeath = 0;
+        nbrVictories = 0;
     }
 }
