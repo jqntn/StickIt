@@ -25,6 +25,7 @@ public class EndScore2 : MonoBehaviour
     public TMP_Text[] textP;
     public TMP_Text[] textScores;
     public GameObject returnToMenu;
+    public ParticleSystem victory;
 
     [Header("HIERARCHY ELEMENTS_________________")]
     public Transform[] startPos;
@@ -33,6 +34,8 @@ public class EndScore2 : MonoBehaviour
     
     [Header("DEBUG___________________________")]
     [SerializeField] private Player[] ranking;
+    [SerializeField] private PlayerAnimations[] animations;
+    [SerializeField] private PlayerInput[] playerinputs;
     [SerializeField] private float timer = 0.0f;
     [SerializeField] private PlayerInputs controller;
 
@@ -51,6 +54,8 @@ public class EndScore2 : MonoBehaviour
         GameEvents.OnSwitchCamera.AddListener(EndGame);
         timer = 0.0f;
         returnToMenu.SetActive(false);
+        Canvas canva = GetComponent<Canvas>();
+        canva.worldCamera = Camera.main;
 
     }
 
@@ -92,18 +97,9 @@ public class EndScore2 : MonoBehaviour
         while(MultiplayerManager.instance.players.Count <= 0) { yield return null;}
 
         ranking = new Player[MultiplayerManager.instance.players.Count];
+        playerinputs = new PlayerInput[MultiplayerManager.instance.players.Count];
+        animations = new PlayerAnimations[MultiplayerManager.instance.players.Count];
         MultiplayerManager.instance.players.CopyTo(ranking);
-        foreach(Player player in ranking)
-        {
-            player.myMouvementScript.enabled = false;
-        }
-
-        // Debug
-        if (isStartingDirect) { ranking[1].myDatas.score = 5; }
-
-        // Adding listerner to one player
-        //controller = ranking[0].GetComponent<PlayerInput>();
-        controller = new PlayerInputs();
 
         // Sort Ranking (slow sorting > change to quicksort)
         bool hasPermute = false;
@@ -121,6 +117,27 @@ public class EndScore2 : MonoBehaviour
         } while (hasPermute);
 
 
+        int k = 0;
+        foreach(Player player in ranking)
+        {
+            // Disable Player Controller
+            PlayerInput playerInput = player.GetComponent<PlayerInput>();
+            playerInput.enabled = false;
+            playerinputs[k] = playerInput;
+            
+            // Save PlayerAnimations
+            PlayerAnimations playerAnimation = player.GetComponent<PlayerAnimations>();
+            animations[k] = playerAnimation;
+            k++;
+        }
+
+        // Debug
+        //if (isStartingDirect) { ranking[1].myDatas.score = 5; }
+
+        // Adding listerner to Return to menu
+        //controller = ranking[0].GetComponent<PlayerInput>();
+        controller = new PlayerInputs();
+
         int posIndex = 0;
         foreach(Player player in ranking)
         {
@@ -128,24 +145,47 @@ public class EndScore2 : MonoBehaviour
             posIndex++;
         }
 
-        
         for (int i = 0; i < ranking.Length; i++)
         {
             yield return new WaitForSeconds(timeBetweenRankAppear);
-            panelPlayers[i].SetActive(true);
             textP[i].color = ranking[i].myDatas.material.color;
             textP[i].text = "Player " + (ranking[i].myDatas.id + 1).ToString();
             textScores[i].color = ranking[i].myDatas.material.color;
             textScores[i].text = ranking[i].myDatas.score.ToString();
             textRank[i].color = ranking[i].myDatas.material.color;
             canvasRank[i].SetActive(true);
+            panelPlayers[i].SetActive(true);
+
+            if(i == 0)
+            {
+                animations[i].PlayVictory();
+            }
+            else
+            {
+                animations[i].PlayRank();
+            }
+
+            if(i == 0)
+            {
+                yield return new WaitForFixedUpdate();
+                victory.Play();
+
+            }
+
         }
 
         yield return new WaitForSeconds(timeToUnlockController);
-        // unlock player controllers
-        foreach (Player player in ranking)
+
+        // Stop Animation
+        foreach (PlayerAnimations anim in animations)
         {
-            player.myMouvementScript.enabled = true;
+            anim.IsJumpingAnim = false;
+        }
+
+        // Unlock player controllers
+        foreach (PlayerInput input in playerinputs)
+        {
+            input.enabled = true;
         }
 
         controller.Enable();
