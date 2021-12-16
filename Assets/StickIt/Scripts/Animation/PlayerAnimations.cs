@@ -38,12 +38,16 @@ public class PlayerAnimations : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Icy"))
+        IcyPlatform ice = collision.gameObject.GetComponent<IcyPlatform>();
+        if(ice != null)
         {
-            if (!hasCollidedWithSnow)
+            if (collision.gameObject.CompareTag("Icy"))
             {
-                hasCollidedWithSnow = true;
-                StartCoroutine(OnIceEnter());
+                if (!hasCollidedWithSnow)
+                {
+                    hasCollidedWithSnow = true;
+                    StartCoroutine(OnIceEnter());
+                }
             }
         }
     }

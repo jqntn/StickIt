@@ -198,11 +198,6 @@ public class PlayerMouvement : MonoBehaviour
                     }
                 }
             }
-
-            //if (connectedPoints[i].attractionStrength < 0)
-            //{
-            //    connectedPoints.RemoveAt(i);
-            //}
         }
     }
 
@@ -292,9 +287,6 @@ public class PlayerMouvement : MonoBehaviour
                         ImpactBetweenPlayers(playerCollided, collision.contacts[0], strength);
                 }
                 break;
-            case "Icy":
-                AkSoundEngine.PostEvent("Play_SFX_S_IceSlide", gameObject);
-                break;
             default:
 
                 #region Collision Untagged
@@ -318,6 +310,7 @@ public class PlayerMouvement : MonoBehaviour
                         break;
                     case "Icy":
                         state = STATE.ICED;
+                        AkSoundEngine.PostEvent("Play_SFX_S_IceSlide", gameObject);
                         break;
                     default:
                         state = STATE.STICK;
