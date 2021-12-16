@@ -30,6 +30,7 @@ public class PlayerMouvement : MonoBehaviour
     [SerializeField]
     private float minForceJumpMultiplicator;
     private float forceJumpMultiplicator;
+    public float ForceJumpMultiplicator { get => forceJumpMultiplicator; }
     [SerializeField]
     private float speedIncreaseForceJump;
     private bool hasJumped = false;

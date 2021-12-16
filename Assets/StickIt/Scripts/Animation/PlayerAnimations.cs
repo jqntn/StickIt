@@ -2,13 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Animation))]
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerAnimations : MonoBehaviour
 {
     [Header("ANIMATION_______________________________")]
-    public AnimationClip victoryClip;
-    public AnimationClip rankClip;
+    public bool isRandomJumping = true;
+    public float jumpMultiplicator = 1.0f;
+    public bool hasRandomJumpMultiplicator = false;
+    public float minJumpMultiplicator = 0.3f;
+    public float maxJumpMultiplicator = 0.7f;
+    public float rayGroundDistance = 1.0f;
+    public LayerMask layerGround;
 
     [Header("PARTICLE________________________________")]
     public ParticleSystem VFXSnow;
@@ -17,7 +21,9 @@ public class PlayerAnimations : MonoBehaviour
     [Header("DEBUG___________________________________")]
     [SerializeField] private Rigidbody rb;
     [SerializeField] private bool hasCollidedWithSnow = false;
-    [SerializeField] private Animation anim;
+    [SerializeField] private PlayerMouvement playerMovement;
+    [SerializeField] private bool isJumpingAnim = false;
+    public bool IsJumpingAnim { get => isJumpingAnim; set => isJumpingAnim = value; }
 
     public void ChangeBoolSnowToFalse()
     {
@@ -26,32 +32,60 @@ public class PlayerAnimations : MonoBehaviour
 
     public void PlayVictory()
     {
-        anim.Play();
-        //anim.Play(victoryClip.name);
+        if(playerMovement == null) { return; }
+        if(!isRandomJumping) { return; }
+        isJumpingAnim = true;
+        StartCoroutine(OnPlayVictory());
     }
 
     public void PlayRank()
     {
-        //anim.Play(rankClip.name);
+        if (playerMovement == null) { return; }
+        if (!isRandomJumping) { return; }
+        isJumpingAnim = true;
+        StartCoroutine(OnPlayRank());
     }
 
-    public void StopAnimation()
+    private IEnumerator OnPlayVictory()
     {
-        anim.Stop();
+        while (isJumpingAnim)
+        {
+            JumpAnimation();
+            yield return null;
+        }
     }
 
-    //private IEnumerator OnStopAnimator()
-    //{
-    //    while (currentAnim.isPlaying) { yield return null; }
-    //    animator.gameObject.SetActive(false);
-    //}
+    private IEnumerator OnPlayRank()
+    {
+        while (isJumpingAnim)
+        {
+            JumpAnimation();
+            yield return null;
+        }
+    }
+    private void JumpAnimation()
+    {
+        bool hit = Physics.Raycast(transform.position, Vector3.down, rayGroundDistance, layerGround);
+
+        if (hit)
+        {
+            if (hasRandomJumpMultiplicator)
+            {
+                jumpMultiplicator = Random.Range(minJumpMultiplicator, maxJumpMultiplicator);
+            }
+
+            float forceJump = playerMovement.maxSpeed * jumpMultiplicator;
+            rb.velocity = Vector3.up * forceJump;
+        }
+    }
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         VFXSnow.Stop();
         VFXSnow.gameObject.SetActive(false);
         hasCollidedWithSnow = false;
-        anim = GetComponent<Animation>();
+        playerMovement = GetComponent<PlayerMouvement>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -103,4 +137,12 @@ public class PlayerAnimations : MonoBehaviour
     {
         VFXSnow.Play();
     }
+
+    #region GIZMOS
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, new Vector3(0.0f, -rayGroundDistance, 0.0f));
+    }
+    #endregion
 }
