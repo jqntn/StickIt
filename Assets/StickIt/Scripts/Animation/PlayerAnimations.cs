@@ -141,10 +141,10 @@ public class PlayerAnimations : MonoBehaviour
     }
 
     #region GIZMOS
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, new Vector3(0.0f, -rayGroundDistance, 0.0f));
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawRay(transform.position, new Vector3(0.0f, -rayGroundDistance, 0.0f));
+    //}
     #endregion
 }

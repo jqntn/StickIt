@@ -421,23 +421,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 1
+  hasPreviewDots: 1
   numberOfDots: 10
   spaceBetweenDots: 0.015
   dots: []
   dotPreview: {fileID: 1563193181262515494, guid: d0c611942a4ded548aac09b0447276da, type: 3}
   isDotsEnabled: 1
-  isPreviewDots: 1
   maxSpeed: 40
+  limitAngle: 80
   isReversedDirection: 0
-  isLimitedMovement: 0
-  direction: {x: 0, y: 0}
+  rayDistance: 0.7
+  layerPlayer:
+    serializedVersion: 2
+    m_Bits: 384
+  maxNumberOfJumps: 1
   minForceJumpMultiplicator: 0.2
-  forceJumpMultiplicator: 0
   speedIncreaseForceJump: 5
-  isChargingJump: 0
-  hasJumped: 0
-  t_jump: 0
-  y_jump: 1
   animCurveJumpGravity:
     serializedVersion: 2
     m_Curve:
@@ -462,16 +461,20 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  gravityStrength: 100
-  attractionMultiplier: 50
-  velocityLastFrame: {x: 0, y: 0, z: 0}
-  connectedPoints: []
-  repulsionMultiplier: 0.01
-  isSlippery: 1
-  maxNumberOfJumps: 1
   currentNumberOfJumps: 0
-  initScale: {x: 0, y: 0, z: 0}
-  limitAngle: 80
+  forceJumpMultiplicator: 0
+  gravityFactor: 1
+  timeJump: 0
+  direction: {x: 0, y: 0}
+  isChargingJump: 0
+  hasJumped: 0
+  gravityStrength: 150
+  attractionMultiplier: 50
+  repulsionMultiplier: 0.01
+  connectedPoints: []
+  initialScale: {x: 0, y: 0, z: 0}
+  bonesParent: {fileID: 5649321624806424265}
+  collisionEffect: {fileID: 2840358084140451838, guid: 97e8fd232753b2f458d475cb5677f886, type: 3}
   CurveSpeedChargeIncrease:
     serializedVersion: 2
     m_Curve:
@@ -538,19 +541,25 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  collisionEffect: {fileID: 2840358084140451838, guid: 97e8fd232753b2f458d475cb5677f886, type: 3}
+  ratioMass: 0
+  valueSpeedChargeCurve: 0
+  valueStrengthCurve: 0
   strengthRequiredToImpact: 3
   strengthRequiredToBigImpact: 70
   strengthMultiplicator: 1
   ChocParticles: {fileID: 8597058350541634597, guid: 97e8fd232753b2f458d475cb5677f886, type: 3}
   VFXContact: {fileID: 6257797246603552666}
   VFXTime: 2
+  VFXContactParticle: {fileID: 0}
   mesh: {fileID: 0}
   myScriptSoftBody: {fileID: 0}
   rb: {fileID: 0}
+  myCollider: {fileID: 0}
   connexions: 0
+  myColliderDimension: {x: 0, y: 0, z: 0}
+  velocityLastFrame: {x: 0, y: 0, z: 0}
   isDebugLimitAngles: 0
-  isGrounded: 0
+  isGroundedDown: 0
 --- !u!114 &206067774022311513
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -565,13 +574,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   matBones: {fileID: 13400000, guid: b4a9cef7130b7ec4eb4a2a937d5ad794, type: 2}
   ConfigurableJoint: 1
-  Spring: 200
+  Spring: 400
   Damper: 0.2
   ColliderSizeRoot: 13
   collSizeRoot: 0.0013
   ColliderSize: 2
   collSizeBones: 0.0002
-  RigidbodyMass: 0.6
+  RigidbodyMass: 0.5
 --- !u!114 &5447177794664595335
 MonoBehaviour:
   m_ObjectHideFlags: 0
