@@ -3,10 +3,22 @@
 	<GameParameters>
 		<WorkUnit Name="Default Work Unit" ID="{23BEF9A3-C23A-424D-BB00-16649BD97284}" PersistMode="Standalone">
 			<ChildrenList>
-				<GameParameter Name="RTPC_Volume_Global" ID="{32533AB5-CF2A-4C28-AD07-31E15F5B96D4}"/>
+				<GameParameter Name="RTPC_Volume_Global" ID="{32533AB5-CF2A-4C28-AD07-31E15F5B96D4}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="100"/>
+					</PropertyList>
+				</GameParameter>
 				<GameParameter Name="RTPC_Volume_Music" ID="{448338EA-3F80-47C6-A0BD-0F4CBB75C998}"/>
-				<GameParameter Name="RTPC_Volume_SFX" ID="{EF16D0C6-B24C-452B-8869-1DED1A63CC93}"/>
-				<GameParameter Name="RTPC_Volume_Environment" ID="{A42FC30F-BA4D-47C6-BE56-E8E8CB97ECB2}"/>
+				<GameParameter Name="RTPC_Volume_SFX" ID="{EF16D0C6-B24C-452B-8869-1DED1A63CC93}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="100"/>
+					</PropertyList>
+				</GameParameter>
+				<GameParameter Name="RTPC_Volume_Environment" ID="{A42FC30F-BA4D-47C6-BE56-E8E8CB97ECB2}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="100"/>
+					</PropertyList>
+				</GameParameter>
 			</ChildrenList>
 		</WorkUnit>
 	</GameParameters>
