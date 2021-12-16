@@ -13,7 +13,6 @@ public class EndScore2 : MonoBehaviour
     [Header("DATA_______________________________")]
     public bool hasTimer = false;
     public float timerBeforeReturnToMenu = 10.0f;
-    [SerializeField] private float secondsToPress = 1.0f;
 
     [Header("ANIMATION__________________________")]
     public float timeBetweenRankAppear = 1.0f;
@@ -131,11 +130,7 @@ public class EndScore2 : MonoBehaviour
             k++;
         }
 
-        // Debug
-        //if (isStartingDirect) { ranking[1].myDatas.score = 5; }
-
         // Adding listerner to Return to menu
-        //controller = ranking[0].GetComponent<PlayerInput>();
         controller = new PlayerInputs();
 
         int posIndex = 0;
@@ -174,6 +169,7 @@ public class EndScore2 : MonoBehaviour
 
         }
 
+        returnToMenu.SetActive(true);
         yield return new WaitForSeconds(timeToUnlockController);
 
         // Stop Animation
@@ -189,7 +185,6 @@ public class EndScore2 : MonoBehaviour
         }
 
         controller.Enable();
-        returnToMenu.SetActive(true);
         controller.NormalInputs.Menu.performed += _ => Menu();
     }
 
@@ -200,37 +195,44 @@ public class EndScore2 : MonoBehaviour
         ranking[j] = temp;
     }
 
-    IEnumerator OnEndScreen()
-    {
-        yield return null;
-    }
-
     public void Menu()
     {
-        StartCoroutine(PressCoroutine(() =>
+        AkSoundEngine.PostEvent("Play_SFX_UI_Submit", gameObject);
+
+        foreach (Player player in ranking) 
+        { 
+            Destroy(player.gameObject); 
+        }
+        if(Pause.instance != null)
         {
-            Time.timeScale = 1;
-            AkSoundEngine.PostEvent("Play_SFX_UI_Submit", gameObject);
-            Destroy(MultiplayerManager.instance.gameObject);
-            MultiplayerManager.instance = null;
-            Destroy(MainCamera.instance.gameObject);
-            MainCamera.instance = null;
-            Destroy(MapManager.instance.gameObject);
-            MapManager.instance = null;
+            Destroy(Pause.instance.gameObject);
+        }
+        if(Sun.instance != null)
+        {
             Destroy(Sun.instance.gameObject);
-            Sun.instance = null;
-            foreach (var item in GameObject.FindGameObjectsWithTag("Player")) Destroy(item);
-            Pause.instance = null;
-            SceneManager.LoadScene("0_MainMenu");
+        }
+        if (MultiplayerManager.instance != null)
+        {
+            Destroy(MultiplayerManager.instance.gameObject);
+        }
+        if (MainCamera.instance != null)
+        {
+            Destroy(MainCamera.instance.gameObject);
+        }
+        if (MapManager.instance != null)
+        {
+            Destroy(MapManager.instance.gameObject);
+        }
 
-            AkSoundEngine.PostEvent("Play_Music_Main", gameObject);
-            AkSoundEngine.PostEvent("Stop_Music_End", gameObject);
-        }));
-    }
+        Pause.instance = null;
+        Sun.instance = null;
+        MultiplayerManager.instance = null;
+        MainCamera.instance = null;
+        MapManager.instance = null;
 
-    public IEnumerator PressCoroutine(Action func)
-    {
-        yield return new WaitForSecondsRealtime(secondsToPress);
-        func?.Invoke();
+        AkSoundEngine.PostEvent("Play_Music_Main", gameObject);
+        AkSoundEngine.PostEvent("Stop_Music_End", gameObject);
+
+        SceneManager.LoadScene("0_MainMenu");
     }
 }
