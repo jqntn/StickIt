@@ -10,11 +10,9 @@ internal class BouncyPlatform : MonoBehaviour
             var v = other.gameObject.GetComponent<Rigidbody>().velocity.normalized;
             if (Physics.Raycast(other.transform.position, v, out RaycastHit hit))
             {
+                other.gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 other.gameObject.GetComponent<Rigidbody>().velocity = Vector3.Reflect(v, hit.normal) * impulseForce;
-                if (AudioManager.instance != null)
-                {
-                    AudioManager.instance.PlayBounceShroomSounds(gameObject);
-                }
+                if (AudioManager.instance != null) AudioManager.instance.PlayBounceShroomSounds(gameObject);
             }
         }
     }
