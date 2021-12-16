@@ -30,7 +30,6 @@ public class UIParticleAnimation : MonoBehaviour
     [SerializeField] private Vector2 startPos = new Vector2(.0f, 200.0f);
     [SerializeField] private RectTransform rectTransform;
     [SerializeField] private MoveDirection direction;
-    [SerializeField] private Coroutine coroutine = null;
     [SerializeField] private float speed = 0.0f;
 
     private void OnEnable()

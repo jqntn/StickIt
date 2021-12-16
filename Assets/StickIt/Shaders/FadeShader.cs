@@ -53,8 +53,11 @@ public class FadeShader : MonoBehaviour
             for (int i = 0; i < renderers.Length; i++)
             {
                 //float t = (Time.time - time) * speedFade;
-                if ( renderers[i] && !renderers[i].gameObject.CompareTag("Chair"))
-                    renderers[i].material.SetFloat("_Fade", time);
+                if(renderers[i] != null)
+                {
+                    if (!renderers[i].gameObject.CompareTag("Chair"))
+                        renderers[i].material.SetFloat("_Fade", time);
+                }
             }
             if (time >= 1)
             {

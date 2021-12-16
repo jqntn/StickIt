@@ -180,7 +180,7 @@ public class MultiplayerManager : MonoBehaviour
             alivePlayers[i].SetScoreAndMass(scoreAddIfWin, massAddIfWin);
             alivePlayers[i].myDatas.nbrVictories++;
             isAWinner = true;
-            print(i);
+            //print(i);
         }
         // Losers
         for (int i = 0; i < deadPlayers.Count; i++)
@@ -188,7 +188,7 @@ public class MultiplayerManager : MonoBehaviour
             int i2 = (isAWinner) ? i + 1 : i;
             deadPlayers[i].SetScoreAndMass(scoreAddIfLoss[i2], -massAddIfLoss[i2]);
             deadPlayers[i].myDatas.nbrDeath++;
-            print(-massAddIfLoss[i2]);
+            //print(-massAddIfLoss[i2]);
         }
     }
 }

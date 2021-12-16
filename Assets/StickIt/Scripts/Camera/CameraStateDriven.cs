@@ -46,7 +46,6 @@ public class CameraStateDriven : MonoBehaviour
     }
     public void SwitchStates(CameraType type)
     {
-        Debug.Log("Switch State");
         currentState.gameObject.SetActive(false);
         currentState = null;
         foreach(CameraState state in statesList)

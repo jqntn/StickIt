@@ -618,7 +618,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1540560966, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: autoMaxOut_Z
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 626349961222977373, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: m_LocalPosition.y
@@ -4067,7 +4067,15 @@ MonoBehaviour:
   isStartingDirect: 1
   data: {fileID: 11400000, guid: 35b2b7044abee3f489c2fc1434a426c7, type: 2}
   extendsFactor: 1
-  offsets: {x: 0, y: 2, z: 0}
+  offsets: {x: 0, y: 0, z: 0}
+  bounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
+  boundsPos: {x: 0, y: 0}
+  dimension: {x: 0, y: 0}
+  factors: {x: 0, y: 0}
+  dimensionBase: {x: 0, y: 0}
+  childs: []
 --- !u!1001 &2071252714
 PrefabInstance:
   m_ObjectHideFlags: 0

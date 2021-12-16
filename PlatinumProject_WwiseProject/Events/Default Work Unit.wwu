@@ -3,7 +3,68 @@
 	<Events>
 		<WorkUnit Name="Default Work Unit" ID="{0742BF3C-F919-4DA7-B393-E7EE75D4DEE4}" PersistMode="Standalone">
 			<ChildrenList>
-				<Folder Name="Music" ID="{5BDC3F9F-9FC5-4DF3-8769-A6267335126B}" ShortID="290966774"/>
+				<Folder Name="Music" ID="{5BDC3F9F-9FC5-4DF3-8769-A6267335126B}" ShortID="290966774">
+					<ChildrenList>
+						<Event Name="Play_Music_Main" ID="{A64C9790-864C-4FA3-9617-3435B6837F39}">
+							<ChildrenList>
+								<Action Name="" ID="{DBC00999-A3DA-4780-A9A5-7BFF3492A3F4}" ShortID="940526358">
+									<PropertyList>
+										<Property Name="FadeTime" Type="Real64" Value="1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Music_Main" ID="{25699D6D-34AA-4863-B640-036BAA5A8A03}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Play_Music_End" ID="{21BA1A82-0D01-40B0-9B2E-CB81641AC06A}">
+							<ChildrenList>
+								<Action Name="" ID="{E8A5AF5F-3B62-4F56-A740-FDFFCA77DF47}" ShortID="651248314">
+									<PropertyList>
+										<Property Name="FadeTime" Type="Real64" Value="0.1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Music_End" ID="{8E6F7A3F-2EE7-4BEA-83D7-F0B585E4D63E}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Stop_Music_Main" ID="{399D331D-7D8B-4B96-984C-7A2ACBB787A4}">
+							<ChildrenList>
+								<Action Name="" ID="{7F0E7CCB-68A2-42A2-B836-7586CE1834CC}" ShortID="643579839">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+										<Property Name="FadeTime" Type="Real64" Value="0.1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Music_Main" ID="{25699D6D-34AA-4863-B640-036BAA5A8A03}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Stop_Music_End" ID="{3603C0F9-9613-4C4A-8B83-FECA8ACA1AF3}">
+							<ChildrenList>
+								<Action Name="" ID="{9E6864C9-6362-477B-96B7-8D2C6D0DABAD}" ShortID="351155369">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+										<Property Name="FadeTime" Type="Real64" Value="0.1"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="Music_End" ID="{8E6F7A3F-2EE7-4BEA-83D7-F0B585E4D63E}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+					</ChildrenList>
+				</Folder>
 				<Folder Name="SFX_Slime" ID="{79D5F0CC-B7C9-4250-AF69-EDB99B1643BF}" ShortID="1041850501">
 					<ChildrenList>
 						<Event Name="Play_SFX_S_Jump" ID="{C8280902-8B3D-4673-8F7D-DF0313B44CEC}">
@@ -67,6 +128,16 @@
 					<ChildrenList>
 						<Event Name="Event_Play_Ambiance" ID="{42375DA6-3EDD-4286-A5D8-F4DA580E7577}">
 							<ChildrenList>
+								<Action Name="" ID="{4A31B5DC-9741-4A07-9F6B-244ECB25ECAB}" ShortID="664360973">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="22"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="NoState" ID="{37F35E69-E59F-43A5-8AC0-F0281052D192}" WorkUnitID="{F69E1AE3-7C18-49BC-905B-CA8FDDA6EBAD}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
 								<Action Name="" ID="{860B351A-7FF5-40EA-9CA8-E9002B5C6AA4}" ShortID="802051306">
 									<ReferenceList>
 										<Reference Name="Target">
@@ -78,16 +149,6 @@
 									<ReferenceList>
 										<Reference Name="Target">
 											<ObjectRef Name="Enviro_Summer" ID="{3CBB1030-E020-4878-8386-7860D7C62341}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
-										</Reference>
-									</ReferenceList>
-								</Action>
-								<Action Name="" ID="{4A31B5DC-9741-4A07-9F6B-244ECB25ECAB}" ShortID="664360973">
-									<PropertyList>
-										<Property Name="ActionType" Type="int16" Value="22"/>
-									</PropertyList>
-									<ReferenceList>
-										<Reference Name="Target">
-											<ObjectRef Name="NoState" ID="{37F35E69-E59F-43A5-8AC0-F0281052D192}" WorkUnitID="{F69E1AE3-7C18-49BC-905B-CA8FDDA6EBAD}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -163,7 +224,7 @@
 								<Action Name="" ID="{B9BD3C05-8AC3-4356-BDB4-F6ED34FC032E}" ShortID="30210034">
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="SFX_UI_Countdown" ID="{9ECC4959-ECBE-435B-B2DC-08FA8E4182F5}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+											<ObjectRef Name="SFX_UI_Countdown" ID="{ED6B0D18-7BAE-4160-A90D-78B1284E9275}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -174,7 +235,7 @@
 								<Action Name="" ID="{E6D16353-CF99-44FF-8367-D986CFFD6FC3}" ShortID="159045627">
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="SFX_UI_CountdownEnd" ID="{879C4BC6-1106-4876-A89B-783C3C1DA64B}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+											<ObjectRef Name="SFX_UI_CountdownEnd" ID="{4AA328BB-49BC-4B0C-B61D-C5F05BCACFF8}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -200,7 +261,7 @@
 								<Action Name="" ID="{AA399714-3D24-478A-BDDE-1B915C4002E7}" ShortID="1041285553">
 									<ReferenceList>
 										<Reference Name="Target">
-											<ObjectRef Name="SFX_S_IceSlide" ID="{E2FE9438-22A7-4269-AE15-3271E03C8E32}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+											<ObjectRef Name="SFX_S_IceSlide" ID="{806D4080-1677-4ADE-A025-D6E2780477CF}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
 										</Reference>
 									</ReferenceList>
 								</Action>
@@ -228,19 +289,73 @@
 								</Action>
 							</ChildrenList>
 						</Event>
+						<Event Name="Play_SFX_Platform_Rotate" ID="{5A3E2EB7-0C6A-41BE-82E2-DF79F91D6DAF}">
+							<ChildrenList>
+								<Action Name="" ID="{54424233-87E3-4AF0-8A40-EB45524F7426}" ShortID="42145342">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="36"/>
+										<Property Name="SeekPercent" Type="Real64">
+											<ModifierList>
+												<ModifierInfo>
+													<Modifier Name="" ID="{8F38367E-C592-4E7D-A23C-C78FF8B2F5B8}">
+														<PropertyList>
+															<Property Name="Enabled" Type="bool" Value="True"/>
+															<Property Name="Min" Type="Real64" Value="-100"/>
+														</PropertyList>
+													</Modifier>
+												</ModifierInfo>
+											</ModifierList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SFX_Platform_Rotate" ID="{FBA5BFBE-4947-4CC8-9D94-9DEF93AC2DD1}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+								<Action Name="" ID="{5A5387B5-D57E-445D-9043-6D2C5A18E110}" ShortID="631961113">
+									<PropertyList>
+										<Property Name="FadeTime" Type="Real64" Value="0.3"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SFX_Platform_Rotate" ID="{FBA5BFBE-4947-4CC8-9D94-9DEF93AC2DD1}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Stop_SFX_Platform_Rotate" ID="{6A5C441A-B018-4B94-8631-5F5791639F25}">
+							<ChildrenList>
+								<Action Name="" ID="{4D0155FA-109A-4FBD-A079-51BF844DFB58}" ShortID="411094122">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+										<Property Name="FadeTime" Type="Real64" Value="0.3"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SFX_Platform_Rotate" ID="{FBA5BFBE-4947-4CC8-9D94-9DEF93AC2DD1}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
+						<Event Name="Stop_SFX_S_IceSlide" ID="{15D60634-0976-497D-82A9-E29339FC4322}">
+							<ChildrenList>
+								<Action Name="" ID="{E6603C34-E248-42F6-B008-68331576B22D}" ShortID="439436855">
+									<PropertyList>
+										<Property Name="ActionType" Type="int16" Value="2"/>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="Target">
+											<ObjectRef Name="SFX_S_IceSlide" ID="{806D4080-1677-4ADE-A025-D6E2780477CF}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
+										</Reference>
+									</ReferenceList>
+								</Action>
+							</ChildrenList>
+						</Event>
 					</ChildrenList>
 				</Folder>
-				<Event Name="Play_SFX_Platform_Rotate" ID="{5A3E2EB7-0C6A-41BE-82E2-DF79F91D6DAF}">
-					<ChildrenList>
-						<Action Name="" ID="{5A5387B5-D57E-445D-9043-6D2C5A18E110}" ShortID="631961113">
-							<ReferenceList>
-								<Reference Name="Target">
-									<ObjectRef Name="SFX_Platform_Rotate" ID="{FBA5BFBE-4947-4CC8-9D94-9DEF93AC2DD1}" WorkUnitID="{4A2B909F-845A-4F38-B136-23294A7C4C55}"/>
-								</Reference>
-							</ReferenceList>
-						</Action>
-					</ChildrenList>
-				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
