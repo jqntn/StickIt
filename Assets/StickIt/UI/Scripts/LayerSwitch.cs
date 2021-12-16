@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 public class LayerSwitch : MonoBehaviour
@@ -21,6 +22,12 @@ public class LayerSwitch : MonoBehaviour
             {
                 if (!layers[i].activeSelf) layers[i].SetActive(true);
                 firstSelected[i]?.Select();
+                var c0 = firstSelected[i]?.GetComponents<EnableOnSelect>();
+                if (c0 != null) foreach (var item in c0) item.OnSelect(null);
+                var c1 = firstSelected[i]?.GetComponents<AnimateOnSelect>();
+                if (c1 != null) foreach (var item in c1) item.OnSelect(null);
+                var c2 = firstSelected[i]?.GetComponents<TextColorOnSelect>();
+                if (c2 != null) foreach (var item in c2) item.OnSelect(null);
                 continue;
             }
             layers[i].SetActive(false);
@@ -31,15 +38,17 @@ public class LayerSwitch : MonoBehaviour
         if (parentLayer && parentLayer.activeSelf)
         {
             AkSoundEngine.PostEvent("Play_SFX_UI_Move", gameObject);
+            var a = EventSystem.current.currentSelectedGameObject.GetComponents<IDeselectHandler>();
+            if (a != null) foreach (var item in a) item.OnDeselect(null);
             var i = layers.FindIndex(x => x.activeSelf);
             layers[i].SetActive(false);
             var j = i + inc;
             if (j < 0) j = layers.Count - 1;
             else if (j > layers.Count - 1) j = 0;
             layers[j].SetActive(true);
-            var c0 = firstSelected[j]?.GetComponents<AnimateOnSelect>();
-            if (c0 != null) foreach (var item in c0) item.OnSelect(null);
             firstSelected[j]?.Select();
+            var b = firstSelected[j]?.GetComponents<ISelectHandler>();
+            if (b != null) foreach (var item in b) item.OnSelect(null);
         }
     }
     public void OnLeftPage(InputAction.CallbackContext context)

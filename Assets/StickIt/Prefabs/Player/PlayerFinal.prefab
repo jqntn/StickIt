@@ -570,11 +570,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07dd59e67827aa749962a0746a53c332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRandomJumping: 1
+  jumpMultiplicator: 1
+  hasRandomJumpMultiplicator: 1
+  minJumpMultiplicator: 0.5
+  maxJumpMultiplicator: 0.8
+  rayGroundDistance: 0.7
+  layerGround:
+    serializedVersion: 2
+    m_Bits: 64
   VFXSnow: {fileID: 3882261909444492507}
   velocityThresholdToStop: {x: 2, y: 2, z: 0}
   rb: {fileID: 0}
-  velocity: {x: 0, y: 0, z: 0}
   hasCollidedWithSnow: 0
+  playerMovement: {fileID: 0}
+  isJumpingAnim: 0
 --- !u!1 &344050818673503302
 GameObject:
   m_ObjectHideFlags: 0
@@ -1418,7 +1428,7 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 0.38701445, y: 0, z: 3.8289042, w: 0}
+      - m_Value: {x: 0.64150953, y: 8, z: 5.303521, w: 0}
         m_Name: ParticleColor
         m_Overridden: 1
       - m_Value: {x: 18.230595, y: 40.787098, z: 59.017693, w: 0}

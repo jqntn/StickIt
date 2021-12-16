@@ -11,7 +11,6 @@ public class PlayerMouvement : MonoBehaviour
     { STICK, AIR, ICED, STUCK }
     public STATE state = STATE.AIR;
     private bool isGrounded = false;
-
     [Header("Dots Preview")] //-----------------------
     [SerializeField] private bool isPreviewDots;
     [SerializeField] private Transform dotPreview;
@@ -19,7 +18,6 @@ public class PlayerMouvement : MonoBehaviour
     public int numberOfDots;
     private Transform[] dots;
     private bool isDotsEnabled = false;
-
     [Header("Movement")] //-----------------------
     [Tooltip("Force maximale du jump, et clamp de la velocite maximale")]
     public float maxSpeed;
@@ -30,6 +28,7 @@ public class PlayerMouvement : MonoBehaviour
     [SerializeField]
     private float minForceJumpMultiplicator;
     private float forceJumpMultiplicator;
+    public float ForceJumpMultiplicator { get => forceJumpMultiplicator; }
     [SerializeField]
     private float speedIncreaseForceJump;
     private bool hasJumped = false;
@@ -48,7 +47,6 @@ public class PlayerMouvement : MonoBehaviour
     private int currentNumberOfJumps;
     private Vector3 initScale;
     public float limitAngle;
-
     [Header("CollisionVariables")]
     private float ratioMass;
     private float valueSpeedChargeCurve;
@@ -61,15 +59,12 @@ public class PlayerMouvement : MonoBehaviour
     public GameObject VFXContact;
     private ParticleSystem vfxContactParticle;
     public float VFXTime = 2.0f;
-
     [Header("Mesh")]
     private SkinnedMeshRenderer mesh;
     private OurSphereSoft myScriptSoftBody;
-
     [Header("DEBUG")]
     public int connexions;
     public bool isDebugLimitAngles = false;
-
     private void Awake()
     {
         vfxContactParticle = VFXContact.GetComponent<ParticleSystem>();
@@ -257,12 +252,10 @@ public class PlayerMouvement : MonoBehaviour
                         state = STATE.STICK;
                         break;
                 }
-
-                if(AudioManager.instance != null)
+                if (AudioManager.instance != null)
                 {
                     AudioManager.instance.PlayLandSounds(gameObject);
                 }
-
                 hasJumped = false;
                 #endregion Collision Untagged
                 break;
@@ -285,7 +278,7 @@ public class PlayerMouvement : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Icy"))
         {
-            if(rb.velocity.magnitude < 0.1)
+            if (rb.velocity.magnitude < 0.1)
             {
                 AkSoundEngine.PostEvent("Stop_SFX_S_IceSlide", gameObject);
             }
@@ -330,7 +323,6 @@ public class PlayerMouvement : MonoBehaviour
         rb.velocity = Vector3.zero;
         playerCollided.GetImpacted(dir, strength);
         StartCoroutine(OnImpactBetweenPlayer());
-
         // Strong Impact
         bool isPowerfull = strength >= strengthRequiredToBigImpact;
         StartCoroutine(StrongImpact(isPowerfull));
@@ -341,7 +333,6 @@ public class PlayerMouvement : MonoBehaviour
             Destroy(particles.gameObject, 1);
         }
     }
-
     private IEnumerator OnImpactBetweenPlayer()
     {
         VFXContact.SetActive(true);

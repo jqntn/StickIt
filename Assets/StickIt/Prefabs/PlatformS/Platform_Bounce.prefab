@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7678065510541941671}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Platform_Bounce
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 8281822431543754846}
   - component: {fileID: 6612108037944112619}
   - component: {fileID: 3171029730400900791}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Icy
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: e1455825b72863a4ca48bf554c6c0745, type: 2}
+  - {fileID: 2100000, guid: 1dee3b5fcc39b0543a5e8dd6bbb2d533, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -127,7 +127,7 @@ MeshCollider:
   m_Enabled: 1
   serializedVersion: 4
   m_Convex: 1
-  m_CookingOptions: 30
+  m_CookingOptions: -1
   m_Mesh: {fileID: -951608786083511892, guid: 702d89dfcf165f144b623aba594110cc, type: 3}
 --- !u!54 &6612108037944112619
 Rigidbody:
@@ -137,7 +137,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5728185335456548884}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 0
   m_AngularDrag: 0
   m_UseGravity: 0

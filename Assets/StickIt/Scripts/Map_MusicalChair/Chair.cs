@@ -19,14 +19,14 @@ public class Chair : MonoBehaviour
     private Vector3 spawnPosition;
     [SerializeField]
     public GameObject shield;
-    MeshRenderer shieldMesh;
+    private MeshRenderer shieldMesh;
     [Header("ChosenOne")]
     private LineRenderer lr;
-    Color colShield;
+    private Color colShield;
     [SerializeField]
     private Transform lrBeginPos;
     private MeshRenderer myMeshRenderer;
-    Material matChair;
+    private Material matChair;
     // Start is called before the first frame update
     private void Start()
     {
@@ -62,7 +62,7 @@ public class Chair : MonoBehaviour
             if (chosenOne)
             {
                 shield.transform.SetParent(chosenOne.transform);
-                shield.transform.localScale =  new Vector3(musicalChairManager.sizeShieldChair, musicalChairManager.sizeShieldChair, musicalChairManager.sizeShieldChair) / 100;
+                shield.transform.localScale = new Vector3(musicalChairManager.sizeShieldChair, musicalChairManager.sizeShieldChair, musicalChairManager.sizeShieldChair) / 100;
                 shield.transform.localPosition = new Vector3(0, 0, 0);
                 colShield = chosenOne.GetComponent<Player>().myDatas.material.GetColor("_Color");
                 colShield.a = shieldMesh.material.GetColor("_Tint").a;
@@ -106,7 +106,6 @@ public class Chair : MonoBehaviour
         float ratio;
         while (elapsed < duration)
         {
-
             ratio = elapsed / duration;
             ratio = animCurve.Evaluate(ratio);
             matChair.SetFloat("_Fade", ratio);
@@ -139,7 +138,7 @@ public class Chair : MonoBehaviour
                         AudioManager.instance.PlayGainShieldSounds(gameObject);
                     }
                 }
-                if(playersInChair.Count >= 1)
+                if (playersInChair.Count >= 1)
                 {
                     isTaken = true;
                     lr.enabled = true;
@@ -166,7 +165,6 @@ public class Chair : MonoBehaviour
         }
         if (isActive)
         {
-            
         }
     }
     private void OnDrawGizmos()
