@@ -10,7 +10,7 @@ public class MusicalChairManager : Level
     [SerializeField] private float transitionValue;
     [SerializeField] private Color colorTextRound;
     private float transition;
-    bool soundCountdownBool;
+    private bool soundCountdownBool;
     public Text countdown;
     private Animator textAnim;
     private float countDownSave;
@@ -30,9 +30,9 @@ public class MusicalChairManager : Level
     private Spores sporeScript;
     [SerializeField] private MeshRenderer bigMushroomRenderer;
     [SerializeField] private Material bigMushroomMat, bigMushroomAngryMat;
-    protected override void Awake() 
+    protected override void Awake()
     {
-        if (AudioManager.instance == null)
+        if (AudioManager.instance != null)
             AudioManager.instance.SwitchAmbianceToFall(gameObject);
         //durationSpawn = 2;
     }
@@ -104,7 +104,7 @@ public class MusicalChairManager : Level
                 ResetChairPool();
                 GameEvents.CameraShake_CEvent.Invoke(1, 1.0f);
             }
-            if(duration % 1 < 0.01f && textValue > 4)
+            if (duration % 1 < 0.01f && textValue > 4)
             {
                 AkSoundEngine.PostEvent("Play_SFX_UI_Countdown", gameObject);
             }
@@ -124,11 +124,10 @@ public class MusicalChairManager : Level
         }
         countDownSave = textValue;
     }
-    IEnumerator CountdownCor()
+    private IEnumerator CountdownCor()
     {
         AkSoundEngine.PostEvent("Play_SFX_UI_Countdown", gameObject);
         yield return new WaitForSeconds(1);
-
     }
     private void ChangeChairPool()
     {

@@ -2810,10 +2810,11 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<b>The last player alive becomes the winner.\r</b>\n\nThe only way to
-    kill someone is to knock them out of the level.\r\nAt the start of the stage,
-    all players spawn on a predefined spawn.\r\nThe level is built mostly with platforms
-    and spikes or holes.\r"
+  m_text: 'Your goal is to push other players into the spikes surrounding the level.
+
+
+    <b>The
+    last player standing wins the round.</b>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5cadd3b7290006d49b59a70710c48cc8, type: 2}
   m_sharedMaterial: {fileID: 4303891756155778549, guid: 5cadd3b7290006d49b59a70710c48cc8, type: 2}
@@ -20409,20 +20410,18 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'At the start of the stage, all players spawn on a predefined spawn.
+  m_text: 'Mushrooms will appear shortly after the start of the round.
 
-    The
-    level is built mostly with platforms and spikes or holes.
+    Your
+    goal is to take shelter under a mushroom before the time runs out.
 
-    The scene ends
-    when all but one of the players are dead.
 
-    At the end of the timer, if a
-    player is in the control zone, he will sit in the chair.
+    When
+    the timer reaches zero, a player will be eliminated and less mushrooms will appear.
 
-    If more than one
-    player is in the control zone, the player closest to the center of the chair
-    will sit and the other will die.'
+
+    <b>The
+    last player standing wins the round.</b>'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5cadd3b7290006d49b59a70710c48cc8, type: 2}
   m_sharedMaterial: {fileID: 4303891756155778549, guid: 5cadd3b7290006d49b59a70710c48cc8, type: 2}
