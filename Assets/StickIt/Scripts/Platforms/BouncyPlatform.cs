@@ -2,7 +2,7 @@ using UnityEngine;
 internal class BouncyPlatform : MonoBehaviour
 {
     public float impulseForce;
-    private void OnTriggerEnter(Collider other)
+    private void OnCollisionEnter(Collision other)
     {
         Player player = other.gameObject.GetComponent<Player>();
         if (player != null)
