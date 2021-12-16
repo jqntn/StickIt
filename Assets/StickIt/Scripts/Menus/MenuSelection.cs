@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 public class MenuSelection : MonoBehaviour
 {
     [SerializeField] private Transform _prefabPlayer;
@@ -16,7 +17,21 @@ public class MenuSelection : MonoBehaviour
     public float animTime = 0.5f;
     public float yOffset = 1f;
     public AnimationCurve curve;
-    // Start is called before the first frame update
+    public void Menu()
+    {
+        Time.timeScale = 1;
+        AkSoundEngine.PostEvent("Play_SFX_UI_Return", gameObject);
+        SceneManager.LoadScene("0_MainMenu");
+        Destroy(MultiplayerManager.instance.gameObject);
+        MultiplayerManager.instance = null;
+        Destroy(MainCamera.instance.gameObject);
+        MainCamera.instance = null;
+        Destroy(MapManager.instance.gameObject);
+        MapManager.instance = null;
+        Destroy(Sun.instance.gameObject);
+        Sun.instance = null;
+        foreach (var item in GameObject.FindGameObjectsWithTag("Player")) Destroy(item);
+    }
     private void Start()
     {
         _playersStartingPos = FindObjectOfType<PlayerStartingPos>().transform;
@@ -26,11 +41,11 @@ public class MenuSelection : MonoBehaviour
             tuyauxList.Add(tuyau);
         }
     }
-    // Update is called once per frame
     private void Update()
     {
         for (int i = 0; i < Gamepad.all.Count; i++)
         {
+            if (Gamepad.all[i].buttonEast.wasPressedThisFrame) { Menu(); return; }
             if (Gamepad.all[i].buttonSouth.wasPressedThisFrame && MultiplayerManager.instance.players.Count < 5)
             {
                 bool isAlreadyActivated = false;
