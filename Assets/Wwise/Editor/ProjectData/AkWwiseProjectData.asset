@@ -24,7 +24,7 @@ MonoBehaviour:
     ParentPath: Virtual Acoustics\Default Work Unit
     guid: 6a1b4b95fb138c40a653a66da00c8ad4
     GuidInternal: 
-    m_lastTime: -8585636720234399922
+    m_lastTime: -8585669525565006469
     List: []
   AuxBusWwu:
   - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
@@ -38,7 +38,7 @@ MonoBehaviour:
     ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: a1c6ab93e8512249a8872e110d8ab324
     GuidInternal: 
-    m_lastTime: -8585621225678596687
+    m_lastTime: -8585619621964247212
     List:
     - name: EnvironmentBus
       guid: 5bad397b97a7d2419e5e7fb1841282d2
@@ -117,7 +117,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 9d5e1a158700fd4db0fe5d5a184b83f7
     GuidInternal: 
-    m_lastTime: -8585621225678606662
+    m_lastTime: -8585621337955915179
     List:
     - name: MainBank
       guid: e369394fd7aba7409681805170c0d85f
@@ -145,7 +145,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: 3cbf420719f9a74db393e7ee75d4dee4
     GuidInternal: 
-    m_lastTime: -8585620155284273220
+    m_lastTime: -8585619621964577506
     List:
     - name: Environment
       guid: bc3ced92be72ea49abd5e4d45e53b89e
@@ -201,6 +201,46 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
+    - name: Play_Music_End
+      guid: 821aba21010db0409b2ecb81641ac06a
+      id: 2885083713
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: Music
+        ObjectType: 4
+        guid: 9f3fdc5bc59ff34d8769a6267335126b
+      - ElementName: Play_Music_End
+        ObjectType: 3
+        guid: 821aba21010db0409b2ecb81641ac06a
+      Path: Events\Default Work Unit\Music\Play_Music_End
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
+    - name: Play_Music_Main
+      guid: 90974ca64c86a34f96173435b6837f39
+      id: 1614763749
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: Music
+        ObjectType: 4
+        guid: 9f3fdc5bc59ff34d8769a6267335126b
+      - ElementName: Play_Music_Main
+        ObjectType: 3
+        guid: 90974ca64c86a34f96173435b6837f39
+      Path: Events\Default Work Unit\Music\Play_Music_Main
+      maxAttenuation: 0
+      maxDuration: -1
+      minDuration: -1
     - name: Play_SFX_Platform_Rotate
       guid: b72e3e5a6a0cbe4182e2df79f91d6daf
       id: 717539115
@@ -211,10 +251,13 @@ MonoBehaviour:
       - ElementName: Default Work Unit
         ObjectType: 12
         guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: SFX_General
+        ObjectType: 4
+        guid: 0227a7ea4e9d66489b64713d0aa933a4
       - ElementName: Play_SFX_Platform_Rotate
         ObjectType: 3
         guid: b72e3e5a6a0cbe4182e2df79f91d6daf
-      Path: Events\Default Work Unit\Play_SFX_Platform_Rotate
+      Path: Events\Default Work Unit\SFX_General\Play_SFX_Platform_Rotate
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
@@ -336,8 +379,8 @@ MonoBehaviour:
         guid: e51ea5a42794f042a664ab7013cd9bee
       Path: Events\Default Work Unit\SFX_General\Play_SFX_S_IceSlide
       maxAttenuation: 0
-      maxDuration: 0.37744
-      minDuration: 0.279341
+      maxDuration: -1
+      minDuration: -1
     - name: Play_SFX_S_Jump
       guid: 020928c83d8b73468f7ddf0313b44cec
       id: 3510434704
@@ -396,8 +439,8 @@ MonoBehaviour:
         guid: 5f3014bcf3bcf24697dadd338586bdf9
       Path: Events\Default Work Unit\SFX_Slime\Play_SFX_S_SlingshotCharge
       maxAttenuation: 0
-      maxDuration: 0.512347
-      minDuration: 0.410293
+      maxDuration: 0
+      minDuration: 0
     - name: Play_SFX_UI_Countdown
       guid: 63e56b6e32592a458b66c9b6fcb7baa7
       id: 2820203820
@@ -416,8 +459,8 @@ MonoBehaviour:
         guid: 63e56b6e32592a458b66c9b6fcb7baa7
       Path: Events\Default Work Unit\SFX_UI\Play_SFX_UI_Countdown
       maxAttenuation: 0
-      maxDuration: 0.210654
-      minDuration: 0.193171
+      maxDuration: 2
+      minDuration: 2
     - name: Play_SFX_UI_CountdownEnd
       guid: 1f9ea916225f7d45b7c6616cc2e24c30
       id: 2897847363
@@ -436,8 +479,8 @@ MonoBehaviour:
         guid: 1f9ea916225f7d45b7c6616cc2e24c30
       Path: Events\Default Work Unit\SFX_UI\Play_SFX_UI_CountdownEnd
       maxAttenuation: 0
-      maxDuration: 0.210654
-      minDuration: 0.193171
+      maxDuration: 1.985188
+      minDuration: 1.985188
     - name: Play_SFX_UI_Move
       guid: f6f4b00cb3ee9f448b1c7a6f19e5e4fd
       id: 445139456
@@ -456,8 +499,8 @@ MonoBehaviour:
         guid: f6f4b00cb3ee9f448b1c7a6f19e5e4fd
       Path: Events\Default Work Unit\SFX_UI\Play_SFX_UI_Move
       maxAttenuation: 0
-      maxDuration: 0.093911
-      minDuration: 0.068114
+      maxDuration: 0.079979
+      minDuration: 0.079979
     - name: Play_SFX_UI_Return
       guid: 90c92b4486a153449b50ba4867c68248
       id: 811711225
@@ -476,8 +519,8 @@ MonoBehaviour:
         guid: 90c92b4486a153449b50ba4867c68248
       Path: Events\Default Work Unit\SFX_UI\Play_SFX_UI_Return
       maxAttenuation: 0
-      maxDuration: 0.091874
-      minDuration: 0.084249
+      maxDuration: 0.087979
+      minDuration: 0.087979
     - name: Play_SFX_UI_Submit
       guid: 043285112cf3b841b9fe0bec30cc258a
       id: 3895889347
@@ -496,8 +539,8 @@ MonoBehaviour:
         guid: 043285112cf3b841b9fe0bec30cc258a
       Path: Events\Default Work Unit\SFX_UI\Play_SFX_UI_Submit
       maxAttenuation: 0
-      maxDuration: 0.077189
-      minDuration: 0.070783
+      maxDuration: 0.073917
+      minDuration: 0.073917
     - name: Set_State_Season_Fall
       guid: d4674dca485809458c5e093cabe83275
       id: 442955453
@@ -589,6 +632,86 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: -1
       minDuration: -1
+    - name: Stop_Music_End
+      guid: f9c0033613964a4c8b83feca8aca1af3
+      id: 797890747
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: Music
+        ObjectType: 4
+        guid: 9f3fdc5bc59ff34d8769a6267335126b
+      - ElementName: Stop_Music_End
+        ObjectType: 3
+        guid: f9c0033613964a4c8b83feca8aca1af3
+      Path: Events\Default Work Unit\Music\Stop_Music_End
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Stop_Music_Main
+      guid: 1d339d398b7d964b984c7a2acbb787a4
+      id: 760548323
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: Music
+        ObjectType: 4
+        guid: 9f3fdc5bc59ff34d8769a6267335126b
+      - ElementName: Stop_Music_Main
+        ObjectType: 3
+        guid: 1d339d398b7d964b984c7a2acbb787a4
+      Path: Events\Default Work Unit\Music\Stop_Music_Main
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Stop_SFX_Platform_Rotate
+      guid: 1a445c6a18b0944b86315f5791639f25
+      id: 2308253729
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: SFX_General
+        ObjectType: 4
+        guid: 0227a7ea4e9d66489b64713d0aa933a4
+      - ElementName: Stop_SFX_Platform_Rotate
+        ObjectType: 3
+        guid: 1a445c6a18b0944b86315f5791639f25
+      Path: Events\Default Work Unit\SFX_General\Stop_SFX_Platform_Rotate
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
+    - name: Stop_SFX_S_IceSlide
+      guid: 3406d61576097d4982a9e29339fc4322
+      id: 1846537750
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 3cbf420719f9a74db393e7ee75d4dee4
+      - ElementName: SFX_General
+        ObjectType: 4
+        guid: 0227a7ea4e9d66489b64713d0aa933a4
+      - ElementName: Stop_SFX_S_IceSlide
+        ObjectType: 3
+        guid: 3406d61576097d4982a9e29339fc4322
+      Path: Events\Default Work Unit\SFX_General\Stop_SFX_S_IceSlide
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
   RtpcWwu:
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
     PathAndIcons:
@@ -601,7 +724,7 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: a3f9be233ac24d42bb0016649bd97284
     GuidInternal: 
-    m_lastTime: -8585628055293288161
+    m_lastTime: -8585628074507313654
     List:
     - name: RTPC_Volume_Environment
       guid: 0fc32fa44dbac647be56e8e8cb97ecb2
@@ -671,7 +794,7 @@ MonoBehaviour:
     ParentPath: States\Default Work Unit
     guid: e31a9ef6187cbc49905bca8fdda6ebad
     GuidInternal: 
-    m_lastTime: -8585620155284243284
+    m_lastTime: -8585619621963946928
     List:
     - name: State_Season
       guid: 01d8adccb7675748b12717f3f4f64d04
@@ -767,7 +890,7 @@ MonoBehaviour:
     ParentPath: Switches\Default Work Unit
     guid: 6a5393980de5bf43a401c7f5f2e46557
     GuidInternal: 
-    m_lastTime: -8585628055292959034
+    m_lastTime: -8585628074506973346
     List:
     - name: MusicSwitch
       guid: 58b187ef5e54d6408870880dd66e2f0b
@@ -847,7 +970,7 @@ MonoBehaviour:
     ParentPath: Triggers\Default Work Unit
     guid: 8497bab1772ad342aad981e5ac6cc815
     GuidInternal: 
-    m_lastTime: -8585636720234409892
+    m_lastTime: -8585669525565016495
     List: []
   ExpandedFileSystemItemIds: 
   ExpandedWaapiItemIds: 

@@ -8,8 +8,6 @@ public class SpeedPlatfom : Platform
 
     public override void Action(Collision c)
     {
-
-        if (AudioManager.instance != null) { AudioManager.instance.PlayIceSlideSounds(gameObject); }
         if (imposeDir) c.transform.GetComponent<Rigidbody>().velocity = dir.normalized * impulseForce;
         else
         {

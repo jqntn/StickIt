@@ -226,6 +226,9 @@ public class PlayerMouvement : MonoBehaviour
                         ImpactBetweenPlayers(playerCollided, collision.contacts[0], strength);
                 }
                 break;
+            case "Icy":
+                AkSoundEngine.PostEvent("Play_SFX_S_IceSlide", gameObject);
+                break;
             default:
                 //if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
                 #region Collision Untagged
@@ -280,6 +283,13 @@ public class PlayerMouvement : MonoBehaviour
                 Debug.DrawLine(collision.contacts[0].point, collision.contacts[0].point + contact.limitsAngle[1], Color.blue);
             }
         }
+        if (collision.gameObject.CompareTag("Icy"))
+        {
+            if(rb.velocity.magnitude < 0.1)
+            {
+                AkSoundEngine.PostEvent("Stop_SFX_S_IceSlide", gameObject);
+            }
+        }
     }
     private void OnCollisionExit(Collision collision)
     {
@@ -299,6 +309,10 @@ public class PlayerMouvement : MonoBehaviour
                 currentNumberOfJumps = 0;
                 EnableDots(false);
             }
+        }
+        if (collision.gameObject.CompareTag("Icy"))
+        {
+            AkSoundEngine.PostEvent("Stop_SFX_S_IceSlide", gameObject);
         }
     }
     private void ImpactBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact, float strength)
