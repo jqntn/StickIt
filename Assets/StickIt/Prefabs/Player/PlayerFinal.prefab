@@ -76,6 +76,7 @@ GameObject:
   - component: {fileID: 206067774022311515}
   - component: {fileID: 206067774022311508}
   - component: {fileID: 5447177794664595335}
+  - component: {fileID: 5728746732015158737}
   m_Layer: 7
   m_Name: PlayerFinal
   m_TagString: Player
@@ -570,11 +571,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07dd59e67827aa749962a0746a53c332, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  victoryClip: {fileID: 7400000, guid: e6a3651c6d253cd46941ce533d2be45b, type: 2}
+  rankClip: {fileID: 7400000, guid: 57d0be0f89235f54ba729f3b567b60da, type: 2}
   VFXSnow: {fileID: 3882261909444492507}
   velocityThresholdToStop: {x: 2, y: 2, z: 0}
   rb: {fileID: 0}
-  velocity: {x: 0, y: 0, z: 0}
   hasCollidedWithSnow: 0
+  anim: {fileID: 0}
+  currentClip: {fileID: 0}
+--- !u!111 &5728746732015158737
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 206067774022311512}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Animation: {fileID: 7400000, guid: e6a3651c6d253cd46941ce533d2be45b, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: e6a3651c6d253cd46941ce533d2be45b, type: 2}
+  - {fileID: 7400000, guid: 57d0be0f89235f54ba729f3b567b60da, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_CullingType: 0
 --- !u!1 &344050818673503302
 GameObject:
   m_ObjectHideFlags: 0
@@ -1418,7 +1439,7 @@ VisualEffect:
       m_Array: []
     m_Vector4f:
       m_Array:
-      - m_Value: {x: 0.38701445, y: 0, z: 3.8289042, w: 0}
+      - m_Value: {x: 0.64150953, y: 8, z: 5.303521, w: 0}
         m_Name: ParticleColor
         m_Overridden: 1
       - m_Value: {x: 18.230595, y: 40.787098, z: 59.017693, w: 0}

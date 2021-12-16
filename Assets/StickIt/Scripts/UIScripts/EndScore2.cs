@@ -92,9 +92,11 @@ public class EndScore2 : MonoBehaviour
 
         ranking = new Player[MultiplayerManager.instance.players.Count];
         MultiplayerManager.instance.players.CopyTo(ranking);
+
+        // Disable Player Controller
         foreach(Player player in ranking)
         {
-            player.myMouvementScript.enabled = false;
+            player.GetComponent<PlayerInput>().enabled = false;
         }
 
         // Debug
@@ -138,13 +140,24 @@ public class EndScore2 : MonoBehaviour
             textScores[i].text = ranking[i].myDatas.score.ToString();
             textRank[i].color = ranking[i].myDatas.material.color;
             canvasRank[i].SetActive(true);
+
+            if(i == 0)
+            {
+                ranking[i].GetComponent<PlayerAnimations>().PlayVictory();
+            }
+            else
+            {
+                ranking[i].GetComponent<PlayerAnimations>().PlayRank();
+            }
+
         }
 
         yield return new WaitForSeconds(timeToUnlockController);
-        // unlock player controllers
+
+        // Unlock player controllers
         foreach (Player player in ranking)
         {
-            player.myMouvementScript.enabled = true;
+            player.GetComponent<PlayerInput>().enabled = true;
         }
 
         controller.Enable();

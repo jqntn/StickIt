@@ -2,26 +2,56 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animation))]
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerAnimations : MonoBehaviour
 {
+    [Header("ANIMATION_______________________________")]
+    public AnimationClip victoryClip;
+    public AnimationClip rankClip;
+
+    [Header("PARTICLE________________________________")]
     public ParticleSystem VFXSnow;
     public Vector3 velocityThresholdToStop = new Vector3(.0f, .0f, .0f);
 
     [Header("DEBUG___________________________________")]
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private Vector3 velocity;
     [SerializeField] private bool hasCollidedWithSnow = false;
+    [SerializeField] private Animation anim;
 
     public void ChangeBoolSnowToFalse()
     {
         hasCollidedWithSnow = false;
     }
+
+    public void PlayVictory()
+    {
+        anim.Play();
+        //anim.Play(victoryClip.name);
+    }
+
+    public void PlayRank()
+    {
+        //anim.Play(rankClip.name);
+    }
+
+    public void StopAnimation()
+    {
+        anim.Stop();
+    }
+
+    //private IEnumerator OnStopAnimator()
+    //{
+    //    while (currentAnim.isPlaying) { yield return null; }
+    //    animator.gameObject.SetActive(false);
+    //}
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         VFXSnow.Stop();
+        VFXSnow.gameObject.SetActive(false);
         hasCollidedWithSnow = false;
+        anim = GetComponent<Animation>();
     }
 
     private void OnCollisionEnter(Collision collision)
