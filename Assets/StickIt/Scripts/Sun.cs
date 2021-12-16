@@ -3,7 +3,7 @@ using UnityEngine;
 class Sun : Unique<Sun> {
 
     public bool isAnimate = false;
-    public Vector3 rotation = new Vector3(.0f, 1.0f, .0f);
+    public Vector3 rotation = new Vector3(0.1f, 0.1f, 0.1f);
     private IEnumerator Start()
     {
         while (isAnimate)

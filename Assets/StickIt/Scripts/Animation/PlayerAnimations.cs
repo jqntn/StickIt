@@ -25,6 +25,71 @@ public class PlayerAnimations : MonoBehaviour
     [SerializeField] private bool isJumpingAnim = false;
     public bool IsJumpingAnim { get => isJumpingAnim; set => isJumpingAnim = value; }
 
+
+
+    private void Awake()
+    {
+        rb = GetComponent<Rigidbody>();
+        VFXSnow.Stop();
+        VFXSnow.gameObject.SetActive(true);
+        hasCollidedWithSnow = false;
+        playerMovement = GetComponent<PlayerMouvement>();
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        IcyPlatform ice = collision.gameObject.GetComponent<IcyPlatform>();
+        if(ice != null)
+        {
+            if (collision.gameObject.CompareTag("Icy"))
+            {
+                if (!hasCollidedWithSnow)
+                {
+                    hasCollidedWithSnow = true;
+                    StartCoroutine(OnIceEnter());
+                }
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Icy"))
+        {
+            hasCollidedWithSnow = false;
+            StartCoroutine(OnIceExit());
+        }
+    }
+
+    private IEnumerator OnIceEnter()
+    {
+        while (hasCollidedWithSnow)
+        {
+            if (Mathf.Abs(rb.velocity.x) <= velocityThresholdToStop.x &&
+                Mathf.Abs(rb.velocity.y) <= velocityThresholdToStop.y)
+            {
+                VFXSnow.Stop();
+            }
+            else
+            {
+                VFXSnow.Play();
+            }
+
+            yield return null;
+        }
+
+    }
+    private IEnumerator OnIceExit()
+    {
+        yield return new WaitForFixedUpdate();
+        VFXSnow.Stop();
+
+    }
+    public void PlayVFXSnow()
+    {
+        VFXSnow.Play();
+    }
+
     public void ChangeBoolSnowToFalse()
     {
         hasCollidedWithSnow = false;
@@ -32,8 +97,8 @@ public class PlayerAnimations : MonoBehaviour
 
     public void PlayVictory()
     {
-        if(playerMovement == null) { return; }
-        if(!isRandomJumping) { return; }
+        if (playerMovement == null) { return; }
+        if (!isRandomJumping) { return; }
         isJumpingAnim = true;
         StartCoroutine(OnPlayVictory());
     }
@@ -79,70 +144,11 @@ public class PlayerAnimations : MonoBehaviour
         }
     }
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-        VFXSnow.Stop();
-        VFXSnow.gameObject.SetActive(false);
-        hasCollidedWithSnow = false;
-        playerMovement = GetComponent<PlayerMouvement>();
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Icy"))
-        {
-            if (!hasCollidedWithSnow)
-            {
-                hasCollidedWithSnow = true;
-                StartCoroutine(OnIceEnter());
-            }
-        }
-    }
-
-    private void OnCollisionExit(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Icy"))
-        {
-            hasCollidedWithSnow = false;
-            StartCoroutine(OnIceExit());
-        }
-    }
-
-    private IEnumerator OnIceEnter()
-    {
-        while (hasCollidedWithSnow)
-        {
-            if (Mathf.Abs(rb.velocity.x) <= velocityThresholdToStop.x &&
-                Mathf.Abs(rb.velocity.y) <= velocityThresholdToStop.y)
-            {
-                VFXSnow.Stop();
-            }
-            else
-            {
-                VFXSnow.Play();
-            }
-
-            yield return null;
-        }
-
-    }
-    private IEnumerator OnIceExit()
-    {
-        yield return new WaitForFixedUpdate();
-        VFXSnow.Stop();
-
-    }
-    public void PlayVFXSnow()
-    {
-        VFXSnow.Play();
-    }
-
     #region GIZMOS
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawRay(transform.position, new Vector3(0.0f, -rayGroundDistance, 0.0f));
-    }
+    //private void OnDrawGizmos()
+    //{
+    //    Gizmos.color = Color.red;
+    //    Gizmos.DrawRay(transform.position, new Vector3(0.0f, -rayGroundDistance, 0.0f));
+    //}
     #endregion
 }
