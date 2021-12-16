@@ -14,6 +14,8 @@ namespace AK
     namespace EVENTS
     {
         static const AkUniqueID EVENT_PLAY_AMBIANCE = 3182511947U;
+        static const AkUniqueID PLAY_MUSIC_END = 2885083713U;
+        static const AkUniqueID PLAY_MUSIC_MAIN = 1614763749U;
         static const AkUniqueID PLAY_SFX_PLATFORM_ROTATE = 717539115U;
         static const AkUniqueID PLAY_SFX_S_BOUNCEMUSHROOM = 1190391802U;
         static const AkUniqueID PLAY_SFX_S_BRAMBLEIMPACT = 501088891U;
@@ -31,6 +33,10 @@ namespace AK
         static const AkUniqueID PLAY_SFX_UI_SUBMIT = 3895889347U;
         static const AkUniqueID SET_STATE_SEASON_FALL = 442955453U;
         static const AkUniqueID SET_STATE_SEASON_SUMMER = 3566163661U;
+        static const AkUniqueID STOP_MUSIC_END = 797890747U;
+        static const AkUniqueID STOP_MUSIC_MAIN = 760548323U;
+        static const AkUniqueID STOP_SFX_PLATFORM_ROTATE = 2308253729U;
+        static const AkUniqueID STOP_SFX_S_ICESLIDE = 1846537750U;
     } // namespace EVENTS
 
     namespace STATES

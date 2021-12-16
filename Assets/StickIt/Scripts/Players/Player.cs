@@ -19,7 +19,6 @@ public class Player : MonoBehaviour
     [SerializeField] private int maxMass = 250;
     private void Awake()
     {
-
         _multiplayerManager = MultiplayerManager.instance;
         if (TryGetComponent<PlayerMouvement>(out PlayerMouvement pm))
         {
@@ -27,7 +26,6 @@ public class Player : MonoBehaviour
             myMouvementScript.myPlayer = this;
         }
         DontDestroyOnLoad(this);
-
 
         VFXExplosionParticle = VFXExplosion.GetComponent<VisualEffect>();
         VFXExplosionParticle.Stop();
@@ -49,7 +47,11 @@ public class Player : MonoBehaviour
         {
             yield return new WaitForSeconds(deathAnim.TotalDuration / deathAnim.DurationMultiplier);
         }
-        AudioManager.instance.PlayDeathSounds(gameObject);
+
+        if (AudioManager.instance != null) { 
+            AudioManager.instance.PlayDeathSounds(gameObject); 
+        }
+
         myMouvementScript.Death();
         GameObject obj = Instantiate(deathPart, new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z), Quaternion.identity);
         obj.GetComponent<ParticleSystemRenderer>().material = myDatas.material;
@@ -94,43 +96,44 @@ public class Player : MonoBehaviour
     public void SetScoreAndMass(int score, int mass)
     {
         myDatas.score += score;
+        print("score " + gameObject.name + " = " + score);
         myDatas.mass += mass;
         myDatas.mass = Mathf.Clamp(myDatas.mass, minMass, maxMass);
         myMouvementScript.RescaleMeshWithMass();
     }
     // INPUT TOOLS TO REMOVE LATER
-    public void InputTestMassP25(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        if (!MultiplayerManager.instance.isMenuSelection && context.started)
-        {
-            SetScoreAndMass(0, 25);
-            myMouvementScript.RescaleMeshWithMass();
-        }
-    }
-    public void InputTestMassP5(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        if (!MultiplayerManager.instance.isMenuSelection && context.started)
-        {
-            SetScoreAndMass(0, 5);
-            myMouvementScript.RescaleMeshWithMass();
-        }
-    }
-    public void InputTestMassM25(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        if (!MultiplayerManager.instance.isMenuSelection && context.started)
-        {
-            SetScoreAndMass(0, -25);
-            myMouvementScript.RescaleMeshWithMass();
-        }
-    }
-    public void InputTestMassM5(UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        if (!MultiplayerManager.instance.isMenuSelection && context.started)
-        {
-            SetScoreAndMass(0, -5);
-            myMouvementScript.RescaleMeshWithMass();
-        }
-    }
+    //public void InputTestMassP25(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    //{
+    //    if (!MultiplayerManager.instance.isMenuSelection && context.started)
+    //    {
+    //        SetScoreAndMass(0, 25);
+    //        myMouvementScript.RescaleMeshWithMass();
+    //    }
+    //}
+    //public void InputTestMassP5(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    //{
+    //    if (!MultiplayerManager.instance.isMenuSelection && context.started)
+    //    {
+    //        SetScoreAndMass(0, 5);
+    //        myMouvementScript.RescaleMeshWithMass();
+    //    }
+    //}
+    //public void InputTestMassM25(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    //{
+    //    if (!MultiplayerManager.instance.isMenuSelection && context.started)
+    //    {
+    //        SetScoreAndMass(0, -25);
+    //        myMouvementScript.RescaleMeshWithMass();
+    //    }
+    //}
+    //public void InputTestMassM5(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    //{
+    //    if (!MultiplayerManager.instance.isMenuSelection && context.started)
+    //    {
+    //        SetScoreAndMass(0, -5);
+    //        myMouvementScript.RescaleMeshWithMass();
+    //    }
+    //}
     public void OnPause(InputAction.CallbackContext context)
     {
         if (context.performed && !isDead && !MapManager.instance.isBusy && SceneManager.GetActiveScene().name != "1_MenuSelection" && SceneManager.GetActiveScene().name != "100_EndScene")

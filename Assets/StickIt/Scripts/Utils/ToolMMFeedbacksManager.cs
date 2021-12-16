@@ -68,7 +68,7 @@ public class ToolMMFeedbacksManager : MonoBehaviour
                 text = text.Insert(indexCalls,
                     "\n\tpublic void " + feedbacksList[i].name + "Call(float duration, float intensity)\n\t{" +
                     "\n\t\tif (!feedbacksList[" + i + "].IsPlaying){" +
-                    "\n\t\t\tfloat durationMultiplier = duration / feedbacksList[" + i + "].TotalDuration;" +
+                    "\n\t\t\tfloat durationMultiplier = Mathf.Sqrt(duration / startDurationList[" + i + "]);" +
                     "\n\t\t\tfeedbacksList[" + i + "].FeedbacksIntensity = intensity;" +
                     "\n\t\t\tfeedbacksList[" + i + "].DurationMultiplier = durationMultiplier;" +
                     "\n\t\t\tfeedbacksList[" + i + "].PlayFeedbacks();" +

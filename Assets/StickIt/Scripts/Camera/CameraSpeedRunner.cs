@@ -329,9 +329,9 @@ public class CameraSpeedRunner : CameraState
     #endregion
 
     #region Debug
-    protected override void OnDrawGizmosSelected()
+    protected override void OnDrawGizmos()
     {
-        base.OnDrawGizmosSelected();
+        base.OnDrawGizmos();
 
         // Draw Death Margin
         Gizmos.color = Color.red;

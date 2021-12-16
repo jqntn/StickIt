@@ -7,7 +7,9 @@ class SpikesPlatform : MonoBehaviour
         if (player != null)
         {
             player.Death();
-            AudioManager.instance.PlayBrambleImpactSounds(gameObject);
+
+            if (AudioManager.instance != null) { AudioManager.instance.PlayBrambleImpactSounds(gameObject); }
+
         }
     }
 }

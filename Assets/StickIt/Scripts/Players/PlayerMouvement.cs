@@ -185,7 +185,7 @@ public class PlayerMouvement : MonoBehaviour
             t_jump = 0;
             y_jump = 0;
             // addedVector = Vector3.zero;
-            AudioManager.instance.PlayJumpSounds(this.gameObject);
+            if (AudioManager.instance != null) { AudioManager.instance.PlayJumpSounds(this.gameObject); }
             foreach (ContactPointSurface contact in connectedPoints)
             {
                 contact.attractionStrength = 100f;
@@ -218,13 +218,16 @@ public class PlayerMouvement : MonoBehaviour
                 contact.limitsAngle = contact.CalculateLimiteAngle(limitAngle);
                 connectedPoints.Add(contact);
                 PlayerMouvement playerCollided = collision.transform.GetComponent<PlayerMouvement>();
-                AudioManager.instance.PlayCollisionSounds(gameObject);
+                if (AudioManager.instance != null) { AudioManager.instance.PlayCollisionSounds(gameObject); }
                 if (velocityLastFrame.magnitude * valueStrengthCurve > playerCollided.velocityLastFrame.magnitude * playerCollided.valueStrengthCurve)
                 {
                     float strength = velocityLastFrame.magnitude * valueStrengthCurve * strengthMultiplicator / playerCollided.valueStrengthCurve;
                     if (strength >= strengthRequiredToImpact)
                         ImpactBetweenPlayers(playerCollided, collision.contacts[0], strength);
                 }
+                break;
+            case "Icy":
+                AkSoundEngine.PostEvent("Play_SFX_S_IceSlide", gameObject);
                 break;
             default:
                 //if (collision.transform.tag != "Untagged") return; // ----- RETURN CONDITION !!!
@@ -254,7 +257,12 @@ public class PlayerMouvement : MonoBehaviour
                         state = STATE.STICK;
                         break;
                 }
-                AudioManager.instance.PlayLandSounds(gameObject);
+
+                if(AudioManager.instance != null)
+                {
+                    AudioManager.instance.PlayLandSounds(gameObject);
+                }
+
                 hasJumped = false;
                 #endregion Collision Untagged
                 break;
@@ -273,6 +281,13 @@ public class PlayerMouvement : MonoBehaviour
             {
                 Debug.DrawLine(collision.contacts[0].point, collision.contacts[0].point + contact.limitsAngle[0], Color.blue);
                 Debug.DrawLine(collision.contacts[0].point, collision.contacts[0].point + contact.limitsAngle[1], Color.blue);
+            }
+        }
+        if (collision.gameObject.CompareTag("Icy"))
+        {
+            if(rb.velocity.magnitude < 0.1)
+            {
+                AkSoundEngine.PostEvent("Stop_SFX_S_IceSlide", gameObject);
             }
         }
     }
@@ -294,6 +309,10 @@ public class PlayerMouvement : MonoBehaviour
                 currentNumberOfJumps = 0;
                 EnableDots(false);
             }
+        }
+        if (collision.gameObject.CompareTag("Icy"))
+        {
+            AkSoundEngine.PostEvent("Stop_SFX_S_IceSlide", gameObject);
         }
     }
     private void ImpactBetweenPlayers(PlayerMouvement playerCollided, ContactPoint contact, float strength)
