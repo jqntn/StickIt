@@ -35,8 +35,11 @@ public class EndScore2 : MonoBehaviour
     [SerializeField] private Player[] ranking;
     [SerializeField] private PlayerAnimations[] animations;
     [SerializeField] private PlayerInput[] playerinputs;
+    [SerializeField] private PlayerMouvement[] playerMouvements;
     [SerializeField] private float timer = 0.0f;
-    [SerializeField] private PlayerInputs controller;
+    [SerializeField] private InputAction[] m_Starts;
+    [SerializeField] private bool hasUnlockController = false;
+    //[SerializeField] private PlayerInputs controller;
 
     private void OnEnable()
     {
@@ -55,6 +58,7 @@ public class EndScore2 : MonoBehaviour
         returnToMenu.SetActive(false);
         Canvas canva = GetComponent<Canvas>();
         canva.worldCamera = Camera.main;
+        hasUnlockController = false;
 
     }
 
@@ -84,6 +88,17 @@ public class EndScore2 : MonoBehaviour
             Menu();
         }
 
+        if (hasUnlockController)
+        {
+            foreach(InputAction m_start in m_Starts)
+            {
+                if (m_start.triggered)
+                {
+                    Menu();
+                }
+            }
+        }
+
     }
 
     public void EndGame()
@@ -94,11 +109,13 @@ public class EndScore2 : MonoBehaviour
     IEnumerator OnEndGame()
     {
         while(MultiplayerManager.instance.players.Count <= 0) { yield return null;}
-
-        ranking = new Player[MultiplayerManager.instance.players.Count];
-        playerinputs = new PlayerInput[MultiplayerManager.instance.players.Count];
-        animations = new PlayerAnimations[MultiplayerManager.instance.players.Count];
-        MultiplayerManager.instance.players.CopyTo(ranking);
+        MultiplayerManager multiplayerManager = MultiplayerManager.instance;
+        ranking = new Player[multiplayerManager.players.Count];
+        playerinputs = new PlayerInput[multiplayerManager.players.Count];
+        animations = new PlayerAnimations[multiplayerManager.players.Count];
+        m_Starts = new InputAction[multiplayerManager.players.Count];
+        playerMouvements = new PlayerMouvement[multiplayerManager.players.Count];
+        multiplayerManager.players.CopyTo(ranking);
 
         // Sort Ranking (slow sorting > change to quicksort)
         bool hasPermute = false;
@@ -117,21 +134,25 @@ public class EndScore2 : MonoBehaviour
 
 
         int k = 0;
-        foreach(Player player in ranking)
+        foreach (Player player in ranking)
         {
-            // Disable Player Controller
+            // Listener To Player Input
             PlayerInput playerInput = player.GetComponent<PlayerInput>();
-            playerInput.enabled = false;
+            //playerInput.enabled = false;
+            m_Starts[k] = playerInput.actions["Menu"];
             playerinputs[k] = playerInput;
-            
+
+            // Disable Player Mouvement
+            PlayerMouvement playerMouvement = player.GetComponent<PlayerMouvement>();
+            playerMouvement.enabled = false;
+            playerMouvements[k] = playerMouvement;
+
             // Save PlayerAnimations
             PlayerAnimations playerAnimation = player.GetComponent<PlayerAnimations>();
             animations[k] = playerAnimation;
+
             k++;
         }
-
-        // Adding listerner to Return to menu
-        controller = new PlayerInputs();
 
         int posIndex = 0;
         foreach(Player player in ranking)
@@ -164,7 +185,6 @@ public class EndScore2 : MonoBehaviour
             {
                 yield return new WaitForFixedUpdate();
                 victory.Play();
-
             }
 
         }
@@ -179,13 +199,12 @@ public class EndScore2 : MonoBehaviour
         }
 
         // Unlock player controllers
-        foreach (PlayerInput input in playerinputs)
+        foreach (PlayerMouvement mouvement in playerMouvements)
         {
-            input.enabled = true;
+           mouvement.enabled = true;
         }
 
-        controller.Enable();
-        controller.NormalInputs.Menu.performed += _ => Menu();
+        hasUnlockController = true;
     }
 
     private void Swap(int i, int j)

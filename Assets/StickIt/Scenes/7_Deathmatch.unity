@@ -1656,7 +1656,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 541454723}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -18.5, z: 12}
+  m_LocalPosition: {x: 0, y: -11.2, z: 12}
   m_LocalScale: {x: 2.9779892, y: 2.9779892, z: 1.1911956}
   m_Children: []
   m_Father: {fileID: 1055639529}
@@ -1738,7 +1738,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 635837264}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -25.3, z: 177}
+  m_LocalPosition: {x: 0, y: -43.8, z: 177}
   m_LocalScale: {x: 6, y: 6, z: 6}
   m_Children: []
   m_Father: {fileID: 1055639529}
@@ -2583,7 +2583,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1055639527}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 21.1, z: 0}
+  m_LocalPosition: {x: 0, y: 20.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1640413269}
@@ -3269,7 +3269,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1314684242}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.2, y: -22.6, z: 63.7}
+  m_LocalPosition: {x: 2.2, y: -22.9, z: 63.7}
   m_LocalScale: {x: 3.4917052, y: 3.4917052, z: 2.7933643}
   m_Children: []
   m_Father: {fileID: 1055639529}
@@ -3788,7 +3788,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 626349961222977373, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.6476903
+      value: 19.5
       objectReference: {fileID: 0}
     - target: {fileID: 626349961222977373, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4227,7 +4227,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1640413267}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -16.5, z: 4}
+  m_LocalPosition: {x: 0, y: -11.2, z: 4}
   m_LocalScale: {x: 3.48, y: 3.48, z: 1.16}
   m_Children: []
   m_Father: {fileID: 1055639529}
@@ -5239,6 +5239,10 @@ PrefabInstance:
       propertyPath: nbrOfPlayer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3071383605669792054, guid: b923fe745e1b2284b93eb9e389bfcb35, type: 3}
+      propertyPath: isStartingDirect
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3071383605669792055, guid: b923fe745e1b2284b93eb9e389bfcb35, type: 3}
       propertyPath: m_Name
       value: MultiplayerManager
@@ -5297,7 +5301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStartingDirect: 1
-  data: {fileID: 0}
+  data: {fileID: 11400000, guid: 35b2b7044abee3f489c2fc1434a426c7, type: 2}
   extendsFactor: 1
   offsets: {x: 0, y: 0, z: 0}
   bounds:

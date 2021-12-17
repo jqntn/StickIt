@@ -2257,7 +2257,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isStartingDirect: 1
-  data: {fileID: 11400000, guid: c567079baaa896140b34ce303e75bb23, type: 2}
+  data: {fileID: 11400000, guid: dfb51948fc1a6af4a8654d8deaedc917, type: 2}
   extendsFactor: 1
   offsets: {x: 0, y: 0, z: 0}
   bounds:
@@ -2867,6 +2867,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 6832763638716816633, guid: a8a78487c001f404f9abf008652908c5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6832763638902975381, guid: a8a78487c001f404f9abf008652908c5, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -2933,12 +2937,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 626349961222977373, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 626349961222977373, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 25.51
+      value: 44.4
       objectReference: {fileID: 0}
     - target: {fileID: 626349961222977373, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -117.98
+      value: -209.3
       objectReference: {fileID: 0}
     - target: {fileID: 626349961222977373, guid: 3c1a6775edd095f4bb6570e0dd532c16, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5704,6 +5712,10 @@ PrefabInstance:
     - target: {fileID: 3071383605669792054, guid: b923fe745e1b2284b93eb9e389bfcb35, type: 3}
       propertyPath: nbrOfPlayer
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3071383605669792054, guid: b923fe745e1b2284b93eb9e389bfcb35, type: 3}
+      propertyPath: isStartingDirect
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3071383605669792055, guid: b923fe745e1b2284b93eb9e389bfcb35, type: 3}
       propertyPath: m_Name
