@@ -209,11 +209,15 @@ public abstract class CameraState : MonoBehaviour
     //      Calculate zoom depending of the players positions/bounds
     //<summary>
     protected virtual void UpdateZoom() {
+
         Vector2 maxDistance = new Vector2(bounds_dimension.x, bounds_dimension.y);
         Vector2 ratio = new Vector2(0.0f, 0.0f);
-
+        if ((maxDistance.x == 0 || maxDistance.y == 0) && SceneManager.GetActiveScene().name == "100_EndScene")
+        {
+            bounds_dimension = BlocksScript.Instance.Dimension;
+        }
         // Divide by zero protection
-        if(maxDistance.x != 0)
+        if (maxDistance.x != 0)
         {
             ratio.x = Mathf.Clamp(playerBounds.size.x, 0, maxDistance.x) / maxDistance.x;
         }

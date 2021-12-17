@@ -45,9 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startACertainMap: 0
-  mapToStart: 7_DeathMatch
+  mapToStart: 10_Chairs
   playAllMapInOrder: 0
-  playAllMapRandom: 0
+  playAllMapInRandom: 1
   modsData: {fileID: 11400000, guid: 1f9c3a10f541edd4a9217b088aa49aa3, type: 2}
   numberOfRounds: 7
   smoothTime: 0.2
@@ -55,8 +55,8 @@ MonoBehaviour:
   smoothMOE: 0.001
   mapOffset: 100
   timeScale: 0
-  isBusy: 0
   endMapName: 100_EndScene
+  isBusy: 0
   curMapRoot: {fileID: 0}
   nextMapRoot: {fileID: 0}
   prevModName: 
@@ -78,7 +78,7 @@ MonoBehaviour:
   mapCount: 0
   roundCount: 0
   modsRemaining: []
-  tempMods: []
+  cloneModsData: {fileID: 0}
 --- !u!114 &264679286983488418
 MonoBehaviour:
   m_ObjectHideFlags: 0

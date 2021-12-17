@@ -19,13 +19,13 @@ public class MapManager : Unique<MapManager>
     public float smoothMOE;
     public int mapOffset;
     public float timeScale;
-    public bool isBusy;
     public string endMapName = "100_EndScene";
 
     //[Header("PREFABS___________________")]
     //public VisualEffect onDeathVFX;                                             // Take Player death Animation to know how long to wait before transition
 
     [Header("DEBUG____________________")]
+    public bool isBusy;
     [SerializeField] private GameObject curMapRoot;
     [SerializeField] private GameObject nextMapRoot;
     [SerializeField] private string prevModName;
@@ -170,8 +170,14 @@ public class MapManager : Unique<MapManager>
             // Randomly
             else
             {
-                modIndex = Random.Range(0, modsRemaining.Count);
-                mod = modsRemaining[modIndex];
+                if(curMod != null)
+                {
+                    do
+                    {
+                        modIndex = Random.Range(0, modsRemaining.Count);
+                        mod = modsRemaining[modIndex];
+                    } while (mod == curMod);
+                }
             }
 
             // Choose Map

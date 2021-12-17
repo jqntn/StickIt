@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class BlocksScript : MonoBehaviour
 {
     [Header("TEST______________________")]
@@ -20,9 +20,15 @@ public class BlocksScript : MonoBehaviour
     [SerializeField] private Vector2 dimensionBase = new Vector2(0.0f, 0.0f);
     [SerializeField] private List<Transform> childs = new List<Transform>();
     #endregion
-
+    public Vector2 Dimension { get => dimension; }
+    public static BlocksScript Instance { get; set; }
     private void OnEnable()
     {
+        if (SceneManager.GetActiveScene().name == "100_EndScene")
+        {
+            Instance = this;
+        }
+
         bounds = new Bounds(transform.position, new Vector3(1.0f, 1.0f, 1.0f));
         // Create Bounds
         foreach (Transform child in transform)
@@ -77,11 +83,11 @@ public class BlocksScript : MonoBehaviour
     }
 
     #region Debug
-    protected virtual void OnDrawGizmos()
-    {
-        // Draw Camera Bounds
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireCube(bounds.center + offsets, new Vector3(dimensionBase.x * extendsFactor, dimensionBase.y * extendsFactor, 1));
-    }
+    //protected virtual void OnDrawGizmos()
+    //{
+    //    // Draw Camera Bounds
+    //    Gizmos.color = Color.green;
+    //    Gizmos.DrawWireCube(bounds.center + offsets, new Vector3(dimensionBase.x * extendsFactor, dimensionBase.y * extendsFactor, 1));
+    //}
     #endregion
 }
