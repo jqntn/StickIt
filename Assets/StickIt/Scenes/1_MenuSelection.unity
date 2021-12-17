@@ -2905,7 +2905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefabPlayer: {fileID: 133289557909489633, guid: 13fb29bb58259a64aa85ea682998968d, type: 3}
-  nbOfPlayersToLaunch: 1
+  nbOfPlayersToLaunch: 2
   materials:
   - {fileID: 2100000, guid: bbab336ec81de7f4284a26e22ae426df, type: 2}
   - {fileID: 2100000, guid: 4a0d86f138e169c4885a0711c62c440a, type: 2}
@@ -3931,8 +3931,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5004924966347676183, guid: d2ee1942826cebe4183a8eff1e05dbaa, type: 3}
+      propertyPath: mapToStart
+      value: 10_Chairs
+      objectReference: {fileID: 0}
+    - target: {fileID: 5004924966347676183, guid: d2ee1942826cebe4183a8eff1e05dbaa, type: 3}
+      propertyPath: playAllMap
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5004924966347676183, guid: d2ee1942826cebe4183a8eff1e05dbaa, type: 3}
       propertyPath: numberOfRounds
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5004924966347676183, guid: d2ee1942826cebe4183a8eff1e05dbaa, type: 3}
+      propertyPath: playAllMapRandom
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5004924966347676183, guid: d2ee1942826cebe4183a8eff1e05dbaa, type: 3}
+      propertyPath: playAllMapInOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5004924966347676183, guid: d2ee1942826cebe4183a8eff1e05dbaa, type: 3}
+      propertyPath: playAllMapInRandom
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2ee1942826cebe4183a8eff1e05dbaa, type: 3}

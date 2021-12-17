@@ -1,10 +1,17 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.VFX;
+
 public class MapManager : Unique<MapManager>
 {
+    [Header("TEST______________________")]
+    public bool startACertainMap = true;
+    public string mapToStart = "7_Deathmatch";
+    public bool playAllMapInOrder = false;
+    public bool playAllMapInRandom = false;
     [Header("DATAS____________________")]
+    public ModsData modsData;
     public float numberOfRounds = 2.0f;
     [Range(0, 1)]
     public float smoothTime;
@@ -13,24 +20,33 @@ public class MapManager : Unique<MapManager>
     public int mapOffset;
     public float timeScale;
     public bool isBusy;
+    public string endMapName = "100_EndScene";
 
     //[Header("PREFABS___________________")]
     //public VisualEffect onDeathVFX;                                             // Take Player death Animation to know how long to wait before transition
 
     [Header("DEBUG____________________")]
-    public GameObject curMapRoot;
-    public GameObject nextMapRoot;
-    public ModsData modsData;
-    public string nextMapManual;
-    public string prevMod;
-    public string prevMap;
-    public string curMod;
-    public string curMap = "";
+    [SerializeField] private GameObject curMapRoot;
+    [SerializeField] private GameObject nextMapRoot;
+    [SerializeField] private string prevModName;
+    [SerializeField] private string prevMap;
+    [SerializeField] private Mod prevMod;
+    [SerializeField] private string curModName;
+    [SerializeField] private string curMap = "";
+    [SerializeField] private Mod curMod;
+    [SerializeField] private Coroutine _coroutine;
+    [SerializeField] private CameraStateDriven camManager;
+    [SerializeField] private bool levelEnded = false;
+    [SerializeField] private FadeShader shaderScript;
+    [SerializeField] private int modCount = 0;
+    [SerializeField] private int mapCount = 0;
     [SerializeField] private uint roundCount = 0;
-    private Coroutine _coroutine;
-    private CameraStateDriven camManager;
-    bool levelEnded = false;
-    private FadeShader shaderScript;
+    [SerializeField] private List<Mod> modsRemaining = new List<Mod>();
+    [SerializeField] private ModsData cloneModsData;
+
+    #region Property
+    public string CurModName { get => curModName; }
+    #endregion
     //void OnGUI()
     //{
     //    if (GUI.Button(new Rect(0, 0, 200, 100), "NextMap")) NextMap(nextMapManual, true);
@@ -40,6 +56,15 @@ public class MapManager : Unique<MapManager>
         base.Awake();
         camManager = Camera.main.GetComponent<CameraStateDriven>();
         shaderScript = GetComponent<FadeShader>();
+        modCount = 0;
+        mapCount = 0;
+        roundCount = 0;
+
+        cloneModsData = Object.Instantiate(modsData);
+        foreach (Mod aMod in cloneModsData.mods)
+        {
+            modsRemaining.Add(aMod);
+        }
     }
     private void Start()
     {
@@ -47,6 +72,14 @@ public class MapManager : Unique<MapManager>
             AudioManager.instance.PlayAmbiantSounds(gameObject);
         }
 
+        if (playAllMapInOrder || playAllMapInRandom)
+        {
+            numberOfRounds = 0;
+            foreach (Mod aMod in modsData.mods)
+            {
+                numberOfRounds += aMod.maps.Count;
+            }
+        }
     }
     public bool EndLevel()
     {
@@ -73,34 +106,162 @@ public class MapManager : Unique<MapManager>
         else return false;
         return true;
     }
+    private void UpdateData(Mod mod, string map)
+    {
+        prevMod = curMod;
+        prevModName = curModName;
+        prevMap = curMap;
+        curMod = mod;
+        curModName = mod.name;
+        curMap = map;
+
+        roundCount++;
+    }
+
     private string SelectNextMap()
     {
         // End Game
         if (roundCount == numberOfRounds)
         {
-
-            curMod = "End";
-            curMap = "100_EndScene";
-            return "100_EndScene";
+            curModName = "End";
+            curMap = endMapName;
+            return endMapName;
         }
+
         // Next Map
-        ModsData.Mod mod;
+        Mod mod = new Mod();
         string map = SceneManager.GetActiveScene().name;
+
+        // Protection | if No Mod > return current scene
         if (modsData.mods.Count == 0) return map;
+
+        // Play All Map In Order
+        if (playAllMapInOrder)
+        {
+            // Get Next Mod
+            if (mapCount >= modsData.mods[modCount].maps.Count)
+            {
+                modCount++;
+                mapCount = 0;
+            }
+            mod = modsData.mods[modCount];
+
+            // Get Next Map
+            map = mod.maps[mapCount];
+            mapCount++;
+            if (roundCount != 0)
+            {
+                modsRemaining.Add(curMod);
+            }
+            modsRemaining[modCount].maps.Remove(map);
+            UpdateData(mod, map);
+            return map;
+        }
+
+        // Play All Map Without repeating one
+        if (playAllMapInRandom)
+        {
+            // Choose Mod
+            int modIndex = 0;
+            if(modsRemaining.Count == 1)
+            {
+                mod = modsRemaining[0];
+            }
+            // Randomly
+            else
+            {
+                modIndex = Random.Range(0, modsRemaining.Count);
+                mod = modsRemaining[modIndex];
+            }
+
+            // Choose Map
+            if(mod.maps.Count == 1)
+            {
+                map = mod.maps[0];
+            }
+            // Randomly
+            else
+            {
+                do
+                {
+                    map = mod.maps[Random.Range(0, mod.maps.Count)];
+                } while (map == curMap);
+            }
+
+            modsRemaining[modIndex].maps.Remove(map);
+            if (modsRemaining[modIndex].maps.Count <= 0)
+            {
+                modsRemaining.Remove(mod);
+            }
+            UpdateData(mod, map);
+            return map;
+        }
+
+        // Choose Mod
         if (modsData.mods.Count > 1)
-            do mod = modsData.mods[Random.Range(0, modsData.mods.Count)];
-            while (mod.name == curMod);
-        else mod = modsData.mods[0];
-        if (mod.maps.Count == 0) return map;
+        {
+            // Test | Play a Certain Map
+            if (startACertainMap)
+            {
+                bool hasFoundMap = false;
+                foreach (Mod aMod in modsData.mods)
+                {
+                    foreach (string aMap in aMod.maps)
+                    {
+                        if (aMap == mapToStart)
+                        {
+                            mod = aMod;
+                            hasFoundMap = true;
+                            break;
+                        }
+                    }
+
+                    if (hasFoundMap)
+                    {
+                        break;
+                    }
+                }
+            }
+            // Choose Randomly a mod
+            else
+            {
+                if(roundCount != 0)
+                {
+                    modsRemaining.Remove(curMod);
+                }
+                mod = modsRemaining[Random.Range(0, modsRemaining.Count)];
+            }
+        }
+        // Choose the only mod available
+        else
+        {
+            mod = modsData.mods[0];
+        }
+
+        // Protection | If Mod contains No Map > return current scene
+        if (mod.maps.Count == 0) { return map; }
+
+        // Choose map
         if (mod.maps.Count > 1)
-            do map = mod.maps[Random.Range(0, mod.maps.Count)];
-            while (map == curMap);
-        else map = mod.maps[0];
-        prevMod = curMod;
-        prevMap = curMap;
-        curMod = mod.name;
-        curMap = map;
-        roundCount++;
+        {
+            // Test | Take map given
+            if (startACertainMap)
+            {
+                map = mapToStart;
+            }
+            // Random between all maps in the chosen mod
+            else
+            {
+                do map = mod.maps[Random.Range(0, mod.maps.Count)];
+                while (map == curMap);
+            }
+        }
+        else
+        {
+            map = mod.maps[0];
+        }
+
+        UpdateData(mod, map);
         return map;
     }
     private IEnumerator BeginTransition(string nextMap, bool fromMenu)
@@ -174,7 +335,7 @@ public class MapManager : Unique<MapManager>
         shaderScript.SetShaders(true);
         nextMapRoot.transform.position = Vector3.zero;
         // Switch camera state depending of map mode
-        camManager.SwitchStates(Utils.GetCameraType(curMod));
+        camManager.SwitchStates(Utils.GetCameraType(curModName));
         //-------
         Time.timeScale = 1;
         timeScale = Time.timeScale;
