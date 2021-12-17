@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerMouvement))]
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerAnimations : MonoBehaviour
 {
@@ -12,7 +13,7 @@ public class PlayerAnimations : MonoBehaviour
     public float minJumpMultiplicator = 0.3f;
     public float maxJumpMultiplicator = 0.7f;
     public float rayGroundDistance = 1.0f;
-    public LayerMask layerGround;
+    public LayerMask layerPlayer;
 
     [Header("PARTICLE________________________________")]
     public ParticleSystem VFXSnow;
@@ -20,8 +21,9 @@ public class PlayerAnimations : MonoBehaviour
 
     [Header("DEBUG___________________________________")]
     [SerializeField] private Rigidbody rb;
-    [SerializeField] private bool hasCollidedWithSnow = false;
     [SerializeField] private PlayerMouvement playerMovement;
+    [SerializeField] private SphereCollider sphereCollider;
+    [SerializeField] private bool hasCollidedWithSnow = false;
     [SerializeField] private bool isJumpingAnim = false;
     public bool IsJumpingAnim { get => isJumpingAnim; set => isJumpingAnim = value; }
 
@@ -34,6 +36,7 @@ public class PlayerAnimations : MonoBehaviour
         VFXSnow.gameObject.SetActive(true);
         hasCollidedWithSnow = false;
         playerMovement = GetComponent<PlayerMouvement>();
+        sphereCollider = GetComponent<SphereCollider>();
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -131,7 +134,8 @@ public class PlayerAnimations : MonoBehaviour
     }
     private void JumpAnimation()
     {
-        bool hit = Physics.Raycast(transform.position, Vector3.down, rayGroundDistance, layerGround);
+        float distance = sphereCollider.bounds.extents.y + rayGroundDistance;
+        bool hit = Physics.Raycast(transform.position, Vector3.down, distance, ~layerPlayer);
 
         if (hit)
         {
@@ -146,10 +150,11 @@ public class PlayerAnimations : MonoBehaviour
     }
 
     #region GIZMOS
-    //private void OnDrawGizmos()
-    //{
-    //    Gizmos.color = Color.red;
-    //    Gizmos.DrawRay(transform.position, new Vector3(0.0f, -rayGroundDistance, 0.0f));
-    //}
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        float distance = GetComponent<SphereCollider>().bounds.extents.y + rayGroundDistance;
+        Gizmos.DrawRay(transform.position, new Vector3(0.0f, -distance, 0.0f));
+    }
     #endregion
 }

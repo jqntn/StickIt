@@ -16,18 +16,12 @@ public class FadeShader : MonoBehaviour
     public int noiseSize = 30;
     public float speedRotation = 0f;
 
-
     bool isAppearAnimation;
     bool isDisappearAnimation;
 
     [ColorUsageAttribute(true, true), SerializeField] Color colorEdgeDisappear;
     float time;
 
-
-    private void Start()
-    {
-
-    }
     // Update is called once per frame
     void Update()
     {
@@ -36,8 +30,6 @@ public class FadeShader : MonoBehaviour
         {
             for (int i = 0; i < renderers.Length; i++)
             {
-
-                //float t = (Time.time - time) * speedFade;
                 if (!renderers[i].gameObject.CompareTag("Chair"))
                     renderers[i].material.SetFloat("_Fade", 1 - time);
             }
@@ -45,14 +37,12 @@ public class FadeShader : MonoBehaviour
             {
                 isAppearAnimation = false;
                 SetBackMaterials();
-                //print("SetBackMaterialsAppear");
             }
         }
         else if (isDisappearAnimation)
         {
             for (int i = 0; i < renderers.Length; i++)
             {
-                //float t = (Time.time - time) * speedFade;
                 if(renderers[i] != null)
                 {
                     if (!renderers[i].gameObject.CompareTag("Chair"))
@@ -64,8 +54,6 @@ public class FadeShader : MonoBehaviour
                 isDisappearAnimation = false;
             }
         }
-        
-        
     }
 
 
@@ -74,17 +62,13 @@ public class FadeShader : MonoBehaviour
         SetShaders(false);
         isDisappearAnimation = true;
         time = 0;
-        //time = Time.time;
     }
 
     public void AllObjectsAppear()
     {
         isAppearAnimation = true;
         time = 0;
-        //time = Time.time;
     }
-
- 
 
     private void SetBackMaterials()
     {

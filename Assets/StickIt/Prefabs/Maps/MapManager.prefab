@@ -44,22 +44,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb566c5b7b50d2c49a80e4f9351c4c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startACertainMap: 0
+  mapToStart: 10_Chairs
+  playAllMapInOrder: 0
+  playAllMapInRandom: 1
+  modsData: {fileID: 11400000, guid: 1f9c3a10f541edd4a9217b088aa49aa3, type: 2}
   numberOfRounds: 7
   smoothTime: 0.2
   slowTime: 2
   smoothMOE: 0.001
   mapOffset: 100
   timeScale: 0
+  endMapName: 100_EndScene
   isBusy: 0
   curMapRoot: {fileID: 0}
   nextMapRoot: {fileID: 0}
-  modsData: {fileID: 11400000, guid: 1f9c3a10f541edd4a9217b088aa49aa3, type: 2}
-  nextMapManual: 
-  prevMod: 
+  prevModName: 
   prevMap: 
-  curMod: 
+  prevMod:
+    name: 
+    maps: []
+    isTutoDone: 0
+  curModName: 
   curMap: 
+  curMod:
+    name: 
+    maps: []
+    isTutoDone: 0
+  camManager: {fileID: 0}
+  levelEnded: 0
+  shaderScript: {fileID: 0}
+  modCount: 0
+  mapCount: 0
   roundCount: 0
+  modsRemaining: []
+  cloneModsData: {fileID: 0}
 --- !u!114 &264679286983488418
 MonoBehaviour:
   m_ObjectHideFlags: 0

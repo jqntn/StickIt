@@ -596,17 +596,17 @@ MonoBehaviour:
   isRandomJumping: 1
   jumpMultiplicator: 1
   hasRandomJumpMultiplicator: 1
-  minJumpMultiplicator: 0.5
-  maxJumpMultiplicator: 0.8
-  rayGroundDistance: 0.7
-  layerGround:
+  minJumpMultiplicator: 0.1
+  maxJumpMultiplicator: 0.2
+  rayGroundDistance: 0.2
+  layerPlayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 384
   VFXSnow: {fileID: 3882261909444492507}
   velocityThresholdToStop: {x: 1, y: 1, z: 0}
   rb: {fileID: 0}
-  hasCollidedWithSnow: 0
   playerMovement: {fileID: 0}
+  hasCollidedWithSnow: 0
   isJumpingAnim: 0
 --- !u!1 &425054711729676003
 GameObject:

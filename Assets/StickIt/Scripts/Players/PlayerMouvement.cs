@@ -89,10 +89,12 @@ public class PlayerMouvement : MonoBehaviour
     [SerializeField] private bool isDebugLimitAngles = false;
     [SerializeField] private bool isGroundedDown = false;
 
+    
     #endregion
     #region Property
     public Player myPlayer { get; set; }
     public float ForceJumpMultiplicator { get => forceJumpMultiplicator; }
+    public float ColliderY { get => myColliderDimension.y; }
     #endregion
 
     private void Awake()
