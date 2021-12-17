@@ -112,7 +112,6 @@ public class Player : MonoBehaviour
     public void SetScoreAndMass(int score, int mass)
     {
         myDatas.score += score;
-        print("score " + gameObject.name + " = " + score);
         myDatas.mass += mass;
         myDatas.mass = Mathf.Clamp(myDatas.mass, minMass, maxMass);
         myMouvementScript.RescaleMeshWithMass();

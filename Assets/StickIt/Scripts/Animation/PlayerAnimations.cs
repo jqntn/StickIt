@@ -39,7 +39,8 @@ public class PlayerAnimations : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         IcyPlatform ice = collision.gameObject.GetComponent<IcyPlatform>();
-        if(ice != null)
+        SpeedPlatfom dash = collision.gameObject.GetComponent<SpeedPlatfom>();
+        if(ice != null || dash != null) 
         {
             if (collision.gameObject.CompareTag("Icy"))
             {
