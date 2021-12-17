@@ -81,16 +81,10 @@ public class MenuSelection : MonoBehaviour
     }
     private void AddPlayer(Gamepad gamepad, int i)
     {
-        //if (!isSpawnDeactivated[i])
-        //{
-        //    //SpawnPlayer( gamepad, i);
-        //    isSpawnDeactivated[i] = true;
         tuyauxList[i].menuSelection = this;
         tuyauxList[i].gamepad = gamepad;
         tuyauxList[i].id = i;
         tuyauxList[i].PlayAnimation();
-        //StartCoroutine(DoAddPlayer(gamepad, i));
-        //}
     }
     public void SpawnPlayer(Gamepad gamepad, int i)
     {
@@ -98,7 +92,6 @@ public class MenuSelection : MonoBehaviour
         PlayerInput newPlayer = null;
         newPlayer = PlayerInput.Instantiate(_prefabPlayer.gameObject, i, "Gamepad", -1, gamepad);
         Player scriptPlayer = newPlayer.transform.GetComponentInParent<Player>();
-        //newPlayer.transform.position = _playersStartingPos.GetChild(i).position;
         scriptPlayer.transform.position = _playersStartingPos.GetChild(i).position;
         // Set Datas
         scriptPlayer.myDatas.id = i;
@@ -122,39 +115,7 @@ public class MenuSelection : MonoBehaviour
             animLaunchGame.SetTrigger("Entry");
         }
     }
-    //private IEnumerator DoAddPlayer(Gamepad gamepad, int i)
-    //{
-    //    // Play tuyau showing
-    //    float timer = 0;
-    //    float startPosY = tuyauxList[i].transform.position.y;
-    //    Debug.Log("startco");
-    //    while (timer < animTime)
-    //    {
-    //        timer += Time.deltaTime;
-    //        float ratio = timer / animTime;
-    //        Vector3 newPos = new Vector3(
-    //            tuyauxList[i].transform.position.x,
-    //            Mathf.Lerp(startPosY, startPosY - yOffset, curve.Evaluate(ratio)),
-    //            tuyauxList[i].transform.position.z);
-    //        tuyauxList[i].transform.position = newPos;
-    //        yield return null;
-    //    }
-    //    // Spawn the player
-    //    SpawnPlayer(gamepad, i);
-    //    // Play tuyau unshowing
-    //    timer = 0;
-    //    while (timer < animTime)
-    //    {
-    //        timer += Time.deltaTime;
-    //        float ratio = timer / animTime;
-    //        Vector3 newPos = new Vector3(
-    //            tuyauxList[i].transform.position.x,
-    //            Mathf.Lerp(startPosY - yOffset, startPosY, curve.Evaluate(ratio)),
-    //            tuyauxList[i].transform.position.z);
-    //        tuyauxList[i].transform.position = newPos;
-    //        yield return null;
-    //    }
-    //}
+
     public void LaunchGame()
     {
         foreach (Player player in MultiplayerManager.instance.players)
